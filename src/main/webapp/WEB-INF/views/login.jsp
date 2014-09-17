@@ -16,7 +16,7 @@
     <script type="text/javascript" src="../../resources/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Custom styles for this template -->
-    <link href="../../resources/css/main.css" rel="stylesheet">
+    <link href="../../resources/bootstrap/css/main.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -33,7 +33,7 @@
 
     <div class="container loginPane">
 
-      <form class="form-signin" role="form">
+      <form class="form-signin" role="form" action="/employee">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="email" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" class="form-control" placeholder="Password" required>
@@ -42,7 +42,7 @@
           <input type="checkbox" value="remember-me"> Remember me
         </label> -->
         <div style="padding:50px"/>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <input class="btn btn-lg btn-primary btn-block" type="submit">Sign in</input>
       </form>
 
     </div> <!-- /container -->

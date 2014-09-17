@@ -14,10 +14,15 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(Model model) {
 		// TODO Auto-generated method stub
-		return "redirect:/employee";
+		return "employee";
+	}
+	
+	@RequestMapping(value = "/employee", method = RequestMethod.GET)
+	public void employee(Model model) {
+
 	}
 
 }

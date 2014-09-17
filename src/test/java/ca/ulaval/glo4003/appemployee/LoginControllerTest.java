@@ -42,7 +42,7 @@ public class LoginControllerTest {
 	public void loginReturnsUserView() {
 		String view = controller.login(model);
 		
-		assertEquals("redirect:/employee", view);
+		assertEquals("employee", view);
 		
 	}
 }
