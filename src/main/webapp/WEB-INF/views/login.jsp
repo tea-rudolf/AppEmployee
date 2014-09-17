@@ -33,13 +33,13 @@
   <body>
 
     <div class="container loginPane">
-		<form:form method="post" class="form-horizontal" modelAttribute="entry">
+		<form:form method="post" class="form-horizontal" modelAttribute="entry" action="login">
 	      <form class="form-signin" role="form" >
 	        <h2 class="form-signin-heading">Please sign in</h2>
 	        <input type="email" class="form-control" placeholder="Email address" path="username" required autofocus>
 	        <input type="password" class="form-control" placeholder="Password" path="password" required>
 	        <div style="padding:50px"/>
-	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	        <button value="login" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 	      </form>
 	    </form:form>
 
