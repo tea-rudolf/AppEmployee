@@ -28,22 +28,20 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  
 
   <body>
 
     <div class="container loginPane">
-
-      <form class="form-signin" role="form" action="/employee">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
-        <!-- This will be in comment for now because we dont implement the fonctionality -->
-        <!-- <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label> -->
-        <div style="padding:50px"/>
-        <input class="btn btn-lg btn-primary btn-block" type="submit">Sign in</input>
-      </form>
+		<form:form method="post" class="form-horizontal" modelAttribute="entry">
+	      <form class="form-signin" role="form" >
+	        <h2 class="form-signin-heading">Please sign in</h2>
+	        <input type="email" class="form-control" placeholder="Email address" path="username" required autofocus>
+	        <input type="password" class="form-control" placeholder="Password" path="password" required>
+	        <div style="padding:50px"/>
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	      </form>
+	    </form:form>
 
     </div> <!-- /container -->
 

@@ -1,5 +1,18 @@
 package ca.ulaval.glo4003.appemployee.domain.dao;
 
-public interface UserRepository {
+import javax.inject.Singleton;
+
+import org.springframework.stereotype.Repository;
+
+import ca.ulaval.glo4003.appemployee.domain.User;
+
+@Repository
+@Singleton
+public class UserRepository {
+
+	public void find(User user)
+	{
+		
+	};
 
 }

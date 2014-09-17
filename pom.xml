@@ -70,6 +70,13 @@
 			<version>1.2</version>
 		</dependency>
 
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
+
 		<!-- Jackson JSON Processor -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
