@@ -1,2 +1,1 @@
-![AppEmployeeLogo](teanutella.github.com/AppEmployee/blob/master/Logo.jpg)
-
+![Logo](https://raw.githubusercontent.com/teanutella/AppEmployee/master/Logo.jpg)
