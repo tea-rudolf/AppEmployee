@@ -10,7 +10,7 @@ import ca.ulaval.glo4003.appemployee.domain.User;
 @Singleton
 public class UserRepository {
 
-	public void find(User user)
+	public void fetch(User user)
 	{
 		
 	};

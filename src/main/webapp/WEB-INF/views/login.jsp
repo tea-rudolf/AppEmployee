@@ -1,5 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -29,25 +29,19 @@
     <![endif]-->
   </head>
   
-
-  <body>
-
+<form:form method="post" class="form-horizontal" modelAttribute="entry" action="login">
     <div class="container loginPane" >
-    	<img src="/resources/img/Logo.png" style="padding-bottom:2.5cm; padding-left:1.5cm "/>
-		<form:form method="post" class="form-horizontal" modelAttribute="entry" action="login">
+    	<img src="/resources/img/Logo.png" style="padding-bottom:35%;"/>
 	      <form class="form-signin" role="form" >
-	        <h2 class="form-signin-heading">Please sign in</h2>
 	        <input type="email" class="form-control" placeholder="Email address" path="username" required autofocus>
 	        <input type="password" class="form-control" placeholder="Password" path="password" required>
 	        <div style="padding:50px"/>
-	        <button value="login" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Sign in</button>
+	        <button value="login" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Connexion</button>
 	      </form>
-	    </form:form>
-
     </div> <!-- /container -->
+</form:form>
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
 </html>

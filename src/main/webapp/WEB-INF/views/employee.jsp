@@ -46,7 +46,7 @@
             <li><a href="http://getbootstrap.com/examples/dashboard/#">Dashboard</a></li>
             <li><a href="http://getbootstrap.com/examples/dashboard/#">Settings</a></li>
             <li><a href="http://getbootstrap.com/examples/dashboard/#">Profile</a></li>
-            <li><a href="http://getbootstrap.com/examples/dashboard/#">Help</a></li>
+            <li><a href="http://getbootstrap.com/examples/dashboard/#">Déconnexion</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">

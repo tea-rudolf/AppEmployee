@@ -37,7 +37,7 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(UserDto dto) {
 		User user = converter.convert(dto);
-		repository.find(user);
+		repository.fetch(user);
 		return "employee";
 	}
 

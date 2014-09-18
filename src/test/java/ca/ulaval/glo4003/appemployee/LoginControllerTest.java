@@ -44,13 +44,13 @@ public class LoginControllerTest {
 	}
 	
 	@Test
-	public void loginPostFindsUserFromDto() {
+	public void loginPostFetchUserFromRepo() {
 		UserDto dto = new UserDto();
 		User user = addToConverter(dto);
 		
 		controller.login(dto);
 		
-		verify(repository).find(user);
+		verify(repository).fetch(user);
 	}
 	
 	private User addToConverter(UserDto dto) {
