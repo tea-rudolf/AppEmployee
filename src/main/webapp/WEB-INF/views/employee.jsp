@@ -15,6 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <link href="../../resources/bootstrap/css/main.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -29,7 +30,7 @@
 
   <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" navbar-inverse>
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -76,8 +77,8 @@
             <li><a href="">Another nav item</a></li>
           </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" >
+          <h1 class="page-header" >Dashboard</h1>
 
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">

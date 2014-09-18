@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="/resources/img/Logo_tab.png">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -32,14 +32,15 @@
 
   <body>
 
-    <div class="container loginPane">
+    <div class="container loginPane" >
+    	<img src="/resources/img/Logo.png" style="padding-bottom:2.5cm; padding-left:1.5cm "/>
 		<form:form method="post" class="form-horizontal" modelAttribute="entry" action="login">
 	      <form class="form-signin" role="form" >
 	        <h2 class="form-signin-heading">Please sign in</h2>
 	        <input type="email" class="form-control" placeholder="Email address" path="username" required autofocus>
 	        <input type="password" class="form-control" placeholder="Password" path="password" required>
 	        <div style="padding:50px"/>
-	        <button value="login" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	        <button value="login" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Sign in</button>
 	      </form>
 	    </form:form>
 
