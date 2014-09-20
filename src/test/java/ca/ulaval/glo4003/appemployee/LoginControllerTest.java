@@ -1,61 +1,48 @@
 package ca.ulaval.glo4003.appemployee;
 
 import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.validation.support.BindingAwareModelMap;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
-import ca.ulaval.glo4003.appemployee.domain.User;
-import ca.ulaval.glo4003.appemployee.domain.dao.UserRepository;
+import ca.ulaval.glo4003.appemployee.service.UserService;
 import ca.ulaval.glo4003.appemployee.web.controllers.LoginController;
-import ca.ulaval.glo4003.appemployee.web.converter.UserConverter;
-import ca.ulaval.glo4003.appemployee.web.dto.UserDto;
+import ca.ulaval.glo4003.appemployee.web.dto.LoginEntryDto;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginControllerTest {
-	
+
 	@Mock
-	public UserRepository repository;
-	
+	public UserService service;
+
 	@Mock
-	public UserConverter converter;
-	
+	private BindingResult result;
+
+	@Mock
+	private Model model;
+
+	@Mock
+	private LoginEntryDto loginEntryDto;
+
 	@InjectMocks
 	public LoginController controller;
-	
-	private BindingAwareModelMap model;
-	
-	@Before
-	public void setUp() {
-		model = new BindingAwareModelMap();
-	}
-	
+
 	@Test
 	public void rendersIndex() {
-		assertEquals("login", new LoginController(repository, converter).index());
+		assertEquals("login", new LoginController(service).index(model));
 	}
-	
+
 	@Test
-	public void loginPostFetchUserFromRepo() {
-		UserDto dto = new UserDto();
-		User user = addToConverter(dto);
-		
-		controller.login(dto);
-		
-		verify(repository).fetch(user);
+	public void loginPostCallsUserService() throws Exception {
+		controller.login(loginEntryDto, result);
+
+		verify(service).login(loginEntryDto);
 	}
-	
-	private User addToConverter(UserDto dto) {
-		User user = mock(User.class);
-		given(converter.convert(dto)).willReturn(user);
-		return user;
-	}
+
 }

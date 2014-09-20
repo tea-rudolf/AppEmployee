@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<h1>Why is your project called Miley Cyrus? Because it twerks</h1>
+	<h1>Welcome to AppEmployee!</h1>
 
 </body>
 </html>

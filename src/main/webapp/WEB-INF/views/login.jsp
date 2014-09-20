@@ -31,13 +31,11 @@
   
 <form:form method="post" class="form-horizontal" modelAttribute="entry" action="login">
     <div class="container loginPane" >
-    	<img src="/resources/img/Logo.png" style="padding-bottom:35%;"/>
-	      <form class="form-signin" role="form" >
-	        <input type="email" class="form-control" placeholder="Email address" path="username" required autofocus>
-	        <input type="password" class="form-control" placeholder="Password" path="password" required>
-	        <div style="padding:50px"/>
-	        <button value="login" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Connexion</button>
-	      </form>
+      <img src="/resources/img/Logo.png" style="padding-bottom:35%;"/>
+          <form:input class="form-control" placeholder="Username" path="username" />
+          <form:password class="form-control" placeholder="Password" path="password" />
+          <div style="padding:50px"/>
+          <button value="login" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Connexion</button>
     </div> <!-- /container -->
 </form:form>
 
