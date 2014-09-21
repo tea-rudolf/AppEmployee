@@ -10,7 +10,6 @@
 	
 	<context:component-scan base-package="ca.ulaval.glo4003.appemployee" />
 	<annotation-driven />
-	<import resource="spring-security.xml" /
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
 	<resources mapping="/resources/**" location="/resources/" />
