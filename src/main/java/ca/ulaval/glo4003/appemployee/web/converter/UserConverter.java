@@ -13,15 +13,12 @@ public class UserConverter {
 
 		userDto.username = user.getUsername();
 		userDto.password = user.getPassword();
-		userDto.email = user.getEmail();
-		userDto.isLoggedOn = Boolean.toString(user.isLoggedIn());
 
 		return userDto;
 	}
 
 	public User convert(UserDto userDto) {
-		User user = new User(userDto.username, userDto.password, userDto.email);
-
+		User user = new User(userDto.username, userDto.password);
 		return user;
 	}
 

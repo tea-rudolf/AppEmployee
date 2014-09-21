@@ -7,7 +7,7 @@ public interface UserRepository {
 
 	public void remove(User user);
 
-	public User findByUsername(String username) throws UserNotFound;
+	public User findByUsername(String username);
 
 	public void update(User user);
 
