@@ -1,22 +1,26 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ca.ulaval.glo4003.appemployee.domain.User;
 import ca.ulaval.glo4003.appemployee.domain.UserNotFound;
-import ca.ulaval.glo4003.appemployee.domain.WrongPassword;
+import ca.ulaval.glo4003.appemployee.domain.UserRepository;
 import ca.ulaval.glo4003.appemployee.service.UserService;
-import ca.ulaval.glo4003.appemployee.web.dto.LoginEntryDto;
+import ca.ulaval.glo4003.appemployee.web.dto.UserCredentialsDto;
 
 @Controller
 public class LoginController {
 
 	private UserService service;
+	private UserRepository userRepo;
 
 	@Autowired
 	public LoginController(UserService service) {
@@ -25,35 +29,22 @@ public class LoginController {
 
 	@RequestMapping("/")
 	public String index(Model model) {
-		model.addAttribute("entry", new LoginEntryDto());
+		model.addAttribute("entry", new UserCredentialsDto());
 		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		model.addAttribute("entry", new LoginEntryDto());
+		model.addAttribute("entry", new UserCredentialsDto());
 		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(LoginEntryDto loginEntryDto, BindingResult result) {
-
-		try {
-			service.login(loginEntryDto);
-
-		} catch (UserNotFound ex) {
-			ex.printStackTrace();
-			result.addError(new FieldError("login", "username", "User does not exist"));
-
-		} catch (WrongPassword ex) {
-			ex.printStackTrace();
-			result.addError(new FieldError("login", "password", "Incorrect password"));
-		}
-
-		if (result.hasErrors()) {
-			return "redirect:/";
-		}
-
+	public String login(UserCredentialsDto userCredentialsDto, Principal principal, HttpServletRequest request) throws UserNotFound {
+		
+		User user = userRepo.findByUsername(userCredentialsDto.username);	
+		request.getSession().setAttribute("user", user);
+		
 		return "redirect:/employee";
 	}
 

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.appemployee.web.dto;
 
-public class LoginEntryDto {
+public class UserCredentialsDto {
 
 	public String username;
 	public String password;

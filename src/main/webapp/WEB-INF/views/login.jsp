@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page session="true"%>
 
 <html lang="en">
   <head>
@@ -29,15 +31,15 @@
     <![endif]-->
   </head>
   
-<form:form method="post" class="form-horizontal" modelAttribute="entry" action="login">
+<form name="login" method="post" class="form-horizontal" action="<c:url value='j_spring_security_check' />">
     <div class="container loginPane" >
       <img src="/resources/img/Logo.png" style="padding-bottom:35%;"/>
-          <form:input class="form-control" placeholder="Username" path="username" />
-          <form:password class="form-control" placeholder="Password" path="password" />
+          <input type="text" class="form-control" placeholder="Username" path="username" />
+          <input class="form-control" placeholder="Password" path="password" />
           <div style="padding:50px"/>
           <button value="login" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Connexion</button>
     </div> <!-- /container -->
-</form:form>
+</form>
 
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
