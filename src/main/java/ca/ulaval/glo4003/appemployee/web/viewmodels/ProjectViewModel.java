@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
 public class ProjectViewModel {
-	private int number; //TODO: Use a value object
-	private String name;
+	public int number; //TODO: Use a value object
+	public String name;
 	
 	public int getNumber() {
 		return number;

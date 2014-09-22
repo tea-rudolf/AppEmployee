@@ -77,17 +77,17 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h2 class="sub-header">New project</h2>
           <div>
-			<form:form role="form" method="POST" action="/projects/add" modelAttribute="project">
+			<form:form role="form" method="POST" action="/projects/${number}/edit" modelAttribute="project">
 				<div class="form-group">
 					<form:label path="number">Number</form:label>
-					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" />
+					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" readonly="readonly"/>
 				</div>
 				<div class="form-group">
 					<form:label path="name">Name</form:label>
 					<form:input class="form-control" path="name" value="${name}" />
 				</div>
 				<div class="form-group">
-					<input type="submit" value="Create project" class="btn btn-primary"></input>
+					<input type="submit" value="Save" class="btn btn-primary"></input>
 				</div>
 			</form:form>
           </div>

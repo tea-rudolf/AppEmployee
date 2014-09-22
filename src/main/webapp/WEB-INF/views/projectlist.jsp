@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    
+    <link href="/resources/css/projectlist.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -83,7 +85,7 @@
                     <a href="/projects/add"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Create new...</button></a>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table id="project-list" class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -92,7 +94,7 @@
                         </thead>
                         <tbody>
                             <c:forEach var="project" items="${projects}">
-                                <tr>
+                                <tr onClick="javascript:window.location.href = '/projects/${project.number}/edit'">
                                     <td>${project.number}</td>
                                     <td>${project.name}</td>
                                 </tr>
