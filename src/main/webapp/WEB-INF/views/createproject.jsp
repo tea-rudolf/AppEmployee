@@ -77,7 +77,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h2 class="sub-header">New project</h2>
           <div>
-			<form:form role="form" method="POST" action="./addProject">
+			<form:form role="form" method="POST" action="/projects/add">
 				<div class="form-group">
 					<form:label path="number">Number</form:label>
 					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" />

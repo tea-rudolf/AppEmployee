@@ -80,7 +80,7 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h2 class="sub-header">Projects</h2>
                 <div style="text-align:right">
-                    <a href="/projects/project"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Create new...</button></a>
+                    <a href="/projects/add"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Create new...</button></a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">

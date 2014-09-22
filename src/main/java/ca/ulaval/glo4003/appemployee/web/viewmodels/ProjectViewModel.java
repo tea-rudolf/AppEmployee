@@ -1,7 +1,7 @@
-package ca.ulaval.glo4003.appemployee.web.dto;
+package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
-public class ProjectDto {
-	private int number;
+public class ProjectViewModel {
+	private int number; //TODO: Use a value object
 	private String name;
 	
 	public int getNumber() {
