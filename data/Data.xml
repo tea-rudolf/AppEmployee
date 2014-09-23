@@ -1,7 +1,9 @@
-﻿<AppEmployee>
-	<Projects>
-		<Project Number="1" Name="Project 1"></Project>
-		<Project Number="2" Name="Project 2"></Project>
-		<Project Number="3" Name="Project 3"></Project>
-	<Projects>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AppEmployee>
+    <Projects>
+        <Project Name="Project 1" Number="1"/>
+        <Project Name="Project 2" Number="2"/>
+        <Project Name="Project 3" Number="3"/>
+        <Project Name="sdfsdf" Number="4"/>
+    </Projects>
 </AppEmployee>
