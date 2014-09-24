@@ -8,4 +8,6 @@ public interface UserRepository {
 
 	public boolean validateCredentials(String email, String password);
 
+	public User findByEmail(String email);
+
 }

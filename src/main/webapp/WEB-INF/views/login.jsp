@@ -30,13 +30,13 @@
     <![endif]-->
   </head>
   
-<form:form class="form-horizontal" commandName="loginForm" action="login" method="POST">
+<form:form class="form-horizontal" action="<c:url value='j_spring_security_check' />" method="POST">
     <div class="container loginPane" >
       <img src="/resources/img/Logo.png" style="padding-bottom:35%;"/>
-          <form:input type="text" class="form-control" placeholder="Email" path="email" />
-          <form:input type="password" class="form-control" placeholder="Password" path="password" />
+          <form:input type="text" class="form-control" placeholder="Email" name="j_username" />
+          <form:input type="password" class="form-control" placeholder="Password" name="j_password" />
           <div style="padding:50px"/>
-          <button value="login" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Connexion</button>
+          <button name="submit" class="btn btn-lg btn-primary btn-block LoginButtonStyle" type="submit">Connexion</button>
     </div> <!-- /container -->
 </form:form>
 

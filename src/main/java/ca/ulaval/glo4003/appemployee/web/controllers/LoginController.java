@@ -1,0 +1,60 @@
+package ca.ulaval.glo4003.appemployee.web.controllers;
+
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import ca.ulaval.glo4003.appemployee.domain.User;
+import ca.ulaval.glo4003.appemployee.domain.UserRepository;
+
+@Controller
+public class LoginController {
+
+	UserRepository userRepository;
+
+	@Autowired
+	public LoginController(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	@RequestMapping(value = "/menu", method = RequestMethod.GET)
+	public ModelAndView menu(ModelMap model, Principal principal, HttpServletRequest request) {
+
+		ModelAndView mv = new ModelAndView("menu");
+
+		User user = userRepository.findByEmail(principal.getName());
+		request.getSession().setAttribute("user", user);
+
+		mv.addObject("confirm", true);
+
+		return mv;
+	}
+
+	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
+	public ModelAndView loginFailed(ModelMap model) {
+
+		ModelAndView mv = new ModelAndView("login");
+		mv.addObject("loginError", "Le nom d'utilisateur ou le mot de passe est incorrect. Veuillez réessayer.");
+		return mv;
+
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout(ModelMap model, HttpServletRequest request) {
+
+		request.getSession().invalidate();
+
+		ModelAndView mv = new ModelAndView("login");
+		mv.addObject("logout", "Vous avez été déconnecté avec succès");
+		return mv;
+
+	}
+
+}

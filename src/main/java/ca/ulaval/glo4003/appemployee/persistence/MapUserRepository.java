@@ -3,18 +3,16 @@ package ca.ulaval.glo4003.appemployee.persistence;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.stereotype.Repository;
-
+import ca.ulaval.glo4003.appemployee.domain.Role;
 import ca.ulaval.glo4003.appemployee.domain.User;
 import ca.ulaval.glo4003.appemployee.domain.UserRepository;
 
-@Repository
 public class MapUserRepository implements UserRepository {
 
 	private Map<String, User> users = new HashMap<String, User>();
 
 	public MapUserRepository() {
-		users.put("test@test.com", new User("test@test.com", "1234"));
+		users.put("test@test.com", new User("test@test.com", "1234", Role.ROLE_Employee));
 	}
 
 	@Override
@@ -34,6 +32,11 @@ public class MapUserRepository implements UserRepository {
 			return false;
 		}
 		return user.validatePassword(password);
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		return users.get("email");
 	}
 
 }

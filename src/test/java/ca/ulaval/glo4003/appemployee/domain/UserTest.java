@@ -12,7 +12,7 @@ public class UserTest {
 	@Test
 	public void canValidateRightPassword() {
 		String password = "1234";
-		User user = new User("test@test.com", password);
+		User user = new User("test@test.com", password, Role.ROLE_Employee);
 
 		assertTrue(user.validatePassword(password));
 	}
@@ -20,7 +20,7 @@ public class UserTest {
 	@Test
 	public void cannotValidateWrongPassword() {
 		String password = "1234";
-		User user = new User("test@test.com", password);
+		User user = new User("test@test.com", password, Role.ROLE_Employee);
 
 		assertFalse(user.validatePassword("wrongPassword"));
 	}
