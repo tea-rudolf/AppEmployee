@@ -19,6 +19,7 @@ public class XmlRepositoryMarshaller {
 	
 	protected XmlRepositoryMarshaller() {
 		file = new File(XML_DATA_FILE_PATH);
+		
 		if(file.exists() == false || file.isFile() == false) {
 			throw new IllegalArgumentException(String.format("File '%s' was not found."));
 		}
@@ -28,6 +29,7 @@ public class XmlRepositoryMarshaller {
 		if (instance == null) {
 			instance = new XmlRepositoryMarshaller();
 		}
+		
 		return instance;
 	}
 	
@@ -50,15 +52,17 @@ public class XmlRepositoryMarshaller {
 	}
 	
 	public void Unmarshall() {
-		if (needsUnmarshalling == true) {
-			try {
-				JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
-				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-				
-				xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
-			} catch (JAXBException e) {
-				throw new RuntimeException(e);
-			}
+		if (needsUnmarshalling == false) {
+			return;
 		}
-	}
+		
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			
+			xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
+		} catch (JAXBException e) {
+			throw new RuntimeException(e);
+		}
+}
 }
