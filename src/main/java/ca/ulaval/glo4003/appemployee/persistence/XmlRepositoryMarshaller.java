@@ -62,7 +62,7 @@ public class XmlRepositoryMarshaller {
 			
 			xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
 		} catch (JAXBException e) {
-			throw new RuntimeException("Failed to unmarshall objects from XML repository.",e);
+			throw new MarshallingException("Failed to unmarshall objects from XML repository.",e);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <!-- saved from url=(0043)http://getbootstrap.com/examples/dashboard/ -->
@@ -81,6 +82,9 @@
 				<div class="form-group">
 					<form:label path="number">Number</form:label>
 					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" required="required" />
+					<c:if test="${not empty message && message.name == 'ProjectExistsException'}">
+						<div class="alert alert-danger" style="margin-top:10px;" role="alert">${message.message}</div>
+					</c:if>
 				</div>
 				<div class="form-group">
 					<form:label path="name">Name</form:label>

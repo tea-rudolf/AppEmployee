@@ -1,4 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <!-- saved from url=(0043)http://getbootstrap.com/examples/dashboard/ -->
@@ -75,7 +76,7 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h2 class="sub-header">Edit task</h2>
+          <h2 class="sub-header">Edit task (${task.name})</h2>
           <div>
 			<form:form role="form" method="POST" action="/projects/${projectNumber}/tasks/${task.number}/edit" modelAttribute="task">
 				<div class="form-group">
