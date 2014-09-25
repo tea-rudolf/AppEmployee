@@ -1,19 +1,21 @@
 package ca.ulaval.glo4003.appemployee.domain;
 
-public abstract class User {
+public class User {
 
-	protected String username;
-	protected String password;
+	private String email;
+	private String password;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
+	public User(String username, String password) {
+		this.email = username;
 		this.password = password;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public boolean validatePassword(String password) {
+		return this.password.equals(password);
+	}
+
 }
