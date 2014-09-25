@@ -1,5 +1,3 @@
-﻿<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <!-- saved from url=(0043)http://getbootstrap.com/examples/dashboard/ -->
 <html lang="en">
@@ -90,6 +88,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
+                                <th>Employee</th>
                             </tr>
                         </thead>
                         <tbody>
