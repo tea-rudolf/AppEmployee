@@ -6,7 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.User;
-import ca.ulaval.glo4003.appemployee.domain.UserRepository;
+import ca.ulaval.glo4003.appemployee.domain.dao.UserRepository;
+import ca.ulaval.glo4003.appemployee.exceptions.UserNotFoundException;
 
 @Repository
 public class MapUserRepository implements UserRepository {
@@ -26,6 +27,12 @@ public class MapUserRepository implements UserRepository {
 	public void remove(User user) {
 		users.remove(user.getEmail());
 	}
+	
+	@Override
+	public void update(User user) {
+		users.remove(user.getEmail());
+		add(user);
+	}
 
 	@Override
 	public boolean validateCredentials(String email, String password) {
@@ -34,6 +41,14 @@ public class MapUserRepository implements UserRepository {
 			return false;
 		}
 		return user.validatePassword(password);
+	}
+
+	@Override
+	public User findByEmail(String email) throws UserNotFoundException {
+		if (users.containsKey(email)){
+			return users.get(email);
+		}
+		throw new UserNotFoundException("User not found.");
 	}
 
 }
