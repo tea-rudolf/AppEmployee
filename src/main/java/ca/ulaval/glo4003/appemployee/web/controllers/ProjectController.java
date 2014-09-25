@@ -36,13 +36,13 @@ public class ProjectController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getProjects(Model model) {
 		model.addAttribute("projects", projectConverter.convert(projectService.getAllProjects()));
-		return "projectlist";
+		return "projectList";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String project(Model model, ProjectViewModel projectViewModel) {
 		model.addAttribute("project", projectViewModel);
-		return "createproject";
+		return "createProject";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -61,7 +61,7 @@ public class ProjectController {
 		Project project = projectService.getProjectByNumber(projectNumber);
 		model.addAttribute("project", projectConverter.convert(project));
 		model.addAttribute("tasks", taskConverter.convert(project.getTasks()));
-		return "editproject";
+		return "editProject";
 	}
 	
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
@@ -74,7 +74,7 @@ public class ProjectController {
 	public String task(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel) {
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
-		return String.format("createtask");
+		return String.format("createTask");
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.POST)
@@ -95,7 +95,7 @@ public class ProjectController {
 		model.addAttribute("task", taskConverter.convert(task));
 		model.addAttribute("projectNumber", projectNumber);
 		
-		return "edittask";
+		return "editTask";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
