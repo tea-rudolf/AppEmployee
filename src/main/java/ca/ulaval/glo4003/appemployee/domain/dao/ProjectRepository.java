@@ -12,7 +12,7 @@ import ca.ulaval.glo4003.appemployee.domain.Project;
 @Singleton
 public interface ProjectRepository {
 	
-	Project findByNumber(Integer number);
+	Project findByNumber(String number);
 	
 	List<Project> findAll();
 	

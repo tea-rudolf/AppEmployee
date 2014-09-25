@@ -78,7 +78,7 @@
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h2 class="sub-header">Projects</h2>
+                <h2 class="sub-header">Tasks</h2>
                 <div style="text-align:right">
                     <a href="/tasks/add"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Assign new...</button></a>
                 </div>

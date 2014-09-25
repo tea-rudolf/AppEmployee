@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -14,13 +15,17 @@ import ca.ulaval.glo4003.appemployee.domain.dao.ProjectRepository;
 public class XmlProjectRepository implements ProjectRepository {
 	
 	XmlRepositoryMarshaller xmlRepositoryMarshaller = XmlRepositoryMarshaller.getInstance();
-	public List<Project> projects;
+	public List<Project> projects = new ArrayList<Project>();
 
-	public Project findByNumber(Integer number) {
+	public XmlProjectRepository() {
+		Unmarshall();
+	}
+	
+	public Project findByNumber(String number) {
 		Unmarshall();
 		
 		for(Project project : projects) {
-			if (project.getNumber() == number) {
+			if (project.getNumber().compareTo(number) == 0) {
 				return project;
 			}
 		}

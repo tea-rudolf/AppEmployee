@@ -1,18 +1,19 @@
 package ca.ulaval.glo4003.appemployee.domain;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlID;
 
 public class Task {
 
 	private Employee employee;
 	private String name;
-	private int number;
+	private String number;
 	
 	protected Task() {
 		//Required for JAXB
 	}
 	
-	public Task(int number, String name, Employee employee) {
+	public Task(String number, String name, Employee employee) {
 		this.name = name;
 		this.number = number;
 		this.employee = employee;
@@ -23,16 +24,17 @@ public class Task {
 		return name;
 	}
 
-	public void setName(String taskName) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
+	@XmlID
 	@XmlAttribute(name="Number")
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 

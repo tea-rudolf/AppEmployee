@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import ca.ulaval.glo4003.appemployee.domain.Project;
 import ca.ulaval.glo4003.appemployee.domain.Task;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 @Component

@@ -64,5 +64,5 @@ public class XmlRepositoryMarshaller {
 		} catch (JAXBException e) {
 			throw new RuntimeException(e);
 		}
-}
+	}
 }

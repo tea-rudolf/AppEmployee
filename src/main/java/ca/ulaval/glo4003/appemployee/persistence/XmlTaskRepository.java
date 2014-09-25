@@ -7,9 +7,7 @@ import javax.inject.Singleton;
 
 import org.springframework.stereotype.Repository;
 
-import ca.ulaval.glo4003.appemployee.domain.Project;
 import ca.ulaval.glo4003.appemployee.domain.Task;
-import ca.ulaval.glo4003.appemployee.domain.dao.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.dao.TaskRepository;
 
 
@@ -18,13 +16,17 @@ import ca.ulaval.glo4003.appemployee.domain.dao.TaskRepository;
 public class XmlTaskRepository implements TaskRepository {
 	
 	XmlRepositoryMarshaller xmlRepositoryMarshaller = XmlRepositoryMarshaller.getInstance();
-	public List<Task> tasks;
+	public List<Task> tasks = new ArrayList<Task>();
 
-	public Task findByNumber(Integer number) {
+	public XmlTaskRepository() {
+		Unmarshall();
+	}
+	
+	public Task findByNumber(String number) {
 		Unmarshall();
 		
 		for(Task task : tasks) {
-			if (task.getNumber() == number) {
+			if (task.getNumber().compareTo(number) == 0) {
 				return task;
 			}
 		}

@@ -1,4 +1,5 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <!-- saved from url=(0043)http://getbootstrap.com/examples/dashboard/ -->
@@ -75,7 +76,7 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h2 class="sub-header">New project</h2>
+          <h2 class="sub-header">Edit project</h2>
           <div>
 			<form:form role="form" method="POST" action="/projects/${number}/edit" modelAttribute="project">
 				<div class="form-group">
@@ -86,8 +87,29 @@
 					<form:label path="name">Name</form:label>
 					<form:input class="form-control" path="name" value="${name}" />
 				</div>
+				<h3 class="sub-header" style="margin-top:0px; padding-top: 0px">Tasks</h3>
+                <div style="text-align:right">
+                    <a href="/tasks/add?source=editproject&projectNumber=${number}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Create new task...</button></a>
+                </div>
+				<table id="task-list" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    	<c:forEach var="task" items="${tasks}">
+	                        <tr onclick="javascript:window.location.href = '/tasks/${task.number}/edit?source=editproject&projectNumber=${number}'">
+	                            <td>${task.number}</td>
+	                            <td>${task.name}</td>
+	                        </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 				<div class="form-group">
 					<input type="submit" value="Save" class="btn btn-primary"></input>
+					<input type="button" onclick="javascript:window.location.href = '/projects/'" value="Cancel" class="btn btn-default"></input>
 				</div>
 			</form:form>
           </div>
