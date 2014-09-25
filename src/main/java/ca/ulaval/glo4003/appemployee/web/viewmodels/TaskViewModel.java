@@ -7,9 +7,6 @@ public class TaskViewModel {
 	public String name;
 	public Employee employee;
 	
-	public String source;
-	public String projectNumber;
-	
 	public String getNumber() {
 		return number;
 	}
@@ -32,21 +29,5 @@ public class TaskViewModel {
 	
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
-	}
-	
-	public String getSource() {
-		return source;
-	}
-	
-	public void setSource(String source) {
-		this.source = source;
-	}
-	
-	public String getProjectNumber() {
-		return projectNumber;
-	}
-	
-	public void setProjectNumber(String projectNumber) {
-		this.projectNumber = projectNumber;
 	}
 }

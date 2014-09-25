@@ -9,6 +9,7 @@ import ca.ulaval.glo4003.appemployee.domain.Project;
 import ca.ulaval.glo4003.appemployee.domain.Task;
 import ca.ulaval.glo4003.appemployee.domain.dao.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 @Service
 public class ProjectService {
@@ -32,7 +33,7 @@ public class ProjectService {
 		projectRepository.persist(project);
 	}
 	
-	public void editProject(String number, ProjectViewModel viewModel) {
+	public void updateProject(String number, ProjectViewModel viewModel) {
 		Project project = getProjectByNumber(number);
 		project.setName(viewModel.getName());
 		projectRepository.update(project);
@@ -42,5 +43,17 @@ public class ProjectService {
 		Project project = getProjectByNumber(number);
 		project.addTask(task);
 		projectRepository.update(project);
+	}
+	
+	public void updateTask(String projectNumber, String taskNumber, TaskViewModel viewModel) {
+		Project project = getProjectByNumber(projectNumber);
+		Task task = project.getTaskByNumber(taskNumber);
+		task.setName(viewModel.getName());
+		projectRepository.update(project);
+	}
+	
+	public Task getTaskByNumber(String projectNumber, String taskNumber) {
+		Project project = getProjectByNumber(projectNumber);
+		return project.getTaskByNumber(taskNumber);
 	}
 }

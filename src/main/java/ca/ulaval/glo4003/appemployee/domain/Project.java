@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="Project")
@@ -41,8 +42,8 @@ public class Project {
 		this.name = name;
 	}
 	
-	@XmlIDREF
-	@XmlAttribute(name="Tasks")
+	@XmlElementWrapper(name="Tasks")
+	@XmlElement(name="Task")
 	public List<Task> getTasks() {
 		return tasks;
 	}
@@ -53,5 +54,15 @@ public class Project {
 	
 	public void addTask(Task task) {
 		this.tasks.add(task);
+	}
+	
+	public Task getTaskByNumber(String number) {
+		for(Task task : tasks) {
+			if (task.getNumber().compareTo(number) == 0) {
+				return task;
+			}
+		}
+		
+		throw new RuntimeException(String.format("Cannot find task with number '%s'.", number));
 	}
 }

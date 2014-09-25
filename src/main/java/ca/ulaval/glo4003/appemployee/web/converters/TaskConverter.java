@@ -22,7 +22,7 @@ public class TaskConverter {
 	}
 	
 	public Task convert(TaskViewModel taskViewModel) {
-		Task task = new Task(taskViewModel.getNumber(), taskViewModel.getName(), taskViewModel.getEmployee());
+		Task task = new Task(taskViewModel.getNumber(), taskViewModel.getName());
 		return task;
 	}
 	
@@ -30,7 +30,6 @@ public class TaskConverter {
 		TaskViewModel viewModel = new TaskViewModel();
 		viewModel.setNumber(task.getNumber());
 		viewModel.setName(task.getName());
-		viewModel.setEmployee(task.getEmployee(null)); //null à changer
 		return viewModel;
 	}
 
