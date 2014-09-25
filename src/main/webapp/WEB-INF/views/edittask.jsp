@@ -1,3 +1,5 @@
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!DOCTYPE html>
 <!-- saved from url=(0043)http://getbootstrap.com/examples/dashboard/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -101,7 +103,7 @@
     		if ("${task.source}" == "editproject") {
     			newLocation = '/projects/${task.projectNumber}/edit'
     		} else {
-    			newLocation = '/projects/'
+    			newLocation = '/tasks/'
     		}
     		
     		javascript:window.location.href = newLocation;

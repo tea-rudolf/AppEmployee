@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <!-- saved from url=(0043)http://getbootstrap.com/examples/dashboard/ -->
 <html lang="en">
@@ -93,7 +95,7 @@
                         </thead>
                         <tbody>
                             <c:forEach var="task" items="${tasks}">
-                                <tr onClick="javascript:window.location.href = '/projects/${task.number}/edit'">
+                                <tr onClick="javascript:window.location.href = '/tasks/${task.number}/edit?source=tasklist'">
                                     <td>${task.number}</td>
                                     <td>${task.name}</td>
                                     <td>${task.employee}</td>
