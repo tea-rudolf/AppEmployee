@@ -8,6 +8,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskNotFoundException;
+
 @XmlRootElement(name="Project")
 public class Project {
 	private List<Task> tasks = new ArrayList<Task>();

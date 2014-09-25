@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.web.viewModels;
+package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
 public class LoginFormViewModel {
 

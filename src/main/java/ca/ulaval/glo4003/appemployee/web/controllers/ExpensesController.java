@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ca.ulaval.glo4003.appemployee.domain.Expenses;
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.Shift;
-import ca.ulaval.glo4003.appemployee.domain.User;
-import ca.ulaval.glo4003.appemployee.exceptions.NoCurrentPayPeriod;
-import ca.ulaval.glo4003.appemployee.exceptions.UserNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
@@ -35,7 +33,7 @@ public class ExpensesController {
 		}
 		
 		@RequestMapping(method = RequestMethod.GET )
-	    public String getExpenses(Map<String, Object> model) throws UserNotFoundException, NoCurrentPayPeriod {
+	    public String getExpenses(Map<String, Object> model) {
 	    	
 	    	//TODO: Get the email of the current session from the Login Controller 
 	    	User currentUser = payPeriodService.getUserByEmail("test@test.com");
@@ -60,7 +58,7 @@ public class ExpensesController {
 	    }
 		
 		@RequestMapping(method = RequestMethod.POST)
-	    public String saveExpenses(@ModelAttribute("payPeriodForm") PayPeriodViewModel payPeriodForm) throws UserNotFoundException, NoCurrentPayPeriod {
+	    public String saveExpenses(@ModelAttribute("payPeriodForm") PayPeriodViewModel payPeriodForm) {
 	    	
 	    	User currentUser = payPeriodService.getUserByEmail("test@test.com");
 	    	payPeriodService.updateUserCurrentPayPeriodExpenses(currentUser.getEmail(), payPeriodConverter.convert(payPeriodForm));
@@ -76,7 +74,7 @@ public class ExpensesController {
 	    }
 		
 		//Debugging purposes
-		public void printUser() throws UserNotFoundException, NoCurrentPayPeriod{
+		public void printUser() {
 			User currentUser = payPeriodService.getUserByEmail("test@test.com");
 			PayPeriod pay = currentUser.getCurrentPayPeriod();
 			List<Expenses> list = pay.getExpenses();

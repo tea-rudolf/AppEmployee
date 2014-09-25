@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.service;
+package ca.ulaval.glo4003.appemployee.services;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
-import ca.ulaval.glo4003.appemployee.domain.project.Task;
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 

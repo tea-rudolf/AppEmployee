@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
-import ca.ulaval.glo4003.appemployee.domain.project.Task;
-import ca.ulaval.glo4003.appemployee.domain.project.TaskExistsException;
-import ca.ulaval.glo4003.appemployee.service.ProjectService;
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;

@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.Shift;
-import ca.ulaval.glo4003.appemployee.domain.User;
-import ca.ulaval.glo4003.appemployee.exceptions.NoCurrentPayPeriod;
-import ca.ulaval.glo4003.appemployee.exceptions.UserNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
@@ -34,7 +32,7 @@ public class TimeController {
 	}
     
     @RequestMapping(method = RequestMethod.GET )
-    public String getTime(Map<String, Object> model) throws UserNotFoundException, NoCurrentPayPeriod {
+    public String getTime(Map<String, Object> model) {
     	
     	//TODO: Get the email of the current session from the Login Controller 
     	User currentUser = service.getUserByEmail("test@test.com");
@@ -52,7 +50,7 @@ public class TimeController {
     }
     
 	@RequestMapping(method = RequestMethod.POST)
-    public String saveTime(@ModelAttribute("payPeriodForm") PayPeriodViewModel payPeriodForm) throws UserNotFoundException, NoCurrentPayPeriod {
+    public String saveTime(@ModelAttribute("payPeriodForm") PayPeriodViewModel payPeriodForm) {
     	
     	User currentUser = service.getUserByEmail("test@test.com");
         service.updateUserCurrentPayPeriodShiftList(currentUser.getEmail(), payPeriodConverter.convert(payPeriodForm));
@@ -67,7 +65,7 @@ public class TimeController {
     }
 	
 	//Debugging purposes
-	public void printUser() throws UserNotFoundException, NoCurrentPayPeriod{
+	public void printUser() {
 		User currentUser = service.getUserByEmail("test@test.com");
 		PayPeriod pay = currentUser.getCurrentPayPeriod();
 		List<Shift> list = pay.getShiftsWorked();

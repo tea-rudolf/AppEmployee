@@ -1,11 +1,12 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.user;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import ca.ulaval.glo4003.appemployee.exceptions.NoCurrentPayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.NoCurrentPayPeriodException;
+import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 
 public class User {
 
@@ -26,22 +27,22 @@ public class User {
 		payPeriods.add(new PayPeriod(new LocalDate(2014,10,19), new LocalDate(2014,11,1)));
 	}
 
-	public PayPeriod getCurrentPayPeriod() throws NoCurrentPayPeriod {
+	public PayPeriod getCurrentPayPeriod() {
 	LocalDate currentDate = new LocalDate();
 		for (PayPeriod payPeriod : payPeriods){
 			if (currentDate.isAfter(payPeriod.getStartDate()) && currentDate.isBefore(payPeriod.getEndDate())){
 				return payPeriod;
 			}
 		}
-		throw new NoCurrentPayPeriod("The user " + this.email + " does not have a current pay period.");
+		throw new NoCurrentPayPeriodException("The user " + this.email + " does not have a current pay period.");
 	}
 	
-	public void setShiftsCurrentPayPeriod(PayPeriod newPayPeriod) throws NoCurrentPayPeriod {
+	public void setShiftsCurrentPayPeriod(PayPeriod newPayPeriod) {
 	 PayPeriod currentPayPeriod = getCurrentPayPeriod();
 	 currentPayPeriod.setShiftsWorked(newPayPeriod.getShiftsWorked());
 	}
 	
-	public void setExpensesCurrentPayPeriod(PayPeriod newPayPeriod) throws NoCurrentPayPeriod {
+	public void setExpensesCurrentPayPeriod(PayPeriod newPayPeriod) {
 		PayPeriod currentPayPeriod = getCurrentPayPeriod();
 		currentPayPeriod.setExpenses(newPayPeriod.getExpenses());
 	}

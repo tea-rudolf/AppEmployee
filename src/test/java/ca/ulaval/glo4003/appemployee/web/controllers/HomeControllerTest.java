@@ -1,7 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.BDDMockito.given;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.support.SimpleSessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ca.ulaval.glo4003.appemployee.domain.UserRepository;
-import ca.ulaval.glo4003.appemployee.web.viewModels.LoginFormViewModel;
+import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HomeControllerTest {

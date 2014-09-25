@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.User;
-import ca.ulaval.glo4003.appemployee.domain.dao.UserRepository;
-import ca.ulaval.glo4003.appemployee.exceptions.NoCurrentPayPeriod;
-import ca.ulaval.glo4003.appemployee.exceptions.UserNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 
 @Service
 public class PayPeriodService {
@@ -28,14 +27,14 @@ public class PayPeriodService {
 	}
 
 	public void updateUserCurrentPayPeriodShiftList(String email,
-			PayPeriod payPeriod) throws UserNotFoundException, NoCurrentPayPeriod {
+			PayPeriod payPeriod) {
 		User user = userRepository.findByEmail(email);
 		user.getCurrentPayPeriod().setShiftsWorked(payPeriod.getShiftsWorked());
 	}
 	
 	
 	public void updateUserCurrentPayPeriodExpenses(String email,
-			PayPeriod payPeriod) throws UserNotFoundException, NoCurrentPayPeriod {
+			PayPeriod payPeriod) {
 		User user = userRepository.findByEmail(email);
 		user.getCurrentPayPeriod().setExpenses(payPeriod.getExpenses());
 	}

@@ -11,8 +11,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import ca.ulaval.glo4003.appemployee.domain.UserRepository;
-import ca.ulaval.glo4003.appemployee.web.viewModels.LoginFormViewModel;
+import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 @Controller
 @SessionAttributes({ "email" })

@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.project.Task;
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
 
 @XmlRootElement(name="AppEmployee")
 public class XmlRootNode {
