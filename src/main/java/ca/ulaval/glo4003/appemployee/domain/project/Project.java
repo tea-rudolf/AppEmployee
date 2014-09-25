@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +53,11 @@ public class Project {
 	}
 	
 	public void addTask(Task task) {
+		try {
+			getTaskByNumber(task.getNumber());
+			throw new TaskExistsException(String.format("Task number '%s' already exists in project number '%s'.", task.getNumber(), this.number));
+		} catch (TaskNotFoundException e) {};
+		
 		this.tasks.add(task);
 	}
 	
@@ -63,6 +68,6 @@ public class Project {
 			}
 		}
 		
-		throw new RuntimeException(String.format("Cannot find task with number '%s'.", number));
+		throw new TaskNotFoundException(String.format("Cannot find task with number '%s'.", number));
 	}
 }

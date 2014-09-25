@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ca.ulaval.glo4003.appemployee.domain.Project;
-import ca.ulaval.glo4003.appemployee.domain.Task;
+import ca.ulaval.glo4003.appemployee.domain.project.Project;
+import ca.ulaval.glo4003.appemployee.domain.project.Task;
 import ca.ulaval.glo4003.appemployee.service.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;

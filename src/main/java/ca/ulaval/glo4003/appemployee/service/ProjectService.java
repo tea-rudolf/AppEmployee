@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.ulaval.glo4003.appemployee.domain.Project;
-import ca.ulaval.glo4003.appemployee.domain.Task;
-import ca.ulaval.glo4003.appemployee.domain.dao.ProjectRepository;
+import ca.ulaval.glo4003.appemployee.domain.project.Project;
+import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
+import ca.ulaval.glo4003.appemployee.domain.project.Task;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
@@ -22,11 +22,11 @@ public class ProjectService {
 	}
 	
 	public Project getProjectByNumber(String number) {
-		return projectRepository.findByNumber(number);
+		return projectRepository.getByNumber(number);
 	}
 	
 	public List<Project> getAllProjects() {
-		return projectRepository.findAll();
+		return projectRepository.getAll();
 	}
 	
 	public void addProject(Project project) {

@@ -80,11 +80,11 @@
 			<form:form role="form" method="POST" action="/projects/${projectNumber}/tasks/add" modelAttribute="task">
 				<div class="form-group">
 					<form:label path="number">Number</form:label>
-					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" />
+					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" required="required" />
 				</div>
 				<div class="form-group">
 					<form:label path="name">Name</form:label>
-					<form:input class="form-control" path="name" value="${name}" />
+					<form:input class="form-control" path="name" value="${name}" required="required" />
 				</div>
 				<div class="form-group">
 					<input type="submit" value="Create task" class="btn btn-primary"></input>

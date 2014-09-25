@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain.dao;
+package ca.ulaval.glo4003.appemployee.domain.project;
 
 import java.util.List;
 
@@ -6,15 +6,13 @@ import javax.inject.Singleton;
 
 import org.springframework.stereotype.Repository;
 
-import ca.ulaval.glo4003.appemployee.domain.Project;
-
 @Repository
 @Singleton
 public interface ProjectRepository {
 	
-	Project findByNumber(String number);
+	Project getByNumber(String number);
 	
-	List<Project> findAll();
+	List<Project> getAll();
 	
 	void persist(Project project);
 	

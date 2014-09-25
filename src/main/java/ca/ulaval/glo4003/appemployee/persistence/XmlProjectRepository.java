@@ -7,8 +7,10 @@ import javax.inject.Singleton;
 
 import org.springframework.stereotype.Repository;
 
-import ca.ulaval.glo4003.appemployee.domain.Project;
-import ca.ulaval.glo4003.appemployee.domain.dao.ProjectRepository;
+import ca.ulaval.glo4003.appemployee.domain.project.Project;
+import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
+import ca.ulaval.glo4003.appemployee.domain.project.ProjectNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
 
 @Repository
 @Singleton
@@ -21,7 +23,7 @@ public class XmlProjectRepository implements ProjectRepository {
 		Unmarshall();
 	}
 	
-	public Project findByNumber(String number) {
+	public Project getByNumber(String number) {
 		Unmarshall();
 		
 		for(Project project : projects) {
@@ -30,15 +32,20 @@ public class XmlProjectRepository implements ProjectRepository {
 			}
 		}
 		
-		throw new RuntimeException(String.format("Cannot find project with number '%s'.", number));
+		throw new ProjectNotFoundException(String.format("Cannot find project with number '%s'.", number));
 	}
 	
-	public List<Project> findAll() {
+	public List<Project> getAll() {
 		Unmarshall();
 		return projects;
 	}
 	
 	public void persist(Project project) {
+		try {
+			getByNumber(project.getNumber());
+			throw new ProjectExistsException(String.format("Project number '%s' already exists.", project.getNumber()));
+		} catch (ProjectNotFoundException e) {};
+		
 		projects.add(project);	
 		Marshall();
 	}

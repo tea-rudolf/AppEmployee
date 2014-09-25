@@ -81,11 +81,11 @@
 			<form:form role="form" method="POST" action="/projects/${project.number}/edit" modelAttribute="project">
 				<div class="form-group">
 					<form:label path="number">Number</form:label>
-					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" readonly="readonly"/>
+					<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" readonly="readonly" required="required"/>
 				</div>
 				<div class="form-group">
 					<form:label path="name">Name</form:label>
-					<form:input class="form-control" path="name" value="${name}" />
+					<form:input class="form-control" path="name" value="${name}" required="required" />
 				</div>
 				<h3 class="sub-header" style="margin-top:0px; padding-top: 0px">Tasks</h3>
                 <div style="text-align:right">

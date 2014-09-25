@@ -21,7 +21,7 @@ public class XmlRepositoryMarshaller {
 		file = new File(XML_DATA_FILE_PATH);
 		
 		if(file.exists() == false || file.isFile() == false) {
-			throw new IllegalArgumentException(String.format("File '%s' was not found."));
+			throw new FileNotFoundException(String.format("File '%s' was not found."));
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class XmlRepositoryMarshaller {
 			jaxbMarshaller.marshal(xmlRootNode, file);
 			needsUnmarshalling = true;
 		} catch(JAXBException e) {
-			throw new RuntimeException(e);
+			throw new MarshallingException("Failed to marshall objects to XML repository.", e);
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class XmlRepositoryMarshaller {
 			
 			xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
 		} catch (JAXBException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("Failed to unmarshall objects from XML repository.",e);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.project;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
