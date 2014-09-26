@@ -37,7 +37,7 @@ public class XmlRepositoryMarshaller {
 		return xmlRootNode;
 	}
 	
-	public void Marshall() {
+	public synchronized void Marshall() {
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -51,7 +51,7 @@ public class XmlRepositoryMarshaller {
 		}
 	}
 	
-	public void Unmarshall() {
+	public synchronized void Unmarshall() {
 		if (needsUnmarshalling == false) {
 			return;
 		}
