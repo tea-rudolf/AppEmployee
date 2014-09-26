@@ -21,9 +21,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 @RunWith(MockitoJUnitRunner.class)
 public class TimeControllerTest {
 	
-	//private static final String VALID_PASSWORD = "password";
-	//private static final String VALID_EMAIL = "email@email.com";
-	
 	@Mock
 	private PayPeriodService payPeriodService;
 	
@@ -32,9 +29,7 @@ public class TimeControllerTest {
 	
 	@InjectMocks
 	private TimeController timeController;
-	
-	//private User user;
-	//private PayPeriod payPeriod;
+
 	private ModelMap model;
 	private PayPeriodViewModel payPeriodViewModel;
 	
@@ -42,7 +37,6 @@ public class TimeControllerTest {
 	public void init(){
 		model = new ModelMap();
 		payPeriodViewModel = new PayPeriodViewModel();
-		//user = new User(VALID_EMAIL, VALID_PASSWORD);
 	}
 
 	@Test
@@ -57,7 +51,5 @@ public class TimeControllerTest {
 		assertEquals("timeSheetSubmitted", returnedForm);
 	}
 	
-	//@Test
-	//public void get()
-
+	
 }

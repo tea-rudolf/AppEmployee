@@ -10,19 +10,19 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTest {
+	private static final String VALID_PASSWORD = "1234";
+	private static final String VALID_EMAIL= "test@test.com";
 
 	@Test
 	public void canValidateRightPassword() {
-		String password = "1234";
-		User user = new User("test@test.com", password);
+		User user = new User(VALID_EMAIL, VALID_PASSWORD);
 
-		assertTrue(user.validatePassword(password));
+		assertTrue(user.validatePassword(VALID_PASSWORD));
 	}
 
 	@Test
 	public void cannotValidateWrongPassword() {
-		String password = "1234";
-		User user = new User("test@test.com", password);
+		User user = new User(VALID_EMAIL, VALID_PASSWORD);
 
 		assertFalse(user.validatePassword("wrongPassword"));
 	}
