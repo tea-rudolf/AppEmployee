@@ -13,6 +13,10 @@ public class User {
 	private String email;
 	private String password;
 	private List<PayPeriod> payPeriods;
+	
+	public User(){
+		
+	}
 
 	public User(String username, String password) {
 		this.email = username;
