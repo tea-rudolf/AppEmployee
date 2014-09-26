@@ -5,11 +5,11 @@
 <html lang="en">
 	<head>
 		<%@include file="../includes/header.jsp" %>
-		<title>AppEmployee - Manage Expenses</title>
+		<title>AppEmployee - Manage Time</title>
 	</head>
 	
 	<%@include file="../includes/bodyHeader.jsp" %>
-
+                
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h2>
 			Pay period from 
@@ -17,22 +17,22 @@
 			to 
 			<c:out value="${payPeriodForm.endDate}"/>
 		</h2>
-		<form:form method="post" action="expenses" modelAttribute="payPeriodForm">
+		<form:form method="post" action="time" modelAttribute="payPeriodForm">
 			<form:hidden path="startDate" />
 			<form:hidden path="endDate" />
 			<div class="table-responsive">
-				<table class="table table-striped table-hover table-condensed">
+				<table class="timesheet table table-striped table-hover table-condensed">
 					<tr>
 						<th>Date</th>
-						<th>Amount</th>
+						<th>Hours</th>
 						<th>Comment</th>
 					</tr>
-					<c:forEach items="${payPeriodForm.expenses}" var="expenses" varStatus="status">
+					<c:forEach items="${payPeriodForm.shifts}" var="shift" varStatus="status">
 						<tr>
-							<form:hidden path="expenses[${status.index}].date" />
-							<td>${expenses.date}</td>
-							<td><input class="form-control" type="number" style="width:150px" name="expenses[${status.index}].amount" value="${expenses.amount}"/></td>
-							<td><input class="form-control" type="text"  name="expenses[${status.index}].comment" value="${expenses.comment}"/></td>
+							<form:hidden path="shifts[${status.index}].date" />
+							<td>${shift.date}</td>
+							<td><input class="form-control" type="number" style="width:150px" step="any" min="0" max="12"  name="shifts[${status.index}].hours" value="${shift.hours}"/></td>
+							<td><input class="form-control" type="text"  name="shifts[${status.index}].comment" value="${shift.comment}"/></td>
 						</tr>
 					</c:forEach>
 				</table>

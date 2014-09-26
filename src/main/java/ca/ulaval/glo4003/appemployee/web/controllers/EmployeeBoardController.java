@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping(value = "/employe")
+@RequestMapping(value = "/employee")
 public class EmployeeBoardController {
 	
 	@RequestMapping(method = RequestMethod.GET )
     public String get() {
-		return "employe";
+		return "employee";
 	}
 }

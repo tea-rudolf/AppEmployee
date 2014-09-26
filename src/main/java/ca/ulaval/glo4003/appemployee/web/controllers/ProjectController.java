@@ -33,7 +33,7 @@ public class ProjectController {
 		this.taskConverter = taskConverter;
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String getProjects(Model model) {
 		model.addAttribute("projects", projectConverter.convert(projectService.getAllProjects()));
 		return "projectList";
