@@ -23,9 +23,6 @@ public class User {
 		this.password = password;
 		payPeriods = new ArrayList<PayPeriod>();
 		
-		//TODO: Manage the pay periods elsewhere i guess
-		//Adding some pay periods
-		//Manage pay periods with Enterprise
 		payPeriods.add(new PayPeriod(new LocalDate(2014,9,21), new LocalDate(2014,10,4)));
 		payPeriods.add(new PayPeriod(new LocalDate(2014,10,5), new LocalDate(2014,10,18)));
 		payPeriods.add(new PayPeriod(new LocalDate(2014,10,19), new LocalDate(2014,11,1)));
