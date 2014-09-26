@@ -40,7 +40,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String project(Model model, ProjectViewModel projectViewModel) {
+	public String projectCreation(Model model, ProjectViewModel projectViewModel) {
 		model.addAttribute("project", projectViewModel);
 		return "createProject";
 	}
@@ -51,13 +51,13 @@ public class ProjectController {
 			projectService.addProject(projectConverter.convert(projectViewModel));
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return project(model, projectViewModel);
+			return projectCreation(model, projectViewModel);
 		}
 		return String.format("redirect:/projects/%s/edit", projectViewModel.getNumber());
 	}
 	
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
-	public String edit(@PathVariable String projectNumber, Model model) {
+	public String projectModification(@PathVariable String projectNumber, Model model) {
 		Project project = projectService.getProjectByNumber(projectNumber);
 		model.addAttribute("project", projectConverter.convert(project));
 		model.addAttribute("tasks", taskConverter.convert(project.getTasks()));
@@ -65,13 +65,13 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
-	public String edit(@PathVariable String projectNumber, ProjectViewModel viewModel) {
+	public String editProject(@PathVariable String projectNumber, ProjectViewModel viewModel) {
 		projectService.updateProject(projectNumber, viewModel);
 		return "redirect:/projects/";
 	}
 	
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
-	public String task(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel) {
+	public String taskCreation(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel) {
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
 		return String.format("createTask");
@@ -83,13 +83,13 @@ public class ProjectController {
 			projectService.addTask(projectNumber, taskConverter.convert(taskViewModel));
 		} catch (TaskExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return task(projectNumber, model, taskViewModel);
+			return taskCreation(projectNumber, model, taskViewModel);
 		}
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
-	public String edit(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model) {
+	public String taskModification(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model) {
 		Task task = projectService.getTaskByNumber(projectNumber, taskNumber);
 		
 		model.addAttribute("task", taskConverter.convert(task));
@@ -99,7 +99,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
-	public String edit(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel) {
+	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel) {
 		projectService.updateTask(projectNumber, taskNumber, viewModel);
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
