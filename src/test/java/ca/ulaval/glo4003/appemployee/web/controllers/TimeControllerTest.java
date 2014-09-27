@@ -2,6 +2,8 @@ package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.*;
 
+import javax.servlet.http.HttpSession;
+
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +23,9 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 @RunWith(MockitoJUnitRunner.class)
 public class TimeControllerTest {
 	
-	//private static final String VALID_PASSWORD = "password";
-	//private static final String VALID_EMAIL = "email@email.com";
+	private static final String EMAIL_KEY = "email";
+	private static final String PAY_PERIOD_KEY = "payPeriodForm";
+	private static final String VALID_EMAIL = "test@test.com";
 	
 	@Mock
 	private PayPeriodService payPeriodService;
@@ -33,31 +36,39 @@ public class TimeControllerTest {
 	@InjectMocks
 	private TimeController timeController;
 	
-	//private User user;
-	//private PayPeriod payPeriod;
 	private ModelMap model;
 	private PayPeriodViewModel payPeriodViewModel;
+	private HttpSession session;
 	
 	@Before
 	public void init(){
 		model = new ModelMap();
+		session.setAttribute(EMAIL_KEY, VALID_EMAIL);
 		payPeriodViewModel = new PayPeriodViewModel();
-		//user = new User(VALID_EMAIL, VALID_PASSWORD);
 	}
 
 	@Test
 	public void getTimeReturnsTimeSheet() {
-		String returnedForm = timeController.getTime(model, null);
+		String returnedForm = timeController.getTime(model, session);
 		assertEquals("time", returnedForm);
 	}
 	
 	@Test
 	public void saveTimeReturnsSubmittedTimeSheetIfSuccessfulSubmit(){
-		String returnedForm = timeController.saveTime(payPeriodViewModel, null);
+		String returnedForm = timeController.saveTime(payPeriodViewModel, session);
 		assertEquals("timeSheetSubmitted", returnedForm);
 	}
 	
-	//@Test
-	//public void get()
+	@Test
+	public void addsUserEmailWhenGetTime(){
+		timeController.getTime(model, session);
+		assertTrue(model.containsKey(EMAIL_KEY));
+	}
+	
+	@Test
+	public void addsPayPeriodFormWhenGetTime(){
+		timeController.getTime(model, session);
+		assertTrue(model.containsKey(PAY_PERIOD_KEY));
+	}
 
 }
