@@ -10,6 +10,7 @@ import javax.xml.bind.Unmarshaller;
 public class XmlRepositoryMarshaller {
 	
 	private final static String XML_DATA_FILE_PATH = "./data/data.xml";
+	private final static Object XML_MARSHALL_LOCK = new Object();
 			
 	private static XmlRepositoryMarshaller instance = null;
 	
@@ -37,30 +38,34 @@ public class XmlRepositoryMarshaller {
 		return xmlRootNode;
 	}
 	
-	public synchronized void Marshall() {
+	public void Marshall() {
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
-			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-	 
-			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-	 
-			jaxbMarshaller.marshal(xmlRootNode, file);
-			needsUnmarshalling = true;
+			synchronized(XML_MARSHALL_LOCK) {
+				JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
+				Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+		 
+				jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		 
+				jaxbMarshaller.marshal(xmlRootNode, file);
+				needsUnmarshalling = true;
+			}
 		} catch(JAXBException e) {
 			throw new MarshallingException("Failed to marshall objects to XML repository.", e);
 		}
 	}
 	
-	public synchronized void Unmarshall() {
+	public void Unmarshall() {
 		if (needsUnmarshalling == false) {
 			return;
 		}
 		
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			
-			xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
+			synchronized(XML_MARSHALL_LOCK) {
+				JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
+				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				
+				xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
+			}
 		} catch (JAXBException e) {
 			throw new MarshallingException("Failed to unmarshall objects from XML repository.",e);
 		}
