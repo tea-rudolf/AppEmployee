@@ -25,10 +25,9 @@ public class TimeControllerTest {
 	private static final String EMAIL_KEY = "email";
 	private static final String PAY_PERIOD_KEY = "payPeriodForm";
 	private static final String VALID_EMAIL = "test@test.com";
-	private static final String VALID_PASSWORD = "1234";
 	private static final String ERROR_MESSAGE = "message";
-	//private static final LocalDate START_DATE = new LocalDate(2014,9,22);
-	//private static final LocalDate END_DATE = new LocalDate(2014,10,3);
+	private static final String TIME_SHEET_JSP = "timeSheet";
+	private static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 	
 	PayPeriodService payPeriodServiceMock;
 	PayPeriodConverter payPeriodConverterMock;
@@ -50,49 +49,42 @@ public class TimeControllerTest {
 		payPeriodMock = mock(PayPeriod.class);
 		userMock = mock(User.class);
 		timeControllerMock = new TimeController(payPeriodServiceMock, payPeriodConverterMock);
-		userMock = new User(VALID_EMAIL, VALID_PASSWORD);
 	}
 
 	@Test
 	public void getTimeReturnsTimeSheet() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(payPeriodServiceMock.getUserByEmail(VALID_EMAIL)).thenReturn(userMock);
 		when(userMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodConverterMock.convert(payPeriodMock)).thenReturn(payPeriodViewModelMock);
 		
 		String returnedForm = timeControllerMock.getTime(modelMapMock, sessionMock);
 		
-		assertEquals("time", returnedForm);
+		assertEquals(TIME_SHEET_JSP, returnedForm);
 	}
 	
 	@Test
 	public void saveTimeReturnsSubmittedTimeSheetIfSuccessfulSubmit(){
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(payPeriodServiceMock.getUserByEmail(VALID_EMAIL)).thenReturn(userMock);
 		
 		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
 		
-		assertEquals("timeSheetSubmitted", returnedForm);
+		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
 	}
 	
 	@Test
 	public void addsUserEmailWhenGetTime(){
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(payPeriodServiceMock.getUserByEmail(VALID_EMAIL)).thenReturn(userMock);
 		when(userMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodConverterMock.convert(payPeriodMock)).thenReturn(payPeriodViewModelMock);
+		when(userMock.getEmail()).thenReturn(VALID_EMAIL);
 		
 		timeControllerMock.getTime(modelMapMock, sessionMock);
 		
-		assertTrue(modelMapMock.containsKey(EMAIL_KEY));
-	}
-	
-	@Test
-	public void addsPayPeriodFormWhenGetTime(){
-		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(userMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
-		when(payPeriodConverterMock.convert(payPeriodMock)).thenReturn(payPeriodViewModelMock);
-		
-		timeControllerMock.getTime(modelMapMock, sessionMock);
-		
-		assertTrue(modelMapMock.containsKey(PAY_PERIOD_KEY));
+		verify(modelMapMock).addAttribute(PAY_PERIOD_KEY, payPeriodViewModelMock);
+		verify(modelMapMock).addAttribute(EMAIL_KEY, VALID_EMAIL);
 	}
 	
 	@Test(expected = UserNotFoundException.class)

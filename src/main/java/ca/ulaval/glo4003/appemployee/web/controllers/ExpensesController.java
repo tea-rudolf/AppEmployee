@@ -1,8 +1,5 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import ca.ulaval.glo4003.appemployee.domain.Expenses;
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.Shift;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
@@ -26,6 +21,11 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 @RequestMapping(value = "/expenses")
 @SessionAttributes({"email"})
 public class ExpensesController {
+	
+		static final String PAY_PERIOD_ATTRIBUTE = "payPeriodForm";
+		static final String EMAIL_ATTRIBUTE = "email";
+		static final String EXPENSES_JSP = "expenses";
+		static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
 	
 		private PayPeriodService payPeriodService;
 	    private PayPeriodConverter payPeriodConverter;
@@ -38,29 +38,25 @@ public class ExpensesController {
 		}
 		
 		@RequestMapping(method = RequestMethod.GET )
-	    public String getExpenses(Map<String, Object> model, HttpSession session) {
+	    public String getExpenses(ModelMap model, HttpSession session) {
 	    	
-	    	user = payPeriodService.getUserByEmail(session.getAttribute("email").toString());
-	    	PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
-	    	List<Expenses> expenses = currentPayPeriod.getExpenses();  	
-	    	
-	    	PayPeriodViewModel form = new PayPeriodViewModel();
-	    	form.setStartDate(currentPayPeriod.getStartDate().toString());
-	    	form.setEndDate(currentPayPeriod.getEndDate().toString());
-	        form.setExpenses(expenses);
+	    	user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+	    	PayPeriod currentPayPeriod = user.getCurrentPayPeriod(); 	   	
+	    	PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
 
-	        model.put("payPeriodForm", form);
+	        model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
+	        model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
 	        
-	        return "expenses";
+	        return EXPENSES_JSP;
 	    }
 		
 		@RequestMapping(method = RequestMethod.POST)
-	    public String saveExpenses(@ModelAttribute("payPeriodForm") PayPeriodViewModel payPeriodForm, HttpSession session) {
+	    public String saveExpenses(@ModelAttribute(PAY_PERIOD_ATTRIBUTE) PayPeriodViewModel payPeriodForm, HttpSession session) {
 	    	
-	    	user = payPeriodService.getUserByEmail(session.getAttribute("email").toString());
+	    	user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 	    	payPeriodService.updateUserCurrentPayPeriodExpenses(user.getEmail(), payPeriodConverter.convert(payPeriodForm));
 	        
-	        return "expensesSubmitted";
+	        return EXPENSES_SUBMIT_JSP;
 	    }
 		
 		@RequestMapping(value = "/logout")

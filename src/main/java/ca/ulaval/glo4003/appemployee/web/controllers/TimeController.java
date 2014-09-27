@@ -21,6 +21,11 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 @RequestMapping(value = "/time")
 @SessionAttributes({"email"})
 public class TimeController {
+	
+	static final String EMAIL_ATTRIBUTE = "email";
+	static final String PAY_PERIOD_ATTRIBUTE = "payPeriodForm";
+	static final String TIME_SHEET_JSP = "timeSheet";
+	static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
  
 	private PayPeriodService service ;
     private PayPeriodConverter payPeriodConverter ;
@@ -32,25 +37,25 @@ public class TimeController {
 		this.payPeriodConverter = payPeriodConverter;
 	}
     
-    @RequestMapping(method = RequestMethod.GET )
+    @RequestMapping(method = RequestMethod.GET)
     public String getTime(ModelMap model, HttpSession session) {
     	
-    	user = service.getUserByEmail(session.getAttribute("email").toString());
+    	user = service.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
     	PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
     	PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
-        model.addAttribute("payPeriodForm", form);
-        model.addAttribute("email", user.getEmail());
+        model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
+        model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
         
-        return "timeSheet";
+        return TIME_SHEET_JSP;
     }
     
 	@RequestMapping(method = RequestMethod.POST)
-    public String saveTime(@ModelAttribute("payPeriodForm") PayPeriodViewModel payPeriodForm, HttpSession session) {
+    public String saveTime(@ModelAttribute(PAY_PERIOD_ATTRIBUTE) PayPeriodViewModel payPeriodForm, HttpSession session) {
     	
-    	user = service.getUserByEmail(session.getAttribute("email").toString());
+    	user = service.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
         service.updateUserCurrentPayPeriodShiftList(user.getEmail(), payPeriodConverter.convert(payPeriodForm));
             
-        return "timeSheetSubmitted";
+        return TIME_SHEET_SUBMIT_JSP;
     }
 	
 	@RequestMapping(value = "/logout")
