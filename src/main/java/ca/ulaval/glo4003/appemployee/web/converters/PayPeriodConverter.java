@@ -29,6 +29,7 @@ public class PayPeriodConverter {
 	   	form.setStartDate(currentPayPeriod.getStartDate().toString());
     	form.setEndDate(currentPayPeriod.getEndDate().toString());
         form.setShifts(currentPayPeriod.getShiftsWorked());
+        form.setExpenses(currentPayPeriod.getExpenses());
 		return form;
 	}
 
