@@ -1,7 +1,5 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
  
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.Shift;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;

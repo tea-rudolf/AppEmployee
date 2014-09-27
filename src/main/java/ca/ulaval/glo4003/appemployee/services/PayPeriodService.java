@@ -19,7 +19,6 @@ public class PayPeriodService {
 	}
 	
 	public User getUserByEmail(String email) throws UserNotFoundException {
-		System.out.println(email);
 		return userRepository.findByEmail(email);
 	}
 	
