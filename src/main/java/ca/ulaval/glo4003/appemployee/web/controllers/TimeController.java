@@ -25,15 +25,13 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 @SessionAttributes({"email"})
 public class TimeController {
  
-	//TODO: Get the UserRepository from the LoginController
-	
-    private PayPeriodService service ;
+	private PayPeriodService service ;
     private PayPeriodConverter payPeriodConverter ;
     private User user;
   
 	@Autowired
 	public TimeController(PayPeriodService timeService, PayPeriodConverter payPeriodConverter) {
-		this.service = timeService; //TODO: Get the UserRepository from the LoginController
+		this.service = timeService; 
 		this.payPeriodConverter = payPeriodConverter;
 	}
     
@@ -46,12 +44,6 @@ public class TimeController {
         model.addAttribute("payPeriodForm", form);
         model.addAttribute("email", user.getEmail());
         
-        //Debugging purposes
-        System.out.println();
-        System.out.println("Before");
-        printUser(); 
-        System.out.println();
-
         return "timeSheet";
     }
     
@@ -60,13 +52,7 @@ public class TimeController {
     	
     	user = service.getUserByEmail(session.getAttribute("email").toString());
         service.updateUserCurrentPayPeriodShiftList(user.getEmail(), payPeriodConverter.convert(payPeriodForm));
-        
-      //Debugging purposes
-        System.out.println();
-        System.out.println("After");
-        printUser(); 
-        System.out.println();
-        
+            
         return "timeSheetSubmitted";
     }
 	
@@ -77,14 +63,4 @@ public class TimeController {
 		return "redirect:/";
 	}
 	
-	//Debugging purposes
-	public void printUser() {
-		User currentUser = service.getUserByEmail(user.getEmail());
-		PayPeriod pay = currentUser.getCurrentPayPeriod();
-		List<Shift> list = pay.getShiftsWorked();
-		System.out.println("  ** " + pay.getStartDate() + "  to  " + pay.getEndDate());
-		for (Shift shift : list){
-			System.out.println("      " + shift.getDate() + " - " + shift.getHours() + " - " + shift.getComment());
-		}
-	}
 }
