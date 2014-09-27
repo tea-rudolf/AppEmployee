@@ -23,6 +23,12 @@ public class PayPeriod {
 		initShifts();	
 	}	
 	
+	PayPeriod(LocalDate startDate, LocalDate endDate, List<Shift> shifts){
+		this(startDate, endDate);
+		this.shifts = shifts;
+	}
+	
+	
 	public void initShifts(){
 		
 		shifts = new ArrayList<Shift>();
