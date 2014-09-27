@@ -23,13 +23,11 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 @RunWith(MockitoJUnitRunner.class)
 public class TimeControllerTest {
 	
-<<<<<<< HEAD
+
 	private static final String EMAIL_KEY = "email";
 	private static final String PAY_PERIOD_KEY = "payPeriodForm";
 	private static final String VALID_EMAIL = "test@test.com";
 	
-=======
->>>>>>> d0a7fa8848a6556988797b96396e79ad3188b262
 	@Mock
 	private PayPeriodService payPeriodService;
 	
@@ -38,11 +36,6 @@ public class TimeControllerTest {
 	
 	@InjectMocks
 	private TimeController timeController;
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> d0a7fa8848a6556988797b96396e79ad3188b262
 	private ModelMap model;
 	private PayPeriodViewModel payPeriodViewModel;
 	private HttpSession session;
@@ -66,7 +59,6 @@ public class TimeControllerTest {
 		assertEquals("timeSheetSubmitted", returnedForm);
 	}
 	
-<<<<<<< HEAD
 	@Test
 	public void addsUserEmailWhenGetTime(){
 		timeController.getTime(model, session);
@@ -78,8 +70,4 @@ public class TimeControllerTest {
 		timeController.getTime(model, session);
 		assertTrue(model.containsKey(PAY_PERIOD_KEY));
 	}
-
-=======
-	
->>>>>>> d0a7fa8848a6556988797b96396e79ad3188b262
 }
