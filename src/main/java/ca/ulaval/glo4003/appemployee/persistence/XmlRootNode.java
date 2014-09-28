@@ -8,34 +8,47 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 
-@XmlRootElement(name="AppEmployee")
+@XmlRootElement(name = "AppEmployee")
 public class XmlRootNode {
-	
+
 	private List<Project> projects;
 	private List<Task> tasks;
-	
+	private List<User> users;
+
 	protected XmlRootNode() {
-		//Required for JAXB
+		// Required for JAXB
 	}
-	
-	@XmlElementWrapper(name="Projects")
-	@XmlElement(name="Project")
+
+	@XmlElementWrapper(name = "Projects")
+	@XmlElement(name = "Project")
 	public List<Project> getProjects() {
 		return projects;
 	}
-	
+
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
-	
-	@XmlElementWrapper(name="Tasks")
-	@XmlElement(name="Task")
+
+	@XmlElementWrapper(name = "Tasks")
+	@XmlElement(name = "Task")
 	public List<Task> getTasks() {
 		return tasks;
 	}
-	
+
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
 	}
+
+	@XmlElementWrapper(name = "Users")
+	@XmlElement(name = "User")
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 }
