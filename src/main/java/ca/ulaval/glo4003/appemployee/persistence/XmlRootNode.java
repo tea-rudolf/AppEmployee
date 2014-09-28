@@ -7,14 +7,12 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @XmlRootElement(name = "AppEmployee")
 public class XmlRootNode {
 
 	private List<Project> projects;
-	private List<Task> tasks;
 	private List<User> users;
 
 	protected XmlRootNode() {
@@ -29,16 +27,6 @@ public class XmlRootNode {
 
 	public void setProjects(List<Project> projects) {
 		this.projects = projects;
-	}
-
-	@XmlElementWrapper(name = "Tasks")
-	@XmlElement(name = "Task")
-	public List<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
 	}
 
 	@XmlElementWrapper(name = "Users")
