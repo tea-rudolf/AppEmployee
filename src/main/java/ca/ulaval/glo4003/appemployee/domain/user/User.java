@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.appemployee.domain.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -21,17 +22,28 @@ public class User {
 	private List<PayPeriod> payPeriods;
 
 	protected User() {
-
+		
 	}
 
 	public User(String username, String password) {
 		this.email = username;
 		this.password = password;
-		payPeriods = new ArrayList<PayPeriod>();
-
-		payPeriods.add(new PayPeriod(new LocalDate(2014, 9, 21), new LocalDate(2014, 10, 4)));
-		payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 5), new LocalDate(2014, 10, 18)));
-		payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 19), new LocalDate(2014, 11, 1)));
+		
+		init();
+	}
+	
+	public void afterUnmarshal(Unmarshaller u, Object parent) {
+		  init();
+	}
+	
+	private void init() {
+		if (payPeriods == null || payPeriods.size() == 0) {
+			payPeriods = new ArrayList<PayPeriod>();
+			
+			payPeriods.add(new PayPeriod(new LocalDate(2014, 9, 21), new LocalDate(2014, 10, 4)));
+			payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 5), new LocalDate(2014, 10, 18)));
+			payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 19), new LocalDate(2014, 11, 1)));
+		}
 	}
 
 	@XmlAttribute(name = "Email")

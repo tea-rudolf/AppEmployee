@@ -30,6 +30,7 @@ public class PayPeriodService {
 			PayPeriod payPeriod) {
 		User user = userRepository.findByEmail(email);
 		user.getCurrentPayPeriod().setShiftsWorked(payPeriod.getShiftsWorked());
+		userRepository.update(user);
 	}
 	
 	
@@ -37,6 +38,7 @@ public class PayPeriodService {
 			PayPeriod payPeriod) {
 		User user = userRepository.findByEmail(email);
 		user.getCurrentPayPeriod().setExpenses(payPeriod.getExpenses());
+		userRepository.update(user);
 	}
 	
 }

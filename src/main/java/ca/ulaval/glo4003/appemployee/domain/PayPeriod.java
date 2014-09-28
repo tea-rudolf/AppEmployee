@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.appemployee.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -24,19 +25,32 @@ public class PayPeriod {
 		//Required for JAXB
 	}
 	
-	
 	public PayPeriod(LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
-		setShiftsWorked(new ArrayList<Shift>());
-		setExpenses(new ArrayList<Expense>());
-		initExpenses();
-		initShifts();
+		
+		init();
 	}
 	
 	public PayPeriod(LocalDate startDate, LocalDate endDate, List<Shift> shifts){
 		this(startDate, endDate);
 		this.shifts = shifts;
+	}
+	
+	public void afterUnmarshal(Unmarshaller u, Object parent) {
+		  init();
+	}
+	
+	private void init() {
+		if (shifts == null || shifts.size() == 0) {
+			setShiftsWorked(new ArrayList<Shift>());
+			initShifts();
+		}
+		
+		if (expenses == null || expenses.size() == 0) {
+			setExpenses(new ArrayList<Expense>());
+			initExpenses();
+		}
 	}
 
 	private void initShifts() {
