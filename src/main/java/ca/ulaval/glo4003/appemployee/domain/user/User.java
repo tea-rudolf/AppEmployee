@@ -3,18 +3,25 @@ package ca.ulaval.glo4003.appemployee.domain.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.joda.time.LocalDate;
 
 import ca.ulaval.glo4003.appemployee.domain.NoCurrentPayPeriodException;
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 
+@XmlRootElement(name = "User")
 public class User {
 
 	private String email;
 	private String password;
 	private List<PayPeriod> payPeriods;
 
-	public User() {
+	protected User() {
+
 	}
 
 	public User(String username, String password) {
@@ -25,6 +32,26 @@ public class User {
 		payPeriods.add(new PayPeriod(new LocalDate(2014, 9, 21), new LocalDate(2014, 10, 4)));
 		payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 5), new LocalDate(2014, 10, 18)));
 		payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 19), new LocalDate(2014, 11, 1)));
+	}
+
+	@XmlAttribute(name = "Email")
+	public String getEmail() {
+		return email;
+	}
+
+	@XmlAttribute(name = "Password")
+	public String getPassword() { // if not required for JAXB flush it
+		return password;
+	}
+
+	@XmlElementWrapper(name = "PayPeriods")
+	@XmlElement(name = "PayPeriod")
+	public List<PayPeriod> getPayPeriods() {
+		return payPeriods;
+	}
+
+	public void setPayPeriods(List<PayPeriod> payPeriods) {
+		this.payPeriods = payPeriods;
 	}
 
 	public PayPeriod getCurrentPayPeriod() {
@@ -47,20 +74,8 @@ public class User {
 		currentPayPeriod.setExpenses(newPayPeriod.getExpenses());
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
 	public boolean validatePassword(String password) {
 		return this.password.equals(password);
-	}
-
-	public List<PayPeriod> getPayPeriods() {
-		return payPeriods;
-	}
-
-	public void setPayPeriods(List<PayPeriod> payPeriods) {
-		this.payPeriods = payPeriods;
 	}
 
 }
