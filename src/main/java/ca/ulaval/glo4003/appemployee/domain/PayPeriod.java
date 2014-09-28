@@ -32,7 +32,7 @@ public class PayPeriod {
 		this.shifts = shifts;
 	}
 
-	public void initShifts() {
+	private void initShifts() {
 		shifts = new ArrayList<Shift>();
 		List<LocalDate> dates = new ArrayList<LocalDate>();
 		dates = getListOfDates();
@@ -44,7 +44,7 @@ public class PayPeriod {
 
 	}
 
-	public void initExpenses() {
+	private void initExpenses() {
 		expenses = new ArrayList<Expenses>();
 		List<LocalDate> dates = new ArrayList<LocalDate>();
 		dates = getListOfDates();

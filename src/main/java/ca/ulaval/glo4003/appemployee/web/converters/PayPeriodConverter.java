@@ -13,6 +13,10 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 @Component
 public class PayPeriodConverter {
 	
+	public PayPeriodConverter(){
+		
+	}
+	
 	public PayPeriod convert(PayPeriodViewModel payPeriodViewModel) {
 		LocalDate startDate = new LocalDate(payPeriodViewModel.getStartDate());
 		LocalDate endDate = new LocalDate(payPeriodViewModel.getEndDate());
