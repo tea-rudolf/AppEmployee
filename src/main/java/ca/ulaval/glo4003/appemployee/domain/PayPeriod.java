@@ -24,6 +24,7 @@ public class PayPeriod {
 		//Required for JAXB
 	}
 	
+	
 	public PayPeriod(LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -31,6 +32,11 @@ public class PayPeriod {
 		setExpenses(new ArrayList<Expense>());
 		initExpenses();
 		initShifts();
+	}
+	
+	public PayPeriod(LocalDate startDate, LocalDate endDate, List<Shift> shifts){
+		this(startDate, endDate);
+		this.shifts = shifts;
 	}
 
 	private void initShifts() {

@@ -22,13 +22,13 @@ public class PayPeriodTest {
 	
 	Shift shiftMock;
 	Shift shift;
-	Expenses expensesMock;
+	Expense expensesMock;
 	PayPeriod payPeriodMock;
 	
 	@Before
 	public void init(){
 		shiftMock = mock(Shift.class);
-		expensesMock = mock(Expenses.class);
+		expensesMock = mock(Expense.class);
 		shift = new Shift(SHIFT_DATE, SAMPLE_NUMBER_OF_HOURS, SHIFT_COMMENT);
 		shifts.add(shift);
 		payPeriodMock = new PayPeriod(START_DATE, END_DATE, shifts);

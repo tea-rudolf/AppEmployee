@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import ca.ulaval.glo4003.appemployee.domain.Expenses;
+import ca.ulaval.glo4003.appemployee.domain.Expense;
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.Shift;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
@@ -21,7 +21,7 @@ public class PayPeriodConverterTest {
 	private static final LocalDate END_DATE = new LocalDate(2014,10,03);
 	
 	List<Shift> shifts = new ArrayList<Shift>();
-	List<Expenses> expenses = new ArrayList<Expenses>();
+	List<Expense> expenses = new ArrayList<Expense>();
 	
 	PayPeriodConverter payPeriodConverterMock;
 	PayPeriod payPeriodMock;
