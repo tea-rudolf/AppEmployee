@@ -37,8 +37,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
-		if (userRepository.validateCredentials(form.email, form.password)) {
-			model.addAttribute("email", form.email);
+		if (userRepository.validateCredentials(form.getEmail(), form.getPassword())) {
+			model.addAttribute("email", form.getEmail());
 			return redirectHome();
 		}
 		model.addAttribute("alert", "Courriel et/ou mot de passe invalide");
@@ -59,5 +59,4 @@ public class HomeController {
 		model.clear();
 		return "redirect:/";
 	}
-
 }

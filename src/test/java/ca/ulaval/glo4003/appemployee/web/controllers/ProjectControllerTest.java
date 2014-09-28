@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -28,22 +29,22 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 public class ProjectControllerTest {
 	private static final String SAMPLE_PROJECTNUMBER = "1";
 	private static final String SAMPLE_TASKNUMBER = "2";
-	
-	HttpSession sessionMock;
-	Model model = new ExtendedModelMap();
-	ProjectController projectController;
-	ProjectService projectServiceMock;
-	ProjectConverter projectConverterMock;
-	ProjectViewModel projectViewModelMock;
-	Project projectMock;
-	List<Project> projectList = new ArrayList<Project>();
-	Collection<ProjectViewModel> projectViewModelCollection = new ArrayList<ProjectViewModel>();
-	Task taskMock;
-	TaskConverter taskConverterMock;
-	TaskViewModel taskViewModelMock;
-	List<Task> taskList = new ArrayList<Task>();
-	Collection<TaskViewModel> taskViewModelCollection = new ArrayList<TaskViewModel>();
-	
+
+	private HttpSession sessionMock;
+	private Model model = new ExtendedModelMap();
+	private ProjectController projectController;
+	private ProjectService projectServiceMock;
+	private ProjectConverter projectConverterMock;
+	private ProjectViewModel projectViewModelMock;
+	private Project projectMock;
+	private List<Project> projectList = new ArrayList<Project>();
+	private Collection<ProjectViewModel> projectViewModelCollection = new ArrayList<ProjectViewModel>();
+	private Task taskMock;
+	private TaskConverter taskConverterMock;
+	private TaskViewModel taskViewModelMock;
+	private List<Task> taskList = new ArrayList<Task>();
+	private Collection<TaskViewModel> taskViewModelCollection = new ArrayList<TaskViewModel>();
+
 	@Before
 	public void init() {
 		createMocks();
@@ -64,93 +65,93 @@ public class ProjectControllerTest {
 	private void instantiateObjects() {
 		projectController = new ProjectController(projectServiceMock, projectConverterMock, taskConverterMock);
 	}
-	
+
 	@Test
 	public void getProjectsUpdatesTheModelCorrectly() {
 		when(projectServiceMock.getAllProjects()).thenReturn(projectList);
 		when(projectConverterMock.convert(projectList)).thenReturn(projectViewModelCollection);
-		
+
 		projectController.getProjects(model, sessionMock);
-		
+
 		assertSame(model.asMap().get("projects"), projectViewModelCollection);
 	}
-	
+
 	@Test
 	public void projectCreationUpdatesTheModelCorrectly() {
 		projectController.projectCreation(model, projectViewModelMock, sessionMock);
 		assertSame(model.asMap().get("project"), projectViewModelMock);
 	}
-	
+
 	@Test
 	public void addProjectCallsTheCorrectServiceMethods() {
 		when(projectConverterMock.convert(projectViewModelMock)).thenReturn(projectMock);
 		projectController.addProject(model, projectViewModelMock, sessionMock);
 		verify(projectServiceMock).addProject(projectMock);
 	}
-	
+
 	@Test
 	public void addProjectReturnsAnErrorMessageOnProjectExistsException() {
 		when(projectConverterMock.convert(projectViewModelMock)).thenReturn(projectMock);
 		doThrow(new ProjectExistsException()).when(projectServiceMock).addProject(projectMock);
-		
+
 		projectController.addProject(model, projectViewModelMock, sessionMock);
-		
+
 		assertEquals(model.asMap().get("message").getClass(), MessageViewModel.class);
 	}
-	
+
 	@Test
 	public void projectMoficiationUpdatesTheModelCorrectly() {
 		when(projectServiceMock.getProjectByNumber(eq(SAMPLE_PROJECTNUMBER))).thenReturn(projectMock);
 		when(projectConverterMock.convert(projectMock)).thenReturn(projectViewModelMock);
 		when(projectMock.getTasks()).thenReturn(taskList);
 		when(taskConverterMock.convert(taskList)).thenReturn(taskViewModelCollection);
-		
+
 		projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
-		
+
 		assertSame(model.asMap().get("project"), projectViewModelMock);
 	}
-	
+
 	@Test
 	public void editProjectCallsTheCorrectServiceMethods() {
 		projectController.editProject(SAMPLE_PROJECTNUMBER, projectViewModelMock, sessionMock);
 		verify(projectServiceMock).updateProject(SAMPLE_PROJECTNUMBER, projectViewModelMock);
 	}
-	
+
 	@Test
 	public void taskCreationUpdatesTheModelCorrectly() {
 		projectController.taskCreation(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
 	}
-	
+
 	@Test
 	public void addTaskCallsTheCorrectServiceMethods() {
 		when(taskConverterMock.convert(taskViewModelMock)).thenReturn(taskMock);
 		projectController.addTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
 		verify(projectServiceMock).addTask(SAMPLE_PROJECTNUMBER, taskMock);
 	}
-	
+
 	@Test
 	public void addTaskReturnsAnErrorMessageOnTaskExistsException() {
 		when(taskConverterMock.convert(taskViewModelMock)).thenReturn(taskMock);
 		doThrow(new TaskExistsException()).when(projectServiceMock).addTask(SAMPLE_PROJECTNUMBER, taskMock);
-		
+
 		projectController.addTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
-		
+
 		assertEquals(model.asMap().get("message").getClass(), MessageViewModel.class);
 	}
-	
+
 	@Test
 	public void taskMoficiationUpdatesTheModelCorrectly() {
 		when(projectServiceMock.getTaskByNumber(eq(SAMPLE_PROJECTNUMBER), eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
 		when(taskConverterMock.convert(taskMock)).thenReturn(taskViewModelMock);
-		
+
 		projectController.taskModification(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);
-		
+
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
 	}
-	
+
 	@Test
 	public void editTaskCallsTheCorrectServiceMethods() {
 		projectController.editTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);

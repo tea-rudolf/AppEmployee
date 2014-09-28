@@ -11,7 +11,7 @@ public class Shift {
 	private Double hours;
 
 	public Shift() {
-		//Required for JAXB
+		// Required for JAXB
 	}
 
 	public Shift(String date, double hours, String comment) {
@@ -46,5 +46,4 @@ public class Shift {
 	public void setHours(Double hours) {
 		this.hours = hours;
 	}
-
 }

@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
 public class LoginFormViewModel {
 
-	public String email;
-	public String password;
+	private String email;
+	private String password;
 
 	public String getEmail() {
 		return email;

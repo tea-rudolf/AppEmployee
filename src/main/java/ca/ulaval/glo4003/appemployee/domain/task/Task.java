@@ -6,17 +6,17 @@ public class Task {
 
 	private String name;
 	private String number;
-	
+
 	protected Task() {
-		//Required for JAXB
+		// Required for JAXB
 	}
-	
+
 	public Task(String number, String name) {
 		this.name = name;
 		this.number = number;
 	}
 
-	@XmlAttribute(name="Name")
+	@XmlAttribute(name = "Name")
 	public String getName() {
 		return name;
 	}
@@ -24,8 +24,8 @@ public class Task {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@XmlAttribute(name="Number")
+
+	@XmlAttribute(name = "Number")
 	public String getNumber() {
 		return number;
 	}

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 
 public class ProjectConverterTest {
 	private ProjectConverter converter;
-	
+
 	@Before
 	public void setUp() {
 		converter = new ProjectConverter();
 	}
-	
+
 	@Test
 	public void convertProjectsListToViewModelsConvertsAllOfThem() {
 		String firstName = "firstName";
@@ -33,40 +33,38 @@ public class ProjectConverterTest {
 		projects.add(firstProject);
 		projects.add(secondProject);
 
-		
 		ProjectViewModel[] viewModels = converter.convert(projects).toArray(new ProjectViewModel[1]);
-			
-		assertEquals(firstName, viewModels[0].name);
-		assertEquals(firstNumber, viewModels[0].number);
-		
-		assertEquals(secondName, viewModels[1].name);
-		assertEquals(secondNumber, viewModels[1].number);
+
+		assertEquals(firstName, viewModels[0].getName());
+		assertEquals(firstNumber, viewModels[0].getNumber());
+
+		assertEquals(secondName, viewModels[1].getName());
+		assertEquals(secondNumber, viewModels[1].getNumber());
 	}
-	
-	@Test 
+
+	@Test
 	public void convertProjectToProjectViewModelSetsNumberAndName() {
 		String number = "123456";
 		String name = "abcdefg";
 		Project project = createProject(number, name);
-		
-		ProjectViewModel viewModel	= converter.convert(project);
-		
-		assertEquals(number, viewModel.number);
-		assertEquals(name, viewModel.name);
+
+		ProjectViewModel viewModel = converter.convert(project);
+
+		assertEquals(number, viewModel.getNumber());
+		assertEquals(name, viewModel.getName());
 	}
-	
+
 	@Test
 	public void convertProjectViewModelToProjectSetsNumberAndName() {
 		ProjectViewModel viewModel = new ProjectViewModel();
-		viewModel.name = "task";
-		viewModel.number = "123456";
-		
+		viewModel.setName("task");
+		viewModel.setNumber("123456");
+
 		Project project = converter.convert(viewModel);
-		
-		assertEquals(viewModel.name, project.getName());
-		assertEquals(viewModel.number, project.getNumber());
+
+		assertEquals(viewModel.getName(), project.getName());
+		assertEquals(viewModel.getNumber(), project.getNumber());
 	}
-	
 
 	private Project createProject(String number, String name) {
 		Project project = mock(Project.class);
@@ -74,5 +72,4 @@ public class ProjectConverterTest {
 		given(project.getNumber()).willReturn(number);
 		return project;
 	}
-
 }

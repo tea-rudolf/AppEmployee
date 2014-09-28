@@ -22,31 +22,31 @@ public class PayPeriod {
 	private LocalDate endDate;
 
 	protected PayPeriod() {
-		//Required for JAXB
+		// Required for JAXB
 	}
-	
+
 	public PayPeriod(LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
-		
+
 		init();
 	}
-	
-	public PayPeriod(LocalDate startDate, LocalDate endDate, List<Shift> shifts){
+
+	public PayPeriod(LocalDate startDate, LocalDate endDate, List<Shift> shifts) {
 		this(startDate, endDate);
 		this.shifts = shifts;
 	}
-	
+
 	public void afterUnmarshal(Unmarshaller u, Object parent) {
-		  init();
+		init();
 	}
-	
+
 	private void init() {
 		if (shifts == null || shifts.size() == 0) {
 			setShiftsWorked(new ArrayList<Shift>());
 			initShifts();
 		}
-		
+
 		if (expenses == null || expenses.size() == 0) {
 			setExpenses(new ArrayList<Expense>());
 			initExpenses();

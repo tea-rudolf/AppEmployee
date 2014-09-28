@@ -23,35 +23,35 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 @Controller
 @RequestMapping(value = "/projects")
-@SessionAttributes({"email"})
+@SessionAttributes({ "email" })
 public class ProjectController {
-	
+
 	private ProjectService projectService;
 	private ProjectConverter projectConverter;
 	private TaskConverter taskConverter;
-	
+
 	@Autowired
 	public ProjectController(ProjectService projectService, ProjectConverter projectConverter, TaskConverter taskConverter) {
 		this.projectService = projectService;
 		this.projectConverter = projectConverter;
 		this.taskConverter = taskConverter;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String getProjects(Model model, HttpSession session) {
 		model.addAttribute("projects", projectConverter.convert(projectService.getAllProjects()));
 		return "projectList";
 	}
-	
+
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String projectCreation(Model model, ProjectViewModel projectViewModel, HttpSession session) {
 		model.addAttribute("project", projectViewModel);
 		return "createProject";
 	}
-	
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String addProject(Model model, ProjectViewModel projectViewModel, HttpSession session) {
-		try { 
+		try {
 			projectService.addProject(projectConverter.convert(projectViewModel));
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
@@ -59,7 +59,7 @@ public class ProjectController {
 		}
 		return String.format("redirect:/projects/%s/edit", projectViewModel.getNumber());
 	}
-	
+
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
 	public String projectModification(@PathVariable String projectNumber, Model model, HttpSession session) {
 		Project project = projectService.getProjectByNumber(projectNumber);
@@ -67,13 +67,13 @@ public class ProjectController {
 		model.addAttribute("tasks", taskConverter.convert(project.getTasks()));
 		return "editProject";
 	}
-	
+
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
 	public String editProject(@PathVariable String projectNumber, ProjectViewModel viewModel, HttpSession session) {
 		projectService.updateProject(projectNumber, viewModel);
 		return "redirect:/projects/";
 	}
-	
+
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
 	public String taskCreation(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
 		model.addAttribute("task", taskViewModel);
@@ -95,10 +95,10 @@ public class ProjectController {
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
 	public String taskModification(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
 		Task task = projectService.getTaskByNumber(projectNumber, taskNumber);
-		
+
 		model.addAttribute("task", taskConverter.convert(task));
 		model.addAttribute("projectNumber", projectNumber);
-		
+
 		return "editTask";
 	}
 

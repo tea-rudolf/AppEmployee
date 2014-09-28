@@ -22,27 +22,23 @@ public class User {
 	private List<PayPeriod> payPeriods;
 
 	protected User() {
-		
+
 	}
 
 	public User(String username, String password) {
 		this.email = username;
 		this.password = password;
-		
+
 		init();
 	}
-	
+
 	public void afterUnmarshal(Unmarshaller u, Object parent) {
-		  init();
+		init();
 	}
-	
+
 	private void init() {
 		if (payPeriods == null || payPeriods.size() == 0) {
 			payPeriods = new ArrayList<PayPeriod>();
-			
-			payPeriods.add(new PayPeriod(new LocalDate(2014, 9, 21), new LocalDate(2014, 10, 4)));
-			payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 5), new LocalDate(2014, 10, 18)));
-			payPeriods.add(new PayPeriod(new LocalDate(2014, 10, 19), new LocalDate(2014, 11, 1)));
 		}
 	}
 
@@ -97,5 +93,4 @@ public class User {
 	public boolean validatePassword(String password) {
 		return this.password.equals(password);
 	}
-
 }

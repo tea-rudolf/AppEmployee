@@ -11,7 +11,7 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 @RunWith(MockitoJUnitRunner.class)
 public class UserTest {
 	private static final String VALID_PASSWORD = "1234";
-	private static final String VALID_EMAIL= "test@test.com";
+	private static final String VALID_EMAIL = "test@test.com";
 
 	@Test
 	public void canValidateRightPassword() {

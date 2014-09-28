@@ -15,53 +15,54 @@ import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
 @Repository
 @Singleton
 public class XmlProjectRepository implements ProjectRepository {
-	
-	XmlRepositoryMarshaller xmlRepositoryMarshaller = XmlRepositoryMarshaller.getInstance();
-	public List<Project> projects = new ArrayList<Project>();
+
+	private XmlRepositoryMarshaller xmlRepositoryMarshaller = XmlRepositoryMarshaller.getInstance();
+	private List<Project> projects = new ArrayList<Project>();
 
 	public XmlProjectRepository() {
 		unmarshall();
 	}
-	
+
 	public Project getByNumber(String number) {
 		unmarshall();
-		
-		for(Project project : projects) {
+
+		for (Project project : projects) {
 			if (project.getNumber().compareTo(number) == 0) {
 				return project;
 			}
 		}
-		
+
 		throw new ProjectNotFoundException(String.format("Cannot find project with number '%s'.", number));
 	}
-	
+
 	public List<Project> getAll() {
 		unmarshall();
 		return projects;
 	}
-	
+
 	public void persist(Project project) {
 		try {
 			getByNumber(project.getNumber());
 			throw new ProjectExistsException(String.format("Project number '%s' already exists.", project.getNumber()));
-		} catch (ProjectNotFoundException e) {};
-		
-		projects.add(project);	
+		} catch (ProjectNotFoundException e) {
+		}
+
+		projects.add(project);
 		marshall();
 	}
-	
+
 	public void update(Project project) {
 		marshall();
 	}
-	
+
 	private void marshall() {
 		XmlRootNode xmlRootNode = xmlRepositoryMarshaller.getRootNode();
 		xmlRootNode.setProjects(projects);
-		xmlRepositoryMarshaller.Marshall();
+		xmlRepositoryMarshaller.marshall();
 	}
-	
+
 	private void unmarshall() {
-		xmlRepositoryMarshaller.Unmarshall();
+		xmlRepositoryMarshaller.unmarshall();
 		XmlRootNode xmlRootNode = xmlRepositoryMarshaller.getRootNode();
 		projects = xmlRootNode.getProjects();
 	}

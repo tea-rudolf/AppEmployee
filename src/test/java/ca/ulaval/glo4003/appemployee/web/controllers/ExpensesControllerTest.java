@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,18 +24,18 @@ public class ExpensesControllerTest {
 	private static final String ERROR_MESSAGE = "message";
 	private static final String EXPENSES_JSP = "expenses";
 	private static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
-	
-	PayPeriodService payPeriodServiceMock;
-	PayPeriodConverter payPeriodConverterMock;
-	ExpensesController expensesControllerMock;
-	ModelMap modelMapMock;
-	PayPeriodViewModel payPeriodViewModelMock;
-	HttpSession sessionMock;
-	PayPeriod payPeriodMock;
-	User userMock;
-	
+
+	private PayPeriodService payPeriodServiceMock;
+	private PayPeriodConverter payPeriodConverterMock;
+	private ExpensesController expensesControllerMock;
+	private ModelMap modelMapMock;
+	private PayPeriodViewModel payPeriodViewModelMock;
+	private HttpSession sessionMock;
+	private PayPeriod payPeriodMock;
+	private User userMock;
+
 	@Before
-	public void init(){
+	public void init() {
 		payPeriodServiceMock = mock(PayPeriodService.class);
 		payPeriodConverterMock = mock(PayPeriodConverter.class);
 		expensesControllerMock = mock(ExpensesController.class);
@@ -55,42 +53,42 @@ public class ExpensesControllerTest {
 		when(payPeriodServiceMock.getUserByEmail(VALID_EMAIL)).thenReturn(userMock);
 		when(userMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodConverterMock.convert(payPeriodMock)).thenReturn(payPeriodViewModelMock);
-		
+
 		String returnedForm = expensesControllerMock.getExpenses(modelMapMock, sessionMock);
-		
+
 		assertEquals(EXPENSES_JSP, returnedForm);
 	}
-	
+
 	@Test
-	public void saveTimeReturnsSubmittedExpensesForIfSuccessfulSubmit(){
+	public void saveTimeReturnsSubmittedExpensesForIfSuccessfulSubmit() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.getUserByEmail(VALID_EMAIL)).thenReturn(userMock);
-		
+
 		String returnedForm = expensesControllerMock.saveExpenses(payPeriodViewModelMock, sessionMock);
-		
+
 		assertEquals(EXPENSES_SUBMIT_JSP, returnedForm);
 	}
-	
+
 	@Test
-	public void addsUserEmailWhenGetExpenses(){
+	public void addsUserEmailWhenGetExpenses() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.getUserByEmail(VALID_EMAIL)).thenReturn(userMock);
 		when(userMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodConverterMock.convert(payPeriodMock)).thenReturn(payPeriodViewModelMock);
 		when(userMock.getEmail()).thenReturn(VALID_EMAIL);
-		
+
 		expensesControllerMock.getExpenses(modelMapMock, sessionMock);
-		
+
 		verify(modelMapMock).addAttribute(PAY_PERIOD_KEY, payPeriodViewModelMock);
 	}
-	
+
 	@Test(expected = UserNotFoundException.class)
-	public void getUserByEmailThrowsExceptionWhenUserNotFound(){
+	public void getUserByEmailThrowsExceptionWhenUserNotFound() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.getUserByEmail(VALID_EMAIL)).thenThrow(new UserNotFoundException(ERROR_MESSAGE));
 		when(userMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodConverterMock.convert(payPeriodMock)).thenReturn(payPeriodViewModelMock);
-		
+
 		expensesControllerMock.getExpenses(modelMapMock, sessionMock);
 	}
 }

@@ -19,5 +19,4 @@ public class LocalDateAdapter extends XmlAdapter<String, LocalDate> {
 	public String marshal(LocalDate date) throws Exception {
 		return date.toString("yyyy-MM-dd");
 	}
-
 }

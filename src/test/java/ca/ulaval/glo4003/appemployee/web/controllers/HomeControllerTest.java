@@ -1,8 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.BDDMockito.given;
+import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -98,13 +97,12 @@ public class HomeControllerTest {
 
 	private LoginFormViewModel getValidForm() {
 		LoginFormViewModel form = new LoginFormViewModel();
-		form.email = VALID_EMAIL;
-		form.password = VALID_PASSWORD;
+		form.setEmail(VALID_EMAIL);
+		form.setPassword(VALID_PASSWORD);
 		return form;
 	}
 
 	private LoginFormViewModel getInvalidForm() {
 		return new LoginFormViewModel();
 	}
-
 }

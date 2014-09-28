@@ -9,24 +9,24 @@ import javax.xml.bind.Unmarshaller;
 
 public class XmlRepositoryMarshaller {
 
-	private final static String XML_DATA_FILE_PATH = "./data/data.xml";
-	private final static Object XML_MARSHALL_LOCK = new Object();
+	private static final String XML_DATA_FILE_PATH = "./data/data.xml";
+	private static final Object XML_MARSHALL_LOCK = new Object();
 
 	private static XmlRepositoryMarshaller instance = null;
 
 	private File file;
 	private Boolean needsUnmarshalling = true;
-	public XmlRootNode xmlRootNode;
+	private XmlRootNode xmlRootNode;
 
 	protected XmlRepositoryMarshaller() {
 		file = new File(XML_DATA_FILE_PATH);
 
-		if (file.exists() == false || file.isFile() == false) {
+		if (!file.exists() || !file.isFile()) {
 			throw new FileNotFoundException(String.format("File '%s' was not found."));
 		}
 	}
 
-	public synchronized static XmlRepositoryMarshaller getInstance() {
+	public static synchronized XmlRepositoryMarshaller getInstance() {
 		if (instance == null) {
 			instance = new XmlRepositoryMarshaller();
 		}
@@ -38,7 +38,7 @@ public class XmlRepositoryMarshaller {
 		return xmlRootNode;
 	}
 
-	public void Marshall() {
+	public void marshall() {
 		try {
 			synchronized (XML_MARSHALL_LOCK) {
 				JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
@@ -54,8 +54,8 @@ public class XmlRepositoryMarshaller {
 		}
 	}
 
-	public void Unmarshall() {
-		if (needsUnmarshalling == false) {
+	public void unmarshall() {
+		if (!needsUnmarshalling) {
 			return;
 		}
 
@@ -63,7 +63,6 @@ public class XmlRepositoryMarshaller {
 			synchronized (XML_MARSHALL_LOCK) {
 				JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
 				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-				jaxbUnmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());// debug
 
 				xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
 			}

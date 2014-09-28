@@ -11,7 +11,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 @Component
 public class TaskConverter {
-	
+
 	public Collection<TaskViewModel> convert(List<Task> tasks) {
 		Collection<TaskViewModel> viewModels = new ArrayList<TaskViewModel>();
 		for (Task task : tasks) {
@@ -20,17 +20,16 @@ public class TaskConverter {
 		}
 		return viewModels;
 	}
-	
+
 	public Task convert(TaskViewModel taskViewModel) {
 		Task task = new Task(taskViewModel.getNumber(), taskViewModel.getName());
 		return task;
 	}
-	
+
 	public TaskViewModel convert(Task task) {
 		TaskViewModel viewModel = new TaskViewModel();
 		viewModel.setNumber(task.getNumber());
 		viewModel.setName(task.getName());
 		return viewModel;
 	}
-
 }

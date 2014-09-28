@@ -12,11 +12,11 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 
 @Component
 public class PayPeriodConverter {
-	
-	public PayPeriodConverter(){
-		
+
+	public PayPeriodConverter() {
+
 	}
-	
+
 	public PayPeriod convert(PayPeriodViewModel payPeriodViewModel) {
 		LocalDate startDate = new LocalDate(payPeriodViewModel.getStartDate());
 		LocalDate endDate = new LocalDate(payPeriodViewModel.getEndDate());
@@ -27,14 +27,13 @@ public class PayPeriodConverter {
 		payPeriod.setExpenses(expenses);
 		return payPeriod;
 	}
-	
+
 	public PayPeriodViewModel convert(PayPeriod currentPayPeriod) {
 		PayPeriodViewModel form = new PayPeriodViewModel();
-	   	form.setStartDate(currentPayPeriod.getStartDate().toString());
-    	form.setEndDate(currentPayPeriod.getEndDate().toString());
-        form.setShifts(currentPayPeriod.getShiftsWorked());
-        form.setExpenses(currentPayPeriod.getExpenses());
+		form.setStartDate(currentPayPeriod.getStartDate().toString());
+		form.setEndDate(currentPayPeriod.getEndDate().toString());
+		form.setShifts(currentPayPeriod.getShiftsWorked());
+		form.setExpenses(currentPayPeriod.getExpenses());
 		return form;
 	}
-
 }

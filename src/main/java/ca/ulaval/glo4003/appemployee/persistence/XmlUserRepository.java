@@ -16,8 +16,8 @@ import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 @Singleton
 public class XmlUserRepository implements UserRepository {
 
-	XmlRepositoryMarshaller xmlRepositoryMarshaller = XmlRepositoryMarshaller.getInstance();
-	public List<User> users = new ArrayList<User>();
+	private XmlRepositoryMarshaller xmlRepositoryMarshaller = XmlRepositoryMarshaller.getInstance();
+	private List<User> users = new ArrayList<User>();
 
 	public XmlUserRepository() {
 		unmarshall();
@@ -69,11 +69,11 @@ public class XmlUserRepository implements UserRepository {
 	private void marshall() {
 		XmlRootNode xmlRootNode = xmlRepositoryMarshaller.getRootNode();
 		xmlRootNode.setUsers(users);
-		xmlRepositoryMarshaller.Marshall();
+		xmlRepositoryMarshaller.marshall();
 	}
 
 	private void unmarshall() {
-		xmlRepositoryMarshaller.Unmarshall();
+		xmlRepositoryMarshaller.unmarshall();
 		XmlRootNode xmlRootNode = xmlRepositoryMarshaller.getRootNode();
 		users = xmlRootNode.getUsers();
 	}
@@ -89,5 +89,4 @@ public class XmlUserRepository implements UserRepository {
 		}
 		return userFound;
 	}
-
 }
