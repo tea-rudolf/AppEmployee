@@ -4,7 +4,7 @@
 
   <c:if test="${not empty alert}">
     <div class="alert alert-danger">
-      ${alert }
+      ${alert}
     </div>
   </c:if>
 

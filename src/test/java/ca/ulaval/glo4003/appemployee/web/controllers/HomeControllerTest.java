@@ -54,28 +54,28 @@ public class HomeControllerTest {
 	}
 
 	@Test
-	public void loginReturnsLoginFormIfCannotLogin() {
+	public void whenCannotLoginReturnsLoginForm() {
 		ModelAndView response = controller.login(getInvalidForm(), model);
 
 		assertEquals("home", response.getViewName());
 	}
 
 	@Test
-	public void loginAddsAlertIfCannotLogin() {
+	public void whenCannotLoginReturnsAlert() {
 		controller.login(getInvalidForm(), model);
 
 		assertEquals("Courriel et/ou mot de passe invalide", model.get("alert"));
 	}
 
 	@Test
-	public void loginAddsEmailToSessionIfLoginSuccessful() {
+	public void whenSuccessfulLoginAddsEmailsToSession() {
 		controller.login(getValidForm(), model);
 
 		assertEquals(VALID_EMAIL, model.get("email"));
 	}
 
 	@Test
-	public void loginRedirectsToHomeIfLoginSuccessful() {
+	public void whenLoginSuccessfulLoginRedirectsToHomePage() {
 		ModelAndView response = controller.login(getValidForm(), model);
 
 		assertEquals("/", ((RedirectView) response.getView()).getUrl());

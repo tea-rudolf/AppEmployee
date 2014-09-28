@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.converters;
+package ca.ulaval.glo4003.appemployee.web.converters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import ca.ulaval.glo4003.appemployee.domain.Expenses;
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
@@ -41,10 +42,12 @@ public class PayPeriodConverterTest {
 		when(payPeriodViewModelMock.getShifts()).thenReturn(shifts);
 		when(payPeriodViewModelMock.getExpenses()).thenReturn(expenses);
 		
-		payPeriodConverterMock.convert(payPeriodViewModelMock);
+		PayPeriod payPeriod = payPeriodConverterMock.convert(payPeriodViewModelMock);
 		
-		verify(payPeriodMock).setShiftsWorked(shifts);
-		verify(payPeriodMock).setExpenses(expenses);
+		assertEquals(payPeriodViewModelMock.getStartDate(), payPeriod.getStartDate().toString());
+		assertEquals(payPeriodViewModelMock.getEndDate(), payPeriod.getEndDate().toString());
+		assertEquals(payPeriodViewModelMock.getExpenses(), payPeriod.getExpenses());
+		assertEquals(payPeriodViewModelMock.getShifts(), payPeriod.getShiftsWorked());
 	}
 	
 	@Test
@@ -54,11 +57,11 @@ public class PayPeriodConverterTest {
 		when(payPeriodMock.getShiftsWorked()).thenReturn(shifts);
 		when(payPeriodMock.getExpenses()).thenReturn(expenses);
 		
-		payPeriodConverterMock.convert(payPeriodMock);
+		PayPeriodViewModel viewModel = payPeriodConverterMock.convert(payPeriodMock);
 		
-		verify(payPeriodViewModelMock).setStartDate(START_DATE.toString());
-		verify(payPeriodViewModelMock).setEndDate(END_DATE.toString());
-		verify(payPeriodViewModelMock).setShifts(shifts);
-		verify(payPeriodViewModelMock).setExpenses(expenses);
+		assertEquals(payPeriodMock.getStartDate().toString(), viewModel.getStartDate());
+		assertEquals(payPeriodMock.getEndDate().toString(), viewModel.getEndDate());
+		assertEquals(payPeriodMock.getExpenses(), viewModel.getExpenses());
+		assertEquals(payPeriodMock.getShiftsWorked(), viewModel.getShifts());
 	}
 }
