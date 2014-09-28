@@ -20,11 +20,11 @@ public class XmlProjectRepository implements ProjectRepository {
 	public List<Project> projects = new ArrayList<Project>();
 
 	public XmlProjectRepository() {
-		Unmarshall();
+		unmarshall();
 	}
 	
 	public Project getByNumber(String number) {
-		Unmarshall();
+		unmarshall();
 		
 		for(Project project : projects) {
 			if (project.getNumber().compareTo(number) == 0) {
@@ -36,7 +36,7 @@ public class XmlProjectRepository implements ProjectRepository {
 	}
 	
 	public List<Project> getAll() {
-		Unmarshall();
+		unmarshall();
 		return projects;
 	}
 	
@@ -47,20 +47,20 @@ public class XmlProjectRepository implements ProjectRepository {
 		} catch (ProjectNotFoundException e) {};
 		
 		projects.add(project);	
-		Marshall();
+		marshall();
 	}
 	
 	public void update(Project project) {
-		Marshall();
+		marshall();
 	}
 	
-	private void Marshall() {
+	private void marshall() {
 		XmlRootNode xmlRootNode = xmlRepositoryMarshaller.getRootNode();
 		xmlRootNode.setProjects(projects);
 		xmlRepositoryMarshaller.Marshall();
 	}
 	
-	private void Unmarshall() {
+	private void unmarshall() {
 		xmlRepositoryMarshaller.Unmarshall();
 		XmlRootNode xmlRootNode = xmlRepositoryMarshaller.getRootNode();
 		projects = xmlRootNode.getProjects();

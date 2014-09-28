@@ -1,9 +1,11 @@
 package ca.ulaval.glo4003.appemployee.domain;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.joda.time.LocalDate;
 
+@XmlRootElement(name = "Expense")
 public class Expenses {
 
 	private double amount;
@@ -11,7 +13,7 @@ public class Expenses {
 	private String comment;
 
 	protected Expenses() {
-
+		//Required for JAXB
 	}
 
 	public Expenses(double amount, LocalDate date, String comment) {

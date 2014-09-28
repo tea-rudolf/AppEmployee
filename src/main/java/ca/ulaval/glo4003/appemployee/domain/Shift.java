@@ -1,7 +1,9 @@
 package ca.ulaval.glo4003.appemployee.domain;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "Shift")
 public class Shift {
 
 	private String comment;
@@ -9,7 +11,7 @@ public class Shift {
 	private Double hours;
 
 	protected Shift() {
-
+		//Required for JAXB
 	}
 
 	public Shift(String date, double hours, String comment) {

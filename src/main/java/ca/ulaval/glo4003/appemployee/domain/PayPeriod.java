@@ -6,11 +6,13 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.joda.time.Days;
 import org.joda.time.DurationFieldType;
 import org.joda.time.LocalDate;
 
+@XmlRootElement(name = "PayPeriod")
 public class PayPeriod {
 
 	private List<Shift> shifts;
@@ -18,6 +20,10 @@ public class PayPeriod {
 	private LocalDate startDate;
 	private LocalDate endDate;
 
+	protected PayPeriod() {
+		//Required for JAXB
+	}
+	
 	public PayPeriod(LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -25,11 +31,6 @@ public class PayPeriod {
 		setExpenses(new ArrayList<Expenses>());
 		initExpenses();
 		initShifts();
-	}
-
-	PayPeriod(LocalDate startDate, LocalDate endDate, List<Shift> shifts) {
-		this(startDate, endDate);
-		this.shifts = shifts;
 	}
 
 	private void initShifts() {
