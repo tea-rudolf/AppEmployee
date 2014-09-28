@@ -16,7 +16,7 @@ import org.joda.time.LocalDate;
 public class PayPeriod {
 
 	private List<Shift> shifts;
-	private List<Expenses> expenses;
+	private List<Expense> expenses;
 	private LocalDate startDate;
 	private LocalDate endDate;
 
@@ -28,7 +28,7 @@ public class PayPeriod {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		setShiftsWorked(new ArrayList<Shift>());
-		setExpenses(new ArrayList<Expenses>());
+		setExpenses(new ArrayList<Expense>());
 		initExpenses();
 		initShifts();
 	}
@@ -46,12 +46,12 @@ public class PayPeriod {
 	}
 
 	private void initExpenses() {
-		expenses = new ArrayList<Expenses>();
+		expenses = new ArrayList<Expense>();
 		List<LocalDate> dates = new ArrayList<LocalDate>();
 		dates = getListOfDates();
 
 		for (LocalDate date : dates) {
-			Expenses expense = new Expenses(0, date, "");
+			Expense expense = new Expense(0, date, "");
 			expenses.add(expense);
 		}
 	}
@@ -105,11 +105,11 @@ public class PayPeriod {
 
 	@XmlElementWrapper(name = "Expenses")
 	@XmlElement(name = "Expense")
-	public List<Expenses> getExpenses() {
+	public List<Expense> getExpenses() {
 		return expenses;
 	}
 
-	public void setExpenses(List<Expenses> expenses) {
+	public void setExpenses(List<Expense> expenses) {
 		this.expenses = expenses;
 	}
 

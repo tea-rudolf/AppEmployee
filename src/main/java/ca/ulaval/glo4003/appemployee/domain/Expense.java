@@ -6,17 +6,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.joda.time.LocalDate;
 
 @XmlRootElement(name = "Expense")
-public class Expenses {
+public class Expense {
 
 	private double amount;
 	private LocalDate date;
 	private String comment;
 
-	protected Expenses() {
+	public Expense() {
 		//Required for JAXB
 	}
 
-	public Expenses(double amount, LocalDate date, String comment) {
+	public Expense(double amount, LocalDate date, String comment) {
 		this.amount = amount;
 		this.date = date;
 		this.comment = comment;

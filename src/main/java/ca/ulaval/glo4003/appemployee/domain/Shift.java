@@ -10,7 +10,7 @@ public class Shift {
 	private String date;
 	private Double hours;
 
-	protected Shift() {
+	public Shift() {
 		//Required for JAXB
 	}
 

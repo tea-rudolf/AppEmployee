@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.appemployee.web.viewmodels;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4003.appemployee.domain.Expenses;
+import ca.ulaval.glo4003.appemployee.domain.Expense;
 import ca.ulaval.glo4003.appemployee.domain.Shift;
  
 public class PayPeriodViewModel {
@@ -11,11 +11,11 @@ public class PayPeriodViewModel {
 	private String startDate;
 	private String endDate;
     private List<Shift> shifts;
-    private List<Expenses> expenses;
+    private List<Expense> expenses;
 	
 	public PayPeriodViewModel() {
 		shifts = new ArrayList<Shift>();
-		expenses = new ArrayList<Expenses>();
+		expenses = new ArrayList<Expense>();
 	}
  
     public List<Shift> getShifts() {
@@ -26,11 +26,11 @@ public class PayPeriodViewModel {
         this.shifts = shifts;
     }
     
-    public List<Expenses> getExpenses(){
+    public List<Expense> getExpenses(){
     	return expenses;
     }
     
-    public void setExpenses(List<Expenses> expenses){
+    public void setExpenses(List<Expense> expenses){
     	this.expenses = expenses;
     }
 
