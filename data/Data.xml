@@ -1,27 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <AppEmployee>
-    <Projects>
-        <Project Name="Project 1" Number="1">
-            <Tasks>
-                <Task Name="Task 2" Number="1"/>
-                <Task Name="Task 2" Number="2"/>
-                <Task Name="Task 5" Number="5"/>
-                <Task Name="Task 6" Number="5"/>
-            </Tasks>
-        </Project>
-        <Project Name="Project 2" Number="2">
-            <Tasks/>
-        </Project>
-        <Project Name="Project 3" Number="3">
-            <Tasks/>
-        </Project>
-        <Project Name="Project 4" Number="5">
-            <Tasks/>
-        </Project>
-        <Project Name="Project 6" Number="6">
-            <Tasks>
-                <Task Name="Task 8" Number="8"/>
-            </Tasks>
-        </Project>
-    </Projects>
+  <Projects>
+    <Project Name="Project 1" Number="1">
+      <Tasks>
+        <Task Name="Task 2" Number="1" />
+        <Task Name="Task 2" Number="2" />
+        <Task Name="Task 5" Number="5" />
+        <Task Name="Task 6" Number="5" />
+      </Tasks>
+    </Project>
+    <Project Name="Project 2" Number="2">
+      <Tasks />
+    </Project>
+    <Project Name="Project 3" Number="3">
+      <Tasks />
+    </Project>
+    <Project Name="Project 4" Number="5">
+      <Tasks />
+    </Project>
+    <Project Name="Project 6" Number="6">
+      <Tasks>
+        <Task Name="Task 8" Number="8" />
+      </Tasks>
+    </Project>
+  </Projects>
+  <Users>
+    <User Email="test@test.com" Password="1234">
+      <PayPeriods>
+        <PayPeriod StartDate="2014-09-21" EndDate="2014-10-04">
+          <Shifts>
+            <Shift Comment="This is a comment" Date="2014-09-22" Hours="7.8" />
+          </Shifts>
+          <Expenses>
+            <Expense Amount="780" Date="2014-09-22" Comment="This is a comment" />
+          </Expenses>
+        </PayPeriod>
+      </PayPeriods>
+    </User>
+  </Users>
 </AppEmployee>

@@ -39,9 +39,17 @@ public class User {
 		return email;
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@XmlAttribute(name = "Password")
 	public String getPassword() { // if not required for JAXB flush it
 		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@XmlElementWrapper(name = "PayPeriods")

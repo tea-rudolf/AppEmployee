@@ -63,6 +63,7 @@ public class XmlRepositoryMarshaller {
 			synchronized (XML_MARSHALL_LOCK) {
 				JAXBContext jaxbContext = JAXBContext.newInstance(XmlRootNode.class);
 				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				jaxbUnmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());// debug
 
 				xmlRootNode = (XmlRootNode) jaxbUnmarshaller.unmarshal(file);
 			}

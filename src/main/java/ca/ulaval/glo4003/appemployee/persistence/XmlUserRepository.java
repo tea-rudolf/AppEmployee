@@ -17,13 +17,10 @@ import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 public class XmlUserRepository implements UserRepository {
 
 	XmlRepositoryMarshaller xmlRepositoryMarshaller = XmlRepositoryMarshaller.getInstance();
-	private List<User> users;
+	public List<User> users = new ArrayList<User>();
 
 	public XmlUserRepository() {
-		users = new ArrayList<User>();
 		unmarshall();
-
-		add(new User("test@test.com", "1234"));
 	}
 
 	@Override
