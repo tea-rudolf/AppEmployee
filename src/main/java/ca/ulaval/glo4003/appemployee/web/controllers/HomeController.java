@@ -41,7 +41,8 @@ public class HomeController {
 		if (userRepository.validateCredentials(form.getEmail(), form.getPassword())) {
 			User user = userRepository.findByEmail(form.getEmail());
 			model.addAttribute("email", form.getEmail());
-			model.addAttribute("role", user.getRole()); // ne rajoute pas role
+			model.addAttribute("role", user.getRole());// ne rajoute pas
+														// l'attribut
 			return redirectHome();
 		}
 		model.addAttribute("alert", "Courriel et/ou mot de passe invalide");
