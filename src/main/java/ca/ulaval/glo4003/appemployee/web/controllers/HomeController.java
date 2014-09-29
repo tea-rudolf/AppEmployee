@@ -43,18 +43,12 @@ public class HomeController {
 			model.addAttribute("email", form.getEmail());
 			model.addAttribute("role", user.getRole());// ne rajoute pas
 														// l'attribut
-			return redirectHome();
+			return new ModelAndView("home", model);
 		}
 		model.addAttribute("alert", "Courriel et/ou mot de passe invalide");
 		model.addAttribute("loginForm", form);
 
 		return new ModelAndView("home");
-	}
-
-	private ModelAndView redirectHome() {
-		RedirectView redirect = new RedirectView("/");
-		redirect.setExposeModelAttributes(false);
-		return new ModelAndView(redirect);
 	}
 
 	@RequestMapping(value = "/logout")

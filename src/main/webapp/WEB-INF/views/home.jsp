@@ -10,13 +10,13 @@
 
 <c:if test='${not empty email}'>
 	<c:choose>
-		<c:when test="${role eq EMPLOYEE}">
+		<c:when test="${role eq 'EMPLOYEE'}">
 			<jsp:include page="employee.jsp" />
 		</c:when>
-		<c:when test="${role eq SUPERVISOR}">
+		<c:when test="${role eq 'SUPERVISOR'}">
 			<jsp:include page="employee.jsp" />
 		</c:when>
-		<c:when test="${role eq ENTERPRISE}">
+		<c:when test="${role eq 'ENTERPRISE'}">
 			<jsp:include page="enterprise.jsp" />
 		</c:when>
 	</c:choose>
