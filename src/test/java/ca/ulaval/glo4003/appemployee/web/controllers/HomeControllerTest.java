@@ -14,7 +14,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.bind.support.SimpleSessionStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
@@ -26,6 +25,8 @@ public class HomeControllerTest {
 	private static final String VALID_PASSWORD = "password";
 
 	private static final String VALID_EMAIL = "email@email.com";
+
+	private static final String ROLE = "EMPLOYEE";
 
 	@Mock
 	private UserRepository repository;
@@ -80,10 +81,10 @@ public class HomeControllerTest {
 	}
 
 	@Test
-	public void whenLoginSuccessfulLoginRedirectsToHomePage() {
-		ModelAndView response = controller.login(getValidForm(), model);
+	public void whenSuccessfulLoginAddsRoleToSession() {
+		controller.login(getValidForm(), model);
 
-		assertEquals("/", ((RedirectView) response.getView()).getUrl());
+		assertEquals(ROLE, model.get("role"));
 	}
 
 	@Test
