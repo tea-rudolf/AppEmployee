@@ -15,14 +15,14 @@ public class UserTest {
 
 	@Test
 	public void canValidateRightPassword() {
-		User user = new User(VALID_EMAIL, VALID_PASSWORD);
+		User user = new User(VALID_EMAIL, VALID_PASSWORD, "EMPLOYEE");
 
 		assertTrue(user.validatePassword(VALID_PASSWORD));
 	}
 
 	@Test
 	public void cannotValidateWrongPassword() {
-		User user = new User(VALID_EMAIL, VALID_PASSWORD);
+		User user = new User(VALID_EMAIL, VALID_PASSWORD, "EMPLOYEE");
 
 		assertFalse(user.validatePassword("wrongPassword"));
 	}

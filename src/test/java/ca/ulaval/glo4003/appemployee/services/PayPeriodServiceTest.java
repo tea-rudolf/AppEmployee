@@ -31,7 +31,7 @@ public class PayPeriodServiceTest {
 		userRepositoryMock = mock(UserRepository.class);
 		payPeriodMock = mock(PayPeriod.class);
 		payPeriodServiceMock = mock(PayPeriodService.class);
-		user = new User(VALID_EMAIL, VALID_PASSWORD);
+		user = new User(VALID_EMAIL, VALID_PASSWORD, "EMPLOYEE");
 		payPeriodServiceMock = new PayPeriodService(userRepositoryMock);
 	}
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.support.SimpleSessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
@@ -29,6 +30,9 @@ public class HomeControllerTest {
 	@Mock
 	private UserRepository repository;
 
+	@Mock
+	private User user;
+
 	@InjectMocks
 	private HomeController controller;
 
@@ -38,6 +42,8 @@ public class HomeControllerTest {
 	@Before
 	public void setUpAccounts() {
 		given(repository.validateCredentials(VALID_EMAIL, VALID_PASSWORD)).willReturn(true);
+		given(repository.findByEmail(VALID_EMAIL)).willReturn(user);
+		given(user.getRole()).willReturn("EMPLOYEE");
 	}
 
 	@After

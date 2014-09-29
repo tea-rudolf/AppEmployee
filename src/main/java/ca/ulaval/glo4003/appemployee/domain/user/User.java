@@ -20,19 +20,21 @@ public class User {
 	private String email;
 	private String password;
 	private List<PayPeriod> payPeriods;
+	private String role;
 
 	protected User() {
 
 	}
 
-	public User(String username, String password) {
+	public User(String username, String password, String role) {
 		this.email = username;
 		this.password = password;
+		this.role = role;
 
 		init();
 	}
 
-	public void afterUnmarshal(Unmarshaller u, Object parent) {
+	public void afterUnmarshall(Unmarshaller u, Object parent) {
 		init();
 	}
 
@@ -52,7 +54,7 @@ public class User {
 	}
 
 	@XmlAttribute(name = "Password")
-	public String getPassword() { // if not required for JAXB flush it
+	public String getPassword() {
 		return password;
 	}
 
@@ -68,6 +70,15 @@ public class User {
 
 	public void setPayPeriods(List<PayPeriod> payPeriods) {
 		this.payPeriods = payPeriods;
+	}
+
+	@XmlAttribute(name = "Role")
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public PayPeriod getCurrentPayPeriod() {

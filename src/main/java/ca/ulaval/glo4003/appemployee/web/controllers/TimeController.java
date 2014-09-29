@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
@@ -56,12 +55,5 @@ public class TimeController {
 		service.updateUserCurrentPayPeriodShiftList(user.getEmail(), payPeriodConverter.convert(payPeriodForm));
 
 		return TIME_SHEET_SUBMIT_JSP;
-	}
-
-	@RequestMapping(value = "/logout")
-	public String logout(SessionStatus sessionStatus, ModelMap model) {
-		sessionStatus.setComplete();
-		model.clear();
-		return "redirect:/";
 	}
 }
