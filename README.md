@@ -2,6 +2,6 @@
 
 ## Mots de passe 
 
-ROLE EMPLOYEE **email:** test@test.com **password:** 1234
-ROLE SUPERVISOR **email:** supervisor@supervisor.com **password:** supervisor
-ROLE ENTERPRISE **email:** enterprise@enterprise.com **password:** enterprise
+| ROLE EMPLOYEE **email:** test@test.com **password:** 1234 
+| ROLE SUPERVISOR **email:** supervisor@supervisor.com **password:** supervisor
+| ROLE ENTERPRISE **email:** enterprise@enterprise.com **password:** enterprise
