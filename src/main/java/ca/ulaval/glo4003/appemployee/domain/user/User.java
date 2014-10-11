@@ -20,13 +20,13 @@ public class User {
 	private String email;
 	private String password;
 	private List<PayPeriod> payPeriods;
-	private String role;
+	private Role role;
 
 	protected User() {
 
 	}
 
-	public User(String username, String password, String role) {
+	public User(String username, String password, Role role) {
 		this.email = username;
 		this.password = password;
 		this.role = role;
@@ -74,11 +74,15 @@ public class User {
 
 	@XmlAttribute(name = "Role")
 	public String getRole() {
-		return role;
+		return role.toString();
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public String getRoleName() {
+		return role.toString();
 	}
 
 	public PayPeriod getCurrentPayPeriod() {
@@ -101,7 +105,7 @@ public class User {
 		currentPayPeriod.setExpenses(newPayPeriod.getExpenses());
 	}
 
-	public boolean validatePassword(String password) {
+	public boolean isPasswordValid(String password) {
 		return this.password.equals(password);
 	}
 }

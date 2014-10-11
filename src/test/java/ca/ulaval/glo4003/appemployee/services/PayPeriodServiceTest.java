@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
@@ -31,7 +32,7 @@ public class PayPeriodServiceTest {
 		userRepositoryMock = mock(UserRepository.class);
 		payPeriodMock = mock(PayPeriod.class);
 		payPeriodServiceMock = mock(PayPeriodService.class);
-		user = new User(VALID_EMAIL, VALID_PASSWORD, "EMPLOYEE");
+		user = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE);
 		payPeriodServiceMock = new PayPeriodService(userRepositoryMock);
 	}
 

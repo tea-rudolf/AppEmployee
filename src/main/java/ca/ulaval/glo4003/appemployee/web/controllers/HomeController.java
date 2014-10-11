@@ -5,12 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
@@ -35,20 +32,23 @@ public class HomeController {
 		return "home";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
-		if (userRepository.validateCredentials(form.getEmail(), form.getPassword())) {
-			User user = userRepository.findByEmail(form.getEmail());
-			model.addAttribute("email", form.getEmail());
-			model.addAttribute("role", user.getRole());
+	// commenter pcq spring est suppose appliquer la poutine
 
-			return new ModelAndView("home", model);
-		}
-		model.addAttribute("alert", "Courriel et/ou mot de passe invalide");
-		model.addAttribute("loginForm", form);
-
-		return new ModelAndView("home");
-	}
+	// @RequestMapping(value = "/login", method = RequestMethod.POST)
+	// public ModelAndView login(LoginFormViewModel form, ModelMap model) {
+	// if (userRepository.validateCredentials(form.getEmail(),
+	// form.getPassword())) {
+	// User user = userRepository.findByEmail(form.getEmail());
+	// model.addAttribute("email", form.getEmail());
+	// model.addAttribute("role", user.getRole());
+	//
+	// return new ModelAndView("home", model);
+	// }
+	// model.addAttribute("alert", "Courriel et/ou mot de passe invalide");
+	// model.addAttribute("loginForm", form);
+	//
+	// return new ModelAndView("home");
+	// }
 
 	@RequestMapping(value = "/logout")
 	public String logout(SessionStatus sessionStatus, ModelMap model) {

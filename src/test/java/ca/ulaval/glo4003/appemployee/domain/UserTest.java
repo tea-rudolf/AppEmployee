@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -15,15 +16,15 @@ public class UserTest {
 
 	@Test
 	public void canValidateRightPassword() {
-		User user = new User(VALID_EMAIL, VALID_PASSWORD, "EMPLOYEE");
+		User user = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE);
 
-		assertTrue(user.validatePassword(VALID_PASSWORD));
+		assertTrue(user.isPasswordValid(VALID_PASSWORD));
 	}
 
 	@Test
 	public void cannotValidateWrongPassword() {
-		User user = new User(VALID_EMAIL, VALID_PASSWORD, "EMPLOYEE");
+		User user = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE);
 
-		assertFalse(user.validatePassword("wrongPassword"));
+		assertFalse(user.isPasswordValid("wrongPassword"));
 	}
 }
