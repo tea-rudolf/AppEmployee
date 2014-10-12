@@ -10,6 +10,8 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+
 public class PayPeriodTest {
 
 	private static final LocalDate START_DATE = new LocalDate(2014, 9, 22);

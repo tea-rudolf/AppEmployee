@@ -1,50 +1,22 @@
 package ca.ulaval.glo4003.appemployee.domain.user;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.joda.time.LocalDate;
-
-import ca.ulaval.glo4003.appemployee.domain.NoCurrentPayPeriodException;
-import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
-
-@XmlRootElement(name = "User")
+//@XmlRootElement(name = "User")
 public class User {
 
 	private String email;
 	private String password;
-	private List<PayPeriod> payPeriods;
+	private Integer wage;
 	private String role;
 
-	protected User() {
-
-	}
-
-	public User(String username, String password, String role) {
+	public User(String username, String password, String role, Integer wage) {
 		this.email = username;
 		this.password = password;
 		this.role = role;
-
-		init();
+		this.setWage(wage);
 	}
 
-	public void afterUnmarshall(Unmarshaller u, Object parent) {
-		init();
-	}
-
-	private void init() {
-		if (payPeriods == null || payPeriods.size() == 0) {
-			payPeriods = new ArrayList<PayPeriod>();
-		}
-	}
-
-	@XmlAttribute(name = "Email")
+	//@XmlAttribute(name = "Email")
 	public String getEmail() {
 		return email;
 	}
@@ -53,7 +25,7 @@ public class User {
 		this.email = email;
 	}
 
-	@XmlAttribute(name = "Password")
+	//@XmlAttribute(name = "Password")
 	public String getPassword() {
 		return password;
 	}
@@ -62,17 +34,7 @@ public class User {
 		this.password = password;
 	}
 
-	@XmlElementWrapper(name = "PayPeriods")
-	@XmlElement(name = "PayPeriod")
-	public List<PayPeriod> getPayPeriods() {
-		return payPeriods;
-	}
-
-	public void setPayPeriods(List<PayPeriod> payPeriods) {
-		this.payPeriods = payPeriods;
-	}
-
-	@XmlAttribute(name = "Role")
+	//@XmlAttribute(name = "Role")
 	public String getRole() {
 		return role;
 	}
@@ -81,27 +43,15 @@ public class User {
 		this.role = role;
 	}
 
-	public PayPeriod getCurrentPayPeriod() {
-		LocalDate currentDate = new LocalDate();
-		for (PayPeriod payPeriod : payPeriods) {
-			if (currentDate.isAfter(payPeriod.getStartDate()) && currentDate.isBefore(payPeriod.getEndDate())) {
-				return payPeriod;
-			}
-		}
-		throw new NoCurrentPayPeriodException("The user " + this.email + " does not have a current pay period.");
-	}
-
-	public void setShiftsCurrentPayPeriod(PayPeriod newPayPeriod) {
-		PayPeriod currentPayPeriod = getCurrentPayPeriod();
-		currentPayPeriod.setShiftsWorked(newPayPeriod.getShiftsWorked());
-	}
-
-	public void setExpensesCurrentPayPeriod(PayPeriod newPayPeriod) {
-		PayPeriod currentPayPeriod = getCurrentPayPeriod();
-		currentPayPeriod.setExpenses(newPayPeriod.getExpenses());
-	}
-
 	public boolean validatePassword(String password) {
 		return this.password.equals(password);
+	}
+
+	public Integer getWage() {
+		return wage;
+	}
+
+	public void setWage(Integer wage) {
+		this.wage = wage;
 	}
 }

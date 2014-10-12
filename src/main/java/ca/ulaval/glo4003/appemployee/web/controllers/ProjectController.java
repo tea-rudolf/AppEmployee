@@ -64,7 +64,7 @@ public class ProjectController {
 	public String projectModification(@PathVariable String projectNumber, Model model, HttpSession session) {
 		Project project = projectService.getProjectByNumber(projectNumber);
 		model.addAttribute("project", projectConverter.convert(project));
-		model.addAttribute("tasks", taskConverter.convert(project.getTasks()));
+		model.addAttribute("tasks", taskConverter.convert(projectService.getTasksByIds(project.getBillableIds())));
 		return "editProject";
 	}
 

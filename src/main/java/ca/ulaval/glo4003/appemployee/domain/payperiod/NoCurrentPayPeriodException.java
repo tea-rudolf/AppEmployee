@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.payperiod;
 
 
 public class NoCurrentPayPeriodException extends RuntimeException {

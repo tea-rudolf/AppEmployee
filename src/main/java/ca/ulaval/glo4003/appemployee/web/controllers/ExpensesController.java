@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
@@ -39,14 +39,14 @@ public class ExpensesController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getExpenses(ModelMap model, HttpSession session) {
 
-		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
-		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
-
-		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
-		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
-
-		return EXPENSES_JSP;
+//		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+//		PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
+//		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
+//
+//		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
+//		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
+//
+//		return EXPENSES_JSP;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

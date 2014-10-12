@@ -1,13 +1,16 @@
 package ca.ulaval.glo4003.appemployee.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ca.ulaval.glo4003.appemployee.domain.BillableRessource;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.task.BillableTask;
+import ca.ulaval.glo4003.appemployee.domain.task.BillableTaskRepository;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
@@ -15,6 +18,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 public class ProjectService {
 	
 	private ProjectRepository projectRepository;
+	private BillableTaskRepository taskRepository;
 	
 	@Autowired
 	public ProjectService(ProjectRepository projectRepository) {
@@ -39,7 +43,7 @@ public class ProjectService {
 		projectRepository.update(project);
 	}
 	
-	public void addTask(String number, Task task) {
+	public void addTask(BillableTask task) {
 		Project project = getProjectByNumber(number);
 		project.addTask(task);
 		projectRepository.update(project);
@@ -47,13 +51,23 @@ public class ProjectService {
 	
 	public void updateTask(String projectNumber, String taskNumber, TaskViewModel viewModel) {
 		Project project = getProjectByNumber(projectNumber);
-		Task task = project.getTaskByNumber(taskNumber);
+		BillableTask task = project.getTaskByNumber(taskNumber);
 		task.setName(viewModel.getName());
 		projectRepository.update(project);
 	}
 	
-	public Task getTaskByNumber(String projectNumber, String taskNumber) {
+	public BillableTask getTaskByNumber(String projectNumber, String taskNumber) {
 		Project project = getProjectByNumber(projectNumber);
 		return project.getTaskByNumber(taskNumber);
+	}
+
+	public List<BillableTask> getTasksByIds(List<String> billableIds) {
+		List<BillableTask> tasks = new ArrayList<BillableTask>(); 
+		for (String id : billableIds){
+			BillableRessource = taskRepository.findByName(id);
+			if ()
+			tasks.add(taskRepository.findByName(id));
+		}
+		return null;
 	}
 }

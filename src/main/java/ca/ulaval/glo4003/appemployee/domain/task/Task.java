@@ -1,36 +1,40 @@
 package ca.ulaval.glo4003.appemployee.domain.task;
 
-import javax.xml.bind.annotation.XmlAttribute;
-
 public class Task {
-
+	private Integer uId;
 	private String name;
-	private String number;
-
-	protected Task() {
-		// Required for JAXB
+	private String comment;
+	
+	public Task(Integer uId) {
+		this.uId = uId;
 	}
-
-	public Task(String number, String name) {
-		this.name = name;
-		this.number = number;
+	
+	public void setUid(Integer uId) {
+		this.uId = uId;
 	}
-
-	@XmlAttribute(name = "Name")
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	@XmlAttribute(name = "Number")
-	public String getNumber() {
-		return number;
+	
+	public String getComment() {
+		return comment;
+	}
+	
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public Integer getuId() {
+		return uId;
 	}
+
+	public void setuId(Integer uId) {
+		this.uId = uId;
+	}
+
 }

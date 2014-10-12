@@ -10,9 +10,9 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4003.appemployee.domain.Expense;
-import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.Shift;
+import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 
 public class PayPeriodConverterTest {

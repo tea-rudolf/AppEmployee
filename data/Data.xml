@@ -23,6 +23,16 @@
                 <Task Name="Task 8" Number="8"/>
             </Tasks>
         </Project>
+        <Project Name="dummy" Number="56">
+            <Tasks>
+                <Task Name="task 1 " Number="1"/>
+            </Tasks>
+        </Project>
+        <Project Name="patate" Number="65">
+            <Tasks>
+                <Task Name="task patate" Number="86"/>
+            </Tasks>
+        </Project>
     </Projects>
     <Users>
         <User Email="test@test.com" Password="1234" Role="EMPLOYEE">
@@ -45,8 +55,8 @@
                         <Expense Amount="0.0" Comment="" Date="2014-10-04"/>
                     </Expenses>
                     <Shifts>
-                        <Shift Comment=" " Date="2014-09-21" Hours="1.0"/>
-                        <Shift Comment=" " Date="2014-09-22" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-21" Hours="12.0"/>
+                        <Shift Comment=" " Date="2014-09-22" Hours="8.0"/>
                         <Shift Comment=" " Date="2014-09-23" Hours="0.0"/>
                         <Shift Comment=" " Date="2014-09-24" Hours="0.0"/>
                         <Shift Comment=" " Date="2014-09-25" Hours="0.0"/>
@@ -133,9 +143,112 @@
         </User>
         <User Email="enterprise@enterprise.com" Password="enterprise" Role="ENTERPRISE">
             <PayPeriods/>
-        </User>  
+        </User>
         <User Email="supervisor@supervisor.com" Password="supervisor" Role="SUPERVISOR">
-            <PayPeriods/>
-        </User>         
+            <PayPeriods>
+                <PayPeriod EndDate="2014-10-04" StartDate="2014-09-21">
+                    <Expenses>
+                        <Expense Amount="650.0" Comment="je coute cher" Date="2014-09-21"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-22"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-23"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-24"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-25"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-26"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-27"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-28"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-29"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-09-30"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-01"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-02"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-03"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-04"/>
+                    </Expenses>
+                    <Shifts>
+                        <Shift Comment=" je suis motvi�" Date="2014-09-21" Hours="8.0"/>
+                        <Shift Comment=" " Date="2014-09-22" Hours="11.0"/>
+                        <Shift Comment=" " Date="2014-09-23" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-24" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-25" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-26" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-27" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-28" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-29" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-09-30" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-01" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-02" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-03" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-04" Hours="0.0"/>
+                    </Shifts>
+                </PayPeriod>
+                <PayPeriod EndDate="2014-10-18" StartDate="2014-10-05">
+                    <Expenses>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-05"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-06"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-07"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-08"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-09"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-10"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-11"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-12"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-13"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-14"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-15"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-16"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-17"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-18"/>
+                    </Expenses>
+                    <Shifts>
+                        <Shift Comment=" " Date="2014-10-05" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-06" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-07" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-08" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-09" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-10" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-11" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-12" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-13" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-14" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-15" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-16" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-17" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-18" Hours="0.0"/>
+                    </Shifts>
+                </PayPeriod>
+                <PayPeriod EndDate="2014-11-01" StartDate="2014-10-19">
+                    <Expenses>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-19"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-20"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-21"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-22"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-23"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-24"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-25"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-26"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-27"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-28"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-29"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-30"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-10-31"/>
+                        <Expense Amount="0.0" Comment="" Date="2014-11-01"/>
+                    </Expenses>
+                    <Shifts>
+                        <Shift Comment=" " Date="2014-10-19" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-20" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-21" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-22" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-23" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-24" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-25" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-26" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-27" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-28" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-29" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-30" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-10-31" Hours="0.0"/>
+                        <Shift Comment=" " Date="2014-11-01" Hours="0.0"/>
+                    </Shifts>
+                </PayPeriod>
+            </PayPeriods>
+        </User>
     </Users>
 </AppEmployee>

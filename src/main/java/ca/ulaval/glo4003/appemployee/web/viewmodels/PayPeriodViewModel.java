@@ -3,8 +3,8 @@ package ca.ulaval.glo4003.appemployee.web.viewmodels;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4003.appemployee.domain.Expense;
 import ca.ulaval.glo4003.appemployee.domain.Shift;
+import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 
 public class PayPeriodViewModel {
 

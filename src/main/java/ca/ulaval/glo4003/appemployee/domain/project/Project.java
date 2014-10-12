@@ -3,31 +3,28 @@ package ca.ulaval.glo4003.appemployee.domain.project;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.joda.time.LocalDate;
 
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskNotFoundException;
-
-@XmlRootElement(name = "Project")
+//@XmlRootElement(name = "Project")
 public class Project {
-	private List<Task> tasks = new ArrayList<Task>();
+	
 	private String number;
-	private String name;
+	private String name = "";
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private List<String> taskIds = new ArrayList<String>();
+	private List<String> userIds = new ArrayList<String>();
+	private List<String> expenseIds = new ArrayList<String>();
 
-	protected Project() {
-		// Required for JAXB
+	public Project(String number) {
+		this.number = number;
 	}
-
+	
 	public Project(String number, String name) {
 		this.number = number;
 		this.name = name;
 	}
-
-	@XmlAttribute(name = "Number")
+	
 	public String getNumber() {
 		return number;
 	}
@@ -36,7 +33,7 @@ public class Project {
 		this.number = number;
 	}
 
-	@XmlAttribute(name = "Name")
+	//@XmlAttribute(name = "Name")
 	public String getName() {
 		return name;
 	}
@@ -45,34 +42,45 @@ public class Project {
 		this.name = name;
 	}
 
-	@XmlElementWrapper(name = "Tasks")
-	@XmlElement(name = "Task")
-	public List<Task> getTasks() {
-		return tasks;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
 
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
 	}
 
-	public void addTask(Task task) {
-		try {
-			getTaskByNumber(task.getNumber());
-
-			throw new TaskExistsException(String.format("Task number '%s' already exists in project number '%s'.", task.getNumber(), this.number));
-		} catch (TaskNotFoundException e) {
-		}
-
-		this.tasks.add(task);
+	public LocalDate getEndDate() {
+		return endDate;
 	}
 
-	public Task getTaskByNumber(String number) {
-		for (Task task : tasks) {
-			if (task.getNumber().compareTo(number) == 0) {
-				return task;
-			}
-		}
-
-		throw new TaskNotFoundException(String.format("Cannot find task with number '%s'.", number));
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
 	}
+
+	public List<String> getTaskIds() {
+		return taskIds;
+	}
+
+	public void setTaskIds(List<String> taskIds) {
+		this.taskIds = taskIds;
+	}
+
+	public List<String> getUserIds() {
+		return userIds;
+	}
+
+	public void setUserIds(List<String> userIds) {
+		this.userIds = userIds;
+	}
+
+	public List<String> getExpenseIds() {
+		return expenseIds;
+	}
+
+	public void setExpenseIds(List<String> expenseIds) {
+		this.expenseIds = expenseIds;
+	}
+
+
 }

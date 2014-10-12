@@ -37,9 +37,16 @@ public class HomeController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
+//		User user = userRepository.findByEmail(form.getEmail());
+//		if (user != null && user.validatePassword(form.getPassword())) {
+//			model.addAttribute("email", form.getEmail());
+//			model.addAttribute("role", user.getRole());
+//		
+//			return new ModelAndView("home", model);		
+//		}
 		if (userRepository.validateCredentials(form.getEmail(), form.getPassword())) {
 			User user = userRepository.findByEmail(form.getEmail());
-			model.addAttribute("email", form.getEmail());
+			model.addAttribute("email", user.getEmail());
 			model.addAttribute("role", user.getRole());
 
 			return new ModelAndView("home", model);

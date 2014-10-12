@@ -1,6 +1,5 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.expense;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.joda.time.LocalDate;
@@ -8,25 +7,22 @@ import org.joda.time.LocalDate;
 @XmlRootElement(name = "Expense")
 public class Expense {
 
+	private String uId;
 	private double amount;
 	private LocalDate date;
+	private String userId;
 	private String comment;
+	
 
-	public Expense() {
-		//Required for JAXB
-	}
-
-	public Expense(double amount, LocalDate date, String comment) {
-		this.amount = amount;
-		this.date = date;
-		this.comment = comment;
+	public Expense(String uId) {
+		this.uId = uId;
 	}
 
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
-	@XmlAttribute(name = "Amount")
+	//@XmlAttribute(name = "Amount")
 	public double getAmount() {
 		return amount;
 	}
@@ -35,7 +31,7 @@ public class Expense {
 		this.date = date;
 	}
 
-	@XmlAttribute(name = "Date")
+	//@XmlAttribute(name = "Date")
 	public LocalDate getDate() {
 		return date;
 	}
@@ -44,8 +40,24 @@ public class Expense {
 		this.comment = comment;
 	}
 
-	@XmlAttribute(name = "Comment")
+	//@XmlAttribute(name = "Comment")
 	public String getComment() {
 		return comment;
+	}
+
+	public String getuId() {
+		return uId;
+	}
+
+	public void setuId(String uId) {
+		this.uId = uId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

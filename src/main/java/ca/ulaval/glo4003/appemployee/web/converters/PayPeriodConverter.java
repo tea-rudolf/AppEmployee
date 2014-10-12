@@ -5,9 +5,9 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
-import ca.ulaval.glo4003.appemployee.domain.Expense;
-import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.Shift;
+import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 
 @Component
