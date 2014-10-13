@@ -14,6 +14,7 @@ public class ProjectConverter {
 
 	public Collection<ProjectViewModel> convert(List<Project> projects) {
 		Collection<ProjectViewModel> viewModels = new ArrayList<ProjectViewModel>();
+
 		for (Project project : projects) {
 			ProjectViewModel viewModel = convert(project);
 			viewModels.add(viewModel);
@@ -23,6 +24,12 @@ public class ProjectConverter {
 
 	public Project convert(ProjectViewModel projectViewModel) {
 		Project project = new Project(projectViewModel.getNumber(), projectViewModel.getName());
+		project.setStartDate(projectViewModel.getStartDate());
+		project.setEndDate(projectViewModel.getEndDate());
+		project.setTaskIds(projectViewModel.getTaskIds());
+		project.setUserIds(projectViewModel.getUserIds());
+		project.setExpenseIds(projectViewModel.getExpenseIds());
+
 		return project;
 	}
 
@@ -30,6 +37,12 @@ public class ProjectConverter {
 		ProjectViewModel viewModel = new ProjectViewModel();
 		viewModel.setNumber(project.getNumber());
 		viewModel.setName(project.getName());
+		viewModel.setStartDate(project.getStartDate());
+		viewModel.setEndDate(project.getEndDate());
+		viewModel.setTaskIds(project.getTaskIds());
+		viewModel.setUserIds(project.getUserIds());
+		viewModel.setExpenseIds(project.getExpenseIds());
+
 		return viewModel;
 	}
 }

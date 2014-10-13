@@ -37,10 +37,10 @@ public class TaskConverterTest {
 		TaskViewModel[] viewModels = converter.convert(tasks).toArray(new TaskViewModel[1]);
 
 		assertEquals(firstName, viewModels[0].getName());
-		assertEquals(firstNumber, viewModels[0].getNumber());
+		assertEquals(firstNumber, viewModels[0].getComment());
 
 		assertEquals(secondName, viewModels[1].getName());
-		assertEquals(secondNumber, viewModels[1].getNumber());
+		assertEquals(secondNumber, viewModels[1].getComment());
 	}
 
 	@Test
@@ -51,7 +51,7 @@ public class TaskConverterTest {
 
 		TaskViewModel viewModel = converter.convert(task);
 
-		assertEquals(number, viewModel.getNumber());
+		assertEquals(number, viewModel.getComment());
 		assertEquals(name, viewModel.getName());
 	}
 
@@ -59,18 +59,18 @@ public class TaskConverterTest {
 	public void convertTaskViewModelToTaskSetsNumberAndName() {
 		TaskViewModel viewModel = new TaskViewModel();
 		viewModel.setName("task");
-		viewModel.setNumber("123456");
+		viewModel.setComment("123456");
 
 		Task task = converter.convert(viewModel);
 
 		assertEquals(viewModel.getName(), task.getName());
-		assertEquals(viewModel.getNumber(), task.getNumber());
+		assertEquals(viewModel.getComment(), task.getComment());
 	}
 
 	private Task createTask(String number, String name) {
 		Task task = mock(Task.class);
 		given(task.getName()).willReturn(name);
-		given(task.getNumber()).willReturn(number);
+		given(task.getComment()).willReturn(number);
 		return task;
 	}
 }

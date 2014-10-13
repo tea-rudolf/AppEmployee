@@ -5,8 +5,6 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
-import ca.ulaval.glo4003.appemployee.domain.Shift;
-import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 
@@ -20,20 +18,19 @@ public class PayPeriodConverter {
 	public PayPeriod convert(PayPeriodViewModel payPeriodViewModel) {
 		LocalDate startDate = new LocalDate(payPeriodViewModel.getStartDate());
 		LocalDate endDate = new LocalDate(payPeriodViewModel.getEndDate());
-		List<Shift> shifts = payPeriodViewModel.getShifts();
-		List<Expense> expenses = payPeriodViewModel.getExpenses();
+		List<String> timeEntryIds = payPeriodViewModel.getTimeEntryIds();
 		PayPeriod payPeriod = new PayPeriod(startDate, endDate);
-		payPeriod.setShiftsWorked(shifts);
-		payPeriod.setExpenses(expenses);
+		payPeriod.setTimeEntryIds(timeEntryIds);
+
 		return payPeriod;
 	}
 
-	public PayPeriodViewModel convert(PayPeriod currentPayPeriod) {
-		PayPeriodViewModel form = new PayPeriodViewModel();
-		form.setStartDate(currentPayPeriod.getStartDate().toString());
-		form.setEndDate(currentPayPeriod.getEndDate().toString());
-		form.setShifts(currentPayPeriod.getShiftsWorked());
-		form.setExpenses(currentPayPeriod.getExpenses());
-		return form;
+	public PayPeriodViewModel convert(PayPeriod payPeriod) {
+		PayPeriodViewModel payPeriodViewModel = new PayPeriodViewModel();
+		payPeriodViewModel.setStartDate(payPeriod.getStartDate().toString());
+		payPeriodViewModel.setEndDate(payPeriod.getEndDate().toString());
+		payPeriodViewModel.setTimeEntryIds(payPeriod.getTimeEntryIds());
+
+		return payPeriodViewModel;
 	}
 }

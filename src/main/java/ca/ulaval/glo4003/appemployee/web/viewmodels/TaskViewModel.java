@@ -1,15 +1,24 @@
 package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
 public class TaskViewModel {
-	private String number;
+	private Integer uId;
 	private String name;
+	private String comment;
 
-	public String getNumber() {
-		return number;
+	public Integer getuId() {
+		return uId;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setuId(Integer uId) {
+		this.uId = uId;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public String getName() {
@@ -19,4 +28,5 @@ public class TaskViewModel {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 }

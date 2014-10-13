@@ -41,7 +41,7 @@ public class XmlUserRepository implements UserRepository {
 		if (user == null) {
 			return false;
 		}
-		return user.isPasswordValid(password);
+		return user.validatePassword(password);
 	}
 
 	@Override

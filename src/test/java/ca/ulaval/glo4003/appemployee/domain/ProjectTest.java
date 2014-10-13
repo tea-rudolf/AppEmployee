@@ -24,7 +24,7 @@ public class ProjectTest {
 	public void init() {
 		project = new Project(SAMPLE_PROJECTNUMBER, SAMPLE_PROJECTNAME);
 		taskMock = mock(Task.class);
-		when(taskMock.getNumber()).thenReturn(SAMPLE_TASKNUMBER);
+		when(taskMock.getComment()).thenReturn(SAMPLE_TASKNUMBER);
 	}
 
 	@Test
