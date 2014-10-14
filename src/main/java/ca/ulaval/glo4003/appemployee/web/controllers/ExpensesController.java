@@ -40,13 +40,13 @@ public class ExpensesController {
 	public String getExpenses(ModelMap model, HttpSession session) {
 
 //		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-//		PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
+//		PayPeriod currentPayPeriod = payPeriodService.g
 //		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
 //
 //		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
 //		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
-//
-//		return EXPENSES_JSP;
+
+		return EXPENSES_JSP;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

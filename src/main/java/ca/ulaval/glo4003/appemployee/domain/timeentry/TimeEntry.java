@@ -8,6 +8,7 @@ public class TimeEntry {
 	private Integer billableHours;
 	private LocalDate date;
 	private String userId;
+	private String taskId;
 	
 	public TimeEntry(Integer uId) {
 		this.uId = uId;		
@@ -43,6 +44,14 @@ public class TimeEntry {
 
 	public void setuId(Integer uId) {
 		this.uId = uId;
+	}
+
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
 	}
 
 }
