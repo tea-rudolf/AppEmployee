@@ -73,7 +73,7 @@ public class PayPeriodService {
 	}
 	
 	public PayPeriod getCurrentPayPeriod(){
-		PayPeriod payPeriodFound = null;
+		PayPeriod payPeriodFound;
 
 		try {
 			payPeriodFound = payPeriodRepository.findPayPeriod(new LocalDate());
@@ -87,7 +87,6 @@ public class PayPeriodService {
 	
 	public PayPeriod getPreviousPayPeriod(){
 		return payPeriodRepository.findPayPeriod(this.getCurrentPayPeriod().getStartDate().minusDays(1));
-		
 	}
 	
 	public List<Task> getTasksForUser(PayPeriod payPeriod, String userId){

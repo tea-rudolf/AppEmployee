@@ -13,7 +13,10 @@ public class Expense {
 	private String userId;
 	private String comment;
 	
-
+    protected Expense(){
+    	//For JAXB
+    }
+    
 	public Expense(String uId) {
 		this.uId = uId;
 	}

@@ -3,9 +3,12 @@ package ca.ulaval.glo4003.appemployee.domain.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.joda.time.LocalDate;
 
-//@XmlRootElement(name = "Project")
+@XmlRootElement(name = "Project")
 public class Project {
 	
 	private String number;
@@ -16,6 +19,10 @@ public class Project {
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
 
+	protected Project(){
+		//required for JAXB
+	}
+	
 	public Project(String number) {
 		this.number = number;
 	}
@@ -33,7 +40,7 @@ public class Project {
 		this.number = number;
 	}
 
-	//@XmlAttribute(name = "Name")
+	@XmlAttribute(name = "Name")
 	public String getName() {
 		return name;
 	}

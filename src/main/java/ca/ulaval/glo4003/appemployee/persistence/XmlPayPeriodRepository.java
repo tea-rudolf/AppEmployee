@@ -61,9 +61,7 @@ public class XmlPayPeriodRepository implements PayPeriodRepository {
 	}
 
 	public List<Integer> getAllTimeEntryUids(PayPeriod payPeriod) {
-		
 		return payPeriod.getTimeEntryIds();
-	
 	}
 
 }
