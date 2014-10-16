@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
