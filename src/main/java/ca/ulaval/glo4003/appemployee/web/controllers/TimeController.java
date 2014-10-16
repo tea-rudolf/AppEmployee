@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
@@ -28,18 +29,20 @@ public class TimeController {
 
 	private PayPeriodService payPeriodService;
 	private PayPeriodConverter payPeriodConverter;
+	private UserRepository userRepository;
 	private User user;
 
 	@Autowired
-	public TimeController(PayPeriodService timeService, PayPeriodConverter payPeriodConverter) {
-		this.payPeriodService = timeService;
+	public TimeController(PayPeriodService payPeriodService, PayPeriodConverter payPeriodConverter, UserRepository userRepository) {
+		this.payPeriodService = payPeriodService;
 		this.payPeriodConverter = payPeriodConverter;
+		this.userRepository = userRepository;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getTime(ModelMap model, HttpSession session){
+	public String getTime(ModelMap model, HttpSession session) {
 
-		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		user = userRepository.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
 		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
 		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
@@ -51,8 +54,8 @@ public class TimeController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String saveTime(@ModelAttribute(PAY_PERIOD_ATTRIBUTE) PayPeriodViewModel payPeriodForm, HttpSession session) {
 
-		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		payPeriodService.updateCurrentPayPeriodTimeEntrys(payPeriodConverter.convert(payPeriodForm));
+		user = userRepository.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		payPeriodService.updateCurrentPayPeriodTimeEntries(payPeriodConverter.convert(payPeriodForm));
 
 		return TIME_SHEET_SUBMIT_JSP;
 	}
