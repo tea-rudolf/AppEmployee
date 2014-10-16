@@ -12,7 +12,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 @Component
 public class ProjectConverter {
 
-	public Collection<ProjectViewModel> convert(List<Project> projects) {
+	public Collection<ProjectViewModel> convert(Collection<Project> projects) {
 		Collection<ProjectViewModel> viewModels = new ArrayList<ProjectViewModel>();
 
 		for (Project project : projects) {

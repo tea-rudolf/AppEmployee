@@ -6,21 +6,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
+import org.springframework.stereotype.Repository;
+
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
 
+@Repository
+@Singleton
 public class XMLProjectRepository implements ProjectRepository {
 
-	private XMLSerializer<ProjectXMLAssembler> serializer;
+	private XMLGenericMarshaller<ProjectXMLAssembler> serializer;
 	private Map<String, Project> projects = new HashMap<String, Project>();
-	private static String PROJECTS_FILEPATH = "/resources/projects.xml";
+	private static String PROJECTS_FILEPATH = "/projects.xml";
 
 	public XMLProjectRepository() throws Exception {
-		serializer = new XMLSerializer<ProjectXMLAssembler>(ProjectXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<ProjectXMLAssembler>(ProjectXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLProjectRepository(XMLSerializer<ProjectXMLAssembler> serializer) {
+	public XMLProjectRepository(XMLGenericMarshaller<ProjectXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -43,11 +49,11 @@ public class XMLProjectRepository implements ProjectRepository {
 	private void saveXML() throws Exception {
 		ProjectXMLAssembler projectXMLWrapper = new ProjectXMLAssembler();
 		projectXMLWrapper.setProjects(new ArrayList<Project>(projects.values()));
-		serializer.serialize(projectXMLWrapper, PROJECTS_FILEPATH);
+		serializer.marshall(projectXMLWrapper, PROJECTS_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		List<Project> deserializedProjects = serializer.deserialize(PROJECTS_FILEPATH).getProjects();
+		List<Project> deserializedProjects = serializer.unmarshall(PROJECTS_FILEPATH).getProjects();
 		for (Project project : deserializedProjects) {
 			projects.put(project.getuId(), project);
 		}

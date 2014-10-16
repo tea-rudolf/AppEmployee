@@ -4,6 +4,10 @@ public class Task {
 	private String uId;
 	private String name;
 	private String comment;
+	
+	public Task() {
+		
+	}
 
 	public Task(String uId) {
 		this.uId = uId;

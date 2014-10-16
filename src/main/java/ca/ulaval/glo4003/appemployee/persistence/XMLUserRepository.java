@@ -5,21 +5,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
+import org.springframework.stereotype.Repository;
+
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 
+@Repository
+@Singleton
 public class XMLUserRepository implements UserRepository {
 
-	private XMLSerializer<UserXMLAssembler> serializer;
+	private XMLGenericMarshaller<UserXMLAssembler> serializer;
 	private Map<String, User> users = new HashMap<String, User>();
-	private static String USERS_FILEPATH = "/resources/users.xml";
+	private static String USERS_FILEPATH = "/users.xml";
 
 	public XMLUserRepository() throws Exception {
-		serializer = new XMLSerializer<UserXMLAssembler>(UserXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<UserXMLAssembler>(UserXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLUserRepository(XMLSerializer<UserXMLAssembler> serializer) {
+	public XMLUserRepository(XMLGenericMarshaller<UserXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -37,11 +43,11 @@ public class XMLUserRepository implements UserRepository {
 	private void saveXML() throws Exception {
 		UserXMLAssembler userXMLWrapper = new UserXMLAssembler();
 		userXMLWrapper.setUsers(new ArrayList<User>(users.values()));
-		serializer.serialize(userXMLWrapper, USERS_FILEPATH);
+		serializer.marshall(userXMLWrapper, USERS_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		List<User> deserializedUsers = serializer.deserialize(USERS_FILEPATH).getUsers();
+		List<User> deserializedUsers = serializer.unmarshall(USERS_FILEPATH).getUsers();
 		for (User user : deserializedUsers) {
 			users.put(user.getEmail(), user);
 		}

@@ -9,6 +9,10 @@ public class Expense {
 	private LocalDate date;
 	private String userId;
 	private String comment;
+	
+	public Expense() {
+		
+	}
 
 	public Expense(String uId) {
 		this.uId = uId;

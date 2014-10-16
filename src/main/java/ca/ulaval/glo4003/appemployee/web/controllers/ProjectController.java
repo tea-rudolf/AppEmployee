@@ -50,27 +50,27 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addProject(Model model, ProjectViewModel projectViewModel, HttpSession session) {
+	public String addProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
 		try {
 			projectService.addProject(projectConverter.convert(projectViewModel));
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return projectCreation(model, projectViewModel, session);
 		}
-		return String.format("redirect:/projects/%s/edit", projectViewModel.getNumber());
+		return String.format("redirect:/projects/%s/edit", projectViewModel.getuId());
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
 	public String projectModification(@PathVariable String projectNumber, Model model, HttpSession session) {
-		Project project = projectService.getProjectByNumber(projectNumber);
-		model.addAttribute("project", projectConverter.convert(project));
-		model.addAttribute("tasks", taskConverter.convert(projectService.getTasksByIds(project.getBillableIds())));
+		//Project project = projectService.getProjectByNumber(projectNumber);
+		//model.addAttribute("project", projectConverter.convert(project));
+		//model.addAttribute("tasks", taskConverter.convert(projectService.getTasksByIds(project.getBillableIds())));
 		return "editProject";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
 	public String editProject(@PathVariable String projectNumber, ProjectViewModel viewModel, HttpSession session) {
-		projectService.updateProject(projectNumber, viewModel);
+		//projectService.updateProject(projectNumber, viewModel);
 		return "redirect:/projects/";
 	}
 
@@ -82,9 +82,9 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.POST)
-	public String addTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
+	public String addTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
 		try {
-			projectService.addTask(projectNumber, taskConverter.convert(taskViewModel));
+			projectService.addTaskToProject(projectNumber, taskConverter.convert(taskViewModel).getuId());
 		} catch (TaskAlreadyExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return taskCreation(projectNumber, model, taskViewModel, session);
@@ -94,7 +94,7 @@ public class ProjectController {
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
 	public String taskModification(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
-		Task task = projectService.getTaskByNumber(projectNumber, taskNumber);
+		Task task = projectService.getTaskById(taskNumber);
 
 		model.addAttribute("task", taskConverter.convert(task));
 		model.addAttribute("projectNumber", projectNumber);
@@ -103,7 +103,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
-	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) {
+	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) throws Exception {
 		projectService.updateTask(projectNumber, taskNumber, viewModel);
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}

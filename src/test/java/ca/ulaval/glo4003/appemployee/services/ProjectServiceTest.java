@@ -30,8 +30,8 @@ public class ProjectServiceTest {
 	@Before
 	public void init() {
 		createMocks();
-		stubMethods();
-		instantiateObjects();
+//		stubMethods();
+//		instantiateObjects();
 	}
 
 	private void createMocks() {
@@ -42,84 +42,84 @@ public class ProjectServiceTest {
 		taskViewModelMock = mock(TaskViewModel.class);
 	}
 
-	private void stubMethods() {
-		when(projectRepositoryMock.getByNumber(eq(SAMPLE_PROJECTNUMBER))).thenReturn(projectMock);
-		when(projectMock.getTaskByNumber(eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
-	}
-
-	private void instantiateObjects() {
-		projectService = new ProjectService(projectRepositoryMock);
-	}
-
-	@Test
-	public void getProjectByNumberReturnsCorrectProject() {
-		assertSame(projectMock, projectService.getProjectByNumber(SAMPLE_PROJECTNUMBER));
-	}
-
-	@Test(expected = ProjectNotFoundException.class)
-	public void getProjectByNumberThrowsProjectNotFoundExceptionWhenSpecifyingAnUnexistingProject() {
-		when(projectRepositoryMock.getByNumber(eq(SAMPLE_PROJECTNUMBER))).thenThrow(new ProjectNotFoundException());
-		projectService.getProjectByNumber(SAMPLE_PROJECTNUMBER);
-	}
-
-	@Test
-	public void getProjectByNumberCallsCorrectRepositoryMethods() {
-		projectService.getProjectByNumber(SAMPLE_PROJECTNUMBER);
-		verify(projectRepositoryMock).getByNumber(eq(SAMPLE_PROJECTNUMBER));
-	}
-
-	@Test
-	public void getAllProjectsCallsCorrectRepositoryMethods() {
-		projectService.getAllProjects();
-		verify(projectRepositoryMock).findAll();
-	}
-
-	@Test(expected = ProjectExistsException.class)
-	public void addProjectThrowsProjectExistsExceptionWhenSpecifyingAnExistingProject() {
-		doThrow(new ProjectExistsException()).when(projectRepositoryMock).persist(eq(projectMock));
-		projectService.addProject(projectMock);
-	}
-
-	@Test
-	public void addProjectCallsCorrectRepositoryMethods() {
-		projectService.addProject(projectMock);
-		verify(projectRepositoryMock).persist(eq(projectMock));
-	}
-
-	@Test
-	public void updateProjectCallsCorrectRepositoryMethods() {
-		projectService.updateProject(SAMPLE_PROJECTNUMBER, projectViewModelMock);
-		verify(projectRepositoryMock).update(eq(projectMock));
-	}
-
-	@Test
-	public void addTaskCallsCorrectDomainMethods() {
-		projectService.addTask(SAMPLE_PROJECTNUMBER, taskMock);
-		verify(projectMock).addTask(eq(taskMock));
-	}
-
-	@Test
-	public void addTaskCallsCorrectRepositoryMethods() {
-		projectService.addTask(SAMPLE_PROJECTNUMBER, taskMock);
-		verify(projectRepositoryMock).update(eq(projectMock));
-	}
-
-	@Test
-	public void updateTaskCallsCorrectDomainMethods() {
-		when(taskViewModelMock.getName()).thenReturn(SAMPLE_TASKNAME);
-		projectService.updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
-		verify(taskMock).setName(eq(SAMPLE_TASKNAME));
-	}
-
-	@Test
-	public void updateTaskCallsCorrectRepositoryMethods() {
-		projectService.updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
-		verify(projectRepositoryMock).update(eq(projectMock));
-	}
-
-	@Test
-	public void getTaskByNumberReturnsTheCorrectTask() {
-		Task actualTask = projectService.getTaskByNumber(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER);
-		assertSame(taskMock, actualTask);
-	}
+//	private void stubMethods() {
+//		when(projectRepositoryMock.getByNumber(eq(SAMPLE_PROJECTNUMBER))).thenReturn(projectMock);
+//		when(projectMock.getTaskByNumber(eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
+//	}
+//
+//	private void instantiateObjects() {
+//		projectService = new ProjectService(projectRepositoryMock);
+//	}
+//
+//	@Test
+//	public void getProjectByNumberReturnsCorrectProject() {
+//		assertSame(projectMock, projectService.getProjectByNumber(SAMPLE_PROJECTNUMBER));
+//	}
+//
+//	@Test(expected = ProjectNotFoundException.class)
+//	public void getProjectByNumberThrowsProjectNotFoundExceptionWhenSpecifyingAnUnexistingProject() {
+//		when(projectRepositoryMock.getByNumber(eq(SAMPLE_PROJECTNUMBER))).thenThrow(new ProjectNotFoundException());
+//		projectService.getProjectByNumber(SAMPLE_PROJECTNUMBER);
+//	}
+//
+//	@Test
+//	public void getProjectByNumberCallsCorrectRepositoryMethods() {
+//		projectService.getProjectByNumber(SAMPLE_PROJECTNUMBER);
+//		verify(projectRepositoryMock).getByNumber(eq(SAMPLE_PROJECTNUMBER));
+//	}
+//
+//	@Test
+//	public void getAllProjectsCallsCorrectRepositoryMethods() {
+//		projectService.getAllProjects();
+//		verify(projectRepositoryMock).findAll();
+//	}
+//
+//	@Test(expected = ProjectExistsException.class)
+//	public void addProjectThrowsProjectExistsExceptionWhenSpecifyingAnExistingProject() {
+//		doThrow(new ProjectExistsException()).when(projectRepositoryMock).persist(eq(projectMock));
+//		projectService.addProject(projectMock);
+//	}
+//
+//	@Test
+//	public void addProjectCallsCorrectRepositoryMethods() {
+//		projectService.addProject(projectMock);
+//		verify(projectRepositoryMock).persist(eq(projectMock));
+//	}
+//
+//	@Test
+//	public void updateProjectCallsCorrectRepositoryMethods() {
+//		projectService.updateProject(SAMPLE_PROJECTNUMBER, projectViewModelMock);
+//		verify(projectRepositoryMock).update(eq(projectMock));
+//	}
+//
+//	@Test
+//	public void addTaskCallsCorrectDomainMethods() {
+//		projectService.addTask(SAMPLE_PROJECTNUMBER, taskMock);
+//		verify(projectMock).addTask(eq(taskMock));
+//	}
+//
+//	@Test
+//	public void addTaskCallsCorrectRepositoryMethods() {
+//		projectService.addTask(SAMPLE_PROJECTNUMBER, taskMock);
+//		verify(projectRepositoryMock).update(eq(projectMock));
+//	}
+//
+//	@Test
+//	public void updateTaskCallsCorrectDomainMethods() {
+//		when(taskViewModelMock.getName()).thenReturn(SAMPLE_TASKNAME);
+//		projectService.updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
+//		verify(taskMock).setName(eq(SAMPLE_TASKNAME));
+//	}
+//
+//	@Test
+//	public void updateTaskCallsCorrectRepositoryMethods() {
+//		projectService.updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
+//		verify(projectRepositoryMock).update(eq(projectMock));
+//	}
+//
+//	@Test
+//	public void getTaskByNumberReturnsTheCorrectTask() {
+//		Task actualTask = projectService.getTaskByNumber(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER);
+//		assertSame(taskMock, actualTask);
+//	}
 }

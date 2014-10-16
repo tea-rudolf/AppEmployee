@@ -9,6 +9,10 @@ public class TimeEntry {
 	private LocalDate date;
 	private String userId;
 	private String taskId;
+	
+	public TimeEntry() {
+		
+	}
 
 	public TimeEntry(String uId) {
 		this.uId = uId;

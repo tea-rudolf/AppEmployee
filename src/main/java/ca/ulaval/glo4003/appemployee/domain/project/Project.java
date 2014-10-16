@@ -14,6 +14,10 @@ public class Project {
 	private List<String> taskIds = new ArrayList<String>();
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
+	
+	public Project() {
+		
+	}
 
 	public Project(String number) {
 		this.uId = number;

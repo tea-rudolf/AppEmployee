@@ -11,7 +11,7 @@ import java.util.Map;
 public class ConfigManager {
 	
 	private String payPeriodfile = "payPeriods.txt";
-	List<Map.Entry<String,String>> payPeriodDates = new java.util.ArrayList<>();
+	List<Map.Entry<String, String>> payPeriodDates = new java.util.ArrayList<>();
 	private static ConfigManager instance = null;
 
 	public ConfigManager() {
@@ -26,7 +26,7 @@ public class ConfigManager {
 
 	private void loadPayPeriodsFile(String fileName) throws IOException {
 		
-		List<Map.Entry<String,String>> payPeriodDates = new java.util.ArrayList<>();
+		List<Map.Entry<String, String>> payPeriodDates = new java.util.ArrayList<>();
 		
 		FileReader input = new FileReader(fileName);
 		BufferedReader reader = new BufferedReader(input);
@@ -47,7 +47,7 @@ public class ConfigManager {
 		return instance;
 	}
 
-	public List<Map.Entry<String,String>> getPayPeriodDates() {
+	public List<Map.Entry<String, String>> getPayPeriodDates() {
 		return payPeriodDates;
 	}
 }

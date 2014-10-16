@@ -26,23 +26,23 @@ public class TimeController {
 	static final String TIME_SHEET_JSP = "timeSheet";
 	static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 
-	private PayPeriodService service;
+	private PayPeriodService payPeriodService;
 	private PayPeriodConverter payPeriodConverter;
 	private User user;
 
 	@Autowired
 	public TimeController(PayPeriodService timeService, PayPeriodConverter payPeriodConverter) {
-		this.service = timeService;
+		this.payPeriodService = timeService;
 		this.payPeriodConverter = payPeriodConverter;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getTime(ModelMap model, HttpSession session) {
 
-		user = service.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
-		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
-		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
+		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		//PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
+		//PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
+		//model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
 
 		return TIME_SHEET_JSP;
@@ -51,8 +51,8 @@ public class TimeController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String saveTime(@ModelAttribute(PAY_PERIOD_ATTRIBUTE) PayPeriodViewModel payPeriodForm, HttpSession session) {
 
-		user = service.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		service.updateUserCurrentPayPeriodShiftList(user.getEmail(), payPeriodConverter.convert(payPeriodForm));
+		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		//payPeriodService.updateUserCurrentPayPeriodShiftList(user.getEmail(), payPeriodConverter.convert(payPeriodForm));
 
 		return TIME_SHEET_SUBMIT_JSP;
 	}

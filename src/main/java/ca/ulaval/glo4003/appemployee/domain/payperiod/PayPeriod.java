@@ -10,6 +10,10 @@ public class PayPeriod {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private List<String> timeEntryIds = new ArrayList<String>();
+	
+	public PayPeriod() {
+		
+	}
 
 	public PayPeriod(LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;

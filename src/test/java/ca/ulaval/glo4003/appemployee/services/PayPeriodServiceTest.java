@@ -88,39 +88,39 @@ public class PayPeriodServiceTest {
 		payPeriodServiceMock.getUserByEmail(INVALID_EMAIL);
 	}
 
-	@Test
-	public void getCurrentPayPeriodReturnsPayPeriodIfSuccessful(){
-		when(payPeriodRepositoryMock.findByDate(VALID_DATE)).thenReturn(payPeriod);
-		PayPeriod samplePayPeriod = payPeriodServiceMock.getCurrentPayPeriod();
-		assertEquals(samplePayPeriod.getEndDate(), END_DATE);
-	}
-	
-	@Test(expected = CurrentDateIsInvalidException.class)
-	public void getCurrentPayPeriodThrowsExceptionIfPayPeriodDoesNotExist(){
-		when(payPeriodRepositoryMock.findByDate(VALID_DATE)).thenThrow(new NoCurrentPayPeriodException());
-		payPeriodServiceMock.getCurrentPayPeriod();
-	}
-	
-	@Test
-	public void getCurrentPayPeriodCallsCorrectMethodInRepository(){
-		payPeriodServiceMock.getCurrentPayPeriod();
-		verify(payPeriodRepositoryMock, times(1)).findByDate(VALID_DATE);
-	}
-	
-	@Test
-	public void getPreviousPayPeriodCallsCorrectMethodInRepository(){
-		when(payPeriodRepositoryMock.findByDate(VALID_DATE)).thenReturn(payPeriod);
-		payPeriodServiceMock.getPreviousPayPeriod();
-		verify(payPeriodRepositoryMock, times(1)).findByDate(PREVIOUS_DATE);
-	}
-	
-	@Test
-	public void getPreviousPayPeriodFindsCorrectPayPeriod(){
-		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriod);
-		when(payPeriodRepositoryMock.findByDate(PREVIOUS_DATE)).thenReturn(previousPayPeriod);
-		PayPeriod samplePayPeriod = payPeriodServiceMock.getPreviousPayPeriod();
-		assertEquals(samplePayPeriod.getStartDate(), PREVIOUS_START_DATE);
-	}
+//	@Test
+//	public void getCurrentPayPeriodReturnsPayPeriodIfSuccessful(){
+//		when(payPeriodRepositoryMock.findByDate(VALID_DATE)).thenReturn(payPeriod);
+//		PayPeriod samplePayPeriod = payPeriodServiceMock.getCurrentPayPeriod();
+//		assertEquals(samplePayPeriod.getEndDate(), END_DATE);
+//	}
+//	
+//	@Test(expected = CurrentDateIsInvalidException.class)
+//	public void getCurrentPayPeriodThrowsExceptionIfPayPeriodDoesNotExist(){
+//		when(payPeriodRepositoryMock.findByDate(VALID_DATE)).thenThrow(new NoCurrentPayPeriodException());
+//		payPeriodServiceMock.getCurrentPayPeriod();
+//	}
+//	
+//	@Test
+//	public void getCurrentPayPeriodCallsCorrectMethodInRepository(){
+//		payPeriodServiceMock.getCurrentPayPeriod();
+//		verify(payPeriodRepositoryMock, times(1)).findByDate(VALID_DATE);
+//	}
+//	
+//	@Test
+//	public void getPreviousPayPeriodCallsCorrectMethodInRepository(){
+//		when(payPeriodRepositoryMock.findByDate(VALID_DATE)).thenReturn(payPeriod);
+//		payPeriodServiceMock.getPreviousPayPeriod();
+//		verify(payPeriodRepositoryMock, times(1)).findByDate(PREVIOUS_DATE);
+//	}
+//	
+//	@Test
+//	public void getPreviousPayPeriodFindsCorrectPayPeriod(){
+//		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriod);
+//		when(payPeriodRepositoryMock.findByDate(PREVIOUS_DATE)).thenReturn(previousPayPeriod);
+//		PayPeriod samplePayPeriod = payPeriodServiceMock.getPreviousPayPeriod();
+//		assertEquals(samplePayPeriod.getStartDate(), PREVIOUS_START_DATE);
+//	}
 	
 	@Test
 	public void getTasksForUserReturnsListOfTasks(){

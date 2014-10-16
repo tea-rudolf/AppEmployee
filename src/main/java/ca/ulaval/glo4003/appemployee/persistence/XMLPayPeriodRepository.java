@@ -3,25 +3,30 @@ package ca.ulaval.glo4003.appemployee.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import org.joda.time.LocalDate;
+import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
 
+@Repository
+@Singleton
 public class XMLPayPeriodRepository implements PayPeriodRepository {
 
-	private XMLSerializer<PayPeriodXMLAssembler> serializer;
+	private XMLGenericMarshaller<PayPeriodXMLAssembler> serializer;
 	private List<PayPeriod> payPeriods = new ArrayList<PayPeriod>();
-	private static String PAYPERIODS_FILEPATH = "/resources/payPeriods.xml";
+	private static String PAYPERIODS_FILEPATH = "/payPeriods.xml";
 
 	public XMLPayPeriodRepository() throws Exception {
-		serializer = new XMLSerializer<PayPeriodXMLAssembler>(PayPeriodXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<PayPeriodXMLAssembler>(PayPeriodXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLPayPeriodRepository(XMLSerializer<PayPeriodXMLAssembler> serializer) {
+	public XMLPayPeriodRepository(XMLGenericMarshaller<PayPeriodXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -57,11 +62,11 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	private void saveXML() throws Exception {
 		PayPeriodXMLAssembler payPeriodAssembler = new PayPeriodXMLAssembler();
 		payPeriodAssembler.setPayPeriods(payPeriods);
-		serializer.serialize(payPeriodAssembler, PAYPERIODS_FILEPATH);
+		serializer.marshall(payPeriodAssembler, PAYPERIODS_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		payPeriods = serializer.deserialize(PAYPERIODS_FILEPATH).getPayPeriods();
+		payPeriods = serializer.unmarshall(PAYPERIODS_FILEPATH).getPayPeriods();
 	}
 
 }

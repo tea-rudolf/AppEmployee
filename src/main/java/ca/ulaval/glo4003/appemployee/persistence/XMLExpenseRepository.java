@@ -5,21 +5,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
+import org.springframework.stereotype.Repository;
+
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 
+@Repository
+@Singleton
 public class XMLExpenseRepository implements ExpenseRepository {
 
-	private XMLSerializer<ExpenseXMLAssembler> serializer;
+	private XMLGenericMarshaller<ExpenseXMLAssembler> serializer;
 	private Map<String, Expense> expenses = new HashMap<String, Expense>();
-	private static String EXPENSES_FILEPATH = "/resources/expenses.xml";
+	private static String EXPENSES_FILEPATH = "/expenses.xml";
 
 	public XMLExpenseRepository() throws Exception {
-		serializer = new XMLSerializer<ExpenseXMLAssembler>(ExpenseXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<ExpenseXMLAssembler>(ExpenseXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLExpenseRepository(XMLSerializer<ExpenseXMLAssembler> serializer) {
+	public XMLExpenseRepository(XMLGenericMarshaller<ExpenseXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -44,11 +50,11 @@ public class XMLExpenseRepository implements ExpenseRepository {
 	private void saveXML() throws Exception {
 		ExpenseXMLAssembler expenseAssembler = new ExpenseXMLAssembler();
 		expenseAssembler.setExpenses(new ArrayList<Expense>(expenses.values()));
-		serializer.serialize(expenseAssembler, EXPENSES_FILEPATH);
+		serializer.marshall(expenseAssembler, EXPENSES_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		List<Expense> deserializedExpenses = serializer.deserialize(EXPENSES_FILEPATH).getExpenses();
+		List<Expense> deserializedExpenses = serializer.unmarshall(EXPENSES_FILEPATH).getExpenses();
 		for (Expense expense : deserializedExpenses) {
 			expenses.put(expense.getuId(), expense);
 		}
