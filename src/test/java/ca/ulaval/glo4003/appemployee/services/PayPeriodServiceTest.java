@@ -13,7 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.NoCurrentPayPeriodException;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.CurrentDateIsInvalidException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
@@ -95,9 +95,9 @@ public class PayPeriodServiceTest {
 		assertEquals(samplePayPeriod.getEndDate(), END_DATE);
 	}
 	
-	@Test(expected = NoCurrentPayPeriodException.class)
+	@Test(expected = CurrentDateIsInvalidException.class)
 	public void getCurrentPayPeriodThrowsExceptionIfPayPeriodDoesNotExist(){
-		when(payPeriodRepositoryMock.findPayPeriod(VALID_DATE)).thenThrow(new NoCurrentPayPeriodException());
+		when(payPeriodRepositoryMock.findPayPeriod(VALID_DATE)).thenThrow(new CurrentDateIsInvalidException());
 		payPeriodServiceMock.getCurrentPayPeriod();
 	}
 	

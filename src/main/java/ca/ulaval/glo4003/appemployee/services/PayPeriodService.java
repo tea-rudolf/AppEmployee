@@ -1,5 +1,8 @@
 package ca.ulaval.glo4003.appemployee.services;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +12,9 @@ import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.NoCurrentPayPeriodException;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.CurrentDateIsInvalidException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodFactory;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
@@ -72,20 +76,48 @@ public class PayPeriodService {
 		this.expenseRepository = expenseRepository;
 	}
 	
-	public PayPeriod getCurrentPayPeriod(){
+	public PayPeriod getCurrentPayPeriod() throws IOException{
 		PayPeriod payPeriodFound;
 
 		try {
 			payPeriodFound = payPeriodRepository.findPayPeriod(new LocalDate());
 		} catch (PayPeriodNotFoundException e) {
-			throw new NoCurrentPayPeriodException("Cannot find a current pay period.");
+			List<String> payPeriodDates = getPayPeriodDates("../data/payPeriods.txt");
+			payPeriodFound = PayPeriodFactory.getPayPeriod(payPeriodDates.get(0), payPeriodDates.get(1));
 		}
-		
 		return payPeriodFound;
-		
 	}
 	
-	public PayPeriod getPreviousPayPeriod(){
+	public List<String> getPayPeriodDates(String file) throws IOException{
+		FileReader input = new FileReader(file);
+		BufferedReader reader = new BufferedReader(input);
+		String myLine = null;
+		List<String> payPeriodDates = new ArrayList<String>();
+			while ( (myLine = reader.readLine()) != null)
+			{    
+			    String[] arrayOfDates = myLine.split(";");
+			    if(checkIfCurrentDateIsInPayPeriod(arrayOfDates[0], arrayOfDates[1])){
+			    	payPeriodDates.add(arrayOfDates[0]);
+			    	payPeriodDates.add(arrayOfDates[1]);
+			    	reader.close();
+			    	return payPeriodDates;
+			    }
+			}
+			reader.close();
+			throw new CurrentDateIsInvalidException("The date you entered is invalid");
+	}
+	
+	public boolean checkIfCurrentDateIsInPayPeriod(String startDate, String endDate){
+		LocalDate currentDate = new LocalDate();
+		if(currentDate.isAfter(new LocalDate(startDate)) && currentDate.isBefore(new LocalDate(endDate))){
+	    	return true;
+	    }
+		else{
+			return false;
+		}
+	}
+	
+	public PayPeriod getPreviousPayPeriod() throws IOException{
 		return payPeriodRepository.findPayPeriod(this.getCurrentPayPeriod().getStartDate().minusDays(1));
 	}
 	
