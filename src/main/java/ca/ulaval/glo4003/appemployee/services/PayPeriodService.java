@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.ConfigManager;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.CurrentDateIsInvalidException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodFactory;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
@@ -32,6 +32,7 @@ public class PayPeriodService {
 	private TaskRepository taskRepository;
 	private TimeEntryRepository timeEntryRepository;
 	private ExpenseRepository expenseRepository;
+	private ConfigManager configManager = ConfigManager.getInstance();
 
 	@Autowired
 	public PayPeriodService(PayPeriodRepository payPeriodRepository, 
@@ -88,12 +89,12 @@ public class PayPeriodService {
 	}
 	
 	public PayPeriod createPayPeriod() throws IOException{
-		List<String> payPeriodDates = getPayPeriodDates("../data/payPeriods.txt");
-		return PayPeriodFactory.getPayPeriod(payPeriodDates.get(0), payPeriodDates.get(1));
+		List<String> payPeriodDates = getPayPeriodDates();
+		return new PayPeriod(new LocalDate(payPeriodDates.get(0)), new LocalDate(payPeriodDates.get(1)));
 	}
 	
-	public List<String> getPayPeriodDates(String file) throws IOException{
-		FileReader input = new FileReader(file);
+	public List<String> getPayPeriodDates() throws IOException{
+		FileReader input = new FileReader(configManager.getProperty("payPeriods.txt"));
 		BufferedReader reader = new BufferedReader(input);
 		String myLine = null;
 		List<String> payPeriodDates = new ArrayList<String>();
