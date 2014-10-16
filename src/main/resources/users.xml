@@ -4,18 +4,18 @@
     <email>employee@employee.com</email>
     <password>employee</password>
     <wage>90000.50</wage>
-    <roles>EMPLOYEE</roles>
+    <role>EMPLOYEE</role>
   </users>
   <users>
     <email>supervisor@supervisor.com</email>
     <password>supervisor</password>
     <wage>100000</wage>
-    <roles>SUPERVISOR</roles>
+    <role>SUPERVISOR</role>
   </users>
   <users>
     <email>enterprise@enterprise.com</email>
     <password>enterprise</password>
     <wage>0</wage>
-    <roles>ENTERPRISE</roles>
+    <role>ENTERPRISE</role>
   </users>
 </users>
