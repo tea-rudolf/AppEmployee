@@ -19,5 +19,4 @@ public class PayPeriodXMLAssembler {
 	public void setPayPeriods(List<PayPeriod> payPeriods) {
 		this.payPeriods = payPeriods;
 	}
-
 }

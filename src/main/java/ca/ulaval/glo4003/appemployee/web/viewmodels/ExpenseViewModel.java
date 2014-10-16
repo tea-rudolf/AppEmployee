@@ -8,6 +8,7 @@ public class ExpenseViewModel {
 	private LocalDate date;
 	private String userId;
 	private String comment;
+	private String uId;
 	
 	public double getAmount() {
 		return amount;
@@ -39,6 +40,14 @@ public class ExpenseViewModel {
 	
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getuId() {
+		return uId;
+	}
+
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 
 }

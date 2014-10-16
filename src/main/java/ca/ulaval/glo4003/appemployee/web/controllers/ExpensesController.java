@@ -40,8 +40,8 @@ public class ExpensesController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getExpenses(ModelMap model, HttpSession session) {
 		List<Expense> expenses = expenseRepository.findAllExpensesByUser(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		ExpenseViewModel expenseViewModel = expenseConverter.convert(expenses);
-		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
+		List<ExpenseViewModel> expenseViewModels = expenseConverter.convert(expenses);
+		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModels);
 
 		return EXPENSES_JSP;
 	}

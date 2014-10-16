@@ -12,7 +12,6 @@ public class PayPeriod {
 	private List<String> timeEntryIds = new ArrayList<String>();
 	
 	public PayPeriod() {
-		
 	}
 
 	public PayPeriod(LocalDate startDate, LocalDate endDate) {

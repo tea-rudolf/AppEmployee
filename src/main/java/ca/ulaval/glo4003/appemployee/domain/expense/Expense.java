@@ -15,6 +15,10 @@ public class Expense {
 	public Expense() {
 		this.uId = UUID.randomUUID().toString();
 	}
+	
+	public Expense(String uId) {
+		this.uId = uId;
+	}
 
 	public void setAmount(double amount) {
 		this.amount = amount;
