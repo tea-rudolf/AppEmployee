@@ -2,8 +2,7 @@ package ca.ulaval.glo4003.appemployee.domain.project;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.annotation.XmlAttribute;
+import java.util.UUID;
 
 import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 
@@ -14,17 +13,17 @@ public class Project {
 	private List<String> taskIds = new ArrayList<String>();
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
-	
+
 	public Project() {
-		
+		this.uId = UUID.randomUUID().toString();
 	}
 
-	public Project(String number) {
-		this.uId = number;
+	public Project(String uId) {
+		this.uId = uId;
 	}
 
-	public Project(String number, String name) {
-		this.uId = number;
+	public Project(String uId, String name) {
+		this.uId = uId;
 		this.name = name;
 	}
 
@@ -36,7 +35,6 @@ public class Project {
 		this.uId = uId;
 	}
 
-	@XmlAttribute(name = "Name")
 	public String getName() {
 		return name;
 	}
