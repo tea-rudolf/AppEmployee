@@ -82,10 +82,14 @@ public class PayPeriodService {
 		try {
 			payPeriodFound = payPeriodRepository.findPayPeriod(new LocalDate());
 		} catch (PayPeriodNotFoundException e) {
-			List<String> payPeriodDates = getPayPeriodDates("../data/payPeriods.txt");
-			payPeriodFound = PayPeriodFactory.getPayPeriod(payPeriodDates.get(0), payPeriodDates.get(1));
+			payPeriodFound = createPayPeriod();
 		}
 		return payPeriodFound;
+	}
+	
+	public PayPeriod createPayPeriod() throws IOException{
+		List<String> payPeriodDates = getPayPeriodDates("../data/payPeriods.txt");
+		return PayPeriodFactory.getPayPeriod(payPeriodDates.get(0), payPeriodDates.get(1));
 	}
 	
 	public List<String> getPayPeriodDates(String file) throws IOException{
