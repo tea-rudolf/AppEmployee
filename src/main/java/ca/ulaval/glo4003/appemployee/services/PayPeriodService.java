@@ -1,10 +1,9 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.ConfigManager;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.CurrentDateIsInvalidException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
@@ -32,7 +30,6 @@ public class PayPeriodService {
 	private TaskRepository taskRepository;
 	private TimeEntryRepository timeEntryRepository;
 	private ExpenseRepository expenseRepository;
-	private ConfigManager configManager = ConfigManager.getInstance();
 
 	@Autowired
 	public PayPeriodService(PayPeriodRepository payPeriodRepository, 
@@ -83,33 +80,27 @@ public class PayPeriodService {
 		try {
 			payPeriodFound = payPeriodRepository.findPayPeriod(new LocalDate());
 		} catch (PayPeriodNotFoundException e) {
-			payPeriodFound = createPayPeriod();
+			createCurrentPayPeriod();
+			payPeriodFound = payPeriodRepository.findPayPeriod(new LocalDate());
 		}
 		return payPeriodFound;
 	}
 	
-	public PayPeriod createPayPeriod() throws IOException{
-		List<String> payPeriodDates = getPayPeriodDates();
-		return new PayPeriod(new LocalDate(payPeriodDates.get(0)), new LocalDate(payPeriodDates.get(1)));
-	}
 	
-	public List<String> getPayPeriodDates() throws IOException{
-		FileReader input = new FileReader(configManager.getProperty("payPeriods.txt"));
-		BufferedReader reader = new BufferedReader(input);
-		String myLine = null;
-		List<String> payPeriodDates = new ArrayList<String>();
-			while ( (myLine = reader.readLine()) != null)
-			{    
-			    String[] arrayOfDates = myLine.split(";");
-			    if(checkIfCurrentDateIsInPayPeriod(arrayOfDates[0], arrayOfDates[1])){
-			    	payPeriodDates.add(arrayOfDates[0]);
-			    	payPeriodDates.add(arrayOfDates[1]);
-			    	reader.close();
-			    	return payPeriodDates;
-			    }
+	public void createCurrentPayPeriod(){
+		
+		ConfigManager configManger = ConfigManager.getInstance();
+		List<Entry<String,String>> payPeriodDates = configManger.getPayPeriodDates();
+		
+		for (Entry<String,String> datesEntry : payPeriodDates) {
+			if (checkIfCurrentDateIsInPayPeriod(datesEntry.getKey(), datesEntry.getValue())){
+				PayPeriod newPayPeriod = new PayPeriod(new LocalDate(datesEntry.getKey()),
+				      new LocalDate(datesEntry.getValue()));
+				payPeriodRepository.add(newPayPeriod);
 			}
-			reader.close();
-			throw new CurrentDateIsInvalidException("The date you entered is invalid");
+				 
+		}
+			
 	}
 	
 	public boolean checkIfCurrentDateIsInPayPeriod(String startDate, String endDate){
