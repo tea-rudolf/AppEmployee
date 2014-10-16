@@ -12,6 +12,7 @@ import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.ConfigManager;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodFactory;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
@@ -20,6 +21,7 @@ import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
+import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @Service
 public class PayPeriodService {
@@ -29,6 +31,7 @@ public class PayPeriodService {
 	private TaskRepository taskRepository;
 	private TimeEntryRepository timeEntryRepository;
 	private ExpenseRepository expenseRepository;
+	private PayPeriodFactory payPeriodFactory;
 
 	@Autowired
 	public PayPeriodService(PayPeriodRepository payPeriodRepository, UserRepository userRepository, TaskRepository taskRepository,
@@ -39,9 +42,24 @@ public class PayPeriodService {
 		this.timeEntryRepository = timeEntryRepository;
 		this.expenseRepository = expenseRepository;
 	}
+	
+	public void updateCurrentPayPeriodTimeEntrys(PayPeriod payPeriod){
+		List<String> timeEntryIds = new ArrayList<String>();
+		
+		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
+			timeEntryIds.add(timeEntryId);
+		}
+		payPeriod.setTimeEntryIds(timeEntryIds);
+		
+		try {
+			payPeriodRepository.update(payPeriod);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
+	}
+	
 
-	// a changer
-	public PayPeriod getCurrentPayPeriod() throws Exception {
+	public PayPeriod getCurrentPayPeriod(){
 		PayPeriod foundPayPeriod;
 
 		try {
@@ -53,15 +71,19 @@ public class PayPeriodService {
 		return foundPayPeriod;
 	}
 
-	public void createCurrentPayPeriod() throws Exception {
+	public void createCurrentPayPeriod(){
 
 		ConfigManager configManger = ConfigManager.getInstance();
 		List<Entry<String, String>> payPeriodDates = configManger.getPayPeriodDates();
 
 		for (Entry<String, String> datesEntry : payPeriodDates) {
 			if (checkIfCurrentDateIsInPayPeriod(datesEntry.getKey(), datesEntry.getValue())) {
-				PayPeriod newPayPeriod = new PayPeriod(new LocalDate(datesEntry.getKey()), new LocalDate(datesEntry.getValue()));
-				payPeriodRepository.persist(newPayPeriod);
+				PayPeriod newPayPeriod = payPeriodFactory.createPayPeriod(datesEntry.getKey(), datesEntry.getValue());
+				try {
+					payPeriodRepository.persist(newPayPeriod);
+				} catch (Exception e) {
+					throw new PayPeriodNotFoundException("Pay period does not exist.");
+				}
 			}
 
 		}
@@ -105,6 +127,7 @@ public class PayPeriodService {
 		return expenses;
 
 	}
+	
 
 	public User getUserByEmail(String email) {
 		return userRepository.findByEmail(email);

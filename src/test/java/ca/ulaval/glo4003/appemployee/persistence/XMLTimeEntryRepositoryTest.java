@@ -19,7 +19,7 @@ public class XMLTimeEntryRepositoryTest {
 	@Before
 	public void init() {
 		xmlTimeEntryRepositoryMock = mock(XMLTimeEntryRepository.class);
-		timeEntryMock = new TimeEntry(ID);
+		timeEntryMock = new TimeEntry();
 	}
 
 	@Test

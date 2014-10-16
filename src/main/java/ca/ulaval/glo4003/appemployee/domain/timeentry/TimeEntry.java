@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.appemployee.domain.timeentry;
 
+import java.util.UUID;
+
 import org.joda.time.LocalDate;
 
 public class TimeEntry {
@@ -11,11 +13,7 @@ public class TimeEntry {
 	private String taskId;
 	
 	public TimeEntry() {
-		
-	}
-
-	public TimeEntry(String uId) {
-		this.uId = uId;
+		this.uId = UUID.randomUUID().toString();
 	}
 
 	public double getBillableHours() {

@@ -41,7 +41,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	}
 
 	@Override
-	public void update(PayPeriod payPeriod) throws Exception {
+	public void update(PayPeriod payPeriod) throws Exception{
 		int index = payPeriods.indexOf(payPeriod);
 		payPeriods.set(index, payPeriod);
 		saveXML();

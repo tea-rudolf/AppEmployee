@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.appemployee.domain.expense;
 
+import java.util.UUID;
+
 import org.joda.time.LocalDate;
 
 public class Expense {
@@ -9,13 +11,9 @@ public class Expense {
 	private LocalDate date;
 	private String userId;
 	private String comment;
-	
-	public Expense() {
-		
-	}
 
-	public Expense(String uId) {
-		this.uId = uId;
+	public Expense() {
+		this.uId = UUID.randomUUID().toString();
 	}
 
 	public void setAmount(double amount) {

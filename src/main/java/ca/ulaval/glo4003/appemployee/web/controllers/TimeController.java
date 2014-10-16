@@ -37,12 +37,12 @@ public class TimeController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getTime(ModelMap model, HttpSession session) {
+	public String getTime(ModelMap model, HttpSession session){
 
 		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		//PayPeriod currentPayPeriod = user.getCurrentPayPeriod();
-		//PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
-		//model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
+		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod);
+		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
 
 		return TIME_SHEET_JSP;
@@ -52,7 +52,7 @@ public class TimeController {
 	public String saveTime(@ModelAttribute(PAY_PERIOD_ATTRIBUTE) PayPeriodViewModel payPeriodForm, HttpSession session) {
 
 		user = payPeriodService.getUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		//payPeriodService.updateUserCurrentPayPeriodShiftList(user.getEmail(), payPeriodConverter.convert(payPeriodForm));
+		payPeriodService.updateCurrentPayPeriodTimeEntrys(payPeriodConverter.convert(payPeriodForm));
 
 		return TIME_SHEET_SUBMIT_JSP;
 	}
