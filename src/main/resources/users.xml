@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<users>
+  <users>
+    <email>employee@employee.com</email>
+    <password>employee</password>
+    <wage>90000.50</wage>
+    <roles>EMPLOYEE</roles>
+  </users>
+  <users>
+    <email>supervisor@supervisor.com</email>
+    <password>supervisor</password>
+    <wage>100000</wage>
+    <roles>SUPERVISOR</roles>
+  </users>
+  <users>
+    <email>enterprise@enterprise.com</email>
+    <password>enterprise</password>
+    <wage>0</wage>
+    <roles>ENTERPRISE</roles>
+  </users>
+</users>

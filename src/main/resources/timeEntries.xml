@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<timeEntries>
+  <timeEntries>
+    <uId>0001</uId>
+    <billaHours>7.5</billaHours>
+    <date>2014-09-01</date>
+    <userId>employee@employee.com</userId>
+    <taskId>0001</taskId>
+  </timeEntries>
+  <timeEntries>
+    <uId>0002</uId>
+    <billaHours>6</billaHours>
+    <date>2014-09-02</date>
+    <userId>employee@employee.com</userId>
+    <taskId>0002</taskId>
+  </timeEntries>
+  <timeEntries>
+    <uId>0003</uId>
+    <billaHours>5</billaHours>
+    <date>2014-09-03</date>
+    <userId>employee@employee.com</userId>
+    <taskId>0003</taskId>
+  </timeEntries>
+</timeEntries>

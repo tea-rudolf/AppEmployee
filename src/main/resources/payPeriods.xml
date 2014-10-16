@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<payPeriods>
+  <payPeriods>
+    <startDate>2014-09-01</startDate>
+    <endDate>2014-09-14</<endDate>>
+    <timeEntryIds>0001, 0002, 0003</timeEntryIds>
+  </payPeriods>
+  <payPeriods>
+    <startDate>2014-09-15</startDate>
+    <endDate>2014-09-28</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+  <payPeriods>
+    <startDate>2014-09-29</startDate>
+    <endDate>2014-10-12</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+    <payPeriods>
+    <startDate>2014-10-13</startDate>
+    <endDate>2014-10-26</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+    <payPeriods>
+    <startDate>2014-10-27</startDate>
+    <endDate>2014-11-09</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+    <payPeriods>
+    <startDate>2014-11-10</startDate>
+    <endDate>2014-11-23</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+    <payPeriods>
+    <startDate>2014-11-24</startDate>
+    <endDate>2014-12-07</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+    <payPeriods>
+    <startDate>2014-12-08</startDate>
+    <endDate>2014-12-21</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+    <payPeriods>
+    <startDate>2014-12-22</startDate>
+    <endDate>2015-01-04</<endDate>>
+    <timeEntryIds></timeEntryIds>
+  </payPeriods>
+</payPeriods>

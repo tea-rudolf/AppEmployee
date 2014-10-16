@@ -8,12 +8,7 @@ import org.springframework.stereotype.Repository;
 @Singleton
 public interface UserRepository {
 
-	void add(User user);
-
-	boolean validateCredentials(String email, String password);
+	void store(User user) throws Exception;
 
 	User findByEmail(String email) throws UserNotFoundException;
-
-	void update(User user);
-
 }

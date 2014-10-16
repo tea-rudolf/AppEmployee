@@ -18,7 +18,7 @@ import org.springframework.ui.Model;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
@@ -134,7 +134,7 @@ public class ProjectControllerTest {
 	@Test
 	public void addTaskReturnsAnErrorMessageOnTaskExistsException() {
 		when(taskConverterMock.convert(taskViewModelMock)).thenReturn(taskMock);
-		doThrow(new TaskExistsException()).when(projectServiceMock).addTask(SAMPLE_PROJECTNUMBER, taskMock);
+		doThrow(new TaskAlreadyExistsException()).when(projectServiceMock).addTask(SAMPLE_PROJECTNUMBER, taskMock);
 
 		projectController.addTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
 

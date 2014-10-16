@@ -1,11 +1,11 @@
 package ca.ulaval.glo4003.appemployee.domain.task;
 
 public class Task {
-	private Integer uId;
+	private String uId;
 	private String name;
 	private String comment;
 
-	public Task(Integer uId) {
+	public Task(String uId) {
 		this.uId = uId;
 	}
 
@@ -25,11 +25,11 @@ public class Task {
 		this.comment = comment;
 	}
 
-	public Integer getuId() {
+	public String getuId() {
 		return uId;
 	}
 
-	public void setuId(Integer uId) {
+	public void setuId(String uId) {
 		this.uId = uId;
 	}
 

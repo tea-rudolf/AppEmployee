@@ -71,7 +71,7 @@ public class ProjectServiceTest {
 	@Test
 	public void getAllProjectsCallsCorrectRepositoryMethods() {
 		projectService.getAllProjects();
-		verify(projectRepositoryMock).getAll();
+		verify(projectRepositoryMock).findAll();
 	}
 
 	@Test(expected = ProjectExistsException.class)

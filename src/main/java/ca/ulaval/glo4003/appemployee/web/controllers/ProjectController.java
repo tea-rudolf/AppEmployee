@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
@@ -85,7 +85,7 @@ public class ProjectController {
 	public String addTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
 		try {
 			projectService.addTask(projectNumber, taskConverter.convert(taskViewModel));
-		} catch (TaskExistsException e) {
+		} catch (TaskAlreadyExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return taskCreation(projectNumber, model, taskViewModel, session);
 		}

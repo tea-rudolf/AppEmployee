@@ -1,10 +1,7 @@
 package ca.ulaval.glo4003.appemployee.domain.expense;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.joda.time.LocalDate;
 
-@XmlRootElement(name = "Expense")
 public class Expense {
 
 	private String uId;
@@ -12,11 +9,7 @@ public class Expense {
 	private LocalDate date;
 	private String userId;
 	private String comment;
-	
-    protected Expense(){
-    	//For JAXB
-    }
-    
+
 	public Expense(String uId) {
 		this.uId = uId;
 	}
@@ -25,7 +18,6 @@ public class Expense {
 		this.amount = amount;
 	}
 
-	//@XmlAttribute(name = "Amount")
 	public double getAmount() {
 		return amount;
 	}
@@ -34,7 +26,6 @@ public class Expense {
 		this.date = date;
 	}
 
-	//@XmlAttribute(name = "Date")
 	public LocalDate getDate() {
 		return date;
 	}
@@ -43,7 +34,6 @@ public class Expense {
 		this.comment = comment;
 	}
 
-	//@XmlAttribute(name = "Comment")
 	public String getComment() {
 		return comment;
 	}

@@ -1,73 +1,70 @@
 package ca.ulaval.glo4003.appemployee.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.ulaval.glo4003.appemployee.domain.BillableRessource;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
-import ca.ulaval.glo4003.appemployee.domain.task.BillableTask;
-import ca.ulaval.glo4003.appemployee.domain.task.BillableTaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 @Service
 public class ProjectService {
-	
+
 	private ProjectRepository projectRepository;
-	private BillableTaskRepository taskRepository;
-	
+	private TaskRepository taskRepository;
+
 	@Autowired
-	public ProjectService(ProjectRepository projectRepository) {
+	public ProjectService(ProjectRepository projectRepository, TaskRepository taskRepository) {
 		this.projectRepository = projectRepository;
-	}
-	
-	public Project getProjectByNumber(String number) {
-		return projectRepository.getByNumber(number);
-	}
-	
-	public List<Project> getAllProjects() {
-		return projectRepository.getAll();
-	}
-	
-	public void addProject(Project project) {
-		projectRepository.persist(project);
-	}
-	
-	public void updateProject(String number, ProjectViewModel viewModel) {
-		Project project = getProjectByNumber(number);
-		project.setName(viewModel.getName());
-		projectRepository.update(project);
-	}
-	
-	public void addTask(BillableTask task) {
-		Project project = getProjectByNumber(number);
-		project.addTask(task);
-		projectRepository.update(project);
-	}
-	
-	public void updateTask(String projectNumber, String taskNumber, TaskViewModel viewModel) {
-		Project project = getProjectByNumber(projectNumber);
-		BillableTask task = project.getTaskByNumber(taskNumber);
-		task.setName(viewModel.getName());
-		projectRepository.update(project);
-	}
-	
-	public BillableTask getTaskByNumber(String projectNumber, String taskNumber) {
-		Project project = getProjectByNumber(projectNumber);
-		return project.getTaskByNumber(taskNumber);
+		this.taskRepository = taskRepository;
 	}
 
-	public List<BillableTask> getTasksByIds(List<String> billableIds) {
-		List<BillableTask> tasks = new ArrayList<BillableTask>(); 
-		for (String id : billableIds){
-			BillableRessource = taskRepository.findByName(id);
-			if ()
-			tasks.add(taskRepository.findByName(id));
+	public Collection<Project> getAllProjects() {
+		return projectRepository.findAll();
+	}
+
+	public void addProject(Project project) throws Exception {
+		projectRepository.store(project);
+	}
+
+	public void updateProject(String projectId, ProjectViewModel viewModel) throws Exception {
+		Project project = projectRepository.findById(projectId);
+		project.setName(viewModel.getName());
+		projectRepository.store(project);
+	}
+
+	public void addTaskToProject(String projectId, String taskId) throws Exception {
+		Project project = projectRepository.findById(projectId);
+		project.addTaskId(taskId);
+		projectRepository.store(project);
+	}
+
+	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) throws Exception {
+		Task task = taskRepository.findByUid(taskId);
+		task.setName(viewModel.getName());
+		taskRepository.store(task);
+	}
+
+	public Task getTaskById(String taskId) {
+		return taskRepository.findByUid(taskId);
+	}
+
+	public List<Task> getAllTasksByProjectId(String projectId) {
+		Project project = projectRepository.findById(projectId);
+		List<String> projectTasksId = project.getTaskIds();
+		List<Task> tasks = new ArrayList<Task>();
+
+		for (String taskId : projectTasksId) {
+			Task task = taskRepository.findByUid(taskId);
+			tasks.add(task);
 		}
-		return null;
+		return tasks;
 	}
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 public class ProjectViewModel {
-	private String number;
+	private String uId;
 	private String name;
 	private LocalDate startDate;
 	private LocalDate endDate;
@@ -14,12 +14,12 @@ public class ProjectViewModel {
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
 
-	public String getNumber() {
-		return number;
+	public String getuId() {
+		return uId;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 
 	public String getName() {
@@ -69,4 +69,5 @@ public class ProjectViewModel {
 	public void setExpenseIds(List<String> expenseIds) {
 		this.expenseIds = expenseIds;
 	}
+
 }

@@ -4,40 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 
-import org.joda.time.LocalDate;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 
-@XmlRootElement(name = "Project")
 public class Project {
-	
-	private String number;
+
+	private String uId;
 	private String name = "";
-	private LocalDate startDate;
-	private LocalDate endDate;
 	private List<String> taskIds = new ArrayList<String>();
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
 
-	protected Project(){
-		//required for JAXB
-	}
-	
 	public Project(String number) {
-		this.number = number;
-	}
-	
-	public Project(String number, String name) {
-		this.number = number;
-		this.name = name;
-	}
-	
-	public String getNumber() {
-		return number;
+		this.uId = number;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public Project(String number, String name) {
+		this.uId = number;
+		this.name = name;
+	}
+
+	public String getuId() {
+		return uId;
+	}
+
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 
 	@XmlAttribute(name = "Name")
@@ -47,22 +39,6 @@ public class Project {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
 	}
 
 	public List<String> getTaskIds() {
@@ -89,5 +65,12 @@ public class Project {
 		this.expenseIds = expenseIds;
 	}
 
+	public void addTaskId(String taskId) {
+		if (taskIds.contains(taskId)) {
+			throw new TaskAlreadyExistsException("Task already assigned to this project.");
+		}
+
+		taskIds.add(taskId);
+	}
 
 }

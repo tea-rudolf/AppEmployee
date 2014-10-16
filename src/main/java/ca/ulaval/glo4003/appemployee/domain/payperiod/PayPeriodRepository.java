@@ -1,23 +1,18 @@
 package ca.ulaval.glo4003.appemployee.domain.payperiod;
 
-import java.util.List;
-
 import javax.inject.Singleton;
 
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 @Singleton
 public interface PayPeriodRepository {
 
-	void add(PayPeriod payPeriod);
-	
-	void update(PayPeriod payPeriod);
+	void persist(PayPeriod payPeriod) throws Exception;
 
-	PayPeriod findPayPeriod(LocalDate date);
+	void update(PayPeriod payPeriod) throws Exception;
 
-	List<Integer> getAllTimeEntryUids(PayPeriod payPeriod);
-	
+	PayPeriod findByDate(LocalDate date);
+
 }

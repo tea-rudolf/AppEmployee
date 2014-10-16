@@ -23,9 +23,7 @@ public class ProjectConverter {
 	}
 
 	public Project convert(ProjectViewModel projectViewModel) {
-		Project project = new Project(projectViewModel.getNumber(), projectViewModel.getName());
-		project.setStartDate(projectViewModel.getStartDate());
-		project.setEndDate(projectViewModel.getEndDate());
+		Project project = new Project(projectViewModel.getuId(), projectViewModel.getName());
 		project.setTaskIds(projectViewModel.getTaskIds());
 		project.setUserIds(projectViewModel.getUserIds());
 		project.setExpenseIds(projectViewModel.getExpenseIds());
@@ -35,10 +33,8 @@ public class ProjectConverter {
 
 	public ProjectViewModel convert(Project project) {
 		ProjectViewModel viewModel = new ProjectViewModel();
-		viewModel.setNumber(project.getNumber());
+		viewModel.setuId(project.getuId());
 		viewModel.setName(project.getName());
-		viewModel.setStartDate(project.getStartDate());
-		viewModel.setEndDate(project.getEndDate());
 		viewModel.setTaskIds(project.getTaskIds());
 		viewModel.setUserIds(project.getUserIds());
 		viewModel.setExpenseIds(project.getExpenseIds());

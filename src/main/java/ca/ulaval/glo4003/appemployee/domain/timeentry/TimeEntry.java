@@ -3,18 +3,18 @@ package ca.ulaval.glo4003.appemployee.domain.timeentry;
 import org.joda.time.LocalDate;
 
 public class TimeEntry {
-	
-	private Integer uId;
-	private Integer billableHours;
+
+	private String uId;
+	private double billableHours;
 	private LocalDate date;
 	private String userId;
 	private String taskId;
-	
-	public TimeEntry(Integer uId) {
-		this.uId = uId;		
+
+	public TimeEntry(String uId) {
+		this.uId = uId;
 	}
-	
-	public Integer getBillableHours() {
+
+	public double getBillableHours() {
 		return billableHours;
 	}
 
@@ -38,11 +38,11 @@ public class TimeEntry {
 		this.userId = userId;
 	}
 
-	public Integer getuId() {
+	public String getuId() {
 		return uId;
 	}
 
-	public void setuId(Integer uId) {
+	public void setuId(String uId) {
 		this.uId = uId;
 	}
 

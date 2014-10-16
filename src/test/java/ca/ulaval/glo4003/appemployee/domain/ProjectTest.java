@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskNotFoundException;
 
 public class ProjectTest {
@@ -33,7 +33,7 @@ public class ProjectTest {
 		assertTrue(project.getTasks().contains(taskMock));
 	}
 
-	@Test(expected = TaskExistsException.class)
+	@Test(expected = TaskAlreadyExistsException.class)
 	public void addTaskThrowsTaskExistsExceptionWhenSpecifyingAnExistingTask() {
 		project.addTask(taskMock);
 		project.addTask(taskMock);

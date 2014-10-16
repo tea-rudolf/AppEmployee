@@ -1,29 +1,19 @@
 package ca.ulaval.glo4003.appemployee.domain.user;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-
-
-@XmlRootElement(name = "User")
 public class User {
 
 	private String email;
 	private String password;
-	private Integer wage;
+	private double wage;
 	private String role;
-	
-	protected User(){
-		//required for JAXB
-	}
 
-	public User(String username, String password, String role, Integer wage) {
+	public User(String username, String password, String role, double wage) {
 		this.email = username;
 		this.password = password;
 		this.role = role;
-		this.setWage(wage);
+		this.wage = wage;
 	}
 
-	@XmlAttribute(name = "Email")
 	public String getEmail() {
 		return email;
 	}
@@ -32,7 +22,6 @@ public class User {
 		this.email = email;
 	}
 
-	@XmlAttribute(name = "Password")
 	public String getPassword() {
 		return password;
 	}
@@ -41,7 +30,6 @@ public class User {
 		this.password = password;
 	}
 
-	@XmlAttribute(name = "Role")
 	public String getRole() {
 		return role;
 	}
@@ -54,11 +42,11 @@ public class User {
 		return this.password.equals(password);
 	}
 
-	public Integer getWage() {
+	public double getWage() {
 		return wage;
 	}
 
-	public void setWage(Integer wage) {
+	public void setWage(double wage) {
 		this.wage = wage;
 	}
 }

@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -32,119 +31,79 @@ public class PayPeriodService {
 	private ExpenseRepository expenseRepository;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, 
-			UserRepository userRepository, TaskRepository taskRepository,  		
-			TimeEntryRepository timeEntryRepository, ExpenseRepository expenseRepository){
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, UserRepository userRepository, TaskRepository taskRepository,
+			TimeEntryRepository timeEntryRepository, ExpenseRepository expenseRepository) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.userRepository = userRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
-		this.setExpenseRepository(expenseRepository);
-	}
-
-	public UserRepository getUserRepository() {
-		return userRepository;
-	}
-
-	public void setUserRepository(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-
-	public TaskRepository getTaskRepository() {
-		return taskRepository;
-	}
-
-	public void setTaskRepository(TaskRepository taskRepository) {
-		this.taskRepository = taskRepository;
-	}
-
-	public TimeEntryRepository getTimeEntryRepository() {
-		return timeEntryRepository;
-	}
-
-	public void setTimeEntryRepository(TimeEntryRepository timeEntryRepository) {
-		this.timeEntryRepository = timeEntryRepository;
-	}
-	
-	public ExpenseRepository getExpenseRepository() {
-		return expenseRepository;
-	}
-
-	public void setExpenseRepository(ExpenseRepository expenseRepository) {
 		this.expenseRepository = expenseRepository;
 	}
-	
-	public PayPeriod getCurrentPayPeriod() throws IOException{
-		PayPeriod payPeriodFound;
+
+	// a changer
+	public PayPeriod getCurrentPayPeriod() throws Exception {
+		PayPeriod foundPayPeriod;
 
 		try {
-			payPeriodFound = payPeriodRepository.findPayPeriod(new LocalDate());
+			foundPayPeriod = payPeriodRepository.findByDate(new LocalDate());
 		} catch (PayPeriodNotFoundException e) {
 			createCurrentPayPeriod();
-			payPeriodFound = payPeriodRepository.findPayPeriod(new LocalDate());
+			foundPayPeriod = payPeriodRepository.findByDate(new LocalDate());
 		}
-		return payPeriodFound;
+		return foundPayPeriod;
 	}
-	
-	
-	public void createCurrentPayPeriod(){
-		
+
+	public void createCurrentPayPeriod() throws Exception {
+
 		ConfigManager configManger = ConfigManager.getInstance();
-		List<Entry<String,String>> payPeriodDates = configManger.getPayPeriodDates();
-		
-		for (Entry<String,String> datesEntry : payPeriodDates) {
-			if (checkIfCurrentDateIsInPayPeriod(datesEntry.getKey(), datesEntry.getValue())){
-				PayPeriod newPayPeriod = new PayPeriod(new LocalDate(datesEntry.getKey()),
-				      new LocalDate(datesEntry.getValue()));
-				payPeriodRepository.add(newPayPeriod);
+		List<Entry<String, String>> payPeriodDates = configManger.getPayPeriodDates();
+
+		for (Entry<String, String> datesEntry : payPeriodDates) {
+			if (checkIfCurrentDateIsInPayPeriod(datesEntry.getKey(), datesEntry.getValue())) {
+				PayPeriod newPayPeriod = new PayPeriod(new LocalDate(datesEntry.getKey()), new LocalDate(datesEntry.getValue()));
+				payPeriodRepository.persist(newPayPeriod);
 			}
-				 
+
 		}
-			
+
 	}
-	
-	public boolean checkIfCurrentDateIsInPayPeriod(String startDate, String endDate){
+
+	public boolean checkIfCurrentDateIsInPayPeriod(String startDate, String endDate) {
 		LocalDate currentDate = new LocalDate();
-		if(currentDate.isAfter(new LocalDate(startDate)) && currentDate.isBefore(new LocalDate(endDate))){
-	    	return true;
-	    }
-		else{
-			return false;
-		}
+		return currentDate.isAfter(new LocalDate(startDate)) && currentDate.isBefore(new LocalDate(endDate));
 	}
-	
-	public PayPeriod getPreviousPayPeriod() throws IOException{
-		return payPeriodRepository.findPayPeriod(this.getCurrentPayPeriod().getStartDate().minusDays(1));
+
+	public PayPeriod getPreviousPayPeriod() throws Exception {
+		return payPeriodRepository.findByDate(this.getCurrentPayPeriod().getStartDate().minusDays(1));
 	}
-	
-	public List<Task> getTasksForUser(PayPeriod payPeriod, String userId){
-		
+
+	public List<Task> getTasksForUser(PayPeriod payPeriod, String userId) {
+
 		List<Task> tasks = new ArrayList<Task>();
-		
-		for (Integer timeEntryId : payPeriod.getTimeEntryIds()) {
-			TimeEntry entry = timeEntryRepository.getByUid(timeEntryId);
-			if (entry.getUserId() == userId){
-				tasks.add(taskRepository.getByUid(entry.getuId()));
+
+		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
+			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
+			if (entry.getUserId() == userId) {
+				tasks.add(taskRepository.findByUid(entry.getuId()));
 			}
 		}
-		
+
 		return tasks;
-		
+
 	}
-	
-	public List<Expense> getExpensesForUser(PayPeriod payPeriod, String userId){
-		
+
+	public List<Expense> getExpensesForUser(PayPeriod payPeriod, String userId) {
+
 		List<Expense> expenses = new ArrayList<Expense>();
-		
-		for (Expense expense : expenseRepository.findAllExpensesForUser(userId)) {
-			if (expense.getDate().isBefore(payPeriod.getEndDate()) && 
-					expense.getDate().isAfter(payPeriod.getStartDate())){
+
+		for (Expense expense : expenseRepository.findAllExpensesByUser(userId)) {
+			if (expense.getDate().isBefore(payPeriod.getEndDate()) && expense.getDate().isAfter(payPeriod.getStartDate())) {
 				expenses.add(expense);
 			}
 		}
-		
+
 		return expenses;
-		
+
 	}
 
 	public User getUserByEmail(String email) {
@@ -152,5 +111,3 @@ public class PayPeriodService {
 	}
 
 }
-
-

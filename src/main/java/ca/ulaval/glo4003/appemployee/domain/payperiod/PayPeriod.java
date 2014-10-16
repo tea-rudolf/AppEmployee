@@ -5,20 +5,17 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-//@XmlRootElement(name = "PayPeriod")
 public class PayPeriod {
 
 	private LocalDate startDate;
 	private LocalDate endDate;
-	private List<Integer> timeEntryIds = new ArrayList<Integer>();
+	private List<String> timeEntryIds = new ArrayList<String>();
 
 	public PayPeriod(LocalDate startDate, LocalDate endDate) {
 		this.startDate = startDate;
 		this.endDate = endDate;
-		
 	}
 
-	//@XmlAttribute(name = "StartDate")
 	public LocalDate getStartDate() {
 		return startDate;
 	}
@@ -27,7 +24,6 @@ public class PayPeriod {
 		this.startDate = startDate;
 	}
 
-	//@XmlAttribute(name = "EndDate")
 	public LocalDate getEndDate() {
 		return endDate;
 	}
@@ -36,11 +32,11 @@ public class PayPeriod {
 		this.endDate = endDate;
 	}
 
-	public List<Integer> getTimeEntryIds() {
+	public List<String> getTimeEntryIds() {
 		return timeEntryIds;
 	}
 
-	public void setTimeEntryIds(List<Integer> timeEntryIds) {
+	public void setTimeEntryIds(List<String> timeEntryIds) {
 		this.timeEntryIds = timeEntryIds;
 	}
 

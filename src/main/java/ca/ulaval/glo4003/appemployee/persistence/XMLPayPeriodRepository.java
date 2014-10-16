@@ -1,0 +1,67 @@
+package ca.ulaval.glo4003.appemployee.persistence;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.LocalDate;
+
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
+
+public class XMLPayPeriodRepository implements PayPeriodRepository {
+
+	private XMLSerializer<PayPeriodXMLAssembler> serializer;
+	private List<PayPeriod> payPeriods = new ArrayList<PayPeriod>();
+	private static String PAYPERIODS_FILEPATH = "/resources/payPeriods.xml";
+
+	public XMLPayPeriodRepository() throws Exception {
+		serializer = new XMLSerializer<PayPeriodXMLAssembler>(PayPeriodXMLAssembler.class);
+		parseXML();
+	}
+
+	public XMLPayPeriodRepository(XMLSerializer<PayPeriodXMLAssembler> serializer) {
+		this.serializer = serializer;
+	}
+
+	@Override
+	public void persist(PayPeriod payPeriod) throws Exception {
+		if (payPeriods.contains(payPeriod)) {
+			throw new PayPeriodAlreadyExistsException("PayPeriod already exists in repository.");
+		}
+
+		payPeriods.add(payPeriod);
+		saveXML();
+	}
+
+	@Override
+	public void update(PayPeriod payPeriod) throws Exception {
+		int index = payPeriods.indexOf(payPeriod);
+		payPeriods.set(index, payPeriod);
+		saveXML();
+	}
+
+	@Override
+	public PayPeriod findByDate(LocalDate date) {
+
+		for (PayPeriod payPeriod : payPeriods) {
+			if (date.isAfter(payPeriod.getStartDate()) && date.isBefore(payPeriod.getEndDate())) {
+				return payPeriod;
+			}
+		}
+
+		throw new PayPeriodNotFoundException("Cannot find project pay period containing date " + date.toString());
+	}
+
+	private void saveXML() throws Exception {
+		PayPeriodXMLAssembler payPeriodAssembler = new PayPeriodXMLAssembler();
+		payPeriodAssembler.setPayPeriods(payPeriods);
+		serializer.serialize(payPeriodAssembler, PAYPERIODS_FILEPATH);
+	}
+
+	private void parseXML() throws Exception {
+		payPeriods = serializer.deserialize(PAYPERIODS_FILEPATH).getPayPeriods();
+	}
+
+}
