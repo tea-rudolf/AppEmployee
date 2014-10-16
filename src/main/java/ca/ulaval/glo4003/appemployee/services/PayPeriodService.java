@@ -85,9 +85,7 @@ public class PayPeriodService {
 					throw new PayPeriodNotFoundException("Pay period does not exist.");
 				}
 			}
-
 		}
-
 	}
 
 	public boolean checkIfCurrentDateIsInPayPeriod(String startDate, String endDate) {
@@ -109,26 +107,20 @@ public class PayPeriodService {
 				tasks.add(taskRepository.findByUid(entry.getuId()));
 			}
 		}
-
 		return tasks;
 
 	}
 
 	public List<Expense> getExpensesForUser(PayPeriod payPeriod, String userId) {
-
 		List<Expense> expenses = new ArrayList<Expense>();
-
 		for (Expense expense : expenseRepository.findAllExpensesByUser(userId)) {
 			if (expense.getDate().isBefore(payPeriod.getEndDate()) && expense.getDate().isAfter(payPeriod.getStartDate())) {
 				expenses.add(expense);
 			}
 		}
-
 		return expenses;
-
 	}
 	
-
 	public User getUserByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
