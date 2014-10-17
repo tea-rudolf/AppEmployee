@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
@@ -39,6 +40,11 @@ public class ExpensesController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getExpenses(ModelMap model, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
 		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
 		expenseViewModel.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
@@ -51,8 +57,9 @@ public class ExpensesController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String saveExpenses(@ModelAttribute(EXPENSE_ATTRIBUTE) ExpenseViewModel expenseForm, HttpSession session) throws Exception {
 
-			expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-			expenseRepository.store(expenseConverter.convert(expenseForm));
+		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		Expense newExpense = expenseConverter.convert(expenseForm);
+		expenseRepository.store(newExpense);
 
 		return EXPENSES_SUBMIT_JSP;
 	}

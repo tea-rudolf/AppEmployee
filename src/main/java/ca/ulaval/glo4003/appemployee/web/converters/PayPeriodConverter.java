@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Component
 public class PayPeriodConverter {
@@ -16,9 +16,9 @@ public class PayPeriodConverter {
 
 	}
 
-	public TimeEntry convertToTimeEntry(PayPeriodViewModel payPeriodViewModel) {
+	public TimeEntry convertToTimeEntry(TimeViewModel payPeriodViewModel) {
 		TimeEntry newTimeEntry = new TimeEntry();
-		newTimeEntry.setBillableHours(payPeriodViewModel.getBillableHoursTimeEntry());
+		newTimeEntry.setBillableHours(payPeriodViewModel.getHoursTimeEntry());
 		newTimeEntry.setDate(payPeriodViewModel.getDateTimeEntry());
 		newTimeEntry.setTaskuId(payPeriodViewModel.getTaskIdTimeEntry());
 		newTimeEntry.setUserEmail(payPeriodViewModel.getUserEmail());
@@ -26,8 +26,8 @@ public class PayPeriodConverter {
 		return newTimeEntry;
 	}
 
-	public PayPeriodViewModel convert(PayPeriod payPeriod, List<TimeEntry> timeEntrys, List<Task> tasks) {
-		PayPeriodViewModel payPeriodViewModel = new PayPeriodViewModel();
+	public TimeViewModel convert(PayPeriod payPeriod, List<TimeEntry> timeEntrys, List<Task> tasks) {
+		TimeViewModel payPeriodViewModel = new TimeViewModel();
 		payPeriodViewModel.setStartDate(payPeriod.getStartDate().toString());
 		payPeriodViewModel.setEndDate(payPeriod.getEndDate().toString());
 		payPeriodViewModel.setAvailableTasks(tasks);

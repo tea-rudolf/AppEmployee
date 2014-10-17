@@ -31,7 +31,7 @@ public class ProjectService {
 		return projectRepository.findAll();
 	}
 
-	public void addProject(Project project){
+	public void addProject(Project project) {
 		try {
 			projectRepository.store(project);
 		} catch (Exception e) {
@@ -39,7 +39,7 @@ public class ProjectService {
 		}
 	}
 
-	public void updateProject(String projectId, ProjectViewModel viewModel){
+	public void updateProject(String projectId, ProjectViewModel viewModel) {
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
 		try {
@@ -49,7 +49,7 @@ public class ProjectService {
 		}
 	}
 
-	public void addTaskToProject(String projectId, String taskId){
+	public void addTaskToProject(String projectId, String taskId) {
 		Project project = projectRepository.findById(projectId);
 		project.addTaskuId(taskId);
 		try {
@@ -59,7 +59,7 @@ public class ProjectService {
 		}
 	}
 
-	public void addTask(Task task){
+	public void addTask(Task task) {
 		try {
 			taskRepository.store(task);
 		} catch (Exception e) {
@@ -67,7 +67,7 @@ public class ProjectService {
 		}
 	}
 
-	public void updateTask(String projectId, String taskId, TaskViewModel viewModel){
+	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) {
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
 		try {

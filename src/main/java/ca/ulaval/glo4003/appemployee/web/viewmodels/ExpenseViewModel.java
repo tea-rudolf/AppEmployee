@@ -7,7 +7,7 @@ public class ExpenseViewModel {
 	private String payPeriodStartDate;
 	private String payPeriodEndDate;
 	private double amount;
-	private LocalDate date;
+	private String date;
 	private String userEmail;
 	private String comment;
 	private String uId;
@@ -20,11 +20,11 @@ public class ExpenseViewModel {
 		this.amount = amount;
 	}
 
-	public LocalDate getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

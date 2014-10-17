@@ -29,6 +29,8 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 @SessionAttributes({ "email" })
 public class ProjectController {
 
+	static final String EMAIL_ATTRIBUTE = "email";
+
 	private ProjectService projectService;
 	private ProjectConverter projectConverter;
 	private TaskConverter taskConverter;
@@ -42,12 +44,22 @@ public class ProjectController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getProjects(Model model, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
 		model.addAttribute("projects", projectConverter.convert(projectService.getAllProjects()));
 		return "projectList";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String projectCreation(Model model, ProjectViewModel projectViewModel, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
 		model.addAttribute("project", projectViewModel);
 		return "createProject";
 	}
@@ -69,6 +81,10 @@ public class ProjectController {
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
 	public String projectModification(@PathVariable String projectNumber, Model model, HttpSession session) {
 
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
 		Project project = projectService.getProjectById(projectNumber);
 		model.addAttribute("project", projectConverter.convert(project));
 		List<Task> t = projectService.getAllTasksByProjectId(project.getuId());
@@ -87,6 +103,11 @@ public class ProjectController {
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
 	public String taskCreation(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
 		return String.format("createTask");
@@ -109,6 +130,11 @@ public class ProjectController {
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
 	public String taskModification(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
 		Task task = projectService.getTaskById(taskNumber);
 		model.addAttribute("task", taskConverter.convert(task));
 		model.addAttribute("projectNumber", projectNumber);

@@ -22,7 +22,7 @@ import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Controller
 @RequestMapping(value = "/time")
@@ -30,7 +30,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 public class TimeController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
-	static final String PAY_PERIOD_ATTRIBUTE = "payPeriodForm";
+	static final String TIME_ATTRIBUTE = "timeForm";
 	static final String TIME_SHEET_JSP = "timeSheet";
 	static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 
@@ -55,24 +55,23 @@ public class TimeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getTime(ModelMap model, HttpSession session) {
 
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
 		user = userRepository.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-
 		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, user.getEmail());
-
 		List<Task> tasks = userService.getTasksForUserForAPayPeriod(currentPayPeriod, user.getEmail());
-
-		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod, timeEntries, tasks);
-
-		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
+		TimeViewModel form = payPeriodConverter.convert(currentPayPeriod, timeEntries, tasks);
+		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
 
 		return TIME_SHEET_JSP;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String saveTime(@ModelAttribute(PAY_PERIOD_ATTRIBUTE) PayPeriodViewModel payPeriodForm, HttpSession session) throws Exception {
+	public String saveTime(@ModelAttribute(TIME_ATTRIBUTE) TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
 		TimeEntry newTimeEntry = payPeriodConverter.convertToTimeEntry(payPeriodForm);
 		timeEntryRepository.store(newTimeEntry);
