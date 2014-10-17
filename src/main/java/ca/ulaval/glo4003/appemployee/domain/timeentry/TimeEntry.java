@@ -11,7 +11,7 @@ public class TimeEntry {
 	private LocalDate date;
 	private String userEmail;
 	private String taskuId;
-	
+
 	public TimeEntry() {
 		this.uId = UUID.randomUUID().toString();
 	}

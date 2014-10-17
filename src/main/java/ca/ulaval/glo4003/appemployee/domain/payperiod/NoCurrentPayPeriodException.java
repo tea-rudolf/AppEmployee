@@ -7,7 +7,7 @@ public class NoCurrentPayPeriodException extends RuntimeException {
 	public NoCurrentPayPeriodException() {
 		super();
 	}
-	
+
 	public NoCurrentPayPeriodException(String message) {
 		super(message);
 	}

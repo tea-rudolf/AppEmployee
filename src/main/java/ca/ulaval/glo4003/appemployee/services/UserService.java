@@ -23,13 +23,12 @@ public class UserService {
 	private TimeEntryRepository timeEntryRepository;
 
 	@Autowired
-	public UserService(PayPeriodRepository payPeriodRepository, TaskRepository taskRepository, 
-			ExpenseRepository expenseRepository, TimeEntryRepository timeEntryRepository) {
+	public UserService(PayPeriodRepository payPeriodRepository, TaskRepository taskRepository, ExpenseRepository expenseRepository,
+			TimeEntryRepository timeEntryRepository) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
 	}
-
 
 	public void updateCurrentPayPeriod(PayPeriod payPeriod) {
 		try {
@@ -37,37 +36,37 @@ public class UserService {
 		} catch (Exception e) {
 			throw new RepositoryException(e.getMessage());
 		}
-		
+
 	}
-	
- 	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String userId) {
- 		
- 		List<Task> tasks = new ArrayList<Task>();
- 		
- 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
- 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
- 			if (entry.getUserEmail() == userId) {
- 				tasks.add(taskRepository.findByUid(entry.getuId()));
- 			}
- 		}
- 		
- 		return tasks;
- 		
- 	}
- 	
- 	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
- 		
- 		List<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
- 		
- 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
- 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
- 			if (entry.getUserEmail() == userEmail) {
- 				timeEntries.add(entry);
- 			}
- 		}
- 		
- 		return timeEntries;
- 		
- 	}
- 	
+
+	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String userId) {
+
+		List<Task> tasks = new ArrayList<Task>();
+
+		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
+			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
+			if (entry.getUserEmail() == userId) {
+				tasks.add(taskRepository.findByUid(entry.getuId()));
+			}
+		}
+
+		return tasks;
+
+	}
+
+	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
+
+		List<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
+
+		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
+			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
+			if (entry.getUserEmail() == userEmail) {
+				timeEntries.add(entry);
+			}
+		}
+
+		return timeEntries;
+
+	}
+
 }

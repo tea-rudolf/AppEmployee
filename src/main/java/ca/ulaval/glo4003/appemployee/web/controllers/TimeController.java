@@ -60,15 +60,10 @@ public class TimeController {
 		}
 
 		user = userRepository.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-
 		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, user.getEmail());
-
 		List<Task> tasks = userService.getTasksForUserForAPayPeriod(currentPayPeriod, user.getEmail());
-		System.out.println("tasks count = " + tasks.size());
 		TimeViewModel form = payPeriodConverter.convert(currentPayPeriod, timeEntries, tasks);
-		System.out.println("form date " + form.getPayPeriodStartDate());
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
 

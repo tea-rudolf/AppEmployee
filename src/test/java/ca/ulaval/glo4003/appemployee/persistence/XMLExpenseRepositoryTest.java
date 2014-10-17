@@ -30,7 +30,7 @@ public class XMLExpenseRepositoryTest {
 
 	@Test
 	public void findAllExpensesForUserReturnsListOfExpenses() throws Exception {
-		when(expenseMock.getUserId()).thenReturn(USER_ID);
+		when(expenseMock.getUserEmail()).thenReturn(USER_ID);
 		when(expenseMock.getAmount()).thenReturn(AMOUNT);
 		
 		xmlExpenseRepository.store(expenseMock);
