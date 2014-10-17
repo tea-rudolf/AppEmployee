@@ -13,6 +13,7 @@ import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntryRepository;
+import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @Service
 public class UserService {
@@ -32,25 +33,13 @@ public class UserService {
 	}
 
 
-	public void updateCurrentPayPeriod(PayPeriod payPeriod) throws Exception {
-		payPeriodRepository.update(payPeriod);
+	public void updateCurrentPayPeriod(PayPeriod payPeriod){
+		try {
+			payPeriodRepository.update(payPeriod);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 		
-	}
-
-	public TaskRepository getTaskRepository() {
-		return taskRepository;
-	}
-
-	public void setTaskRepository(TaskRepository taskRepository) {
-		this.taskRepository = taskRepository;
-	}
-
-	public ExpenseRepository getExpenseRepository() {
-		return expenseRepository;
-	}
-
-	public void setExpenseRepository(ExpenseRepository expenseRepository) {
-		this.expenseRepository = expenseRepository;
 	}
 	
  	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String userId) {

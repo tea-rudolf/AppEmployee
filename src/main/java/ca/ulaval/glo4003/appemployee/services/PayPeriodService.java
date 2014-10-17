@@ -45,13 +45,16 @@ public class PayPeriodService {
 		return currentPayPeriod;
 	}
 
-	public PayPeriod getPreviousPayPeriod() throws Exception {
+	public PayPeriod getPreviousPayPeriod(){
 		return payPeriodRepository.findByDate(this.getCurrentPayPeriod().getStartDate().minusDays(1));
 	}
 
-	public void updateCurrentPayPeriod(PayPeriod payPeriod) throws Exception {
-		payPeriodRepository.update(payPeriod);
-
+	public void updateCurrentPayPeriod(PayPeriod payPeriod){
+		try {
+			payPeriodRepository.update(payPeriod);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 	}
 
 }

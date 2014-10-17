@@ -11,6 +11,7 @@ import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
+import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
@@ -30,30 +31,50 @@ public class ProjectService {
 		return projectRepository.findAll();
 	}
 
-	public void addProject(Project project) throws Exception {
-		projectRepository.store(project);
+	public void addProject(Project project){
+		try {
+			projectRepository.store(project);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 	}
 
-	public void updateProject(String projectId, ProjectViewModel viewModel) throws Exception {
+	public void updateProject(String projectId, ProjectViewModel viewModel){
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
-		projectRepository.store(project);
+		try {
+			projectRepository.store(project);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 	}
 
-	public void addTaskToProject(String projectId, String taskId) throws Exception {
+	public void addTaskToProject(String projectId, String taskId){
 		Project project = projectRepository.findById(projectId);
 		project.addTaskuId(taskId);
-		projectRepository.store(project);
+		try {
+			projectRepository.store(project);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 	}
 
-	public void addTask(Task task) throws Exception {
-		taskRepository.store(task);
+	public void addTask(Task task){
+		try {
+			taskRepository.store(task);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 	}
 
-	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) throws Exception {
+	public void updateTask(String projectId, String taskId, TaskViewModel viewModel){
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
-		taskRepository.store(task);
+		try {
+			taskRepository.store(task);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 	}
 
 	public Task getTaskById(String taskId) {
