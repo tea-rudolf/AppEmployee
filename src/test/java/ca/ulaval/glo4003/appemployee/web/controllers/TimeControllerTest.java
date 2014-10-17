@@ -20,7 +20,7 @@ import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TimeControllerTest {
@@ -35,7 +35,7 @@ public class TimeControllerTest {
 	private PayPeriodConverter payPeriodConverterMock;
 	private TimeController timeControllerMock;
 	private ModelMap modelMapMock;
-	private PayPeriodViewModel payPeriodViewModelMock;
+	private TimeViewModel payPeriodViewModelMock;
 	private HttpSession sessionMock;
 	private PayPeriod payPeriodMock;
 	private User userMock;
@@ -51,7 +51,7 @@ public class TimeControllerTest {
 		payPeriodConverterMock = mock(PayPeriodConverter.class);
 		timeControllerMock = mock(TimeController.class);
 		modelMapMock = mock(ModelMap.class);
-		payPeriodViewModelMock = mock(PayPeriodViewModel.class);
+		payPeriodViewModelMock = mock(TimeViewModel.class);
 		sessionMock = mock(HttpSession.class);
 		payPeriodMock = mock(PayPeriod.class);
 		userMock = mock(User.class);
