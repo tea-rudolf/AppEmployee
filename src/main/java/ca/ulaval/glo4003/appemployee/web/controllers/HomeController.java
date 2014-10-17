@@ -19,6 +19,10 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 public class HomeController {
 
 	private UserRepository userRepository;
+	static final String EMAIL_ATTRIBUTE = "email";
+	static final String ROLE_ATTRIBUTE = "role";
+	static final String HOME_VIEW = "home";
+	static final String LOGIN_FORM_ATTRIBUTE = "loginForm";
 
 	@Autowired
 	public HomeController(UserRepository userRepository) {
@@ -32,21 +36,21 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String displayLoginForm() {
-		return "home";
+		return HOME_VIEW;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
 		User user = userRepository.findByEmail(form.getEmail());
 		if (user.validatePassword(form.getPassword())) {
-			model.addAttribute("email", form.getEmail());
-			model.addAttribute("role", user.getRole());
+			model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
+			model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
 
-			return new ModelAndView("home", model);
+			return new ModelAndView(HOME_VIEW, model);
 		}
-		model.addAttribute("alert", "Courriel et/ou mot de passe invalid");
-		model.addAttribute("loginForm", form);
-		return new ModelAndView("home");
+		model.addAttribute("alert", "Invalid username and/or password.");
+		model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
+		return new ModelAndView(HOME_VIEW);
 	}
 
 	@RequestMapping(value = "/logout")

@@ -13,9 +13,10 @@ import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException
 
 public class XMLPayPeriodRepositoryTest {
 
-	private static final LocalDate START_DATE = new LocalDate("2014-09-21");
-	private static final LocalDate END_DATE = new LocalDate("2014-10-04");
+	private static final LocalDate START_DATE = new LocalDate("2014-09-29");
+	private static final LocalDate END_DATE = new LocalDate("2014-10-12");
 	private static final LocalDate ACTUAL_DATE = new LocalDate("2014-10-02");
+	private static final LocalDate WRONG_DATE = new LocalDate("2016-10-10");
 
 	private XMLPayPeriodRepository xmlPayPeriodRepository;
 	private PayPeriod payPeriodMock;
@@ -32,9 +33,9 @@ public class XMLPayPeriodRepositoryTest {
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 		xmlPayPeriodRepository.persist(payPeriodMock);
 
-		payPeriodMock = xmlPayPeriodRepository.findByDate(ACTUAL_DATE);
+		PayPeriod samplePayPeriod = xmlPayPeriodRepository.findByDate(ACTUAL_DATE);
 
-		assertEquals(payPeriodMock.getStartDate(), START_DATE);
+		assertEquals(samplePayPeriod.getStartDate(), payPeriodMock.getStartDate());
 	}
 	
 	@Test
@@ -44,13 +45,12 @@ public class XMLPayPeriodRepositoryTest {
 		
 		xmlPayPeriodRepository.persist(payPeriodMock);
 		
-		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE), payPeriodMock);
+		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE).getStartDate(), payPeriodMock.getStartDate());
 	}
 
 
 	@Test(expected = PayPeriodNotFoundException.class)
 	public void findPayPeriodThrowsExceptionIfPayPeriodNotFound() {
-		when(payPeriodMock.getStartDate()).thenThrow(new PayPeriodNotFoundException());
-		xmlPayPeriodRepository.findByDate(ACTUAL_DATE);
+		xmlPayPeriodRepository.findByDate(WRONG_DATE);
 	}
 }
