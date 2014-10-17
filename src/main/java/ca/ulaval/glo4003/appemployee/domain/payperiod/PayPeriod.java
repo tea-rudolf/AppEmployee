@@ -10,7 +10,7 @@ public class PayPeriod {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private List<String> timeEntryIds = new ArrayList<String>();
-	
+
 	public PayPeriod() {
 	}
 
@@ -42,7 +42,7 @@ public class PayPeriod {
 	public void setTimeEntryIds(List<String> timeEntryIds) {
 		this.timeEntryIds = timeEntryIds;
 	}
-	
+
 	public void addTimeEntry(String timeEntryId) {
 		this.timeEntryIds.add(timeEntryId);
 	}

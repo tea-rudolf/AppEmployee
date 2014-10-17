@@ -3,7 +3,7 @@ package ca.ulaval.glo4003.appemployee.web.viewmodels;
 import org.joda.time.LocalDate;
 
 public class ExpenseViewModel {
-	
+
 	private String payPeriodStartDate;
 	private String payPeriodEndDate;
 	private double amount;
@@ -11,35 +11,35 @@ public class ExpenseViewModel {
 	private String userEmail;
 	private String comment;
 	private String uId;
-	
+
 	public double getAmount() {
 		return amount;
 	}
-	
+
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	
+
 	public LocalDate getDate() {
 		return date;
 	}
-	
+
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	
+
 	public String getUserEmail() {
 		return userEmail;
 	}
-	
+
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	
+
 	public String getComment() {
 		return comment;
 	}
-	
+
 	public void setComment(String comment) {
 		this.comment = comment;
 	}

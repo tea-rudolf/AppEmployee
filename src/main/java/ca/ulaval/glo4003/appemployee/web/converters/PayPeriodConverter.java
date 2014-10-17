@@ -15,13 +15,13 @@ public class PayPeriodConverter {
 	public PayPeriodConverter() {
 
 	}
-	
+
 	public TimeEntry convertToTimeEntry(PayPeriodViewModel payPeriodViewModel) {
 		TimeEntry newTimeEntry = new TimeEntry();
-        newTimeEntry.setBillableHours(payPeriodViewModel.getBillableHoursTimeEntry());
-        newTimeEntry.setDate(payPeriodViewModel.getDateTimeEntry());
-        newTimeEntry.setTaskId(payPeriodViewModel.getTaskIdTimeEntry());
-        newTimeEntry.setUserEmail(payPeriodViewModel.getUserEmail());
+		newTimeEntry.setBillableHours(payPeriodViewModel.getBillableHoursTimeEntry());
+		newTimeEntry.setDate(payPeriodViewModel.getDateTimeEntry());
+		newTimeEntry.setTaskId(payPeriodViewModel.getTaskIdTimeEntry());
+		newTimeEntry.setUserEmail(payPeriodViewModel.getUserEmail());
 
 		return newTimeEntry;
 	}

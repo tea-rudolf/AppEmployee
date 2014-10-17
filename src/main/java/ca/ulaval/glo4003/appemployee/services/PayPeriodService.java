@@ -41,7 +41,7 @@ public class PayPeriodService {
 		} catch (PayPeriodNotFoundException exception) {
 			throw new NoCurrentPayPeriodException(exception.getMessage());
 		}
-		
+
 		return currentPayPeriod;
 	}
 
@@ -51,7 +51,7 @@ public class PayPeriodService {
 
 	public void updateCurrentPayPeriod(PayPeriod payPeriod) throws Exception {
 		payPeriodRepository.update(payPeriod);
-		
+
 	}
 
 }

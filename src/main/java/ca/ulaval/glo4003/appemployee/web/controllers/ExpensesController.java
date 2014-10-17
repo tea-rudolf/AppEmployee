@@ -1,7 +1,5 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
@@ -33,10 +30,8 @@ public class ExpensesController {
 	private PayPeriodService payPeriodService;
 	private ExpenseConverter expenseConverter;
 
-
 	@Autowired
-	public ExpensesController(ExpenseRepository expenseRepository, ExpenseConverter expenseConverter,
-			PayPeriodService payPeriodService) {
+	public ExpensesController(ExpenseRepository expenseRepository, ExpenseConverter expenseConverter, PayPeriodService payPeriodService) {
 		this.expenseRepository = expenseRepository;
 		this.expenseConverter = expenseConverter;
 		this.payPeriodService = payPeriodService;
@@ -54,13 +49,11 @@ public class ExpensesController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String saveExpenses(@ModelAttribute(EXPENSE_ATTRIBUTE) ExpenseViewModel expenseForm, HttpSession session) {
-		try {
+	public String saveExpenses(@ModelAttribute(EXPENSE_ATTRIBUTE) ExpenseViewModel expenseForm, HttpSession session) throws Exception {
+
 			expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-			expenseRepository.store(expenseConverter.convert(expenseForm));	
-		} catch (Exception e) {
-			
-		}
+			expenseRepository.store(expenseConverter.convert(expenseForm));
+
 		return EXPENSES_SUBMIT_JSP;
 	}
 }

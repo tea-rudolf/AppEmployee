@@ -17,21 +17,21 @@ public class ExpenseConverter {
 		expense.setDate(expenseViewModel.getDate());
 		expense.setUserId(expenseViewModel.getUserEmail());
 		expense.setComment(expenseViewModel.getComment());
-		
+
 		return expense;
 	}
 
 	public List<ExpenseViewModel> convert(List<Expense> expenses) {
-	
-		List<ExpenseViewModel> expenseViewModels = new  ArrayList<ExpenseViewModel>();
-		
+
+		List<ExpenseViewModel> expenseViewModels = new ArrayList<ExpenseViewModel>();
+
 		for (Expense expense : expenses) {
 			ExpenseViewModel expenseViewModel = convert(expense);
 			expenseViewModels.add(expenseViewModel);
 		}
 		return expenseViewModels;
 	}
-	
+
 	public ExpenseViewModel convert(Expense expense) {
 		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
 		expenseViewModel.setAmount(expense.getAmount());
@@ -39,8 +39,8 @@ public class ExpenseConverter {
 		expenseViewModel.setDate(expense.getDate());
 		expenseViewModel.setuId(expense.getuId());
 		expenseViewModel.setUserEmail(expense.getUserId());
-		
-		return expenseViewModel;	
+
+		return expenseViewModel;
 	}
 
 }

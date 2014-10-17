@@ -42,10 +42,9 @@ public class TimeController {
 	private User user;
 
 	@Autowired
-	public TimeController(PayPeriodService payPeriodService, PayPeriodConverter payPeriodConverter,
-			UserRepository userRepository, TimeEntryRepository timeEntryRepository,
-			 TaskRepository taskRepository, UserService userService) {
-		
+	public TimeController(PayPeriodService payPeriodService, PayPeriodConverter payPeriodConverter, UserRepository userRepository,
+			TimeEntryRepository timeEntryRepository, TaskRepository taskRepository, UserService userService) {
+
 		this.payPeriodService = payPeriodService;
 		this.userService = userService;
 		this.payPeriodConverter = payPeriodConverter;
@@ -57,18 +56,15 @@ public class TimeController {
 	public String getTime(ModelMap model, HttpSession session) {
 
 		user = userRepository.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-		
 
-		
+		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+
 		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, user.getEmail());
 
-		List<Task> tasks =  userService.getTasksForUserForAPayPeriod(currentPayPeriod, user.getEmail());
-		
+		List<Task> tasks = userService.getTasksForUserForAPayPeriod(currentPayPeriod, user.getEmail());
+
 		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod, timeEntries, tasks);
-		
-		
+
 		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
 
@@ -77,16 +73,15 @@ public class TimeController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String saveTime(@ModelAttribute(PAY_PERIOD_ATTRIBUTE) PayPeriodViewModel payPeriodForm, HttpSession session) throws Exception {
-        
+
 		TimeEntry newTimeEntry = payPeriodConverter.convertToTimeEntry(payPeriodForm);
-        timeEntryRepository.store(newTimeEntry);
-        PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-        currentPayPeriod.addTimeEntry(newTimeEntry.getuId());
+		timeEntryRepository.store(newTimeEntry);
+		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		currentPayPeriod.addTimeEntry(newTimeEntry.getuId());
 		payPeriodService.updateCurrentPayPeriod(currentPayPeriod);
 
 		return TIME_SHEET_SUBMIT_JSP;
-		
+
 	}
-	
 
 }

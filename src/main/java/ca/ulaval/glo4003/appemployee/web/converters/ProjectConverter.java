@@ -32,7 +32,7 @@ public class ProjectConverter {
 	}
 
 	public ProjectViewModel convert(Project project) {
-		
+
 		ProjectViewModel viewModel = new ProjectViewModel();
 		viewModel.setuId(project.getuId());
 		viewModel.setName(project.getName());

@@ -15,9 +15,7 @@ public class TaskConverter {
 	public Collection<TaskViewModel> convert(List<Task> tasks) {
 		Collection<TaskViewModel> viewModels = new ArrayList<TaskViewModel>();
 
-        
 		for (Task task : tasks) {
-
 
 			TaskViewModel viewModel = convert(task);
 
