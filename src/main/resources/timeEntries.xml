@@ -6,6 +6,7 @@
     <date>2014-09-01</date>
     <userId>employee@employee.com</userId>
     <taskId>0001</taskId>
+    <comment>Hola</comment>
   </timeEntries>
   <timeEntries>
     <uId>0002</uId>

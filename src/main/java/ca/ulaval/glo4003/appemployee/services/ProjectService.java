@@ -90,10 +90,24 @@ public class ProjectService {
 		List<String> projectTasksId = project.getTaskuIds();
 		List<Task> tasks = new ArrayList<Task>();
 		for (String taskId : projectTasksId) {
-
 			Task task = taskRepository.findByUid(taskId);
-
 			tasks.add(task);
+		}
+		return tasks;
+	}
+
+	public List<Task> getAllTasksAssignedToAUser(String userId) {
+		Collection<Project> projects = projectRepository.findAll();
+
+		List<Task> tasks = new ArrayList<Task>();
+		for (Project projet : projects) {
+
+			List<String> useruIds = projet.getUseruIds();
+
+			if (useruIds.contains(userId)) {
+				List<Task> tasksProject = getAllTasksByProjectId(projet.getuId());
+				tasks.addAll(tasksProject);
+			}
 		}
 		return tasks;
 	}

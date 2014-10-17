@@ -3,8 +3,6 @@ package ca.ulaval.glo4003.appemployee.web.viewmodels;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
-
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 
 public class TimeViewModel {
@@ -13,7 +11,7 @@ public class TimeViewModel {
 	private String payPeriodEndDate;
 	private List<Task> availableTasks = new ArrayList<Task>();
 	private double hoursTimeEntry;
-	private LocalDate dateTimeEntry;
+	private String dateTimeEntry;
 	private String userEmail;
 	private String commentTimeEntry;
 	private String taskIdTimeEntry;
@@ -66,11 +64,11 @@ public class TimeViewModel {
 		this.hoursTimeEntry = billableHoursTimeEntry;
 	}
 
-	public LocalDate getDateTimeEntry() {
+	public String getDateTimeEntry() {
 		return dateTimeEntry;
 	}
 
-	public void setDateTimeEntry(LocalDate dateTimeEntry) {
+	public void setDateTimeEntry(String dateTimeEntry) {
 		this.dateTimeEntry = dateTimeEntry;
 	}
 

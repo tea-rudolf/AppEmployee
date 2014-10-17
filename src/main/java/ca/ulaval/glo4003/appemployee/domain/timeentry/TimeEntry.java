@@ -11,6 +11,7 @@ public class TimeEntry {
 	private LocalDate date;
 	private String userEmail;
 	private String taskuId;
+	private String comment;
 
 	public TimeEntry() {
 		this.uId = UUID.randomUUID().toString();
@@ -54,6 +55,14 @@ public class TimeEntry {
 
 	public void setTaskuId(String taskuId) {
 		this.taskuId = taskuId;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }

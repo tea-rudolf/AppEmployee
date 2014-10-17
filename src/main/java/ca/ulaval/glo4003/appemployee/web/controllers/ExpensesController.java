@@ -48,7 +48,8 @@ public class ExpensesController {
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
 		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
 		expenseViewModel.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
-		expenseViewModel.setPayPeriodEndDate(currentPayPeriod.getStartDate().toString());
+		expenseViewModel.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
+
 		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
 
 		return EXPENSES_JSP;

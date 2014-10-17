@@ -15,7 +15,6 @@ public class ExpenseConverter {
 	public Expense convert(ExpenseViewModel expenseViewModel) {
 		Expense expense = new Expense();
 		expense.setAmount(expenseViewModel.getAmount());
-		LocalDate date = new LocalDate(expenseViewModel.getDate());
 		expense.setDate(new LocalDate(expenseViewModel.getDate()));
 		expense.setUserEmail(expenseViewModel.getUserEmail());
 		expense.setComment(expenseViewModel.getComment());

@@ -54,7 +54,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	public PayPeriod findByDate(LocalDate date) {
 
 		for (PayPeriod payPeriod : payPeriods) {
-			if (date.isAfter(payPeriod.getStartDate()) && date.isBefore(payPeriod.getEndDate())) {
+			if (date.isAfter(payPeriod.getStartDate().minusDays(1)) && date.isBefore(payPeriod.getEndDate().plusDays(1))) {
 				return payPeriod;
 			}
 		}

@@ -5,7 +5,6 @@ import java.util.UUID;
 public class Task {
 	private String uId;
 	private String name;
-	private String comment;
 
 	public Task() {
 		this.uId = UUID.randomUUID().toString();
@@ -23,13 +22,6 @@ public class Task {
 		this.name = name;
 	}
 
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
 
 	public String getuId() {
 		return uId;
