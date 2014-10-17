@@ -4,9 +4,11 @@ import org.joda.time.LocalDate;
 
 public class ExpenseViewModel {
 	
+	private String payPeriodStartDate;
+	private String payPeriodEndDate;
 	private double amount;
 	private LocalDate date;
-	private String userId;
+	private String userEmail;
 	private String comment;
 	private String uId;
 	
@@ -26,12 +28,12 @@ public class ExpenseViewModel {
 		this.date = date;
 	}
 	
-	public String getUserId() {
-		return userId;
+	public String getUserEmail() {
+		return userEmail;
 	}
 	
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	
 	public String getComment() {
@@ -48,6 +50,22 @@ public class ExpenseViewModel {
 
 	public void setuId(String uId) {
 		this.uId = uId;
+	}
+
+	public String getPayPeriodStartDate() {
+		return payPeriodStartDate;
+	}
+
+	public void setPayPeriodStartDate(String payPeriodStartDate) {
+		this.payPeriodStartDate = payPeriodStartDate;
+	}
+
+	public String getPayPeriodEndDate() {
+		return payPeriodEndDate;
+	}
+
+	public void setPayPeriodEndDate(String payPeriodEndDate) {
+		this.payPeriodEndDate = payPeriodEndDate;
 	}
 
 }
