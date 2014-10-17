@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntryNotFoundException;
 
 public class XMLTimeEntryRepositoryTest {
 
@@ -17,21 +16,14 @@ public class XMLTimeEntryRepositoryTest {
 	private TimeEntry timeEntryMock;
 
 	@Before
-	public void init() {
-		xmlTimeEntryRepositoryMock = mock(XMLTimeEntryRepository.class);
-		timeEntryMock = new TimeEntry();
+	public void init() throws Exception {
+		xmlTimeEntryRepositoryMock = new XMLTimeEntryRepository();
+		timeEntryMock = mock(TimeEntry.class);
 	}
 
 	@Test
 	public void getByUidReturnsCorrectTimeEntry() {
-		xmlTimeEntryRepositoryMock.findByUid(ID);
+		timeEntryMock = xmlTimeEntryRepositoryMock.findByUid(ID);
 		assertEquals(timeEntryMock.getuId(), ID);
 	}
-
-	@Test(expected = TimeEntryNotFoundException.class)
-	public void getByUidCallsGetUidMethod() {
-		when(xmlTimeEntryRepositoryMock.findByUid(ID)).thenThrow(new TimeEntryNotFoundException());
-		xmlTimeEntryRepositoryMock.findByUid(ID);
-	}
-
 }

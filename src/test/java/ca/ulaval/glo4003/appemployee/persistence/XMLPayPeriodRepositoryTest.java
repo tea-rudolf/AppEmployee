@@ -26,7 +26,7 @@ public class XMLPayPeriodRepositoryTest {
 	}
 
 	@Test
-	public void findPayPeriodReturnsCorrectPayPeriodIfFound() throws Exception {
+	public void findByDateReturnsCorrectPayPeriodIfFound() throws Exception{
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 		xmlPayPeriodRepository.persist(payPeriodMock);
@@ -34,6 +34,16 @@ public class XMLPayPeriodRepositoryTest {
 		payPeriodMock = xmlPayPeriodRepository.findByDate(ACTUAL_DATE);
 
 		assertEquals(payPeriodMock.getStartDate(), START_DATE);
+	}
+	
+	@Test
+	public void persistAddsPayPeriodIntoRepository() throws Exception{
+		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
+		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
+		
+		xmlPayPeriodRepository.persist(payPeriodMock);
+		
+		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE), payPeriodMock);
 	}
 
 
