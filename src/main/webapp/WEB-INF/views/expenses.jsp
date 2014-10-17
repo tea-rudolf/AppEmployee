@@ -38,9 +38,27 @@
 			to 
 			<c:out value="${expenseForm.payPeriodEndDate}"/>
 		</h2>
-		
-
-		
+		<form:form method="post" action="expenses" modelAttribute="expenseForm">
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-condensed">
+					<tr>
+						<th>Date</th>
+						<th>Amount</th>
+						<th>Comment</th>
+					</tr>
+						<tr>
+							<td><form:label path="date"></form:label>
+							<form:input class="form-control" type="date" path="date" value="${date}" required="required" /></td>
+							<td><form:label path="amount"></form:label>
+							<form:input class="form-control" path="amount" value="${amount}" required="required" /></td>
+							<td><form:label path="comment"></form:label>
+							<form:input class="form-control" path="comment" value="${comment}" required="required" /></td>
+						</tr>
+				</table>
+			</div>
+			<br/>
+			<input type="submit" class="btn btn-primary" name="submit" value="Save" />
+		</form:form>
 	</div>
 
 <%@include file="../includes/footer.jsp" %>

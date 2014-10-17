@@ -7,31 +7,47 @@ import org.joda.time.LocalDate;
 
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 
-public class PayPeriodViewModel {
+public class TimeViewModel {
 
-	private String startDate;
-	private String endDate;
-	private List<String> timeEntryIds = new ArrayList<String>();
+	private String payPeriodStartDate;
+	private String payPeriodEndDate;
 	private List<Task> availableTasks = new ArrayList<Task>();
-	private double billableHoursTimeEntry;
+	private double hoursTimeEntry;
 	private LocalDate dateTimeEntry;
 	private String userEmail;
+	private String commentTimeEntry;
 	private String taskIdTimeEntry;
 
+	public String getPayPeriodStartDate() {
+		return payPeriodStartDate;
+	}
+
+	public void setPayPeriodStartDate(String payPeriodStartDate) {
+		this.payPeriodStartDate = payPeriodStartDate;
+	}
+
+	public String getPayPeriodEndDate() {
+		return payPeriodEndDate;
+	}
+
+	public void setPayPeriodEndDate(String payPeriodEndDate) {
+		this.payPeriodEndDate = payPeriodEndDate;
+	}
+	
 	public String getStartDate() {
-		return startDate;
+		return payPeriodStartDate;
 	}
 
 	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+		this.payPeriodStartDate = startDate;
 	}
 
 	public String getEndDate() {
-		return endDate;
+		return payPeriodEndDate;
 	}
 
 	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+		this.payPeriodEndDate = endDate;
 	}
 
 	public List<Task> getAvailableTasks() {
@@ -42,12 +58,12 @@ public class PayPeriodViewModel {
 		this.availableTasks = tasks;
 	}
 
-	public double getBillableHoursTimeEntry() {
-		return billableHoursTimeEntry;
+	public double getHoursTimeEntry() {
+		return hoursTimeEntry;
 	}
 
-	public void setBillableHoursTimeEntry(double billableHoursTimeEntry) {
-		this.billableHoursTimeEntry = billableHoursTimeEntry;
+	public void setHoursTimeEntry(double billableHoursTimeEntry) {
+		this.hoursTimeEntry = billableHoursTimeEntry;
 	}
 
 	public LocalDate getDateTimeEntry() {
@@ -74,12 +90,12 @@ public class PayPeriodViewModel {
 		this.taskIdTimeEntry = taskIdTimeEntry;
 	}
 
-	public List<String> getTimeEntryIds() {
-		return timeEntryIds;
+	public String getCommentTimeEntry() {
+		return commentTimeEntry;
 	}
 
-	public void setTimeEntryIds(List<String> timeEntryIds) {
-		this.timeEntryIds = timeEntryIds;
+	public void setCommentTimeEntry(String commentTimeEntry) {
+		this.commentTimeEntry = commentTimeEntry;
 	}
 
 }

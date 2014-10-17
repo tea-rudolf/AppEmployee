@@ -20,7 +20,6 @@ public class UserService {
 
 	private PayPeriodRepository payPeriodRepository;
 	private TaskRepository taskRepository;
-	private ExpenseRepository expenseRepository;
 	private TimeEntryRepository timeEntryRepository;
 
 	@Autowired
@@ -28,12 +27,11 @@ public class UserService {
 			ExpenseRepository expenseRepository, TimeEntryRepository timeEntryRepository) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.taskRepository = taskRepository;
-		this.expenseRepository = expenseRepository;
 		this.timeEntryRepository = timeEntryRepository;
 	}
 
 
-	public void updateCurrentPayPeriod(PayPeriod payPeriod){
+	public void updateCurrentPayPeriod(PayPeriod payPeriod) {
 		try {
 			payPeriodRepository.update(payPeriod);
 		} catch (Exception e) {
