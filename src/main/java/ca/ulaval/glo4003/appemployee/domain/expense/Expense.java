@@ -9,7 +9,7 @@ public class Expense {
 	private String uId;
 	private double amount;
 	private LocalDate date;
-	private String userId;
+	private String userEmail;
 	private String comment;
 
 	public Expense() {
@@ -52,11 +52,11 @@ public class Expense {
 		this.uId = uId;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserEmail(String userId) {
+		this.userEmail = userId;
 	}
 }

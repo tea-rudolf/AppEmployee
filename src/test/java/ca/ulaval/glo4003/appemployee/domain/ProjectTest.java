@@ -31,14 +31,14 @@ public class ProjectTest {
 
 	@Test
 	public void addTaskIdAddsTaskCorrectlyToTheList() {
-		project.addTaskId(TASK_ID);
-		assertTrue(project.getTaskIds().contains(TASK_ID));
+		project.addTaskuId(TASK_ID);
+		assertTrue(project.getTaskuIds().contains(TASK_ID));
 	}
 
 	@Test(expected = TaskAlreadyExistsException.class)
 	public void addTaskIdThrowsTaskAlreadyExistsExceptionWhenAddingAnExistingId() {
-		project.addTaskId(TASK_ID);
-		project.addTaskId(TASK_ID);
+		project.addTaskuId(TASK_ID);
+		project.addTaskuId(TASK_ID);
 	}
 
 }

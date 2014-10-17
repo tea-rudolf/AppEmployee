@@ -20,7 +20,7 @@ public class PayPeriodConverter {
 		TimeEntry newTimeEntry = new TimeEntry();
 		newTimeEntry.setBillableHours(payPeriodViewModel.getBillableHoursTimeEntry());
 		newTimeEntry.setDate(payPeriodViewModel.getDateTimeEntry());
-		newTimeEntry.setTaskId(payPeriodViewModel.getTaskIdTimeEntry());
+		newTimeEntry.setTaskuId(payPeriodViewModel.getTaskIdTimeEntry());
 		newTimeEntry.setUserEmail(payPeriodViewModel.getUserEmail());
 
 		return newTimeEntry;

@@ -40,7 +40,7 @@ public class XMLExpenseRepository implements ExpenseRepository {
 		List<Expense> foundExpenses = new ArrayList<Expense>();
 
 		for (Expense expense : expenses.values()) {
-			if (expense.getUserId().equals(userId)) {
+			if (expense.getUserEmail().equals(userId)) {
 				foundExpenses.add(expense);
 			}
 		}

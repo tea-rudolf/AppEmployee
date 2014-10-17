@@ -15,7 +15,7 @@ public class ExpenseConverter {
 		Expense expense = new Expense(expenseViewModel.getuId());
 		expense.setAmount(expenseViewModel.getAmount());
 		expense.setDate(expenseViewModel.getDate());
-		expense.setUserId(expenseViewModel.getUserEmail());
+		expense.setUserEmail(expenseViewModel.getUserEmail());
 		expense.setComment(expenseViewModel.getComment());
 
 		return expense;
@@ -38,7 +38,7 @@ public class ExpenseConverter {
 		expenseViewModel.setComment(expense.getComment());
 		expenseViewModel.setDate(expense.getDate());
 		expenseViewModel.setuId(expense.getuId());
-		expenseViewModel.setUserEmail(expense.getUserId());
+		expenseViewModel.setUserEmail(expense.getUserEmail());
 
 		return expenseViewModel;
 	}

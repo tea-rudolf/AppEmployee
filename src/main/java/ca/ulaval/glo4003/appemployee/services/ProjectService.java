@@ -42,7 +42,7 @@ public class ProjectService {
 
 	public void addTaskToProject(String projectId, String taskId) throws Exception {
 		Project project = projectRepository.findById(projectId);
-		project.addTaskId(taskId);
+		project.addTaskuId(taskId);
 		projectRepository.store(project);
 	}
 
@@ -66,7 +66,7 @@ public class ProjectService {
 
 	public List<Task> getAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
-		List<String> projectTasksId = project.getTaskIds();
+		List<String> projectTasksId = project.getTaskuIds();
 		List<Task> tasks = new ArrayList<Task>();
 		for (String taskId : projectTasksId) {
 

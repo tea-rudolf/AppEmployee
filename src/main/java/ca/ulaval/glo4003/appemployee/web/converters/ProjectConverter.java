@@ -24,9 +24,9 @@ public class ProjectConverter {
 	public Project convert(ProjectViewModel projectViewModel) {
 		Project project = new Project();
 		project.setName(projectViewModel.getName());
-		project.setTaskIds(projectViewModel.getTaskIds());
-		project.setUserIds(projectViewModel.getUserIds());
-		project.setExpenseIds(projectViewModel.getExpenseIds());
+		project.setTaskuIds(projectViewModel.getTaskIds());
+		project.setUseruIds(projectViewModel.getUserIds());
+		project.setExpenseuIds(projectViewModel.getExpenseIds());
 
 		return project;
 	}
@@ -36,9 +36,9 @@ public class ProjectConverter {
 		ProjectViewModel viewModel = new ProjectViewModel();
 		viewModel.setuId(project.getuId());
 		viewModel.setName(project.getName());
-		viewModel.setTaskIds(project.getTaskIds());
-		viewModel.setUserIds(project.getUserIds());
-		viewModel.setExpenseIds(project.getExpenseIds());
+		viewModel.setTaskIds(project.getTaskuIds());
+		viewModel.setUserIds(project.getUseruIds());
+		viewModel.setExpenseIds(project.getExpenseuIds());
 
 		return viewModel;
 	}
