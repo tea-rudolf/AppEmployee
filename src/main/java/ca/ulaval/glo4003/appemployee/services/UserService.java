@@ -53,7 +53,7 @@ public class UserService {
 		this.expenseRepository = expenseRepository;
 	}
 	
- 	public List<Task> getTasksForUserForAPayPerod(PayPeriod payPeriod, String userId) {
+ 	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String userId) {
  		
  		List<Task> tasks = new ArrayList<Task>();
  		
@@ -68,7 +68,7 @@ public class UserService {
  		
  	}
  	
- 	public List<TimeEntry> getTimeEntriesForUser(PayPeriod payPeriod, String userEmail) {
+ 	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
  		
  		List<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
  		
@@ -83,5 +83,4 @@ public class UserService {
  		
  	}
  	
-
 }

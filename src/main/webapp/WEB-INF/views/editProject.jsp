@@ -11,10 +11,9 @@
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	  	<h2 class="sub-header">Edit project (${project.name})</h2>
-		<form:form role="form" method="POST" action="/projects/${project.number}/edit" modelAttribute="project">
+		<form:form role="form" method="POST" action="/projects/${project.uId}/edit" modelAttribute="project">
 			<div class="form-group">
-				<form:label path="number">Number</form:label>
-				<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" readonly="readonly" required="required"/>
+				<form:hidden path="uId" />
 			</div>
 			<div class="form-group">
 				<form:label path="name">Name</form:label>
@@ -22,19 +21,17 @@
 			</div>
 			<h3 class="sub-header" style="margin-top:0px; padding-top: 0px">Tasks</h3>
 	        <div style="text-align:right">
-	            <a href="/projects/${project.number}/tasks/add"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Create new task...</button></a>
+	            <a href="/projects/${project.uId}/tasks/add"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>&nbsp;Create new task...</button></a>
 	        </div>
 			<table id="task-list" class="table table-striped table-hover">
 	            <thead>
 	                <tr>
-	                    <th>#</th>
 	                    <th>Name</th>
 	                </tr>
 	            </thead>
 	            <tbody>
 	            	<c:forEach var="task" items="${tasks}">
-	                    <tr onclick="javascript:window.location.href = '/projects/${project.number}/tasks/${task.number}/edit'">
-	                        <td>${task.number}</td>
+	                    <tr onclick="javascript:window.location.href = '/projects/${project.uId}/tasks/${task.uId}/edit'">
 	                        <td>${task.name}</td>
 	                    </tr>
 	                </c:forEach>

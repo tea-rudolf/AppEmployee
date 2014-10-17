@@ -17,14 +17,12 @@
 	        <table id="project-list" class="table table-striped table-hover">
 	            <thead>
 	                <tr>
-	                    <th>#</th>
 	                    <th>Name</th>
 	                </tr>
 	            </thead>
 	            <tbody>
 	                <c:forEach var="project" items="${projects}">
-	                    <tr onClick="javascript:window.location.href = '/projects/${project.number}/edit'">
-	                        <td>${project.number}</td>
+	                    <tr onClick="javascript:window.location.href = '/projects/${project.uId}/edit'">
 	                        <td>${project.name}</td>
 	                    </tr>
 	                </c:forEach>

@@ -32,7 +32,7 @@ public class ExpenseConverter {
 		return expenseViewModels;
 	}
 	
-	public ExpenseViewModel convert(Expense expense){
+	public ExpenseViewModel convert(Expense expense) {
 		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
 		expenseViewModel.setAmount(expense.getAmount());
 		expenseViewModel.setComment(expense.getComment());

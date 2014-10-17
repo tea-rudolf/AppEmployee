@@ -2,7 +2,6 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;

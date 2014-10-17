@@ -46,6 +46,10 @@ public class ProjectService {
 		projectRepository.store(project);
 	}
 
+	public void addTask(Task task) throws Exception {
+		taskRepository.store(task);
+	}
+	
 	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) throws Exception {
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
@@ -55,14 +59,20 @@ public class ProjectService {
 	public Task getTaskById(String taskId) {
 		return taskRepository.findByUid(taskId);
 	}
+	
+	public Project getProjectById(String projectId) {
+		return projectRepository.findById(projectId);
+	}
 
+	
 	public List<Task> getAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
 		List<String> projectTasksId = project.getTaskIds();
 		List<Task> tasks = new ArrayList<Task>();
-
 		for (String taskId : projectTasksId) {
+
 			Task task = taskRepository.findByUid(taskId);
+
 			tasks.add(task);
 		}
 		return tasks;

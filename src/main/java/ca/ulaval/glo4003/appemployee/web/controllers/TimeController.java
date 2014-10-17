@@ -59,10 +59,16 @@ public class TimeController {
 		user = userRepository.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-		List<TimeEntry> timeEntries = userService.getTimeEntriesForUser(currentPayPeriod, user.getEmail());
-		List<Task> tasks =  userService.getTasksForUserForAPayPerod(currentPayPeriod, user.getEmail());
+		
+
+		
+		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, user.getEmail());
+
+		List<Task> tasks =  userService.getTasksForUserForAPayPeriod(currentPayPeriod, user.getEmail());
 		
 		PayPeriodViewModel form = payPeriodConverter.convert(currentPayPeriod, timeEntries, tasks);
+		
+		
 		model.addAttribute(PAY_PERIOD_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, user.getEmail());
 
