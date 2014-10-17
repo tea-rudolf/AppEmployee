@@ -49,4 +49,9 @@ public class PayPeriodService {
 		return payPeriodRepository.findByDate(this.getCurrentPayPeriod().getStartDate().minusDays(1));
 	}
 
+	public void updateCurrentPayPeriod(PayPeriod payPeriod) throws Exception {
+		payPeriodRepository.update(payPeriod);
+		
+	}
+
 }

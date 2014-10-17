@@ -42,5 +42,9 @@ public class PayPeriod {
 	public void setTimeEntryIds(List<String> timeEntryIds) {
 		this.timeEntryIds = timeEntryIds;
 	}
+	
+	public void addTimeEntry(String timeEntryId) {
+		this.timeEntryIds.add(timeEntryId);
+	}
 
 }

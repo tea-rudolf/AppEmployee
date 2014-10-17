@@ -9,7 +9,7 @@ public class TimeEntry {
 	private String uId;
 	private double billableHours;
 	private LocalDate date;
-	private String userId;
+	private String userEmail;
 	private String taskId;
 	
 	public TimeEntry() {
@@ -20,7 +20,7 @@ public class TimeEntry {
 		return billableHours;
 	}
 
-	public void setBillableHours(Integer billableHours) {
+	public void setBillableHours(double billableHours) {
 		this.billableHours = billableHours;
 	}
 
@@ -32,12 +32,12 @@ public class TimeEntry {
 		this.date = date;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public String getuId() {
