@@ -9,8 +9,8 @@ public class TimeEntry {
 	private String uId;
 	private double billableHours;
 	private LocalDate date;
-	private String userId;
-	private String taskId;
+	private String userEmail;
+	private String taskuId;
 	
 	public TimeEntry() {
 		this.uId = UUID.randomUUID().toString();
@@ -20,7 +20,7 @@ public class TimeEntry {
 		return billableHours;
 	}
 
-	public void setBillableHours(Integer billableHours) {
+	public void setBillableHours(double billableHours) {
 		this.billableHours = billableHours;
 	}
 
@@ -32,12 +32,12 @@ public class TimeEntry {
 		this.date = date;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public String getuId() {
@@ -48,12 +48,12 @@ public class TimeEntry {
 		this.uId = uId;
 	}
 
-	public String getTaskId() {
-		return taskId;
+	public String getTaskuId() {
+		return taskuId;
 	}
 
-	public void setTaskId(String taskId) {
-		this.taskId = taskId;
+	public void setTaskuId(String taskuId) {
+		this.taskuId = taskuId;
 	}
 
 }

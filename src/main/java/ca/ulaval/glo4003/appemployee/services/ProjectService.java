@@ -42,8 +42,12 @@ public class ProjectService {
 
 	public void addTaskToProject(String projectId, String taskId) throws Exception {
 		Project project = projectRepository.findById(projectId);
-		project.addTaskId(taskId);
+		project.addTaskuId(taskId);
 		projectRepository.store(project);
+	}
+
+	public void addTask(Task task) throws Exception {
+		taskRepository.store(task);
 	}
 
 	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) throws Exception {
@@ -56,13 +60,18 @@ public class ProjectService {
 		return taskRepository.findByUid(taskId);
 	}
 
+	public Project getProjectById(String projectId) {
+		return projectRepository.findById(projectId);
+	}
+
 	public List<Task> getAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
-		List<String> projectTasksId = project.getTaskIds();
+		List<String> projectTasksId = project.getTaskuIds();
 		List<Task> tasks = new ArrayList<Task>();
-
 		for (String taskId : projectTasksId) {
+
 			Task task = taskRepository.findByUid(taskId);
+
 			tasks.add(task);
 		}
 		return tasks;

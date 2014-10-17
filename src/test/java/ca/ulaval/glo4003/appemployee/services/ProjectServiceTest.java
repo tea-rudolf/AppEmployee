@@ -1,15 +1,10 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
-import ca.ulaval.glo4003.appemployee.domain.project.ProjectNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;

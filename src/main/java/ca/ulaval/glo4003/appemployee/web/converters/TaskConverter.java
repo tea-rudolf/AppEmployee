@@ -16,9 +16,12 @@ public class TaskConverter {
 		Collection<TaskViewModel> viewModels = new ArrayList<TaskViewModel>();
 
 		for (Task task : tasks) {
+
 			TaskViewModel viewModel = convert(task);
+
 			viewModels.add(viewModel);
 		}
+
 		return viewModels;
 	}
 

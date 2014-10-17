@@ -11,10 +11,9 @@
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	  <h2 class="sub-header">Edit task (${task.name})</h2>
-		<form:form role="form" method="POST" action="/projects/${projectNumber}/tasks/${task.number}/edit" modelAttribute="task">
+		<form:form role="form" method="POST" action="/projects/${projectNumber}/tasks/${task.uId}/edit" modelAttribute="task">
 			<div class="form-group">
-				<form:label path="number">Number</form:label>
-				<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" readonly="readonly" required="required"/>
+				<form:hidden path="uId" />
 			</div>
 			<div class="form-group">
 				<form:label path="name">Name</form:label>

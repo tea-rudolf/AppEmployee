@@ -13,8 +13,7 @@
 	  <h2 class="sub-header">New project</h2>
 	  <form:form role="form" method="POST" action="/projects/add" modelAttribute="project">
 			<div class="form-group">
-				<form:label path="number">Number</form:label>
-				<form:input class="form-control" path="number" style="width:100px;" type="number" min="1" value="${number}" required="required" />
+				<form:hidden path="uId" />
 				<c:if test="${not empty message && message.name == 'ProjectExistsException'}">
 					<div class="alert alert-danger" style="margin-top:10px;" role="alert">${message.message}</div>
 				</c:if>
