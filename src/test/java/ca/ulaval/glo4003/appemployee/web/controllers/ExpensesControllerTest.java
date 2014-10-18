@@ -23,6 +23,7 @@ public class ExpensesControllerTest {
 	private static final String EXPENSES_JSP = "expenses";
 	private static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
 	private static final LocalDate START_DATE = new LocalDate("2014-10-13");
+	private static final LocalDate END_DATE = new LocalDate("2014-10-26");
 
 	private PayPeriodService payPeriodServiceMock;
 	private ExpensesController expensesControllerMock;
@@ -51,6 +52,7 @@ public class ExpensesControllerTest {
 		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
+		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 
 		String returnedForm = expensesControllerMock.getExpenses(modelMapMock, sessionMock);
 
