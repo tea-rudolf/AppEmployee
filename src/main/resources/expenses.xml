@@ -4,21 +4,21 @@
     <uId>0001</uId>
     <amount>800.50</amount>
     <date>2014-10-15</date>
-    <userId>employee@employee.com</userId>
+    <userEmail>employee@employee.com</userId>
     <comment>Deplacement a Montreal</comment>
   </expenses>
   <expenses>
     <uId>0002</uId>
     <amount>200.00</amount>
     <date>2014-10-10</date>
-    <userId>supervisor@supervisor.com</userId>
+    <userEmail>supervisor@supervisor.com</userId>
     <comment>Diner avec client</comment>
   </expenses>
   <expenses>
     <uId>0003</uId>
     <amount>100.50</amount>
     <date>2014-10-07</date>
-    <userId>employee@employee.com</userId>
+    <userEmail>employee@employee.com</userId>
     <comment>Achat license</comment>
   </expenses>
 </expenses>
