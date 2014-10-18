@@ -29,6 +29,9 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 public class ProjectControllerTest {
 	private static final String SAMPLE_PROJECTNUMBER = "1";
 	private static final String SAMPLE_TASKNUMBER = "2";
+	private static final String EMAIL_KEY = "email";
+	private static final String VALID_EMAIL = "employee@employee.com";
+	private static final String REDIRECT_LINK = "redirect:/";
 
 	private HttpSession sessionMock;
 	private Model model = new ExtendedModelMap();
@@ -61,6 +64,7 @@ public class ProjectControllerTest {
 
 	@Test
 	public void getProjectsUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(projectServiceMock.getAllProjects()).thenReturn(projectList);
 		when(projectConverterMock.convert(projectList)).thenReturn(projectViewModelCollection);
 
@@ -68,11 +72,24 @@ public class ProjectControllerTest {
 
 		assertSame(model.asMap().get("projects"), projectViewModelCollection);
 	}
+	
+	@Test
+	public void getProjectsReturnRedirectIfSessionAttributeIsNull(){
+		String returnedForm = projectController.getProjects(model, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
 
 	@Test
 	public void projectCreationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		projectController.projectCreation(model, projectViewModelMock, sessionMock);
 		assertSame(model.asMap().get("project"), projectViewModelMock);
+	}
+	
+	@Test
+	public void projectCreationReturnsRedirectIfSessionAttributeIsNull(){
+		String returnedForm = projectController.projectCreation(model, projectViewModelMock, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -94,6 +111,7 @@ public class ProjectControllerTest {
 
 	@Test
 	public void projectModificationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(projectServiceMock.getProjectById(eq(SAMPLE_PROJECTNUMBER))).thenReturn(projectMock);
 		when(projectConverterMock.convert(projectMock)).thenReturn(projectViewModelMock);
 		when(projectServiceMock.getAllTasksByProjectId(SAMPLE_PROJECTNUMBER)).thenReturn(taskList);
@@ -102,6 +120,12 @@ public class ProjectControllerTest {
 		projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
 
 		assertSame(model.asMap().get("project"), projectViewModelMock);
+	}
+	
+	@Test
+	public void projectModificationReturnsRedirectIfSessionAttributeIsNull(){
+		String returnedForm = projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -112,9 +136,16 @@ public class ProjectControllerTest {
 
 	@Test
 	public void taskCreationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		projectController.taskCreation(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
+	}
+	
+	@Test
+	public void taskCreationReturnsRedirectIfSessionAttributeIsNull(){
+		String returnedForm = projectController.taskCreation(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -135,7 +166,8 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	public void taskMoficiationUpdatesTheModelCorrectly() {
+	public void taskModificationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(projectServiceMock.getTaskById(eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
 		when(taskConverterMock.convert(taskMock)).thenReturn(taskViewModelMock);
 
@@ -143,6 +175,12 @@ public class ProjectControllerTest {
 
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
+	}
+	
+	@Test
+	public void taskModificationReturnsRedirectIfSessionAttributeIsNull(){
+		String returnedForm = projectController.taskModification(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
