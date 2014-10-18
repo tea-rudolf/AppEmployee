@@ -18,8 +18,9 @@ import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.converters.PayPeriodConverter;
+import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -27,12 +28,14 @@ public class TimeControllerTest {
 
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
-	private static final String TIME_SHEET_JSP = "timeSheet";
+	private static final String TIME_SHEET_JSP = "time";
 	private static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
+	private static final String REDIRECT_LINK = "redirect:/";
+	private static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
 	private static final String TIME_ENTRY_UID = "0001";
 
 	private PayPeriodService payPeriodServiceMock;
-	private PayPeriodConverter payPeriodConverterMock;
+	private TimeConverter timeConverter;
 	private TimeController timeControllerMock;
 	private ModelMap modelMapMock;
 	private TimeViewModel payPeriodViewModelMock;
@@ -44,11 +47,12 @@ public class TimeControllerTest {
 	private TaskRepository taskRepositoryMock;
 	private UserService userServiceMock;
 	private TimeEntry timeEntryMock;
+	private ProjectService projectServiceMock;
 
 	@Before
 	public void init() {
 		payPeriodServiceMock = mock(PayPeriodService.class);
-		payPeriodConverterMock = mock(PayPeriodConverter.class);
+		timeConverter = mock(TimeConverter.class);
 		timeControllerMock = mock(TimeController.class);
 		modelMapMock = mock(ModelMap.class);
 		payPeriodViewModelMock = mock(TimeViewModel.class);
@@ -60,7 +64,8 @@ public class TimeControllerTest {
 		taskRepositoryMock = mock(TaskRepository.class);
 		userServiceMock = mock(UserService.class);
 		timeEntryMock = mock(TimeEntry.class);
-		timeControllerMock = new TimeController(payPeriodServiceMock, payPeriodConverterMock, userRepositoryMock, timeEntryRepositoryMock, taskRepositoryMock, userServiceMock);
+		projectServiceMock = mock(ProjectService.class);
+		timeControllerMock = new TimeController(payPeriodServiceMock, timeConverter, timeEntryRepositoryMock, taskRepositoryMock, userServiceMock, projectServiceMock);
 	}
 
 	@Test
@@ -79,8 +84,9 @@ public class TimeControllerTest {
 	public void saveTimeReturnsSubmittedTimeSheetIfSuccessfulSubmit() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
-		when(payPeriodConverterMock.convertToTimeEntry(payPeriodViewModelMock)).thenReturn(timeEntryMock);
+		when(timeConverter.convertToTimeEntry(payPeriodViewModelMock)).thenReturn(timeEntryMock);
 		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_UID);
+		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 
 		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
 
@@ -97,5 +103,17 @@ public class TimeControllerTest {
 		timeControllerMock.getTime(modelMapMock, sessionMock);
 
 		verify(modelMapMock).addAttribute(EMAIL_KEY, VALID_EMAIL);
+	}
+	
+	@Test
+	public void getTimeReturnRedirectsIfEmailAttributeIsNull(){
+		String returnedForm = timeControllerMock.getTime(modelMapMock, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
+	
+	@Test
+	public void saveTimeReturnsErrorIfTaskIdIsNull() throws Exception{
+		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
+		assertEquals(ERROR_REDIRECT, returnedForm);
 	}
 }

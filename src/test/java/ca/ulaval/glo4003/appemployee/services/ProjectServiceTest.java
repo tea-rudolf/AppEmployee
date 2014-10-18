@@ -17,9 +17,10 @@ import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 
 public class ProjectServiceTest {
-	private static final String TASK_ID = "id";
-	private static final String PROJECT_ID = "id";
-	private static final String PROJECT_NAME = "name";
+	private static final String TASK_ID = "0001";
+	private static final String PROJECT_ID = "0001";
+	private static final String PROJECT_NAME = "ProjectShanna";
+	//private static final String NEW_NAME = "newName";
 
 	private ProjectService projectService;
 	private ProjectRepository projectRepositoryMock;
@@ -74,8 +75,11 @@ public class ProjectServiceTest {
 //	@Test
 //	public void updateProjectSetsProjectName(){
 //		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-//		when(projectViewModelMock.getName()).thenReturn(PROJECT_NAME);
+//		when(projectMock.getName()).thenReturn(PROJECT_NAME);
+//		when(projectViewModelMock.getName()).thenReturn(NEW_NAME);
+//		
 //		projectService.updateProject(PROJECT_ID, projectViewModelMock);
+//
 //		assertEquals(projectViewModelMock.getName(), projectMock.getName());
 //	}
 	
@@ -98,6 +102,7 @@ public class ProjectServiceTest {
 //	@Test
 //	public void addTaskToProjectCorrectlyAddsATaskToTheProject(){
 //		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
+//		when(taskMock.getuId()).thenReturn(TASK_ID);
 //		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 //		projectService.addTaskToProject(PROJECT_ID, TASK_ID);
 //		assertTrue(projectMock.getTaskuIds().contains(TASK_ID));

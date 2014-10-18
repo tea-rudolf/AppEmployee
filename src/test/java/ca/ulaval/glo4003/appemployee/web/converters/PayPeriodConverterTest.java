@@ -27,31 +27,31 @@ public class PayPeriodConverterTest {
 	private List<Task> expenses = new ArrayList<Task>();
 	private List<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
 
-	private PayPeriodConverter payPeriodConverterMock;
+	private TimeConverter payPeriodConverterMock;
 	private PayPeriod payPeriodMock;
 	private TimeViewModel timeViewModelMock;
 	private TimeEntry timeEntryMock;
 
 	@Before
 	public void init() {
-		payPeriodConverterMock = mock(PayPeriodConverter.class);
+		//payPeriodConverterMock = mock(TimeConverter.class);
 		payPeriodMock = mock(PayPeriod.class);
 		timeViewModelMock = mock(TimeViewModel.class);
 		timeEntryMock = mock(TimeEntry.class);
-		payPeriodConverterMock = new PayPeriodConverter();
+		payPeriodConverterMock = new TimeConverter();
 	}
 
 	@Test
 	public void convertViewModelConvertsIntoPayPeriod() {
 		when(timeViewModelMock.getHoursTimeEntry()).thenReturn(HOURS);
-		when(timeViewModelMock.getDateTimeEntry()).thenReturn(START_DATE);
+		when(timeViewModelMock.getDateTimeEntry()).thenReturn(START_DATE.toString());
 		when(timeViewModelMock.getTaskIdTimeEntry()).thenReturn(TASK_ID);
 		when(timeViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
 
 		timeEntryMock = payPeriodConverterMock.convertToTimeEntry(timeViewModelMock);
 		
 		assertEquals(timeViewModelMock.getHoursTimeEntry(), timeEntryMock.getBillableHours(), EPSILON);
-		assertEquals(timeViewModelMock.getDateTimeEntry(), timeEntryMock.getDate());
+		assertEquals(timeViewModelMock.getDateTimeEntry(), timeEntryMock.getDate().toString());
 		assertEquals(timeViewModelMock.getTaskIdTimeEntry(), timeEntryMock.getTaskuId());
 		assertEquals(timeViewModelMock.getUserEmail(), timeEntryMock.getUserEmail());
 	}

@@ -16,7 +16,6 @@ public class TaskConverterTest {
 	private final static String FIRST_ID = "123456";
 	private final static String SECOND_NAME = "secondName";
 	private final static String SECOND_ID = "789103";
-	private final static String TASK_COMMENT = "comment";
 	
 	private TaskConverter taskConverter;
 	private TaskViewModel taskViewModelMock;
@@ -40,42 +39,38 @@ public class TaskConverterTest {
 		TaskViewModel[] viewModels = taskConverter.convert(tasks).toArray(new TaskViewModel[1]);
 
 		assertEquals(FIRST_NAME, viewModels[0].getName());
-		assertEquals(FIRST_ID, viewModels[0].getComment());
+		assertEquals(FIRST_ID, viewModels[0].getuId());
 
 		assertEquals(SECOND_NAME, viewModels[1].getName());
-		assertEquals(SECOND_ID, viewModels[1].getComment());
+		assertEquals(SECOND_ID, viewModels[1].getuId());
 	}
 
 	@Test
 	public void convertTaskViewModelToTask() {
 		when(taskViewModelMock.getuId()).thenReturn(FIRST_ID);
 		when(taskViewModelMock.getName()).thenReturn(FIRST_NAME);
-		when(taskViewModelMock.getComment()).thenReturn(TASK_COMMENT);
 		
 		taskMock = taskConverter.convert(taskViewModelMock);
 		
 		assertEquals(taskViewModelMock.getuId(), taskMock.getuId());
 		assertEquals(taskViewModelMock.getName(), taskMock.getName());
-		assertEquals(taskViewModelMock.getComment(), taskMock.getComment());
 	}
 
 	@Test
 	public void convertTaskToTaskViewModel() {
 		when(taskMock.getuId()).thenReturn(FIRST_ID);
 		when(taskMock.getName()).thenReturn(FIRST_NAME);
-		when(taskMock.getComment()).thenReturn(TASK_COMMENT);
 		
 		taskViewModelMock = taskConverter.convert(taskMock);
 		
 		assertEquals(taskMock.getuId(), taskViewModelMock.getuId());
 		assertEquals(taskMock.getName(), taskViewModelMock.getName());
-		assertEquals(taskMock.getComment(), taskViewModelMock.getComment());
 	}
 
 	private Task createTask(String number, String name) {
 		Task task = mock(Task.class);
 		given(task.getName()).willReturn(name);
-		given(task.getComment()).willReturn(number);
+		given(task.getuId()).willReturn(number);
 		return task;
 	}
 }

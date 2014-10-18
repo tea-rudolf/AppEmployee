@@ -92,12 +92,12 @@ public class PayPeriodServiceTest {
 	@Test(expected = RepositoryException.class)
 	public void updatePayPeriodThrowsExceptionWhenPayPeriodWasNotUpdated() throws Exception{
 		doThrow(new RepositoryException()).when(payPeriodRepositoryMock).update(payPeriodMock);
-		payPeriodServiceMock.updateCurrentPayPeriod(payPeriodMock);
+		payPeriodServiceMock.updatePayPeriod(payPeriodMock);
 	}
 	
 	@Test
 	public void updateCurrentPayPeriodCallsCorrectRepositoryMethod() throws Exception{
-		payPeriodServiceMock.updateCurrentPayPeriod(payPeriodMock);
+		payPeriodServiceMock.updatePayPeriod(payPeriodMock);
 		verify(payPeriodRepositoryMock, times(1)).update(payPeriodMock);
 	}
 	
