@@ -7,7 +7,7 @@
     <taskuIds>0002</taskuIds>
     <useruIds>employee@employee.com</useruIds>
     <useruIds>supervisor@supervisor.com</useruIds>
-    <expenseIds>0001</expenseIds>
+    <expenseuIds>0001</expenseIds>
   </projects>
   <projects>
     <uId>0002</uId>
@@ -15,7 +15,7 @@
     <taskuIds>0003</taskuIds>
     <useruIds>employee@employee.com</useruIds>
     <useruIds>supervisor@supervisor.com</useruIds>
-    <expenseIds>0002</expenseIds>
-    <expenseIds>0003</expenseIds>
+    <expenseuIds>0002</expenseIds>
+    <expenseuIds>0003</expenseIds>
   </projects>
 </projects>
