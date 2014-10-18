@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 @Controller

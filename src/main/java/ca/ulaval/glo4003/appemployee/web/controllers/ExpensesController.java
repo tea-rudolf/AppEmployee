@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
-import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;

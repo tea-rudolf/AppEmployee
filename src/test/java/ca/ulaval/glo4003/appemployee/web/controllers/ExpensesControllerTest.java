@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
 
-import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;

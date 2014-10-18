@@ -146,4 +146,10 @@ public class ProjectController {
 		projectService.updateTask(projectNumber, taskNumber, viewModel);
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
+	
+	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
+	public String assignTask(@PathVariable String projectNumber, @PathVariable String userId, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) throws Exception {
+		projectService.assignUserToTask(userId, projectNumber, taskNumber);
+		return String.format("redirect:/projects/%s/edit", projectNumber);
+	}
 }

@@ -9,8 +9,8 @@ import javax.inject.Singleton;
 
 import org.springframework.stereotype.Repository;
 
+import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 
 @Repository
 @Singleton

@@ -1,7 +1,5 @@
 package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
-import org.joda.time.LocalDate;
-
 public class ExpenseViewModel {
 
 	private String payPeriodStartDate;

@@ -7,13 +7,13 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 public class UserServiceTest {

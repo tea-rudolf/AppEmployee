@@ -1,7 +1,9 @@
 package ca.ulaval.glo4003.appemployee.domain.project;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
@@ -73,6 +75,14 @@ public class Project {
 		}
 
 		taskuIds.add(taskuId);
+	}
+
+	public boolean userIsAlreadyAssigned(String userId) {
+		return useruIds.contains(userId);
+	}
+
+	public void addUserToProject(String userId) {
+		useruIds.add(userId);
 	}
 
 }

@@ -4,14 +4,14 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.NoCurrentPayPeriodException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodRepository;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
-import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @Service

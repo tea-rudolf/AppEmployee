@@ -12,11 +12,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.ModelMap;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.domain.user.UserRepository;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;

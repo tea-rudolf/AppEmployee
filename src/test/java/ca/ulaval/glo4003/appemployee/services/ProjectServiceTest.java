@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 

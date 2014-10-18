@@ -9,8 +9,8 @@ import javax.inject.Singleton;
 
 import org.springframework.stereotype.Repository;
 
+import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
 
 @Repository
 @Singleton

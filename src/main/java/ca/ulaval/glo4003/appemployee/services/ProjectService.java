@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.project.ProjectRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskRepository;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
@@ -110,5 +110,17 @@ public class ProjectService {
 			}
 		}
 		return tasks;
+	}
+
+	public void assignUserToTask(String userId, String projectId, String taskUId) {
+		Project project = projectRepository.findById(projectId);
+		Task task = taskRepository.findByUid(taskUId);
+		
+		if (project.userIsAlreadyAssigned(userId)) {
+			task.assignUserToTask(userId);
+		} else {
+			project.addUserToProject(userId);
+			task.assignUserToTask(userId);
+		}
 	}
 }
