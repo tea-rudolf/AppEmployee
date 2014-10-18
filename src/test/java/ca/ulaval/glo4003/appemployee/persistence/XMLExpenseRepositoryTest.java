@@ -36,6 +36,13 @@ public class XMLExpenseRepositoryTest {
 		xmlExpenseRepository.store(expenseMock);
 		
 		List<Expense> sampleList = xmlExpenseRepository.findAllExpensesByUser(USER_ID);
+		
+		System.out.println("size" + sampleList.size());
+		
+		for(Expense ex : xmlExpenseRepository.findAllExpensesByUser(USER_ID)){
+			System.out.println(ex.getUserEmail() + "  " + ex.getAmount());
+		}
+		
 		assertTrue(sampleList.contains(expenseMock));
 	}
 	
