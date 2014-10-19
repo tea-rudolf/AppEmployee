@@ -96,17 +96,15 @@ public class ProjectService {
 		return tasks;
 	}
 
-	public List<Task> getAllTasksAssignedToAUser(String userId) {
+	public List<Task> getAllTasksByUserId(String userId) {
 		Collection<Project> projects = projectRepository.findAll();
 
 		List<Task> tasks = new ArrayList<Task>();
-		for (Project projet : projects) {
+		for (Project project : projects) {
 
-			List<String> useruIds = projet.getUseruIds();
-
-			if (useruIds.contains(userId)) {
-				List<Task> tasksProject = getAllTasksByProjectId(projet.getuId());
-				tasks.addAll(tasksProject);
+			if (project.userIsAlreadyAssigned(userId)) {
+				List<Task> projectTasks = getAllTasksByProjectId(project.getuId());
+				tasks.addAll(projectTasks);
 			}
 		}
 		return tasks;

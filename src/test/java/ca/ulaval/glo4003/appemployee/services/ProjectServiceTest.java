@@ -1,7 +1,12 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +26,7 @@ public class ProjectServiceTest {
 	private static final String PROJECT_ID = "0001";
 	private static final String PROJECT_NAME = "ProjectShanna";
 	private static final String NEW_NAME = "newName";
+	private static final String DUMMY_USER_ID = "1234";
 
 	private ProjectService projectService;
 	private ProjectRepository projectRepositoryMock;
@@ -100,7 +106,7 @@ public class ProjectServiceTest {
 	 public void addTaskToProjectCorrectlyAddsATaskToTheProject() {
 	 when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
 	 when(taskMock.getuId()).thenReturn(TASK_ID);
-	 when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+	 when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock); 
 	 projectService.addTaskToProject(PROJECT_ID, TASK_ID);
 	 assertTrue(project.getTaskuIds().contains(TASK_ID));
 	 }
@@ -130,13 +136,32 @@ public class ProjectServiceTest {
 	}
 
 	@Test
-	public void gettAllTasksByProjectIdReturnsListeOfTasks() {
+	public void getAllTasksByProjectIdReturnsListOfTasks() {
 		List<String> sampleList = new ArrayList<String>();
 		sampleList.add(TASK_ID);
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(projectMock.getTaskuIds()).thenReturn(sampleList);
-		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);	
 		List<Task> sampleTaskList = projectService.getAllTasksByProjectId(PROJECT_ID);
 		assertTrue(sampleTaskList.contains(taskMock));
+	}
+	
+	@Test 
+	public void  givenUnassignedUserWhenAssigningUserToTaskThenAddsUserToProjectAndTask() {
+		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
+		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+		when(projectMock.userIsAlreadyAssigned(DUMMY_USER_ID)).thenReturn(false);
+		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
+		verify(projectMock, times(1)).addUserToProject(DUMMY_USER_ID);	
+		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
+	}
+	
+	@Test
+	public void givenAssignedUserWhenAssigningToTaskThenAddsUserToTask() {
+		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
+		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+		when(projectMock.userIsAlreadyAssigned(DUMMY_USER_ID)).thenReturn(true);
+		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
+		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);	
 	}
 }

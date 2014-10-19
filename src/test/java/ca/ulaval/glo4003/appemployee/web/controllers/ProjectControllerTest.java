@@ -29,6 +29,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 public class ProjectControllerTest {
 	private static final String SAMPLE_PROJECTNUMBER = "1";
 	private static final String SAMPLE_TASKNUMBER = "2";
+	private static final String SAMPLE_USERID = "1234";
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
 	private static final String REDIRECT_LINK = "redirect:/";
@@ -186,5 +187,11 @@ public class ProjectControllerTest {
 	public void editTaskCallsTheCorrectServiceMethods() throws Exception {
 		projectController.editTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);
 		verify(projectServiceMock).updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
+	}
+	
+	@Test 
+	public void assignUserToTaskCallsAssignUserToTaskInProjectService() throws Exception {
+		projectController.assignTask(SAMPLE_PROJECTNUMBER, SAMPLE_USERID, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);
+		verify(projectServiceMock).assignUserToTask(SAMPLE_USERID, SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER);
 	}
 }
