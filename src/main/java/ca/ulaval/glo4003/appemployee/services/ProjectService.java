@@ -113,7 +113,7 @@ public class ProjectService {
 	public void assignUserToTask(String userId, String projectId, String taskUId) {
 		Project project = projectRepository.findById(projectId);
 		Task task = taskRepository.findByUid(taskUId);
-		
+
 		if (project.userIsAlreadyAssigned(userId)) {
 			task.assignUserToTask(userId);
 		} else {

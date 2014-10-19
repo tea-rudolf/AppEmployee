@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.springframework.ui.ModelMap;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.ExpenseService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 
@@ -25,26 +25,26 @@ public class ExpensesControllerTest {
 	private static final LocalDate START_DATE = new LocalDate("2014-10-13");
 	private static final LocalDate END_DATE = new LocalDate("2014-10-26");
 
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
 	private ExpensesController expensesControllerMock;
 	private ModelMap modelMapMock;
 	private ExpenseViewModel expenseViewModelMock;
 	private HttpSession sessionMock;
 	private PayPeriod payPeriodMock;
-	private ExpenseRepository expenseRepositoryMock;
+	private ExpenseService expenseServiceMock;
 	private ExpenseConverter expenseConverterMock;
 
 	@Before
 	public void init() {
-		payPeriodServiceMock = mock(PayPeriodService.class);
+		payPeriodServiceMock = mock(TimeService.class);
 		expensesControllerMock = mock(ExpensesController.class);
 		modelMapMock = mock(ModelMap.class);
 		expenseViewModelMock = mock(ExpenseViewModel.class);
 		sessionMock = mock(HttpSession.class);
 		payPeriodMock = mock(PayPeriod.class);
-		expenseRepositoryMock = mock(ExpenseRepository.class);
+		expenseServiceMock = mock(ExpenseService.class);
 		expenseConverterMock = mock(ExpenseConverter.class);
-		expensesControllerMock = new ExpensesController(expenseRepositoryMock, expenseConverterMock, payPeriodServiceMock);
+		expensesControllerMock = new ExpensesController(expenseServiceMock, expenseConverterMock, payPeriodServiceMock);
 	}
 
 	@Test
@@ -58,7 +58,6 @@ public class ExpensesControllerTest {
 
 		assertEquals(EXPENSES_JSP, returnedForm);
 	}
-
 
 	@Test
 	public void saveTimeReturnsSubmittedExpensesForIfSuccessfulSubmit() throws Exception {

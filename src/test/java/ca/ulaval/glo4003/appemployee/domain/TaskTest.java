@@ -20,14 +20,14 @@ public class TaskTest {
 		task = new Task(UUID.randomUUID().toString());
 		assertNotNull(task);
 	}
-	
+
 	@Test
 	public void whenAssigningUserToTaskUserShouldBeInAuthorizedUsersList() {
 		task = new Task(UUID.randomUUID().toString());
 		String dummyUserId = "1234";
-		
+
 		task.assignUserToTask(dummyUserId);
-		
+
 		assertTrue(task.getAuthorizedUsers().contains(dummyUserId));
 	}
 

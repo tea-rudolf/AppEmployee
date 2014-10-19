@@ -34,7 +34,7 @@ public class PayPeriodServiceTest {
 	private ExpenseRepository expenseRepositoryMock;
 	private PayPeriod payPeriodMock;
 	private PayPeriod previousPayPeriodMock;
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
 
 	@Before
 	public void init() {
@@ -43,11 +43,10 @@ public class PayPeriodServiceTest {
 		taskRepositoryMock = mock(TaskRepository.class);
 		timeEntryRepositoryMock = mock(TimeEntryRepository.class);
 		expenseRepositoryMock = mock(ExpenseRepository.class);
-		payPeriodServiceMock = mock(PayPeriodService.class);
+		payPeriodServiceMock = mock(TimeService.class);
 		payPeriodMock = mock(PayPeriod.class);
 		previousPayPeriodMock = mock(PayPeriod.class);
-		payPeriodServiceMock = new PayPeriodService(payPeriodRepositoryMock, userRepositoryMock, taskRepositoryMock, timeEntryRepositoryMock,
-				expenseRepositoryMock);
+		payPeriodServiceMock = new TimeService(payPeriodRepositoryMock, userRepositoryMock, taskRepositoryMock, timeEntryRepositoryMock, expenseRepositoryMock);
 	}
 
 	@Test

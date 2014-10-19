@@ -34,7 +34,7 @@ public class PayPeriodConverterTest {
 
 	@Before
 	public void init() {
-		//payPeriodConverterMock = mock(TimeConverter.class);
+		// payPeriodConverterMock = mock(TimeConverter.class);
 		payPeriodMock = mock(PayPeriod.class);
 		timeViewModelMock = mock(TimeViewModel.class);
 		timeEntryMock = mock(TimeEntry.class);
@@ -49,7 +49,7 @@ public class PayPeriodConverterTest {
 		when(timeViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
 
 		timeEntryMock = payPeriodConverterMock.convertToTimeEntry(timeViewModelMock);
-		
+
 		assertEquals(timeViewModelMock.getHoursTimeEntry(), timeEntryMock.getBillableHours(), EPSILON);
 		assertEquals(timeViewModelMock.getDateTimeEntry(), timeEntryMock.getDate().toString());
 		assertEquals(timeViewModelMock.getTaskIdTimeEntry(), timeEntryMock.getTaskuId());

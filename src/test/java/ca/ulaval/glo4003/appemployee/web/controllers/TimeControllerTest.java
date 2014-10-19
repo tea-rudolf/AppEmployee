@@ -17,7 +17,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
@@ -34,7 +34,7 @@ public class TimeControllerTest {
 	private static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
 	private static final String TIME_ENTRY_UID = "0001";
 
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
 	private TimeConverter timeConverter;
 	private TimeController timeControllerMock;
 	private ModelMap modelMapMock;
@@ -51,7 +51,7 @@ public class TimeControllerTest {
 
 	@Before
 	public void init() {
-		payPeriodServiceMock = mock(PayPeriodService.class);
+		payPeriodServiceMock = mock(TimeService.class);
 		timeConverter = mock(TimeConverter.class);
 		timeControllerMock = mock(TimeController.class);
 		modelMapMock = mock(ModelMap.class);

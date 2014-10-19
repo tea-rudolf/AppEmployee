@@ -79,13 +79,13 @@ public class ProjectServiceTest {
 		projectService.updateProject(PROJECT_ID, projectViewModelMock);
 	}
 
-	 @Test
-	 public void updateProjectSetsProjectName() {
-	 when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
-	 when(projectViewModelMock.getName()).thenReturn(NEW_NAME);
-	 projectService.updateProject(PROJECT_ID, projectViewModelMock);
-	 assertEquals(projectViewModelMock.getName(), project.getName());
-	 }
+	@Test
+	public void updateProjectSetsProjectName() {
+		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
+		when(projectViewModelMock.getName()).thenReturn(NEW_NAME);
+		projectService.updateProject(PROJECT_ID, projectViewModelMock);
+		assertEquals(projectViewModelMock.getName(), project.getName());
+	}
 
 	@Test(expected = RepositoryException.class)
 	public void updateProjectThrowsExceptionIfProjectIsNotUpdated() throws Exception {
@@ -102,14 +102,14 @@ public class ProjectServiceTest {
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
 
-	 @Test
-	 public void addTaskToProjectCorrectlyAddsATaskToTheProject() {
-	 when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
-	 when(taskMock.getuId()).thenReturn(TASK_ID);
-	 when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock); 
-	 projectService.addTaskToProject(PROJECT_ID, TASK_ID);
-	 assertTrue(project.getTaskuIds().contains(TASK_ID));
-	 }
+	@Test
+	public void addTaskToProjectCorrectlyAddsATaskToTheProject() {
+		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
+		when(taskMock.getuId()).thenReturn(TASK_ID);
+		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+		projectService.addTaskToProject(PROJECT_ID, TASK_ID);
+		assertTrue(project.getTaskuIds().contains(TASK_ID));
+	}
 
 	@Test
 	public void addTaskCallsCorrectRepositoryMethod() throws Exception {
@@ -141,27 +141,27 @@ public class ProjectServiceTest {
 		sampleList.add(TASK_ID);
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(projectMock.getTaskuIds()).thenReturn(sampleList);
-		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);	
+		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 		List<Task> sampleTaskList = projectService.getAllTasksByProjectId(PROJECT_ID);
 		assertTrue(sampleTaskList.contains(taskMock));
 	}
-	
-	@Test 
-	public void  givenUnassignedUserWhenAssigningUserToTaskThenAddsUserToProjectAndTask() {
+
+	@Test
+	public void givenUnassignedUserWhenAssigningUserToTaskThenAddsUserToProjectAndTask() {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 		when(projectMock.userIsAlreadyAssigned(DUMMY_USER_ID)).thenReturn(false);
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
-		verify(projectMock, times(1)).addUserToProject(DUMMY_USER_ID);	
+		verify(projectMock, times(1)).addUserToProject(DUMMY_USER_ID);
 		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
 	}
-	
+
 	@Test
 	public void givenAssignedUserWhenAssigningToTaskThenAddsUserToTask() {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 		when(projectMock.userIsAlreadyAssigned(DUMMY_USER_ID)).thenReturn(true);
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
-		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);	
+		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
 	}
 }
