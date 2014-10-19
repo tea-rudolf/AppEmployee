@@ -20,11 +20,12 @@ public class ProjectServiceTest {
 	private static final String TASK_ID = "0001";
 	private static final String PROJECT_ID = "0001";
 	private static final String PROJECT_NAME = "ProjectShanna";
-	// private static final String NEW_NAME = "newName";
+	private static final String NEW_NAME = "newName";
 
 	private ProjectService projectService;
 	private ProjectRepository projectRepositoryMock;
 	private Project projectMock;
+	private Project project;
 	private ProjectViewModel projectViewModelMock;
 	private Task taskMock;
 	private TaskRepository taskRepositoryMock;
@@ -36,6 +37,7 @@ public class ProjectServiceTest {
 		projectViewModelMock = mock(ProjectViewModel.class);
 		taskMock = mock(Task.class);
 		taskRepositoryMock = mock(TaskRepository.class);
+		project = new Project(PROJECT_ID, PROJECT_NAME);
 		projectService = new ProjectService(projectRepositoryMock, taskRepositoryMock);
 	}
 
@@ -71,17 +73,13 @@ public class ProjectServiceTest {
 		projectService.updateProject(PROJECT_ID, projectViewModelMock);
 	}
 
-	// TODO: le test ne passe pas et le probl�me semble �tre la persistence
-	// @Test
-	// public void updateProjectSetsProjectName(){
-	// when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-	// when(projectMock.getName()).thenReturn(PROJECT_NAME);
-	// when(projectViewModelMock.getName()).thenReturn(NEW_NAME);
-	//
-	// projectService.updateProject(PROJECT_ID, projectViewModelMock);
-	//
-	// assertEquals(projectViewModelMock.getName(), projectMock.getName());
-	// }
+	 @Test
+	 public void updateProjectSetsProjectName(){
+	 when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
+	 when(projectViewModelMock.getName()).thenReturn(NEW_NAME);
+	 projectService.updateProject(PROJECT_ID, projectViewModelMock);
+	 assertEquals(projectViewModelMock.getName(), project.getName());
+	 }
 
 	@Test(expected = RepositoryException.class)
 	public void updateProjectThrowsExceptionIfProjectIsNotUpdated() throws Exception {
@@ -98,15 +96,14 @@ public class ProjectServiceTest {
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
 
-	// TODO: le test ne passe pas et �a semble �tre la persistence
-	// @Test
-	// public void addTaskToProjectCorrectlyAddsATaskToTheProject(){
-	// when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-	// when(taskMock.getuId()).thenReturn(TASK_ID);
-	// when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
-	// projectService.addTaskToProject(PROJECT_ID, TASK_ID);
-	// assertTrue(projectMock.getTaskuIds().contains(TASK_ID));
-	// }
+	 @Test
+	 public void addTaskToProjectCorrectlyAddsATaskToTheProject(){
+	 when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
+	 when(taskMock.getuId()).thenReturn(TASK_ID);
+	 when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+	 projectService.addTaskToProject(PROJECT_ID, TASK_ID);
+	 assertTrue(project.getTaskuIds().contains(TASK_ID));
+	 }
 
 	@Test
 	public void addTaskCallsCorrectRepositoryMethod() throws Exception {
