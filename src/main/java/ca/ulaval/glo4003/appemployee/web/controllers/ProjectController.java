@@ -87,10 +87,10 @@ public class ProjectController {
 
 		Project project = projectService.getProjectById(projectNumber);
 		model.addAttribute("project", projectConverter.convert(project));
-		List<Task> t = projectService.getAllTasksByProjectId(project.getuId());
+		List<Task> task = projectService.getAllTasksByProjectId(project.getuId());
 
-		Collection<TaskViewModel> col = taskConverter.convert(t);
-		model.addAttribute("tasks", col);
+		Collection<TaskViewModel> tasks = taskConverter.convert(task);
+		model.addAttribute("tasks", tasks);
 
 		return "editProject";
 	}

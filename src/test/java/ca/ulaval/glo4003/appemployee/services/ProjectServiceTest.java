@@ -1,12 +1,7 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +12,7 @@ import org.junit.Test;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
@@ -35,6 +31,7 @@ public class ProjectServiceTest {
 	private ProjectViewModel projectViewModelMock;
 	private Task taskMock;
 	private TaskRepository taskRepositoryMock;
+	private UserRepository userRepositoryMock;
 
 	@Before
 	public void init() {
@@ -44,7 +41,7 @@ public class ProjectServiceTest {
 		taskMock = mock(Task.class);
 		taskRepositoryMock = mock(TaskRepository.class);
 		project = new Project(PROJECT_ID, PROJECT_NAME);
-		projectService = new ProjectService(projectRepositoryMock, taskRepositoryMock);
+		projectService = new ProjectService(projectRepositoryMock, taskRepositoryMock, userRepositoryMock);
 	}
 
 	@Test
@@ -152,7 +149,7 @@ public class ProjectServiceTest {
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 		when(projectMock.userIsAlreadyAssigned(DUMMY_USER_ID)).thenReturn(false);
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
-		verify(projectMock, times(1)).addUserToProject(DUMMY_USER_ID);
+		verify(projectMock, times(1)).addEmployeeToProject(DUMMY_USER_ID);
 		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
 	}
 

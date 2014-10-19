@@ -11,7 +11,7 @@ public class Project {
 	private String uId;
 	private String name = "";
 	private List<String> taskuIds = new ArrayList<String>();
-	private List<String> useruIds = new ArrayList<String>();
+	private List<String> employeeuIds = new ArrayList<String>();
 	private List<String> expenseuIds = new ArrayList<String>();
 
 	public Project() {
@@ -51,12 +51,12 @@ public class Project {
 		this.taskuIds = taskuIds;
 	}
 
-	public List<String> getUseruIds() {
-		return useruIds;
+	public List<String> getEmployeeuIds() {
+		return employeeuIds;
 	}
 
-	public void setUseruIds(List<String> useruIds) {
-		this.useruIds = useruIds;
+	public void setEmployeeuIds(List<String> useruIds) {
+		this.employeeuIds = useruIds;
 	}
 
 	public List<String> getExpenseuIds() {
@@ -76,11 +76,11 @@ public class Project {
 	}
 
 	public boolean userIsAlreadyAssigned(String userId) {
-		return useruIds.contains(userId);
+		return employeeuIds.contains(userId);
 	}
 
-	public void addUserToProject(String userId) {
-		useruIds.add(userId);
+	public void addEmployeeToProject(String userId) {
+		employeeuIds.add(userId);
 	}
 
 }
