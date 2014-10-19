@@ -46,4 +46,16 @@ public class XMLGenericMarshaller<T> {
 		OutputStream stream = resourcesLoader.loadResourceForWriting(resourceName);
 		marshaller.marshal(element, stream);
 	}
+
+	public void setResourcesLoader(ResourcesLoader loader) {
+		this.resourcesLoader = loader;
+	}
+
+	public void setUnmarshaller(Unmarshaller unmarshaller) {
+		this.unmarshaller = unmarshaller;
+	}
+
+	public void setMarshaller(Marshaller marshaller) {
+		this.marshaller = marshaller;
+	}
 }
