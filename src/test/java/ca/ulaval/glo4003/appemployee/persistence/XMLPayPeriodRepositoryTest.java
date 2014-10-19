@@ -1,8 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -28,7 +27,7 @@ public class XMLPayPeriodRepositoryTest {
 	}
 
 	@Test
-	public void findByDateReturnsCorrectPayPeriodIfFound() throws Exception{
+	public void findByDateReturnsCorrectPayPeriodIfFound() throws Exception {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 		xmlPayPeriodRepository.persist(payPeriodMock);
@@ -37,17 +36,16 @@ public class XMLPayPeriodRepositoryTest {
 
 		assertEquals(samplePayPeriod.getStartDate(), payPeriodMock.getStartDate());
 	}
-	
+
 	@Test
-	public void persistAddsPayPeriodIntoRepository() throws Exception{
+	public void persistAddsPayPeriodIntoRepository() throws Exception {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-		
+
 		xmlPayPeriodRepository.persist(payPeriodMock);
-		
+
 		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE).getStartDate(), payPeriodMock.getStartDate());
 	}
-
 
 	@Test(expected = PayPeriodNotFoundException.class)
 	public void findPayPeriodThrowsExceptionIfPayPeriodNotFound() {

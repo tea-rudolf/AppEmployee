@@ -61,7 +61,6 @@ public class ProjectControllerTest {
 		projectController = new ProjectController(projectServiceMock, projectConverterMock, taskConverterMock);
 	}
 
-
 	@Test
 	public void getProjectsUpdatesTheModelCorrectly() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
@@ -72,9 +71,9 @@ public class ProjectControllerTest {
 
 		assertSame(model.asMap().get("projects"), projectViewModelCollection);
 	}
-	
+
 	@Test
-	public void getProjectsReturnRedirectIfSessionAttributeIsNull(){
+	public void getProjectsReturnRedirectIfSessionAttributeIsNull() {
 		String returnedForm = projectController.getProjects(model, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
@@ -85,9 +84,9 @@ public class ProjectControllerTest {
 		projectController.projectCreation(model, projectViewModelMock, sessionMock);
 		assertSame(model.asMap().get("project"), projectViewModelMock);
 	}
-	
+
 	@Test
-	public void projectCreationReturnsRedirectIfSessionAttributeIsNull(){
+	public void projectCreationReturnsRedirectIfSessionAttributeIsNull() {
 		String returnedForm = projectController.projectCreation(model, projectViewModelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
@@ -121,9 +120,9 @@ public class ProjectControllerTest {
 
 		assertSame(model.asMap().get("project"), projectViewModelMock);
 	}
-	
+
 	@Test
-	public void projectModificationReturnsRedirectIfSessionAttributeIsNull(){
+	public void projectModificationReturnsRedirectIfSessionAttributeIsNull() {
 		String returnedForm = projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
@@ -141,9 +140,9 @@ public class ProjectControllerTest {
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
 	}
-	
+
 	@Test
-	public void taskCreationReturnsRedirectIfSessionAttributeIsNull(){
+	public void taskCreationReturnsRedirectIfSessionAttributeIsNull() {
 		String returnedForm = projectController.taskCreation(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
@@ -176,9 +175,9 @@ public class ProjectControllerTest {
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
 	}
-	
+
 	@Test
-	public void taskModificationReturnsRedirectIfSessionAttributeIsNull(){
+	public void taskModificationReturnsRedirectIfSessionAttributeIsNull() {
 		String returnedForm = projectController.taskModification(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}

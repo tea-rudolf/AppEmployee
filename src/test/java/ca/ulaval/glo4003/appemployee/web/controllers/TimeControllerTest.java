@@ -65,7 +65,8 @@ public class TimeControllerTest {
 		userServiceMock = mock(UserService.class);
 		timeEntryMock = mock(TimeEntry.class);
 		projectServiceMock = mock(ProjectService.class);
-		timeControllerMock = new TimeController(payPeriodServiceMock, timeConverter, timeEntryRepositoryMock, taskRepositoryMock, userServiceMock, projectServiceMock);
+		timeControllerMock = new TimeController(payPeriodServiceMock, timeConverter, timeEntryRepositoryMock, taskRepositoryMock, userServiceMock,
+				projectServiceMock);
 	}
 
 	@Test
@@ -104,15 +105,15 @@ public class TimeControllerTest {
 
 		verify(modelMapMock).addAttribute(EMAIL_KEY, VALID_EMAIL);
 	}
-	
+
 	@Test
-	public void getTimeReturnRedirectsIfEmailAttributeIsNull(){
+	public void getTimeReturnRedirectsIfEmailAttributeIsNull() {
 		String returnedForm = timeControllerMock.getTime(modelMapMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
-	
+
 	@Test
-	public void saveTimeReturnsErrorIfTaskIdIsNull() throws Exception{
+	public void saveTimeReturnsErrorIfTaskIdIsNull() throws Exception {
 		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
 		assertEquals(ERROR_REDIRECT, returnedForm);
 	}

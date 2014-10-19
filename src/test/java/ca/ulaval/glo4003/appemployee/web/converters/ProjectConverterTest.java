@@ -2,6 +2,8 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,15 +14,15 @@ import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 
 public class ProjectConverterTest {
-	
-	private final static String FIRST_NAME = "firstName";
-	private final static String FIRST_ID = "123456";
-	private final static String SECOND_NAME = "secondName";
-	private final static String SECOND_ID = "789103";
-	private final static List<String> TASK_IDS = new ArrayList<String>();
-	private final static List<String> USER_IDS = new ArrayList<String>();
-	private final static List<String> EXPENSES_IDS = new ArrayList<String>();
-	
+
+	private static final String FIRST_NAME = "firstName";
+	private static final String FIRST_ID = "123456";
+	private static final String SECOND_NAME = "secondName";
+	private static final String SECOND_ID = "789103";
+	private static final List<String> TASK_IDS = new ArrayList<String>();
+	private static final List<String> USER_IDS = new ArrayList<String>();
+	private static final List<String> EXPENSES_IDS = new ArrayList<String>();
+
 	private ProjectConverter projectConverter;
 	private ProjectViewModel projectViewModelMock;
 	private Project projectMock;
@@ -56,9 +58,9 @@ public class ProjectConverterTest {
 		when(projectViewModelMock.getTaskIds()).thenReturn(TASK_IDS);
 		when(projectViewModelMock.getUserIds()).thenReturn(USER_IDS);
 		when(projectViewModelMock.getExpenseIds()).thenReturn(EXPENSES_IDS);
-		
+
 		projectMock = projectConverter.convert(projectViewModelMock);
-		
+
 		assertEquals(projectViewModelMock.getName(), projectMock.getName());
 		assertEquals(projectViewModelMock.getTaskIds(), projectMock.getTaskuIds());
 		assertEquals(projectViewModelMock.getUserIds(), projectMock.getUseruIds());
@@ -72,9 +74,9 @@ public class ProjectConverterTest {
 		when(projectMock.getTaskuIds()).thenReturn(TASK_IDS);
 		when(projectMock.getUseruIds()).thenReturn(USER_IDS);
 		when(projectMock.getExpenseuIds()).thenReturn(EXPENSES_IDS);
-		
+
 		projectViewModelMock = projectConverter.convert(projectMock);
-		
+
 		assertEquals(projectMock.getuId(), projectViewModelMock.getuId());
 		assertEquals(projectMock.getName(), projectViewModelMock.getName());
 		assertEquals(projectMock.getTaskuIds(), projectViewModelMock.getTaskIds());
