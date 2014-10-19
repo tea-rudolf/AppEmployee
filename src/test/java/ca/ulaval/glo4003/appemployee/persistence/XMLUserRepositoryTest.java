@@ -20,8 +20,9 @@ public class XMLUserRepositoryTest {
 	
 	@Mock
 	private XMLGenericMarshaller<UserXMLAssembler> serializerMock;
+	
 	@Mock
-	private User user;
+	private User userMock;
 
 	@InjectMocks
 	private XMLUserRepository repository;
@@ -30,7 +31,7 @@ public class XMLUserRepositoryTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		repository = new XMLUserRepository(serializerMock);
-		when(user.getEmail()).thenReturn(VALID_EMAIL);
+		when(userMock.getEmail()).thenReturn(VALID_EMAIL);
 	}
 	
 	@Test
@@ -43,9 +44,9 @@ public class XMLUserRepositoryTest {
 	
 	@Test
 	public void storeAddsUserToUserRepository() throws Exception {
-		repository.store(user);
+		repository.store(userMock);
 		
-		assertEquals(user, repository.findByEmail(VALID_EMAIL));
+		assertEquals(userMock, repository.findByEmail(VALID_EMAIL));
 	}
 	
 

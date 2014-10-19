@@ -16,4 +16,6 @@ public interface ExpenseRepository {
 
 	List<Expense> findAllExpensesByUser(String userId);
 
+	Expense findByUid(String uId);
+
 }
