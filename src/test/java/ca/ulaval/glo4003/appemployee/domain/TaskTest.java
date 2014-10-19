@@ -20,5 +20,10 @@ public class TaskTest {
 		task = new Task(UUID.randomUUID().toString());
 		assertNotNull(task);
 	}
+	
+	@Test
+	public void assignUserToTaskaddsUserToAuthorizedUsersInThisTask() {
+		
+	}
 
 }
