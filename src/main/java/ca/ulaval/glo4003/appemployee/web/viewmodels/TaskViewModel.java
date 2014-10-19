@@ -1,9 +1,12 @@
 package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskViewModel {
 	private String uId;
 	private String name;
-	private String comment;
+	private List<String> authorizedUsers = new ArrayList<String>();
 
 	public String getuId() {
 		return uId;
@@ -13,12 +16,12 @@ public class TaskViewModel {
 		this.uId = uId;
 	}
 
-	public String getComment() {
-		return comment;
+	public List<String> getAuthorizedUsers() {
+		return authorizedUsers;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setAuthorizedUsers(List<String> authorizedUsers) {
+		this.authorizedUsers = authorizedUsers;
 	}
 
 	public String getName() {
