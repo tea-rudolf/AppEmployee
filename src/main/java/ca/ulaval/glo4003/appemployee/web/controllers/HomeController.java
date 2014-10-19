@@ -53,7 +53,7 @@ public class HomeController {
 		return new ModelAndView(HOME_VIEW);
 	}
 
-	@RequestMapping(value = "/logout")
+	@RequestMapping(value = "**/logout")
 	public String logout(SessionStatus sessionStatus, ModelMap model) {
 		sessionStatus.setComplete();
 		model.clear();

@@ -3,15 +3,19 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <html lang="en">
-  <head>
-    <%@include file="../includes/header.jsp" %>
-    <title>AppEmployee - Enterprise Board</title>
-  </head>
-  
-  <%@include file="../includes/bodyHeader.jsp" %>
+<head>
+<%@include file="../includes/header.jsp"%>
+<title>AppEmployee - Enterprise Board</title>
+</head>
 
-  <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-   
-  </div>
+<body>
+	<%@include file="../includes/navbar.jsp"%>
 
-<%@include file="../includes/footer.jsp" %>
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+	</div>
+
+	<%@include file="../includes/footer.jsp"%>
+
+</body>
+</html>
