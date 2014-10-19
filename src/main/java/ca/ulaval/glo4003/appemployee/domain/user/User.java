@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.appemployee.domain.user;
 
+
 public class User {
 
 	private String email;
@@ -11,8 +12,8 @@ public class User {
 
 	}
 
-	public User(String username, String password, Role role, double wage) {
-		this.email = username;
+	public User(String email, String password, Role role, double wage) {
+		this.email = email;
 		this.password = password;
 		this.role = role;
 		this.wage = wage;

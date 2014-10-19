@@ -13,12 +13,8 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 public class XMLExpenseRepositoryTest {
 
-	private static final String USER_EMAIL = "employee@employee.com"; // employee
-																		// a 2
-																		// expenses
-																		// dans
-																		// le
-																		// repo
+	private static final String USER_EMAIL = "employee@employee.com"; // cet employee a 2 expenses dans le repo
+
 	private static final Integer LIST_SIZE = 2;
 	private static final double EPSILON = 0.001;
 
