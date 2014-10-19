@@ -74,7 +74,7 @@ public class ProjectServiceTest {
 	}
 
 	 @Test
-	 public void updateProjectSetsProjectName(){
+	 public void updateProjectSetsProjectName() {
 	 when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
 	 when(projectViewModelMock.getName()).thenReturn(NEW_NAME);
 	 projectService.updateProject(PROJECT_ID, projectViewModelMock);
@@ -97,7 +97,7 @@ public class ProjectServiceTest {
 	}
 
 	 @Test
-	 public void addTaskToProjectCorrectlyAddsATaskToTheProject(){
+	 public void addTaskToProjectCorrectlyAddsATaskToTheProject() {
 	 when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
 	 when(taskMock.getuId()).thenReturn(TASK_ID);
 	 when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
