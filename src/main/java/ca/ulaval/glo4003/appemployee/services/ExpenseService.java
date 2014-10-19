@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.appemployee.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 

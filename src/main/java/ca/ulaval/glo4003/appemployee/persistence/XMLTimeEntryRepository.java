@@ -1,12 +1,16 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Singleton;
+import javax.xml.bind.JAXBException;
 
+import org.apache.commons.lang3.SerializationException;
 import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
@@ -20,7 +24,7 @@ public class XMLTimeEntryRepository implements TimeEntryRepository {
 	private Map<String, TimeEntry> timeEntries = new HashMap<String, TimeEntry>();
 	private static String TIMEENTRIES_FILEPATH = "/timeEntries.xml";
 
-	public XMLTimeEntryRepository() throws Exception {
+	public XMLTimeEntryRepository() throws JAXBException {
 		serializer = new XMLGenericMarshaller<TimeEntryXMLAssembler>(TimeEntryXMLAssembler.class);
 		parseXML();
 	}
@@ -40,13 +44,13 @@ public class XMLTimeEntryRepository implements TimeEntryRepository {
 		return timeEntries.get(timeEntryId);
 	}
 
-	private void saveXML() throws Exception {
+	private void saveXML() throws FileNotFoundException, JAXBException, URISyntaxException {
 		TimeEntryXMLAssembler timeEntryAssembler = new TimeEntryXMLAssembler();
 		timeEntryAssembler.setTimeEntries(new ArrayList<TimeEntry>(timeEntries.values()));
 		serializer.marshall(timeEntryAssembler, TIMEENTRIES_FILEPATH);
 	}
 
-	private void parseXML() throws Exception {
+	private void parseXML() throws SerializationException, JAXBException  {
 		List<TimeEntry> deserializedTimeEntries = serializer.unmarshall(TIMEENTRIES_FILEPATH).getTimeEntries();
 		for (TimeEntry timeEntry : deserializedTimeEntries) {
 			timeEntries.put(timeEntry.getuId(), timeEntry);

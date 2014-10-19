@@ -1,17 +1,20 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Singleton;
+import javax.xml.bind.JAXBException;
 
+import org.apache.commons.lang3.SerializationException;
 import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @Repository
 @Singleton
@@ -36,7 +39,7 @@ public class XMLExpenseRepository implements ExpenseRepository {
 	}
 
 	@Override
-	public void store(Expense expense) throws Exception {
+	public void store(Expense expense) throws FileNotFoundException, JAXBException, URISyntaxException {
 		expenses.put(expense.getuId(), expense);
 		saveXML();
 	}
@@ -53,13 +56,13 @@ public class XMLExpenseRepository implements ExpenseRepository {
 		return foundExpenses;
 	}
 
-	private void saveXML() throws Exception {
+	private void saveXML() throws FileNotFoundException, JAXBException, URISyntaxException  {
 		ExpenseXMLAssembler expenseAssembler = new ExpenseXMLAssembler();
 		expenseAssembler.setExpenses(new ArrayList<Expense>(expenses.values()));
 		serializer.marshall(expenseAssembler, EXPENSES_FILEPATH);
 	}
 
-	private void parseXML() throws Exception {
+	private void parseXML() throws SerializationException, JAXBException  {
 		List<Expense> deserializedExpenses = serializer.unmarshall(EXPENSES_FILEPATH).getExpenses();
 		for (Expense expense : deserializedExpenses) {
 			expenses.put(expense.getuId(), expense);
