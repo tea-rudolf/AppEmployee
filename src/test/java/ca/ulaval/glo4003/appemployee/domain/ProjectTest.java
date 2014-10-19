@@ -16,6 +16,7 @@ public class ProjectTest {
 	private static final String TASK_ID = "0001";
 	private static final String PROJECT_UID = TASK_ID;
 	private static final String PROJECTNAME = "SampleName";
+	private static final String USER_UID = "1234";
 
 	private Project project;
 
@@ -40,5 +41,19 @@ public class ProjectTest {
 		project.addTaskuId(TASK_ID);
 		project.addTaskuId(TASK_ID);
 	}
+	
+	@Test 
+	public void whenUserIsAddedToProjectUserShouldBeInUsersList() {
+		project.addUserToProject(USER_UID);
+		
+		assertTrue(project.getUseruIds().contains(USER_UID));
+	}
 
+	@Test
+	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
+		project.addUserToProject(USER_UID);
+		
+		assertTrue(project.userIsAlreadyAssigned(USER_UID));
+		
+	}
 }

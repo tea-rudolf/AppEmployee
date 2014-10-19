@@ -38,4 +38,12 @@ public class Task {
 		authorizedUsers.add(userId);	
 	}
 
+	public List<String> getAuthorizedUsers() {
+		return authorizedUsers;
+	}
+
+	public void setAuthorizedUsers(List<String> authorizedUsers) {
+		this.authorizedUsers = authorizedUsers;
+	}
+
 }

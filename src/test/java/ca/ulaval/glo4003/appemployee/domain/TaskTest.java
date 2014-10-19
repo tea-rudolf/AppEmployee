@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.appemployee.domain;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.UUID;
 
@@ -22,8 +22,13 @@ public class TaskTest {
 	}
 	
 	@Test
-	public void assignUserToTaskaddsUserToAuthorizedUsersInThisTask() {
+	public void whenAssigningUserToTaskUserShouldBeInAuthorizedUsersList() {
+		task = new Task(UUID.randomUUID().toString());
+		String dummyUserId = "1234";
 		
+		task.assignUserToTask(dummyUserId);
+		
+		assertTrue(task.getAuthorizedUsers().contains(dummyUserId));
 	}
 
 }
