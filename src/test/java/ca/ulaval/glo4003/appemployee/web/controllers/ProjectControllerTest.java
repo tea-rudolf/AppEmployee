@@ -1,8 +1,12 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +37,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class ProjectControllerTest {
 	private static final String SAMPLE_PROJECTNUMBER = "1";
 	private static final String SAMPLE_TASKNUMBER = "2";
-	private static final String SAMPLE_USERID = "1234";
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
 	private static final String REDIRECT_LINK = "redirect:/";
@@ -44,12 +47,14 @@ public class ProjectControllerTest {
 	private ProjectService projectServiceMock;
 	private ProjectConverter projectConverterMock;
 	private ProjectViewModel projectViewModelMock;
+	private ProjectViewModel projectViewModel;
 	private Project projectMock;
 	private List<Project> projectList = new ArrayList<Project>();
 	private Collection<ProjectViewModel> projectViewModelCollection = new ArrayList<ProjectViewModel>();
 	private Task taskMock;
 	private TaskConverter taskConverterMock;
 	private TaskViewModel taskViewModelMock;
+	private TaskViewModel taskViewModel;
 	private List<Task> taskList = new ArrayList<Task>();
 	private List<User> employeeList = new ArrayList<User>();
 	private Collection<TaskViewModel> taskViewModelCollection = new ArrayList<TaskViewModel>();
@@ -71,7 +76,10 @@ public class ProjectControllerTest {
 		userConverterMock = mock(UserConverter.class);
 		userServiceMock = mock(UserService.class);
 		currentUserMock = mock(User.class);
-
+		projectViewModel = new ProjectViewModel();
+		projectViewModel.setUserEmail("");
+		taskViewModel = new TaskViewModel();
+		taskViewModel.setUserEmail("");
 		projectController = new ProjectController(projectServiceMock, userServiceMock, projectConverterMock, taskConverterMock, userConverterMock);
 	}
 
@@ -146,8 +154,8 @@ public class ProjectControllerTest {
 
 	@Test
 	public void editProjectCallsTheCorrectServiceMethods() throws Exception {
-		projectController.editProject(SAMPLE_PROJECTNUMBER, projectViewModelMock, sessionMock);
-		verify(projectServiceMock).updateProject(SAMPLE_PROJECTNUMBER, projectViewModelMock);
+		projectController.editProject(SAMPLE_PROJECTNUMBER, projectViewModel, sessionMock);
+		verify(projectServiceMock).updateProject(SAMPLE_PROJECTNUMBER, projectViewModel);
 	}
 
 	@Test
@@ -208,8 +216,8 @@ public class ProjectControllerTest {
 
 	@Test
 	public void editTaskCallsTheCorrectServiceMethods() throws Exception {
-		projectController.editTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);
-		verify(projectServiceMock).updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
+		projectController.editTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModel, sessionMock);
+		verify(projectServiceMock).updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModel);
 	}
 
 }

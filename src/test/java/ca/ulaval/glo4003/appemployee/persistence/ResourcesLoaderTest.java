@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.io.FileNotFoundException;
 

@@ -80,7 +80,9 @@ public class Project {
 	}
 
 	public void addEmployeeToProject(String userId) {
-		employeeuIds.add(userId);
+		if (!employeeuIds.contains(userId)) {
+			employeeuIds.add(userId);
+		}
 	}
 
 }

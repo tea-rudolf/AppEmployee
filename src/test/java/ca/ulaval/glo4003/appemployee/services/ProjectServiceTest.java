@@ -1,7 +1,12 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +26,13 @@ public class ProjectServiceTest {
 	private static final String TASK_ID = "0001";
 	private static final String PROJECT_ID = "0001";
 	private static final String PROJECT_NAME = "ProjectShanna";
-	private static final String NEW_NAME = "newName";
 	private static final String DUMMY_USER_ID = "1234";
 
 	private ProjectService projectService;
 	private ProjectRepository projectRepositoryMock;
 	private Project projectMock;
 	private Project project;
-	private ProjectViewModel projectViewModelMock;
+	private ProjectViewModel projectViewModel;
 	private Task taskMock;
 	private TaskRepository taskRepositoryMock;
 	private UserRepository userRepositoryMock;
@@ -37,7 +41,8 @@ public class ProjectServiceTest {
 	public void init() {
 		projectRepositoryMock = mock(ProjectRepository.class);
 		projectMock = mock(Project.class);
-		projectViewModelMock = mock(ProjectViewModel.class);
+		projectViewModel = new ProjectViewModel();
+		projectViewModel.setName(PROJECT_NAME);
 		taskMock = mock(Task.class);
 		taskRepositoryMock = mock(TaskRepository.class);
 		userRepositoryMock = mock(UserRepository.class);
@@ -66,7 +71,7 @@ public class ProjectServiceTest {
 	@Test
 	public void updateProjectCallsCorrectRepositoryMethod() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-		projectService.updateProject(PROJECT_ID, projectViewModelMock);
+		projectService.updateProject(PROJECT_ID, projectViewModel);
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
 
@@ -74,33 +79,31 @@ public class ProjectServiceTest {
 	public void updateProjectThrowsExceptionWhenProjectIsNotUpdated() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		doThrow(new RepositoryException()).when(projectRepositoryMock).store(projectMock);
-		projectService.updateProject(PROJECT_ID, projectViewModelMock);
+		projectService.updateProject(PROJECT_ID, projectViewModel);
 	}
 
 	@Test
 	public void updateProjectSetsProjectName() {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(project);
-		when(projectViewModelMock.getName()).thenReturn(NEW_NAME);
 
-		projectService.updateProject(PROJECT_ID, projectViewModelMock);
+		projectService.updateProject(PROJECT_ID, projectViewModel);
 
-		assertEquals(projectViewModelMock.getName(), project.getName());
+		assertEquals(projectViewModel.getName(), project.getName());
 	}
 
 	@Test(expected = RepositoryException.class)
 	public void updateProjectThrowsExceptionIfProjectIsNotUpdated() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-		when(projectViewModelMock.getName()).thenReturn(PROJECT_NAME);
 
 		doThrow(new RepositoryException()).when(projectRepositoryMock).store(projectMock);
 
-		projectService.updateProject(PROJECT_ID, projectViewModelMock);
+		projectService.updateProject(PROJECT_ID, projectViewModel);
 	}
 
 	@Test
 	public void addTaskToProjectCorrecltyCallsRepositoryMethod() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-		projectService.updateProject(PROJECT_ID, projectViewModelMock);
+		projectService.updateProject(PROJECT_ID, projectViewModel);
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
 

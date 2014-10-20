@@ -34,7 +34,9 @@ public class Task {
 	}
 
 	public void assignUserToTask(String userId) {
-		authorizedUsers.add(userId);
+		if (!authorizedUsers.contains(userId)) {
+			authorizedUsers.add(userId);
+		}			
 	}
 
 	public List<String> getAuthorizedUsers() {

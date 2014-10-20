@@ -35,6 +35,7 @@ public class ProjectTest {
 		project.addTaskuId(TASK_ID);
 		assertTrue(project.getTaskuIds().contains(TASK_ID));
 	}
+	
 
 	@Test(expected = TaskAlreadyExistsException.class)
 	public void addTaskIdThrowsTaskAlreadyExistsExceptionWhenAddingAnExistingId() {
