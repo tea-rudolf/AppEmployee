@@ -7,12 +7,11 @@ import java.io.FileNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
-
 public class ResourcesLoaderTest {
-	
+
 	private final String VALID_DUMMY_RESOURCE = "/dummyResource.xml";
 	private final String INVALID_DUMMY_RESOURCE = "DUMMYdummyDUMMY.xml";
-	
+
 	private ResourcesLoader loader;
 
 	@Before

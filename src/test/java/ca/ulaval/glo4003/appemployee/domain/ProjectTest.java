@@ -41,19 +41,19 @@ public class ProjectTest {
 		project.addTaskuId(TASK_ID);
 		project.addTaskuId(TASK_ID);
 	}
-	
-	@Test 
+
+	@Test
 	public void whenUserIsAddedToProjectUserShouldBeInUsersList() {
 		project.addEmployeeToProject(USER_UID);
-		
+
 		assertTrue(project.getEmployeeuIds().contains(USER_UID));
 	}
 
 	@Test
 	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
 		project.addEmployeeToProject(USER_UID);
-		
+
 		assertTrue(project.userIsAlreadyAssigned(USER_UID));
-		
+
 	}
 }

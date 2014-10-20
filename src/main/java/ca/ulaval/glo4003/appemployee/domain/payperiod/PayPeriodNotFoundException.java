@@ -7,7 +7,7 @@ public class PayPeriodNotFoundException extends RuntimeException {
 	public PayPeriodNotFoundException() {
 		super();
 	}
-	
+
 	public PayPeriodNotFoundException(String message) {
 		super(message);
 	}
