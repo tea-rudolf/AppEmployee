@@ -42,7 +42,7 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
 		User user = userRepository.findByEmail(form.getEmail());
-		if (user.validatePassword(form.getPassword())) {
+		if (user != null && user.validatePassword(form.getPassword())) {
 			model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
 			model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
 
