@@ -47,8 +47,14 @@ public class ProjectService {
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
 
-		if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+		if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {		
+			
 			project.addEmployeeToProject(viewModel.getUserEmail());
+			
+			for (Task task : getAllTasksByProjectId(projectId)) {
+				assignUserToTask(viewModel.getUserEmail(), projectId, task.getuId());
+			}
+			
 		}
 
 		try {
