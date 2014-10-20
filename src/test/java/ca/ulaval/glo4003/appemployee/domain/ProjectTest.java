@@ -44,14 +44,14 @@ public class ProjectTest {
 	
 	@Test 
 	public void whenUserIsAddedToProjectUserShouldBeInUsersList() {
-		project.addUserToProject(USER_UID);
+		project.addEmployeeToProject(USER_UID);
 		
-		assertTrue(project.getUseruIds().contains(USER_UID));
+		assertTrue(project.getEmployeeuIds().contains(USER_UID));
 	}
 
 	@Test
 	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
-		project.addUserToProject(USER_UID);
+		project.addEmployeeToProject(USER_UID);
 		
 		assertTrue(project.userIsAlreadyAssigned(USER_UID));
 		

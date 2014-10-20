@@ -25,7 +25,7 @@ public class ProjectConverter {
 		Project project = new Project();
 		project.setName(projectViewModel.getName());
 		project.setTaskuIds(projectViewModel.getTaskIds());
-		project.setUseruIds(projectViewModel.getUserIds());
+		project.setEmployeeuIds(projectViewModel.getUserIds());
 		project.setExpenseuIds(projectViewModel.getExpenseIds());
 
 		return project;
@@ -37,7 +37,7 @@ public class ProjectConverter {
 		viewModel.setuId(project.getuId());
 		viewModel.setName(project.getName());
 		viewModel.setTaskIds(project.getTaskuIds());
-		viewModel.setUserIds(project.getUseruIds());
+		viewModel.setUserIds(project.getEmployeeuIds());
 		viewModel.setExpenseIds(project.getExpenseuIds());
 
 		return viewModel;
