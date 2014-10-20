@@ -47,14 +47,16 @@ public class ProjectService {
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
 
-		if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {		
-			
-			project.addEmployeeToProject(viewModel.getUserEmail());
-			
-			for (Task task : getAllTasksByProjectId(projectId)) {
-				assignUserToTask(viewModel.getUserEmail(), projectId, task.getuId());
+		if (!viewModel.getUserEmail().equals("")) {
+			if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+
+				project.addEmployeeToProject(viewModel.getUserEmail());
+
+				for (Task task : getAllTasksByProjectId(projectId)) {
+					assignUserToTask(viewModel.getUserEmail(), projectId, task.getuId());
+				}
+
 			}
-			
 		}
 
 		try {
@@ -86,8 +88,10 @@ public class ProjectService {
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
 
-		if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {
-			task.assignUserToTask(viewModel.getUserEmail());
+		if (!viewModel.getUserEmail().equals("")) {
+			if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+				task.assignUserToTask(viewModel.getUserEmail());
+			}
 		}
 
 		try {

@@ -114,10 +114,12 @@ public class ProjectController {
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
 	public String editProject(@PathVariable String projectNumber, ProjectViewModel viewModel, HttpSession session) throws Exception {
 
-		try {
-			userService.findByEmail(viewModel.getUserEmail());
-		} catch (UserNotFoundException userNotFound) {
-			return "redirect:/projects/userNotFoundError";
+		if (!viewModel.getUserEmail().equals("")) {
+			try {
+				userService.findByEmail(viewModel.getUserEmail());
+			} catch (UserNotFoundException userNotFound) {
+				return "redirect:/projects/userNotFoundError";
+			}
 		}
 
 		projectService.updateProject(projectNumber, viewModel);
@@ -175,10 +177,12 @@ public class ProjectController {
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
 	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) throws Exception {
 
-		try {
-			userService.findByEmail(viewModel.getUserEmail());
-		} catch (UserNotFoundException userNotFound) {
-			return "redirect:/projects/userNotFoundError";
+		if (!viewModel.getUserEmail().equals("")) {
+			try {
+				userService.findByEmail(viewModel.getUserEmail());
+			} catch (UserNotFoundException userNotFound) {
+				return "redirect:/projects/userNotFoundError";
+			}
 		}
 
 		projectService.updateTask(projectNumber, taskNumber, viewModel);
