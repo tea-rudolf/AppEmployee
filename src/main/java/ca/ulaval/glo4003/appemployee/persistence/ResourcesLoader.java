@@ -15,12 +15,10 @@ public class ResourcesLoader {
 		return aClass.getResourceAsStream(resourceName);
 	}
 
-	public OutputStream loadResourceForWriting(String resourceName)
-			throws URISyntaxException, FileNotFoundException {
+	public OutputStream loadResourceForWriting(String resourceName) throws URISyntaxException, FileNotFoundException {
 		URL resourceUrl = getClass().getResource(resourceName);
 		if (resourceUrl == null) {
-			throw new FileNotFoundException(
-					"Can't find the resource with the name : " + resourceName);
+			throw new FileNotFoundException("Can't find the resource with the name : " + resourceName);
 		}
 
 		File file = new File(resourceUrl.toURI());

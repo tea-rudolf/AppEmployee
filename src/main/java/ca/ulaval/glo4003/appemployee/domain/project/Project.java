@@ -11,7 +11,7 @@ public class Project {
 	private String uId;
 	private String name = "";
 	private List<String> taskuIds = new ArrayList<String>();
-	private List<String> employeeuIds = new ArrayList<String>();
+	private List<String> useruIds = new ArrayList<String>();
 	private List<String> expenseuIds = new ArrayList<String>();
 
 	public Project() {
@@ -51,12 +51,12 @@ public class Project {
 		this.taskuIds = taskuIds;
 	}
 
-	public List<String> getEmployeeuIds() {
-		return employeeuIds;
+	public List<String> getUseruIds() {
+		return useruIds;
 	}
 
-	public void setEmployeeuIds(List<String> useruIds) {
-		this.employeeuIds = useruIds;
+	public void setUseruIds(List<String> useruIds) {
+		this.useruIds = useruIds;
 	}
 
 	public List<String> getExpenseuIds() {
@@ -69,19 +69,18 @@ public class Project {
 
 	public void addTaskuId(String taskuId) {
 		if (taskuIds.contains(taskuId)) {
-			throw new TaskAlreadyExistsException(
-					"Task already assigned to this project.");
+			throw new TaskAlreadyExistsException("Task already assigned to this project.");
 		}
 
 		taskuIds.add(taskuId);
 	}
 
 	public boolean userIsAlreadyAssigned(String userId) {
-		return employeeuIds.contains(userId);
+		return useruIds.contains(userId);
 	}
 
-	public void addEmployeeToProject(String userId) {
-		employeeuIds.add(userId);
+	public void addUserToProject(String userId) {
+		useruIds.add(userId);
 	}
 
 }

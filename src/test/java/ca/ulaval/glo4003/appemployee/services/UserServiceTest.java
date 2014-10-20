@@ -14,7 +14,6 @@ import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
@@ -26,7 +25,6 @@ public class UserServiceTest {
 
 	private UserService userService;
 	private TaskRepository taskRepositoryMock;
-	private UserRepository userRepositoryMock;
 	private PayPeriodRepository payPeriodRepositoryMock;
 	private ExpenseRepository expenseRepositoryMock;
 	private TimeEntryRepository timeEntryRepositoryMock;
@@ -36,7 +34,6 @@ public class UserServiceTest {
 
 	@Before
 	public void init() {
-		userRepositoryMock = mock(UserRepository.class);
 		taskRepositoryMock = mock(TaskRepository.class);
 		payPeriodRepositoryMock = mock(PayPeriodRepository.class);
 		expenseRepositoryMock = mock(ExpenseRepository.class);
@@ -44,7 +41,7 @@ public class UserServiceTest {
 		payPeriodMock = mock(PayPeriod.class);
 		timeEntryMock = mock(TimeEntry.class);
 		taskMock = mock(Task.class);
-		userService = new UserService(userRepositoryMock, payPeriodRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock);
+		userService = new UserService(payPeriodRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock);
 	}
 
 	@Test

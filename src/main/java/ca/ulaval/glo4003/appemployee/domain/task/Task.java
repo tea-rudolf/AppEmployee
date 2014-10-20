@@ -25,6 +25,7 @@ public class Task {
 		this.name = name;
 	}
 
+
 	public String getuId() {
 		return uId;
 	}
@@ -34,7 +35,7 @@ public class Task {
 	}
 
 	public void assignUserToTask(String userId) {
-		authorizedUsers.add(userId);
+		authorizedUsers.add(userId);	
 	}
 
 	public List<String> getAuthorizedUsers() {

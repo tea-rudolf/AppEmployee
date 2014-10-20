@@ -64,7 +64,7 @@ public class ProjectConverterTest {
 
 		assertEquals(projectViewModelMock.getName(), projectMock.getName());
 		assertEquals(projectViewModelMock.getTaskIds(), projectMock.getTaskuIds());
-		assertEquals(projectViewModelMock.getUserIds(), projectMock.getEmployeeuIds());
+		assertEquals(projectViewModelMock.getUserIds(), projectMock.getUseruIds());
 		assertEquals(projectViewModelMock.getExpenseIds(), projectMock.getExpenseuIds());
 	}
 
@@ -73,7 +73,7 @@ public class ProjectConverterTest {
 		when(projectMock.getuId()).thenReturn(FIRST_ID);
 		when(projectMock.getName()).thenReturn(FIRST_NAME);
 		when(projectMock.getTaskuIds()).thenReturn(TASK_IDS);
-		when(projectMock.getEmployeeuIds()).thenReturn(USER_IDS);
+		when(projectMock.getUseruIds()).thenReturn(USER_IDS);
 		when(projectMock.getExpenseuIds()).thenReturn(EXPENSES_IDS);
 
 		projectViewModelMock = projectConverter.convert(projectMock);
@@ -81,7 +81,7 @@ public class ProjectConverterTest {
 		assertEquals(projectMock.getuId(), projectViewModelMock.getuId());
 		assertEquals(projectMock.getName(), projectViewModelMock.getName());
 		assertEquals(projectMock.getTaskuIds(), projectViewModelMock.getTaskIds());
-		assertEquals(projectMock.getEmployeeuIds(), projectViewModelMock.getUserIds());
+		assertEquals(projectMock.getUseruIds(), projectViewModelMock.getUserIds());
 		assertEquals(projectMock.getExpenseuIds(), projectViewModelMock.getExpenseIds());
 	}
 
