@@ -16,10 +16,13 @@ public class XMLExpenseRepositoryTest {
 	private static final String VALID_UID = "1234";
 
 	@Mock
-	private XMLGenericMarshaller<UserXMLAssembler> serializerMock;
+	private XMLGenericMarshaller<ExpenseXMLAssembler> marshallerMock;
 	
 	@Mock
 	private Expense expenseMock;
+	
+	@Mock
+	private XMLUserRepository userRepository;
 	
 	@InjectMocks
 	private XMLExpenseRepository repository;
@@ -45,5 +48,4 @@ public class XMLExpenseRepositoryTest {
 		
 		assertEquals(expenseMock, repository.findByUid(VALID_UID));
 	}
-
 }

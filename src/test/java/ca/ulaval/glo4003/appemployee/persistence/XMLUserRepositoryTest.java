@@ -19,7 +19,7 @@ public class XMLUserRepositoryTest {
 	private static final double VALID_WAGE = 100.00;
 	
 	@Mock
-	private XMLGenericMarshaller<UserXMLAssembler> serializerMock;
+	private XMLGenericMarshaller<UserXMLAssembler> marshallerMock;
 	
 	@Mock
 	private User userMock;
@@ -30,7 +30,7 @@ public class XMLUserRepositoryTest {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		repository = new XMLUserRepository(serializerMock);
+		repository = new XMLUserRepository(marshallerMock);
 		when(userMock.getEmail()).thenReturn(VALID_EMAIL);
 	}
 	
@@ -48,6 +48,4 @@ public class XMLUserRepositoryTest {
 		
 		assertEquals(userMock, repository.findByEmail(VALID_EMAIL));
 	}
-	
-
 }
