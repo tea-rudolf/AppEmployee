@@ -22,10 +22,13 @@
 				<form:label path="name">Name</form:label>
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />
-				<form:label path="userEmail">Assign a user email</form:label>
-				<form:input class="form-control" path="userEmail" value="${userEmail}"/>
-
+				<c:if test="${role eq 'SUPERVISOR'}">
+					<form:label path="userEmail">Assign a user email</form:label>
+					<form:input class="form-control" path="userEmail"
+						value="${userEmail}" />
+				</c:if>
 			</div>
+
 
 			<c:if test="${role eq 'SUPERVISOR'}">
 				<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Employees</h3>

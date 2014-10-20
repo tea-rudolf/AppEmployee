@@ -22,11 +22,13 @@
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />
 			</div>
-						<div class="form-group">
+			<c:if test="${role eq 'SUPERVISOR'}">
+			<div class="form-group">
 				<form:label path="userEmail">Assign a user email</form:label>
-				<form:input class="form-control" path="userEmail" value="${userEmail}"
-					required="required" />
+				<form:input class="form-control" path="userEmail"
+					value="${userEmail}" required="required" />
 			</div>
+			</c:if>
 			<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Tasks</h3>
 			<div style="text-align: right">
 				<a href="/projects/${projectNumber}/tasks/add"><button

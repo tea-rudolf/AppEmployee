@@ -162,7 +162,6 @@ public class ProjectController {
 		List<User> employees = userService.findUsersByEmail(task.getAuthorizedUsers());
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
 		User currentUser = userService.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		System.out.println("projectNumber " + projectNumber.toString());
 
 		model.addAttribute("task", taskConverter.convert(task));
 		model.addAttribute("projectNumber", projectNumber);
