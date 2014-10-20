@@ -23,7 +23,7 @@
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />
 				<c:if test="${role eq 'SUPERVISOR'}">
-					<form:label path="userEmail">Assign a user email</form:label>
+					<form:label path="userEmail">Assign a user email (optional)</form:label>
 					<form:input class="form-control" path="userEmail"
 						value="${userEmail}" />
 				</c:if>
@@ -32,12 +32,6 @@
 
 			<c:if test="${role eq 'SUPERVISOR'}">
 				<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Employees</h3>
-				<div style="text-align: right">
-					<a href="/projects/${projectNumber}/tasks/${taskNumber}/assign"><button
-							type="button" class="btn btn-primary">
-							<span class="glyphicon glyphicon-plus"></span>&nbsp;Add employee
-						</button></a>
-				</div>
 				<table id="employee-list" class="table table-striped table-hover">
 					<thead>
 						<tr>

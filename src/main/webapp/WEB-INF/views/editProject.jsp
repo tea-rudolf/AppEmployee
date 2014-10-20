@@ -24,7 +24,7 @@
 			</div>
 			<c:if test="${role eq 'SUPERVISOR'}">
 			<div class="form-group">
-				<form:label path="userEmail">Assign a user email</form:label>
+				<form:label path="userEmail">Assign a user email (optional)</form:label>
 				<form:input class="form-control" path="userEmail"
 					value="${userEmail}" />
 			</div>
