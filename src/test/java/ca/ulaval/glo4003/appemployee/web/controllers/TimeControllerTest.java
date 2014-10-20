@@ -31,7 +31,6 @@ public class TimeControllerTest {
 	private static final String TIME_SHEET_JSP = "time";
 	private static final String PREVIOUS_TIME_SHEET_JSP = "previousTime";
 	private static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
-	private static final String PREVIOUS_TIME_SHEET_SUBMIT_JSP = "previousTimeSheetSubmitted";
 	private static final String REDIRECT_LINK = "redirect:/";
 	private static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
 	private static final String TIME_ENTRY_UID = "0001";
@@ -119,7 +118,7 @@ public class TimeControllerTest {
 
 		String returnedForm = timeControllerMock.savePreviousTime(payPeriodViewModelMock, sessionMock);
 
-		assertEquals(PREVIOUS_TIME_SHEET_SUBMIT_JSP, returnedForm);
+		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
 	}
 
 	@Test
