@@ -16,6 +16,10 @@ public class TimeEntry {
 	public TimeEntry() {
 		this.uId = UUID.randomUUID().toString();
 	}
+	
+	public TimeEntry(String uId) {
+		this.uId = uId;	
+	}
 
 	public double getBillableHours() {
 		return billableHours;
