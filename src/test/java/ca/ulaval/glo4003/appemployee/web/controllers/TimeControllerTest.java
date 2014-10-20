@@ -117,7 +117,7 @@ public class TimeControllerTest {
 		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_UID);
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 
-		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.savePreviousTime(payPeriodViewModelMock, sessionMock);
 
 		assertEquals(PREVIOUS_TIME_SHEET_SUBMIT_JSP, returnedForm);
 	}
