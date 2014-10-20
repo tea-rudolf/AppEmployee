@@ -5,16 +5,16 @@
     <name>Project1</name>
     <taskuIds>0001</taskuIds>
     <taskuIds>0002</taskuIds>
-    <useruIds>employee@employee.com</useruIds>
-    <useruIds>supervisor@supervisor.com</useruIds>
+    <employeeuIds>jean.gauthier@employee.com</employeeuIds>
+    <employeeuIds>alexandre.pitt@supervisor.com</employeeuIds>
     <expenseuIds>0001</expenseuIds>
   </projects>
   <projects>
     <uId>0002</uId>
     <name>Project2</name>
     <taskuIds>0003</taskuIds>
-    <useruIds>employee@employee.com</useruIds>
-    <useruIds>supervisor@supervisor.com</useruIds>
+    <useruIds>jean.gauthier@employee.com</useruIds>
+    <useruIds>alexandre.pitt@supervisor.com</useruIds>
     <expenseuIds>0002</expenseuIds>
     <expenseuIds>0003</expenseuIds>
   </projects>

@@ -46,28 +46,29 @@
 				</tbody>
 			</table>
 
-			<!-- ajout Gracy -->
-			<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Employees</h3>
-			<div style="text-align: right">
-				<a href="/projects/${project.uId}/employees/add"><button
-						type="button" class="btn btn-primary">
-						<span class="glyphicon glyphicon-plus"></span>&nbsp;Add employee
-					</button></a>
-			</div>
-			<table id="employee-list" class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th>Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="employee" items="${employees}">
+			<c:if test="${role eq 'SUPERVISOR'}">
+				<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Employees</h3>
+				<div style="text-align: right">
+					<a href="/projects/${project.uId}/employees/add"><button
+							type="button" class="btn btn-primary">
+							<span class="glyphicon glyphicon-plus"></span>&nbsp;Add employee
+						</button></a>
+				</div>
+				<table id="employee-list" class="table table-striped table-hover">
+					<thead>
 						<tr>
-							<td>${employee.name}</td>
+							<th>Name</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach var="employee" items="${employees}">
+							<tr>
+								<td>${employee.email}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</c:if>
 
 			<div class="form-group">
 				<input type="submit" value="Save" class="btn btn-primary"></input> <input

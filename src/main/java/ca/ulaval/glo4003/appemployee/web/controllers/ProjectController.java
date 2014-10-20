@@ -17,12 +17,16 @@ import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
+import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Controller
 @RequestMapping(value = "/projects")
@@ -32,14 +36,19 @@ public class ProjectController {
 	static final String EMAIL_ATTRIBUTE = "email";
 
 	private ProjectService projectService;
+	private UserService userService;
 	private ProjectConverter projectConverter;
 	private TaskConverter taskConverter;
+	private UserConverter userConverter;
 
 	@Autowired
-	public ProjectController(ProjectService projectService, ProjectConverter projectConverter, TaskConverter taskConverter) {
+	public ProjectController(ProjectService projectService, UserService userService, ProjectConverter projectConverter, TaskConverter taskConverter,
+			UserConverter userConverter) {
 		this.projectService = projectService;
+		this.userService = userService;
 		this.projectConverter = projectConverter;
 		this.taskConverter = taskConverter;
+		this.userConverter = userConverter;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -86,11 +95,16 @@ public class ProjectController {
 		}
 
 		Project project = projectService.getProjectById(projectNumber);
-		model.addAttribute("project", projectConverter.convert(project));
-		List<Task> task = projectService.getAllTasksByProjectId(project.getuId());
+		List<Task> tasks = projectService.getAllTasksByProjectId(project.getuId());
+		List<User> employees = projectService.getAllEmployeesByProjectId(project.getuId());
+		User currentUser = userService.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		Collection<TaskViewModel> tasksViewModel = taskConverter.convert(tasks);
+		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
 
-		Collection<TaskViewModel> tasks = taskConverter.convert(task);
-		model.addAttribute("tasks", tasks);
+		model.addAttribute("tasks", tasksViewModel);
+		model.addAttribute("employees", employeesViewModel);
+		model.addAttribute("project", projectConverter.convert(project));
+		model.addAttribute("role", currentUser.getRole());
 
 		return "editProject";
 	}
@@ -136,8 +150,14 @@ public class ProjectController {
 		}
 
 		Task task = projectService.getTaskById(taskNumber);
+		List<User> employees = userService.findUsersByEmail(task.getAuthorizedUsers());
+		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
+		User currentUser = userService.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+
 		model.addAttribute("task", taskConverter.convert(task));
 		model.addAttribute("projectNumber", projectNumber);
+		model.addAttribute("employees", employeesViewModel);
+		model.addAttribute("role", currentUser.getRole());
 		return "editTask";
 	}
 

@@ -100,7 +100,7 @@ public class ProjectService {
 		return tasks;
 	}
 
-	public List<User> getAllEmployeeByProjectId(String projectId) {
+	public List<User> getAllEmployeesByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
 		List<String> projectEmployeesEmail = project.getEmployeeuIds();
 		List<User> employees = new ArrayList<User>();

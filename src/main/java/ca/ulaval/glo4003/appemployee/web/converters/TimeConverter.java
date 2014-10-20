@@ -18,14 +18,14 @@ public class TimeConverter {
 	}
 
 	public TimeEntry convertToTimeEntry(TimeViewModel payPeriodViewModel) {
-		TimeEntry newTimeEntry = new TimeEntry();
-		newTimeEntry.setBillableHours(payPeriodViewModel.getHoursTimeEntry());
-		newTimeEntry.setDate(new LocalDate(payPeriodViewModel.getDateTimeEntry()));
-		newTimeEntry.setTaskuId(payPeriodViewModel.getTaskIdTimeEntry());
-		newTimeEntry.setUserEmail(payPeriodViewModel.getUserEmail());
-		newTimeEntry.setComment(payPeriodViewModel.getCommentTimeEntry());
+		TimeEntry timeEntry = new TimeEntry();
+		timeEntry.setBillableHours(payPeriodViewModel.getHoursTimeEntry());
+		timeEntry.setDate(new LocalDate(payPeriodViewModel.getDateTimeEntry()));
+		timeEntry.setTaskuId(payPeriodViewModel.getTaskIdTimeEntry());
+		timeEntry.setUserEmail(payPeriodViewModel.getUserEmail());
+		timeEntry.setComment(payPeriodViewModel.getCommentTimeEntry());
 
-		return newTimeEntry;
+		return timeEntry;
 	}
 
 	public TimeViewModel convert(PayPeriod payPeriod, List<TimeEntry> timeEntrys, List<Task> tasks) {

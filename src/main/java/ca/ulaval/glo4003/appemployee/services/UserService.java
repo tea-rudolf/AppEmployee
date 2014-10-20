@@ -28,6 +28,7 @@ public class UserService {
 	@Autowired
 	public UserService(UserRepository userRepository, PayPeriodRepository payPeriodRepository, TaskRepository taskRepository,
 			ExpenseRepository expenseRepository, TimeEntryRepository timeEntryRepository) {
+		this.userRepository = userRepository;
 		this.payPeriodRepository = payPeriodRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
@@ -74,6 +75,17 @@ public class UserService {
 
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	public List<User> findUsersByEmail(List<String> emails) {
+		List<User> users = new ArrayList<User>();
+
+		for (String email : emails) {
+			User user = userRepository.findByEmail(email);
+			users.add(user);
+		}
+
+		return users;
 	}
 
 }

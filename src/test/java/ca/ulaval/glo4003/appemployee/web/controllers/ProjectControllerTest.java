@@ -19,12 +19,16 @@ import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
+import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class ProjectControllerTest {
 	private static final String SAMPLE_PROJECTNUMBER = "1";
@@ -47,7 +51,12 @@ public class ProjectControllerTest {
 	private TaskConverter taskConverterMock;
 	private TaskViewModel taskViewModelMock;
 	private List<Task> taskList = new ArrayList<Task>();
+	private List<User> employeeList = new ArrayList<User>();
 	private Collection<TaskViewModel> taskViewModelCollection = new ArrayList<TaskViewModel>();
+	private UserConverter userConverterMock;
+	private UserService userServiceMock;
+	private User currentUserMock;
+	private List<UserViewModel> userViewModelCollection = new ArrayList<UserViewModel>();
 
 	@Before
 	public void init() {
@@ -59,7 +68,11 @@ public class ProjectControllerTest {
 		taskMock = mock(Task.class);
 		taskConverterMock = mock(TaskConverter.class);
 		taskViewModelMock = mock(TaskViewModel.class);
-		projectController = new ProjectController(projectServiceMock, projectConverterMock, taskConverterMock);
+		userConverterMock = mock(UserConverter.class);
+		userServiceMock = mock(UserService.class);
+		currentUserMock = mock(User.class);
+
+		projectController = new ProjectController(projectServiceMock, userServiceMock, projectConverterMock, taskConverterMock, userConverterMock);
 	}
 
 	@Test
@@ -115,7 +128,10 @@ public class ProjectControllerTest {
 		when(projectServiceMock.getProjectById(eq(SAMPLE_PROJECTNUMBER))).thenReturn(projectMock);
 		when(projectConverterMock.convert(projectMock)).thenReturn(projectViewModelMock);
 		when(projectServiceMock.getAllTasksByProjectId(SAMPLE_PROJECTNUMBER)).thenReturn(taskList);
+		when(projectServiceMock.getAllEmployeesByProjectId(eq(SAMPLE_PROJECTNUMBER))).thenReturn(employeeList);
 		when(taskConverterMock.convert(taskList)).thenReturn(taskViewModelCollection);
+		when(userServiceMock.findByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
+		when(userConverterMock.convert(employeeList)).thenReturn(userViewModelCollection);
 
 		projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
 
@@ -167,9 +183,14 @@ public class ProjectControllerTest {
 
 	@Test
 	public void taskModificationUpdatesTheModelCorrectly() {
+		List<String> authorizedUsers = new ArrayList<String>();
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(projectServiceMock.getTaskById(eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
 		when(taskConverterMock.convert(taskMock)).thenReturn(taskViewModelMock);
+		when(taskMock.getAuthorizedUsers()).thenReturn(authorizedUsers);
+		when(userServiceMock.findUsersByEmail(authorizedUsers)).thenReturn(employeeList);
+		when(userServiceMock.findByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
+		when(userConverterMock.convert(employeeList)).thenReturn(userViewModelCollection);
 
 		projectController.taskModification(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);
 
