@@ -13,7 +13,7 @@ public class ProjectViewModel {
 	private List<String> taskIds = new ArrayList<String>();
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
-	private String userEmail;
+	private String userEmail = "";
 
 	public String getuId() {
 		return uId;

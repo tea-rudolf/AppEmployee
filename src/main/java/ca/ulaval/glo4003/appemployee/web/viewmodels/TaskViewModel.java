@@ -7,7 +7,7 @@ public class TaskViewModel {
 	private String uId;
 	private String name;
 	private List<String> authorizedUsers = new ArrayList<String>();
-	private String userEmail;
+	private String userEmail = "";
 
 	public String getuId() {
 		return uId;
