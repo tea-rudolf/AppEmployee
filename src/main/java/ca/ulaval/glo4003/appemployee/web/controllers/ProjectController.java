@@ -167,6 +167,15 @@ public class ProjectController {
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
 
+	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/assign", method = RequestMethod.GET)
+	public String taskAssignation(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+		return "addEmployee";
+	}
+
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/assign", method = RequestMethod.POST)
 	public String assignTask(@PathVariable String projectNumber, @PathVariable String userId, @PathVariable String taskNumber, TaskViewModel viewModel,
 			HttpSession session) {

@@ -27,7 +27,7 @@
 			<c:if test="${role eq 'SUPERVISOR'}">
 				<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Employees</h3>
 				<div style="text-align: right">
-					<a href="/projects/${project.uId}/employees/add"><button
+					<a href="/projects/${project.uId}/tasks/{taskNumber}/assign"><button
 							type="button" class="btn btn-primary">
 							<span class="glyphicon glyphicon-plus"></span>&nbsp;Add employee
 						</button></a>
