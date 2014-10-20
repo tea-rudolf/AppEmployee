@@ -7,7 +7,7 @@ public class TaskAlreadyExistsException extends RuntimeException {
 	public TaskAlreadyExistsException() {
 		super();
 	}
-	
+
 	public TaskAlreadyExistsException(String message) {
 		super(message);
 	}

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
@@ -20,11 +22,13 @@ public class ProjectService {
 
 	private ProjectRepository projectRepository;
 	private TaskRepository taskRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	public ProjectService(ProjectRepository projectRepository, TaskRepository taskRepository) {
+	public ProjectService(ProjectRepository projectRepository, TaskRepository taskRepository, UserRepository userRepository) {
 		this.projectRepository = projectRepository;
 		this.taskRepository = taskRepository;
+		this.userRepository = userRepository;
 	}
 
 	public Collection<Project> getAllProjects() {
@@ -96,10 +100,22 @@ public class ProjectService {
 		return tasks;
 	}
 
+	public List<User> getAllEmployeeByProjectId(String projectId) {
+		Project project = projectRepository.findById(projectId);
+		List<String> projectEmployeesEmail = project.getEmployeeuIds();
+		List<User> employees = new ArrayList<User>();
+
+		for (String employeeEmail : projectEmployeesEmail) {
+			User employee = userRepository.findByEmail(employeeEmail);
+			employees.add(employee);
+		}
+		return employees;
+	}
+
 	public List<Task> getAllTasksByUserId(String userId) {
 		Collection<Project> projects = projectRepository.findAll();
-
 		List<Task> tasks = new ArrayList<Task>();
+
 		for (Project project : projects) {
 
 			if (project.userIsAlreadyAssigned(userId)) {
@@ -113,11 +129,11 @@ public class ProjectService {
 	public void assignUserToTask(String userId, String projectId, String taskUId) {
 		Project project = projectRepository.findById(projectId);
 		Task task = taskRepository.findByUid(taskUId);
-		
+
 		if (project.userIsAlreadyAssigned(userId)) {
 			task.assignUserToTask(userId);
 		} else {
-			project.addUserToProject(userId);
+			project.addEmployeeToProject(userId);
 			task.assignUserToTask(userId);
 		}
 	}

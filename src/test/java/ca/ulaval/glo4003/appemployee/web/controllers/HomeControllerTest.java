@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
-import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 public class HomeControllerTest {
@@ -25,7 +25,7 @@ public class HomeControllerTest {
 	private HomeController homeController;
 	private LoginFormViewModel loginFormViewModelMock;
 	private ModelMap modelMapMock;
-	private UserRepository userRepositoryMock;
+	private UserService userServiceMock;
 	private User userMock;
 	private Role role;
 
@@ -33,16 +33,16 @@ public class HomeControllerTest {
 	public void init() {
 		loginFormViewModelMock = mock(LoginFormViewModel.class);
 		modelMapMock = mock(ModelMap.class);
-		userRepositoryMock = mock(UserRepository.class);
+		userServiceMock = mock(UserService.class);
 		userMock = mock(User.class);
 		role = Role.EMPLOYEE;
-		homeController = new HomeController(userRepositoryMock);
+		homeController = new HomeController(userServiceMock);
 	}
 
 	@Test
 	public void loginReturnsCorrectModelForm() {
 		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
+		when(userServiceMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 		ModelAndView sampleForm = homeController.login(loginFormViewModelMock, modelMapMock);
 		assertEquals("home", sampleForm.getViewName());
@@ -51,7 +51,7 @@ public class HomeControllerTest {
 	@Test
 	public void loginAddsEmailAttributeToForm() {
 		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
+		when(userServiceMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 		when(userMock.validatePassword(USER_PASSWORD)).thenReturn(true);
 		homeController.login(loginFormViewModelMock, modelMapMock);
@@ -61,7 +61,7 @@ public class HomeControllerTest {
 	@Test
 	public void loginAddsRoleAttributeToForm() {
 		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
+		when(userServiceMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 		when(userMock.validatePassword(USER_PASSWORD)).thenReturn(true);
 		when(userMock.getRole()).thenReturn(role);
@@ -72,7 +72,7 @@ public class HomeControllerTest {
 	@Test
 	public void loginReturnsAlertIfWrongEmailOrPassword() {
 		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
+		when(userServiceMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 		when(userMock.validatePassword(USER_PASSWORD)).thenReturn(false);
 		homeController.login(loginFormViewModelMock, modelMapMock);

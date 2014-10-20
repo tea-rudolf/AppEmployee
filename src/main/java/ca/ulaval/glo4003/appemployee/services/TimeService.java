@@ -15,12 +15,12 @@ import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @Service
-public class PayPeriodService {
+public class TimeService {
 
 	private PayPeriodRepository payPeriodRepository;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, UserRepository userRepository, TaskRepository taskRepository,
+	public TimeService(PayPeriodRepository payPeriodRepository, UserRepository userRepository, TaskRepository taskRepository,
 			TimeEntryRepository timeEntryRepository, ExpenseRepository expenseRepository) {
 		this.payPeriodRepository = payPeriodRepository;
 	}

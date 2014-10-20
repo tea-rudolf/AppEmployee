@@ -17,7 +17,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
@@ -29,12 +29,13 @@ public class TimeControllerTest {
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
 	private static final String TIME_SHEET_JSP = "time";
+	private static final String PREVIOUS_TIME_SHEET_JSP = "previousTime";
 	private static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 	private static final String REDIRECT_LINK = "redirect:/";
 	private static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
 	private static final String TIME_ENTRY_UID = "0001";
 
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
 	private TimeConverter timeConverter;
 	private TimeController timeControllerMock;
 	private ModelMap modelMapMock;
@@ -51,7 +52,7 @@ public class TimeControllerTest {
 
 	@Before
 	public void init() {
-		payPeriodServiceMock = mock(PayPeriodService.class);
+		payPeriodServiceMock = mock(TimeService.class);
 		timeConverter = mock(TimeConverter.class);
 		timeControllerMock = mock(TimeController.class);
 		modelMapMock = mock(ModelMap.class);
@@ -80,6 +81,19 @@ public class TimeControllerTest {
 
 		assertEquals(TIME_SHEET_JSP, returnedForm);
 	}
+	
+	@Test
+	public void getPreviousTimeReturnsTimeSheet() {
+		when(userRepositoryMock.findByEmail(VALID_EMAIL)).thenReturn(userMock);
+		when(payPeriodServiceMock.getPreviousPayPeriod()).thenReturn(payPeriodMock);
+		when(userMock.getEmail()).thenReturn(VALID_EMAIL);
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+
+		String returnedForm = timeControllerMock.getPreviousTime(modelMapMock, sessionMock);
+
+		assertEquals(PREVIOUS_TIME_SHEET_JSP, returnedForm);
+	}
+
 
 	@Test
 	public void saveTimeReturnsSubmittedTimeSheetIfSuccessfulSubmit() throws Exception {
@@ -90,6 +104,19 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 
 		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
+
+		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
+	}
+	
+	@Test
+	public void savePreviousTimeReturnsSubmittedTimeSheetIfSuccessfulSubmit() throws Exception {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(payPeriodServiceMock.getPreviousPayPeriod()).thenReturn(payPeriodMock);
+		when(timeConverter.convertToTimeEntry(payPeriodViewModelMock)).thenReturn(timeEntryMock);
+		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_UID);
+		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
+
+		String returnedForm = timeControllerMock.savePreviousTime(payPeriodViewModelMock, sessionMock);
 
 		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
 	}
@@ -115,6 +142,18 @@ public class TimeControllerTest {
 	@Test
 	public void saveTimeReturnsErrorIfTaskIdIsNull() throws Exception {
 		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
+		assertEquals(ERROR_REDIRECT, returnedForm);
+	}
+	
+	@Test
+	public void getPreviousTimeReturnRedirectsIfEmailAttributeIsNull() {
+		String returnedForm = timeControllerMock.getPreviousTime(modelMapMock, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
+	
+	@Test
+	public void savePreviousTimeReturnsErrorIfTaskIdIsNull() throws Exception {
+		String returnedForm = timeControllerMock.savePreviousTime(payPeriodViewModelMock, sessionMock);
 		assertEquals(ERROR_REDIRECT, returnedForm);
 	}
 }

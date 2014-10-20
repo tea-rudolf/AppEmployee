@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.ExpenseService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 
@@ -27,13 +27,13 @@ public class ExpensesController {
 	static final String EXPENSES_JSP = "expenses";
 	static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
 
-	private ExpenseRepository expenseRepository;
-	private PayPeriodService payPeriodService;
+	private ExpenseService expenseService;
+	private TimeService payPeriodService;
 	private ExpenseConverter expenseConverter;
 
 	@Autowired
-	public ExpensesController(ExpenseRepository expenseRepository, ExpenseConverter expenseConverter, PayPeriodService payPeriodService) {
-		this.expenseRepository = expenseRepository;
+	public ExpensesController(ExpenseService expenseService, ExpenseConverter expenseConverter, TimeService payPeriodService) {
+		this.expenseService = expenseService;
 		this.expenseConverter = expenseConverter;
 		this.payPeriodService = payPeriodService;
 	}
@@ -60,7 +60,7 @@ public class ExpensesController {
 
 		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Expense newExpense = expenseConverter.convert(expenseForm);
-		expenseRepository.store(newExpense);
+		expenseService.store(newExpense);
 
 		return EXPENSES_SUBMIT_JSP;
 	}

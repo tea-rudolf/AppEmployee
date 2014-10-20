@@ -17,7 +17,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
@@ -35,14 +35,14 @@ public class TimeController {
 	static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 	static final String NO_TASK_SELECTED_JSP = "noTaskSelectedError";
 
-	private PayPeriodService payPeriodService;
+	private TimeService payPeriodService;
 	private ProjectService projectService;
 	private UserService userService;
 	private TimeConverter payPeriodConverter;
 	private TimeEntryRepository timeEntryRepository;
 
 	@Autowired
-	public TimeController(PayPeriodService payPeriodService, TimeConverter payPeriodConverter, TimeEntryRepository timeEntryRepository,
+	public TimeController(TimeService payPeriodService, TimeConverter payPeriodConverter, TimeEntryRepository timeEntryRepository,
 			TaskRepository taskRepository, UserService userService, ProjectService projectService) {
 
 		this.payPeriodService = payPeriodService;

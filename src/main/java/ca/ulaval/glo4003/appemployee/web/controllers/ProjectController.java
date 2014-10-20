@@ -87,10 +87,10 @@ public class ProjectController {
 
 		Project project = projectService.getProjectById(projectNumber);
 		model.addAttribute("project", projectConverter.convert(project));
-		List<Task> t = projectService.getAllTasksByProjectId(project.getuId());
+		List<Task> task = projectService.getAllTasksByProjectId(project.getuId());
 
-		Collection<TaskViewModel> col = taskConverter.convert(t);
-		model.addAttribute("tasks", col);
+		Collection<TaskViewModel> tasks = taskConverter.convert(task);
+		model.addAttribute("tasks", tasks);
 
 		return "editProject";
 	}
@@ -146,10 +146,11 @@ public class ProjectController {
 		projectService.updateTask(projectNumber, taskNumber, viewModel);
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
-	
+
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/assign", method = RequestMethod.POST)
-	public String assignTask(@PathVariable String projectNumber, @PathVariable String userId, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) {
-		
+	public String assignTask(@PathVariable String projectNumber, @PathVariable String userId, @PathVariable String taskNumber, TaskViewModel viewModel,
+			HttpSession session) {
+
 		projectService.assignUserToTask(userId, projectNumber, taskNumber);
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}

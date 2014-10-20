@@ -1,10 +1,14 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
+import javax.xml.bind.JAXBException;
 
+import org.apache.commons.lang3.SerializationException;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
@@ -21,7 +25,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	private List<PayPeriod> payPeriods = new ArrayList<PayPeriod>();
 	private static String PAYPERIODS_FILEPATH = "/payPeriods.xml";
 
-	public XMLPayPeriodRepository() throws Exception {
+	public XMLPayPeriodRepository() throws JAXBException  {
 		serializer = new XMLGenericMarshaller<PayPeriodXMLAssembler>(PayPeriodXMLAssembler.class);
 		parseXML();
 	}
@@ -31,7 +35,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	}
 
 	@Override
-	public void persist(PayPeriod payPeriod) throws Exception {
+	public void persist(PayPeriod payPeriod) throws FileNotFoundException, JAXBException, URISyntaxException, PayPeriodAlreadyExistsException  {
 		if (payPeriods.contains(payPeriod)) {
 			throw new PayPeriodAlreadyExistsException("PayPeriod already exists in repository.");
 		}
@@ -41,7 +45,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	}
 
 	@Override
-	public void update(PayPeriod payPeriod) throws Exception {
+	public void update(PayPeriod payPeriod) throws FileNotFoundException, JAXBException, URISyntaxException  {
 		int index = payPeriods.indexOf(payPeriod);
 		if (index == -1) {
 			throw new PayPeriodNotFoundException();
@@ -62,13 +66,13 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 		throw new PayPeriodNotFoundException("Cannot find project pay period containing date " + date.toString());
 	}
 
-	private void saveXML() throws Exception {
+	private void saveXML() throws FileNotFoundException, JAXBException, URISyntaxException {
 		PayPeriodXMLAssembler payPeriodAssembler = new PayPeriodXMLAssembler();
 		payPeriodAssembler.setPayPeriods(payPeriods);
 		serializer.marshall(payPeriodAssembler, PAYPERIODS_FILEPATH);
 	}
 
-	private void parseXML() throws Exception {
+	private void parseXML() throws SerializationException, JAXBException {
 		payPeriods = serializer.unmarshall(PAYPERIODS_FILEPATH).getPayPeriods();
 	}
 

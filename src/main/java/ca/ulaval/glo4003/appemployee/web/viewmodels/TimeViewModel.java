@@ -31,7 +31,7 @@ public class TimeViewModel {
 	public void setPayPeriodEndDate(String payPeriodEndDate) {
 		this.payPeriodEndDate = payPeriodEndDate;
 	}
-	
+
 	public String getStartDate() {
 		return payPeriodStartDate;
 	}

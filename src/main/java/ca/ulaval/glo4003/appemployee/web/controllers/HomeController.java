@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 @Controller
 @SessionAttributes({ "email" })
 public class HomeController {
 
-	private UserRepository userRepository;
+	private UserService userService;
 	static final String EMAIL_ATTRIBUTE = "email";
 	static final String ROLE_ATTRIBUTE = "role";
 	static final String HOME_VIEW = "home";
 	static final String LOGIN_FORM_ATTRIBUTE = "loginForm";
 
 	@Autowired
-	public HomeController(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public HomeController(UserService userService) {
+		this.userService = userService;
 	}
 
 	@ModelAttribute("loginForm")
@@ -41,7 +41,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
-		User user = userRepository.findByEmail(form.getEmail());
+		User user = userService.findByEmail(form.getEmail());
 		if (user.validatePassword(form.getPassword())) {
 			model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
 			model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
