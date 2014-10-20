@@ -26,7 +26,7 @@
 			<div class="form-group">
 				<form:label path="userEmail">Assign a user email</form:label>
 				<form:input class="form-control" path="userEmail"
-					value="${userEmail}" required="required" />
+					value="${userEmail}" />
 			</div>
 			</c:if>
 			<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Tasks</h3>
