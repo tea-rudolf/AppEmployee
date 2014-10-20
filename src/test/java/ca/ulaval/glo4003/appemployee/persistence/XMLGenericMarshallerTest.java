@@ -20,7 +20,7 @@ public class XMLGenericMarshallerTest {
 
 	private ResourcesLoader loader;
 	private XMLGenericMarshaller<ProjectXMLAssembler> serializer;
-	private final String RESOURCE_NAME = "resource name";
+	private final String RESOURCE_NAME = "resourceName";
 
 	@Before
 	public void setUp() throws Exception {
@@ -34,7 +34,7 @@ public class XMLGenericMarshallerTest {
 	}
 
 	@Test
-	public void canUnmarshal() throws Exception {
+	public void canUnmarshall() throws Exception {
 		InputStream stream = mock(InputStream.class);
 		when(loader.loadResource(ProjectXMLAssembler.class, RESOURCE_NAME)).thenReturn(stream);
 		serializer.setResourcesLoader(loader);
@@ -56,7 +56,7 @@ public class XMLGenericMarshallerTest {
 	}
 
 	@Test
-	public void canMarshal() throws Exception {
+	public void canMarshall() throws Exception {
 		ProjectXMLAssembler dto = mock(ProjectXMLAssembler.class);
 		Marshaller marshaller = mock(Marshaller.class);
 		OutputStream stream = mock(OutputStream.class);

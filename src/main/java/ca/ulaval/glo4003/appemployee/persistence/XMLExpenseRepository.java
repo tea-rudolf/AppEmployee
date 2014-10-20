@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @Repository
 @Singleton

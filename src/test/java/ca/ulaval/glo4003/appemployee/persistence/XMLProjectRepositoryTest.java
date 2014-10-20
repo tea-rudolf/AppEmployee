@@ -10,8 +10,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.user.Role;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 
 public class XMLProjectRepositoryTest {
