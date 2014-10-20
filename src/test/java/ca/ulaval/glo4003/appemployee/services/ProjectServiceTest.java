@@ -40,6 +40,7 @@ public class ProjectServiceTest {
 		projectViewModelMock = mock(ProjectViewModel.class);
 		taskMock = mock(Task.class);
 		taskRepositoryMock = mock(TaskRepository.class);
+		userRepositoryMock = mock(UserRepository.class);
 		project = new Project(PROJECT_ID, PROJECT_NAME);
 		projectService = new ProjectService(projectRepositoryMock, taskRepositoryMock, userRepositoryMock);
 	}
