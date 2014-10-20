@@ -25,21 +25,24 @@ public class XMLExpenseRepository implements ExpenseRepository {
 	private static String EXPENSES_FILEPATH = "/expenses.xml";
 
 	public XMLExpenseRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<ExpenseXMLAssembler>(ExpenseXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<ExpenseXMLAssembler>(
+				ExpenseXMLAssembler.class);
 		parseXML();
 	}
-	
+
 	@Override
 	public Expense findByUid(String uId) {
 		return expenses.get(uId);
 	}
 
-	public XMLExpenseRepository(XMLGenericMarshaller<ExpenseXMLAssembler> serializer) {
+	public XMLExpenseRepository(
+			XMLGenericMarshaller<ExpenseXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
 	@Override
-	public void store(Expense expense) throws FileNotFoundException, JAXBException, URISyntaxException {
+	public void store(Expense expense) throws FileNotFoundException,
+			JAXBException, URISyntaxException {
 		expenses.put(expense.getuId(), expense);
 		saveXML();
 	}
@@ -56,14 +59,16 @@ public class XMLExpenseRepository implements ExpenseRepository {
 		return foundExpenses;
 	}
 
-	private void saveXML() throws FileNotFoundException, JAXBException, URISyntaxException  {
+	private void saveXML() throws FileNotFoundException, JAXBException,
+			URISyntaxException {
 		ExpenseXMLAssembler expenseAssembler = new ExpenseXMLAssembler();
 		expenseAssembler.setExpenses(new ArrayList<Expense>(expenses.values()));
 		serializer.marshall(expenseAssembler, EXPENSES_FILEPATH);
 	}
 
-	private void parseXML() throws SerializationException, JAXBException  {
-		List<Expense> deserializedExpenses = serializer.unmarshall(EXPENSES_FILEPATH).getExpenses();
+	private void parseXML() throws SerializationException, JAXBException {
+		List<Expense> deserializedExpenses = serializer.unmarshall(
+				EXPENSES_FILEPATH).getExpenses();
 		for (Expense expense : deserializedExpenses) {
 			expenses.put(expense.getuId(), expense);
 		}

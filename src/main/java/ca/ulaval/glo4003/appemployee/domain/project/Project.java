@@ -69,7 +69,8 @@ public class Project {
 
 	public void addTaskuId(String taskuId) {
 		if (taskuIds.contains(taskuId)) {
-			throw new TaskAlreadyExistsException("Task already assigned to this project.");
+			throw new TaskAlreadyExistsException(
+					"Task already assigned to this project.");
 		}
 
 		taskuIds.add(taskuId);

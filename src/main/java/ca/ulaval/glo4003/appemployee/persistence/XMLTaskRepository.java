@@ -34,7 +34,7 @@ public class XMLTaskRepository implements TaskRepository {
 	}
 
 	@Override
-	public void store(Task task) throws FileNotFoundException, JAXBException, URISyntaxException{
+	public void store(Task task) throws FileNotFoundException, JAXBException, URISyntaxException {
 		tasks.put(task.getuId(), task);
 		saveXML();
 	}
