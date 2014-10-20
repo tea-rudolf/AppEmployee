@@ -17,12 +17,14 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 public class UserServiceTest {
 
 	private static final String TIME_ENTRY_ID = "id";
-	private static final String USER_ID = "id";
+	private static final String EMAIL = "employee1@employee.com";
+	private static final String EMAIL2 = "employee1@employee.com";
 
 	private UserService userService;
 	private TaskRepository taskRepositoryMock;
@@ -33,6 +35,8 @@ public class UserServiceTest {
 	private PayPeriod payPeriodMock;
 	private TimeEntry timeEntryMock;
 	private Task taskMock;
+	private User userMock;
+	private User userMock2;
 
 	@Before
 	public void init() {
@@ -44,6 +48,8 @@ public class UserServiceTest {
 		payPeriodMock = mock(PayPeriod.class);
 		timeEntryMock = mock(TimeEntry.class);
 		taskMock = mock(Task.class);
+		userMock = mock(User.class);
+		userMock2 = mock(User.class);
 		userService = new UserService(userRepositoryMock, payPeriodRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock);
 	}
 
@@ -65,10 +71,12 @@ public class UserServiceTest {
 		sampleIdList.add(TIME_ENTRY_ID);
 		when(payPeriodMock.getTimeEntryIds()).thenReturn(sampleIdList);
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
-		when(timeEntryMock.getUserEmail()).thenReturn(USER_ID);
+		when(timeEntryMock.getUserEmail()).thenReturn(EMAIL);
 		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_ID);
 		when(taskRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(taskMock);
-		List<Task> simpleTaskList = userService.getTasksForUserForAPayPeriod(payPeriodMock, USER_ID);
+
+		List<Task> simpleTaskList = userService.getTasksForUserForAPayPeriod(payPeriodMock, EMAIL);
+
 		assertTrue(simpleTaskList.contains(taskMock));
 	}
 
@@ -78,9 +86,33 @@ public class UserServiceTest {
 		sampleIdList.add(TIME_ENTRY_ID);
 		when(payPeriodMock.getTimeEntryIds()).thenReturn(sampleIdList);
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
-		when(timeEntryMock.getUserEmail()).thenReturn(USER_ID);
-		List<TimeEntry> sampleTimeEntryList = userService.getTimeEntriesForUserForAPayPeriod(payPeriodMock, USER_ID);
+		when(timeEntryMock.getUserEmail()).thenReturn(EMAIL);
+
+		List<TimeEntry> sampleTimeEntryList = userService.getTimeEntriesForUserForAPayPeriod(payPeriodMock, EMAIL);
+
 		assertTrue(sampleTimeEntryList.contains(timeEntryMock));
 	}
 
+	@Test
+	public void findByEmailReturnsUser() {
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
+		when(userMock.getEmail()).thenReturn(EMAIL);
+
+		User user = userService.findByEmail(EMAIL);
+
+		assertEquals(userMock.getEmail(), user.getEmail());
+	}
+
+	@Test
+	public void findUsersByEmail() {
+		List<String> emails = new ArrayList<String>();
+		emails.add(EMAIL);
+		emails.add(EMAIL2);
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
+		when(userRepositoryMock.findByEmail(EMAIL2)).thenReturn(userMock2);
+
+		List<User> users = userService.findUsersByEmail(emails);
+
+		assertEquals(2, users.size());
+	}
 }

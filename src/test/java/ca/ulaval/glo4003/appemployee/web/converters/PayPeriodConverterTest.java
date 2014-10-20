@@ -34,7 +34,6 @@ public class PayPeriodConverterTest {
 
 	@Before
 	public void init() {
-		// payPeriodConverterMock = mock(TimeConverter.class);
 		payPeriodMock = mock(PayPeriod.class);
 		timeViewModelMock = mock(TimeViewModel.class);
 		timeEntryMock = mock(TimeEntry.class);

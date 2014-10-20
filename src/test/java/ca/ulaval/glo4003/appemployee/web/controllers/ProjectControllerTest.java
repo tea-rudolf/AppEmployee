@@ -153,7 +153,9 @@ public class ProjectControllerTest {
 	@Test
 	public void taskCreationUpdatesTheModelCorrectly() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+
 		projectController.taskCreation(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
+
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
 	}
@@ -209,10 +211,5 @@ public class ProjectControllerTest {
 		projectController.editTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);
 		verify(projectServiceMock).updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
 	}
-	
-//	@Test 
-//	public void assignUserToTaskCallsAssignUserToTaskInProjectService() throws Exception {
-//		projectController.assignTask(SAMPLE_PROJECTNUMBER, SAMPLE_USERID, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);
-//		verify(projectServiceMock).assignUserToTask(SAMPLE_USERID, SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER);
-//	}
+
 }

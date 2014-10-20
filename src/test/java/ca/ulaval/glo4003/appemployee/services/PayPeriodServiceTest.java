@@ -55,7 +55,9 @@ public class PayPeriodServiceTest {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 		when(payPeriodRepositoryMock.findByDate(VALID_DATE)).thenReturn(payPeriodMock);
+
 		PayPeriod samplePayPeriod = payPeriodServiceMock.getCurrentPayPeriod();
+
 		assertEquals(samplePayPeriod.getEndDate(), payPeriodMock.getEndDate());
 	}
 
@@ -75,7 +77,9 @@ public class PayPeriodServiceTest {
 	public void getPreviousPayPeriodCallsCorrectMethodInRepository() {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
+
 		payPeriodServiceMock.getPreviousPayPeriod();
+
 		verify(payPeriodRepositoryMock, times(1)).findByDate(PREVIOUS_DATE);
 	}
 
@@ -86,7 +90,9 @@ public class PayPeriodServiceTest {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodRepositoryMock.findByDate(PREVIOUS_DATE)).thenReturn(previousPayPeriodMock);
+
 		PayPeriod samplePayPeriod = payPeriodServiceMock.getPreviousPayPeriod();
+
 		assertEquals(previousPayPeriodMock.getEndDate(), samplePayPeriod.getEndDate());
 	}
 
