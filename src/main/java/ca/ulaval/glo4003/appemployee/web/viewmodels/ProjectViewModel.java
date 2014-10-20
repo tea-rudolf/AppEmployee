@@ -13,6 +13,7 @@ public class ProjectViewModel {
 	private List<String> taskIds = new ArrayList<String>();
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
+	private String userEmail;
 
 	public String getuId() {
 		return uId;
@@ -68,6 +69,14 @@ public class ProjectViewModel {
 
 	public void setExpenseIds(List<String> expenseIds) {
 		this.expenseIds = expenseIds;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 }

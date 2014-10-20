@@ -46,6 +46,11 @@ public class ProjectService {
 	public void updateProject(String projectId, ProjectViewModel viewModel) {
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
+
+		if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+			project.addEmployeeToProject(viewModel.getUserEmail());
+		}
+
 		try {
 			projectRepository.store(project);
 		} catch (Exception e) {
@@ -74,6 +79,11 @@ public class ProjectService {
 	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) {
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
+
+		if (userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+			task.assignUserToTask(viewModel.getUserEmail());
+		}
+
 		try {
 			taskRepository.store(task);
 		} catch (Exception e) {

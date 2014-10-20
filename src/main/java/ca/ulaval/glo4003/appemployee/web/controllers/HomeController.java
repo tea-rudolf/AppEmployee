@@ -41,17 +41,25 @@ public class HomeController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
-		User user = userRepository.findByEmail(form.getEmail());
-		if (user != null && user.validatePassword(form.getPassword())) {
-			model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
-			model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
 
-			return new ModelAndView(HOME_VIEW, model);
+		try {
+			User user = userRepository.findByEmail(form.getEmail());
+			if (user != null && user.validatePassword(form.getPassword())) {
+				model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
+				model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
+
+				return new ModelAndView(HOME_VIEW, model);
+			}
+
+			model.addAttribute("alert", "Invalid username and/or password.");
+			model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
+			return new ModelAndView(HOME_VIEW);
+		} catch (Exception e) {
+			model.addAttribute("alert", "Invalid username and/or password.");
+			model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
+			return new ModelAndView(HOME_VIEW);
 		}
 
-		model.addAttribute("alert", "Invalid username and/or password.");
-		model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
-		return new ModelAndView(HOME_VIEW);
 	}
 
 	@RequestMapping(value = "**/logout")

@@ -22,12 +22,15 @@
 				<form:label path="name">Name</form:label>
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />
+				<form:label path="userEmail">Assign a user email</form:label>
+				<form:input class="form-control" path="userEmail" value="${userEmail}"/>
+
 			</div>
 
 			<c:if test="${role eq 'SUPERVISOR'}">
 				<h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Employees</h3>
 				<div style="text-align: right">
-					<a href="/projects/${project.uId}/tasks/{taskNumber}/assign"><button
+					<a href="/projects/${projectNumber}/tasks/${taskNumber}/assign"><button
 							type="button" class="btn btn-primary">
 							<span class="glyphicon glyphicon-plus"></span>&nbsp;Add employee
 						</button></a>

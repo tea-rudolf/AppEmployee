@@ -12,6 +12,7 @@ import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 public class XMLExpenseRepositoryIT {
 	
 	private static final String USER_EMAIL = "employee@employee.com";
+	private static final int NUMBER_OF_EXPENSES = 3;
 	
 	private XMLGenericMarshaller<ExpenseXMLAssembler> marshaller;
 	private XMLExpenseRepository repository;
@@ -31,7 +32,7 @@ public class XMLExpenseRepositoryIT {
 		
 		List<Expense> expenses = repository.findAllExpensesByUser(USER_EMAIL);
 		
-		assertEquals(3, expenses.size());
+		assertEquals(NUMBER_OF_EXPENSES, expenses.size());
 		
 	}
 
