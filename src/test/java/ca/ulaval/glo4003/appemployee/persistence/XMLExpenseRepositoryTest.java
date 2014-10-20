@@ -17,13 +17,13 @@ public class XMLExpenseRepositoryTest {
 
 	@Mock
 	private XMLGenericMarshaller<ExpenseXMLAssembler> marshallerMock;
-	
+
 	@Mock
 	private Expense expenseMock;
-	
+
 	@Mock
 	private XMLUserRepository userRepository;
-	
+
 	@InjectMocks
 	private XMLExpenseRepository repository;
 
@@ -33,19 +33,19 @@ public class XMLExpenseRepositoryTest {
 		repository = new XMLExpenseRepository();
 		when(expenseMock.getuId()).thenReturn(VALID_UID);
 	}
-	
+
 	@Test
 	public void findByuIdFindsExpenseById() throws Exception {
 		Expense dummyExpense = new Expense(VALID_UID);
 		repository.store(dummyExpense);
-		
+
 		assertEquals(dummyExpense, repository.findByUid(VALID_UID));
 	}
 
 	@Test
 	public void storeExpenseToRepositoryAddsExpenseToRepo() throws Exception {
 		repository.store(expenseMock);
-		
+
 		assertEquals(expenseMock, repository.findByUid(VALID_UID));
 	}
 }

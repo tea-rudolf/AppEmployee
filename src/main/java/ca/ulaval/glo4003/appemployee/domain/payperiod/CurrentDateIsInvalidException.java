@@ -7,9 +7,9 @@ public class CurrentDateIsInvalidException extends RuntimeException {
 	public CurrentDateIsInvalidException() {
 		super();
 	}
-	
+
 	public CurrentDateIsInvalidException(String message) {
 		super(message);
 	}
-	
+
 }

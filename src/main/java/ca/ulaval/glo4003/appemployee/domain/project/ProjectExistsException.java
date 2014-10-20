@@ -7,7 +7,7 @@ public class ProjectExistsException extends RuntimeException {
 	public ProjectExistsException() {
 		super();
 	}
-	
+
 	public ProjectExistsException(String message) {
 		super(message);
 	}

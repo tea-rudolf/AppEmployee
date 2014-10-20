@@ -24,7 +24,7 @@ public class XMLExpenseRepository implements ExpenseRepository {
 		serializer = new XMLGenericMarshaller<ExpenseXMLAssembler>(ExpenseXMLAssembler.class);
 		parseXML();
 	}
-	
+
 	@Override
 	public Expense findByUid(String uId) {
 		return expenses.get(uId);

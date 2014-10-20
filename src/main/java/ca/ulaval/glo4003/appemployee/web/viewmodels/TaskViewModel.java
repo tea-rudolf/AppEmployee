@@ -41,8 +41,4 @@ public class TaskViewModel {
 		this.userEmail = userEmail;
 	}
 
-
-
-
-
 }

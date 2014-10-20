@@ -59,7 +59,6 @@ public class ExpensesControllerTest {
 		assertEquals(EXPENSES_JSP, returnedForm);
 	}
 
-
 	@Test
 	public void saveTimeReturnsSubmittedExpensesForIfSuccessfulSubmit() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);

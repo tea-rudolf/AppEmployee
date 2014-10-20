@@ -7,7 +7,7 @@ public class TimeEntryNotFoundException extends RuntimeException {
 	public TimeEntryNotFoundException() {
 		super();
 	}
-	
+
 	public TimeEntryNotFoundException(String message) {
 		super(message);
 	}
