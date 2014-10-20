@@ -9,5 +9,5 @@
 
 # Utilisateurs temporaires
 * ROLE EMPLOYEE **email:** jean.gauthier@employee.com **password:** employee1
-* ROLE SUPERVISOR **email:** supervisor@supervisor.com **password:** supervisor
+* ROLE SUPERVISOR **email:** alexandre.pitt@supervisor.com **password:** supervisor
 * ROLE ENTERPRISE **email:** enterprise@enterprise.com **password:** enterprise
