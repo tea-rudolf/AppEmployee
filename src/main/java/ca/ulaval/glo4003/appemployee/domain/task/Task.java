@@ -1,22 +1,22 @@
 package ca.ulaval.glo4003.appemployee.domain.task;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Task {
-
+	private String uId;
 	private String name;
-	private String number;
+	private List<String> authorizedUsers = new ArrayList<String>();
 
-	protected Task() {
-		// Required for JAXB
+	public Task() {
+		this.uId = UUID.randomUUID().toString();
 	}
 
-	public Task(String number, String name) {
-		this.name = name;
-		this.number = number;
+	public Task(String uId) {
+		this.uId = uId;
 	}
 
-	@XmlAttribute(name = "Name")
 	public String getName() {
 		return name;
 	}
@@ -25,12 +25,24 @@ public class Task {
 		this.name = name;
 	}
 
-	@XmlAttribute(name = "Number")
-	public String getNumber() {
-		return number;
+	public String getuId() {
+		return uId;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
+
+	public void assignUserToTask(String userId) {
+		authorizedUsers.add(userId);
+	}
+
+	public List<String> getAuthorizedUsers() {
+		return authorizedUsers;
+	}
+
+	public void setAuthorizedUsers(List<String> authorizedUsers) {
+		this.authorizedUsers = authorizedUsers;
+	}
+
 }

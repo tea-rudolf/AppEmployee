@@ -1,10 +1,12 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
-import static org.junit.Assert.*;
-import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -14,63 +16,74 @@ import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 public class TaskConverterTest {
+	private static final String FIRST_NAME = "firstName";
+	private static final String FIRST_ID = "123456";
+	private static final String SECOND_NAME = "secondName";
+	private static final String SECOND_ID = "789103";
+	private ArrayList<String> authorizedUsers;
 
-	private TaskConverter converter;
+	private TaskConverter taskConverter;
+	private TaskViewModel taskViewModelMock;
+	private Task taskMock;
 
 	@Before
 	public void setUp() {
-		converter = new TaskConverter();
+		taskViewModelMock = mock(TaskViewModel.class);
+		taskMock = mock(Task.class);
+		taskConverter = new TaskConverter();
+		authorizedUsers = new ArrayList<String>(Arrays.asList("FIRST_ID", "SECOND_ID"));
 	}
 
 	@Test
 	public void convertTasksListToViewModelsConvertsAllOfThem() {
-		String firstName = "firstName";
-		String firstNumber = "123456";
-		String secondName = "secondName";
-		String secondNumber = "789103";
-		Task firstTask = createTask(firstNumber, firstName);
-		Task secondTask = createTask(secondNumber, secondName);
+		Task firstTask = createTask(FIRST_ID, FIRST_NAME);
+		Task secondTask = createTask(SECOND_ID, SECOND_NAME);
 		List<Task> tasks = new ArrayList<Task>();
 		tasks.add(firstTask);
 		tasks.add(secondTask);
 
-		TaskViewModel[] viewModels = converter.convert(tasks).toArray(new TaskViewModel[1]);
+		TaskViewModel[] viewModels = taskConverter.convert(tasks).toArray(new TaskViewModel[1]);
 
-		assertEquals(firstName, viewModels[0].getName());
-		assertEquals(firstNumber, viewModels[0].getNumber());
+		assertEquals(FIRST_NAME, viewModels[0].getName());
+		assertEquals(FIRST_ID, viewModels[0].getuId());
+		assertEquals(authorizedUsers, viewModels[0].getAuthorizedUsers());
 
-		assertEquals(secondName, viewModels[1].getName());
-		assertEquals(secondNumber, viewModels[1].getNumber());
+		assertEquals(SECOND_NAME, viewModels[1].getName());
+		assertEquals(SECOND_ID, viewModels[1].getuId());
+		assertEquals(authorizedUsers, viewModels[1].getAuthorizedUsers());
 	}
 
 	@Test
-	public void convertTaskToTaskViewModelSetsNumberAndName() {
-		String number = "123456";
-		String name = "abcdefg";
-		Task task = createTask(number, name);
+	public void convertTaskViewModelToTask() {
+		when(taskViewModelMock.getuId()).thenReturn(FIRST_ID);
+		when(taskViewModelMock.getName()).thenReturn(FIRST_NAME);
+		when(taskViewModelMock.getAuthorizedUsers()).thenReturn(authorizedUsers);
 
-		TaskViewModel viewModel = converter.convert(task);
+		taskMock = taskConverter.convert(taskViewModelMock);
 
-		assertEquals(number, viewModel.getNumber());
-		assertEquals(name, viewModel.getName());
+		assertEquals(taskViewModelMock.getuId(), taskMock.getuId());
+		assertEquals(taskViewModelMock.getName(), taskMock.getName());
+		assertEquals(taskViewModelMock.getAuthorizedUsers(), taskMock.getAuthorizedUsers());
 	}
 
 	@Test
-	public void convertTaskViewModelToTaskSetsNumberAndName() {
-		TaskViewModel viewModel = new TaskViewModel();
-		viewModel.setName("task");
-		viewModel.setNumber("123456");
+	public void convertTaskToTaskViewModel() {
+		when(taskMock.getuId()).thenReturn(FIRST_ID);
+		when(taskMock.getName()).thenReturn(FIRST_NAME);
+		when(taskMock.getAuthorizedUsers()).thenReturn(authorizedUsers);
 
-		Task task = converter.convert(viewModel);
+		taskViewModelMock = taskConverter.convert(taskMock);
 
-		assertEquals(viewModel.getName(), task.getName());
-		assertEquals(viewModel.getNumber(), task.getNumber());
+		assertEquals(taskMock.getuId(), taskViewModelMock.getuId());
+		assertEquals(taskMock.getName(), taskViewModelMock.getName());
+		assertEquals(taskMock.getAuthorizedUsers(), taskViewModelMock.getAuthorizedUsers());
 	}
 
 	private Task createTask(String number, String name) {
 		Task task = mock(Task.class);
 		given(task.getName()).willReturn(name);
-		given(task.getNumber()).willReturn(number);
+		given(task.getuId()).willReturn(number);
+		given(task.getAuthorizedUsers()).willReturn(authorizedUsers);
 		return task;
 	}
 }

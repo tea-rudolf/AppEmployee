@@ -18,7 +18,7 @@ import org.springframework.ui.Model;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
@@ -29,6 +29,10 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 public class ProjectControllerTest {
 	private static final String SAMPLE_PROJECTNUMBER = "1";
 	private static final String SAMPLE_TASKNUMBER = "2";
+	private static final String SAMPLE_USERID = "1234";
+	private static final String EMAIL_KEY = "email";
+	private static final String VALID_EMAIL = "employee@employee.com";
+	private static final String REDIRECT_LINK = "redirect:/";
 
 	private HttpSession sessionMock;
 	private Model model = new ExtendedModelMap();
@@ -47,11 +51,6 @@ public class ProjectControllerTest {
 
 	@Before
 	public void init() {
-		createMocks();
-		instantiateObjects();
-	}
-
-	private void createMocks() {
 		sessionMock = mock(HttpSession.class);
 		projectMock = mock(Project.class);
 		projectServiceMock = mock(ProjectService.class);
@@ -60,14 +59,12 @@ public class ProjectControllerTest {
 		taskMock = mock(Task.class);
 		taskConverterMock = mock(TaskConverter.class);
 		taskViewModelMock = mock(TaskViewModel.class);
-	}
-
-	private void instantiateObjects() {
 		projectController = new ProjectController(projectServiceMock, projectConverterMock, taskConverterMock);
 	}
 
 	@Test
 	public void getProjectsUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(projectServiceMock.getAllProjects()).thenReturn(projectList);
 		when(projectConverterMock.convert(projectList)).thenReturn(projectViewModelCollection);
 
@@ -77,20 +74,33 @@ public class ProjectControllerTest {
 	}
 
 	@Test
+	public void getProjectsReturnRedirectIfSessionAttributeIsNull() {
+		String returnedForm = projectController.getProjects(model, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
+
+	@Test
 	public void projectCreationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		projectController.projectCreation(model, projectViewModelMock, sessionMock);
 		assertSame(model.asMap().get("project"), projectViewModelMock);
 	}
 
 	@Test
-	public void addProjectCallsTheCorrectServiceMethods() {
+	public void projectCreationReturnsRedirectIfSessionAttributeIsNull() {
+		String returnedForm = projectController.projectCreation(model, projectViewModelMock, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
+
+	@Test
+	public void addProjectCallsTheCorrectServiceMethods() throws Exception {
 		when(projectConverterMock.convert(projectViewModelMock)).thenReturn(projectMock);
 		projectController.addProject(model, projectViewModelMock, sessionMock);
 		verify(projectServiceMock).addProject(projectMock);
 	}
 
 	@Test
-	public void addProjectReturnsAnErrorMessageOnProjectExistsException() {
+	public void addProjectReturnsAnErrorMessageOnProjectExistsException() throws Exception {
 		when(projectConverterMock.convert(projectViewModelMock)).thenReturn(projectMock);
 		doThrow(new ProjectExistsException()).when(projectServiceMock).addProject(projectMock);
 
@@ -100,10 +110,11 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	public void projectMoficiationUpdatesTheModelCorrectly() {
-		when(projectServiceMock.getProjectByNumber(eq(SAMPLE_PROJECTNUMBER))).thenReturn(projectMock);
+	public void projectModificationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(projectServiceMock.getProjectById(eq(SAMPLE_PROJECTNUMBER))).thenReturn(projectMock);
 		when(projectConverterMock.convert(projectMock)).thenReturn(projectViewModelMock);
-		when(projectMock.getTasks()).thenReturn(taskList);
+		when(projectServiceMock.getAllTasksByProjectId(SAMPLE_PROJECTNUMBER)).thenReturn(taskList);
 		when(taskConverterMock.convert(taskList)).thenReturn(taskViewModelCollection);
 
 		projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
@@ -112,29 +123,42 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	public void editProjectCallsTheCorrectServiceMethods() {
+	public void projectModificationReturnsRedirectIfSessionAttributeIsNull() {
+		String returnedForm = projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
+
+	@Test
+	public void editProjectCallsTheCorrectServiceMethods() throws Exception {
 		projectController.editProject(SAMPLE_PROJECTNUMBER, projectViewModelMock, sessionMock);
 		verify(projectServiceMock).updateProject(SAMPLE_PROJECTNUMBER, projectViewModelMock);
 	}
 
 	@Test
 	public void taskCreationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		projectController.taskCreation(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
 	}
 
 	@Test
-	public void addTaskCallsTheCorrectServiceMethods() {
-		when(taskConverterMock.convert(taskViewModelMock)).thenReturn(taskMock);
-		projectController.addTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
-		verify(projectServiceMock).addTask(SAMPLE_PROJECTNUMBER, taskMock);
+	public void taskCreationReturnsRedirectIfSessionAttributeIsNull() {
+		String returnedForm = projectController.taskCreation(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
-	public void addTaskReturnsAnErrorMessageOnTaskExistsException() {
+	public void addTaskCallsTheCorrectServiceMethods() throws Exception {
 		when(taskConverterMock.convert(taskViewModelMock)).thenReturn(taskMock);
-		doThrow(new TaskExistsException()).when(projectServiceMock).addTask(SAMPLE_PROJECTNUMBER, taskMock);
+		projectController.addTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
+		verify(projectServiceMock).addTask(taskMock);
+	}
+
+	@Test
+	public void addTaskReturnsAnErrorMessageOnTaskExistsException() throws Exception {
+		when(taskConverterMock.convert(taskViewModelMock)).thenReturn(taskMock);
+		doThrow(new TaskAlreadyExistsException()).when(projectServiceMock).addTask(taskMock);
 
 		projectController.addTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
 
@@ -142,8 +166,9 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	public void taskMoficiationUpdatesTheModelCorrectly() {
-		when(projectServiceMock.getTaskByNumber(eq(SAMPLE_PROJECTNUMBER), eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
+	public void taskModificationUpdatesTheModelCorrectly() {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(projectServiceMock.getTaskById(eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
 		when(taskConverterMock.convert(taskMock)).thenReturn(taskViewModelMock);
 
 		projectController.taskModification(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);
@@ -153,8 +178,20 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	public void editTaskCallsTheCorrectServiceMethods() {
+	public void taskModificationReturnsRedirectIfSessionAttributeIsNull() {
+		String returnedForm = projectController.taskModification(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
+
+	@Test
+	public void editTaskCallsTheCorrectServiceMethods() throws Exception {
 		projectController.editTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);
 		verify(projectServiceMock).updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModelMock);
+	}
+
+	@Test
+	public void assignUserToTaskCallsAssignUserToTaskInProjectService() throws Exception {
+		projectController.assignTask(SAMPLE_PROJECTNUMBER, SAMPLE_USERID, SAMPLE_TASKNUMBER, taskViewModelMock, sessionMock);
+		verify(projectServiceMock).assignUserToTask(SAMPLE_USERID, SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER);
 	}
 }

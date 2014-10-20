@@ -7,40 +7,22 @@
 		<%@include file="../includes/header.jsp" %>
 		<title>AppEmployee - Manage Expenses</title>
 	</head>
-<<<<<<< HEAD
+
 	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">App Employee</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" style="color:white">Connected as : ${sessionScope.email}</a></li>
-            <li><a href="logout">Disconnect</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
 	
-	<%@include file="../includes/bodyHeader.jsp" %>
+	<%@include file="../includes/navbar.jsp" %>
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h2>
 			Pay period from 
-			<c:out value="${payPeriodForm.startDate}"/>
+			<c:out value="${expenseForm.payPeriodStartDate}"/>
 			to 
-			<c:out value="${payPeriodForm.endDate}"/>
+			<c:out value="${expenseForm.payPeriodEndDate}"/>
 		</h2>
-		<form:form method="post" action="expenses" modelAttribute="payPeriodForm">
-			<form:hidden path="startDate" />
-			<form:hidden path="endDate" />
+				<div></div>
+		<div><h3>Add a expense</h3></div>
+		<div></div>
+		<form:form method="post" action="expenses" modelAttribute="expenseForm">
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
@@ -48,14 +30,14 @@
 						<th>Amount</th>
 						<th>Comment</th>
 					</tr>
-					<c:forEach items="${payPeriodForm.expenses}" var="expenses" varStatus="status">
 						<tr>
-							<form:hidden path="expenses[${status.index}].date" />
-							<td>${expenses.date}</td>
-							<td><input class="form-control" type="number" style="width:150px" name="expenses[${status.index}].amount" value="${expenses.amount}"/></td>
-							<td><input class="form-control" type="text"  name="expenses[${status.index}].comment" value="${expenses.comment}"/></td>
+							<td><form:label path="date"></form:label>
+							<form:input class="form-control" type="date" min="${expenseForm.payPeriodStartDate}" max="${expenseForm.payPeriodEndDate}" path="date" value="${date}" required="required" /></td>
+							<td><form:label path="amount"></form:label>
+							<form:input class="form-control" path="amount" type="number" step="any" min="1" value="${amount}" required="required" /></td>
+							<td><form:label path="comment"></form:label>
+							<form:input class="form-control" path="comment" value="${comment}" /></td>
 						</tr>
-					</c:forEach>
 				</table>
 			</div>
 			<br/>
@@ -64,3 +46,6 @@
 	</div>
 
 <%@include file="../includes/footer.jsp" %>
+
+</body>
+</html>

@@ -2,41 +2,39 @@ package ca.ulaval.glo4003.appemployee.domain.project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskNotFoundException;
-
-@XmlRootElement(name = "Project")
 public class Project {
-	private List<Task> tasks = new ArrayList<Task>();
-	private String number;
-	private String name;
 
-	protected Project() {
-		// Required for JAXB
+	private String uId;
+	private String name = "";
+	private List<String> taskuIds = new ArrayList<String>();
+	private List<String> employeeuIds = new ArrayList<String>();
+	private List<String> expenseuIds = new ArrayList<String>();
+
+	public Project() {
+		this.uId = UUID.randomUUID().toString();
 	}
 
-	public Project(String number, String name) {
-		this.number = number;
+	public Project(String uId) {
+		this.uId = uId;
+	}
+
+	public Project(String uId, String name) {
+		this.uId = uId;
 		this.name = name;
 	}
 
-	@XmlAttribute(name = "Number")
-	public String getNumber() {
-		return number;
+	public String getuId() {
+		return uId;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 
-	@XmlAttribute(name = "Name")
 	public String getName() {
 		return name;
 	}
@@ -45,34 +43,45 @@ public class Project {
 		this.name = name;
 	}
 
-	@XmlElementWrapper(name = "Tasks")
-	@XmlElement(name = "Task")
-	public List<Task> getTasks() {
-		return tasks;
+	public List<String> getTaskuIds() {
+		return taskuIds;
 	}
 
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+	public void setTaskuIds(List<String> taskuIds) {
+		this.taskuIds = taskuIds;
 	}
 
-	public void addTask(Task task) {
-		try {
-			getTaskByNumber(task.getNumber());
+	public List<String> getEmployeeuIds() {
+		return employeeuIds;
+	}
 
-			throw new TaskExistsException(String.format("Task number '%s' already exists in project number '%s'.", task.getNumber(), this.number));
-		} catch (TaskNotFoundException e) {
+	public void setEmployeeuIds(List<String> useruIds) {
+		this.employeeuIds = useruIds;
+	}
+
+	public List<String> getExpenseuIds() {
+		return expenseuIds;
+	}
+
+	public void setExpenseuIds(List<String> expenseIds) {
+		this.expenseuIds = expenseIds;
+	}
+
+	public void addTaskuId(String taskuId) {
+		if (taskuIds.contains(taskuId)) {
+			throw new TaskAlreadyExistsException(
+					"Task already assigned to this project.");
 		}
 
-		this.tasks.add(task);
+		taskuIds.add(taskuId);
 	}
 
-	public Task getTaskByNumber(String number) {
-		for (Task task : tasks) {
-			if (task.getNumber().compareTo(number) == 0) {
-				return task;
-			}
-		}
-
-		throw new TaskNotFoundException(String.format("Cannot find task with number '%s'.", number));
+	public boolean userIsAlreadyAssigned(String userId) {
+		return employeeuIds.contains(userId);
 	}
+
+	public void addEmployeeToProject(String userId) {
+		employeeuIds.add(userId);
+	}
+
 }

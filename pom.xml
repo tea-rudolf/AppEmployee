@@ -8,6 +8,7 @@
   <properties>
     <java-version>1.7</java-version>
     <org.springframework-version>4.1.0.RELEASE</org.springframework-version>
+    <org.springframework.security-version>3.2.5.RELEASE</org.springframework.security-version>
     <org.aspectj-version>1.8.2</org.aspectj-version>
     <org.slf4j-version>1.7.7</org.slf4j-version>
     <org.eclipse.jetty-version>9.2.2.v20140723</org.eclipse.jetty-version>
@@ -94,15 +95,6 @@
       <artifactId>jstl-api</artifactId>
       <version>1.2</version>
     </dependency>
-
-    <!-- @Inject -->
-    <dependency>
-      <groupId>javax.inject</groupId>
-      <artifactId>javax.inject</artifactId>
-      <version>1</version>
-    </dependency>
-
-    <!-- Servlet -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
@@ -110,15 +102,16 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.1</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
+    </dependency>
+
+    <!-- @Inject -->
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
     </dependency>
 
     <!-- Jackson JSON Processor -->
@@ -135,14 +128,7 @@
       <artifactId>hibernate-validator</artifactId>
       <version>4.1.0.Final</version>
     </dependency>
-		
-		<!-- @Inject -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-		
+
     <!-- Tests -->
     <dependency>
       <groupId>junit</groupId>
@@ -156,11 +142,17 @@
       <version>1.9.5</version>
     </dependency>
 
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>2.4</version>
-		</dependency>
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.3.2</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

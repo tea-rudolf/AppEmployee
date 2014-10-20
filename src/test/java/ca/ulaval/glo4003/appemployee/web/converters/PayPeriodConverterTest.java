@@ -10,58 +10,60 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.ulaval.glo4003.appemployee.domain.Expense;
-import ca.ulaval.glo4003.appemployee.domain.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.Shift;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 public class PayPeriodConverterTest {
 
 	private static final LocalDate START_DATE = new LocalDate(2014, 9, 22);
 	private static final LocalDate END_DATE = new LocalDate(2014, 10, 03);
+	private static final double HOURS = 7.00;
+	private static final String TASK_ID = "id";
+	private static final String USER_EMAIL = "employee@employee.com";
+	private static final double EPSILON = 0.001;
 
-	private List<Shift> shifts = new ArrayList<Shift>();
-	private List<Expense> expenses = new ArrayList<Expense>();
+	private List<Task> expenses = new ArrayList<Task>();
+	private List<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
 
-	private PayPeriodConverter payPeriodConverterMock;
+	private TimeConverter payPeriodConverterMock;
 	private PayPeriod payPeriodMock;
-	private PayPeriodViewModel payPeriodViewModelMock;
+	private TimeViewModel timeViewModelMock;
+	private TimeEntry timeEntryMock;
 
 	@Before
 	public void init() {
-		payPeriodConverterMock = mock(PayPeriodConverter.class);
+		// payPeriodConverterMock = mock(TimeConverter.class);
 		payPeriodMock = mock(PayPeriod.class);
-		payPeriodViewModelMock = mock(PayPeriodViewModel.class);
-		payPeriodConverterMock = new PayPeriodConverter();
+		timeViewModelMock = mock(TimeViewModel.class);
+		timeEntryMock = mock(TimeEntry.class);
+		payPeriodConverterMock = new TimeConverter();
 	}
 
 	@Test
 	public void convertViewModelConvertsIntoPayPeriod() {
-		when(payPeriodViewModelMock.getStartDate()).thenReturn(START_DATE.toString());
-		when(payPeriodViewModelMock.getEndDate()).thenReturn(END_DATE.toString());
-		when(payPeriodViewModelMock.getShifts()).thenReturn(shifts);
-		when(payPeriodViewModelMock.getExpenses()).thenReturn(expenses);
+		when(timeViewModelMock.getHoursTimeEntry()).thenReturn(HOURS);
+		when(timeViewModelMock.getDateTimeEntry()).thenReturn(START_DATE.toString());
+		when(timeViewModelMock.getTaskIdTimeEntry()).thenReturn(TASK_ID);
+		when(timeViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
 
-		PayPeriod payPeriod = payPeriodConverterMock.convert(payPeriodViewModelMock);
+		timeEntryMock = payPeriodConverterMock.convertToTimeEntry(timeViewModelMock);
 
-		assertEquals(payPeriodViewModelMock.getStartDate(), payPeriod.getStartDate().toString());
-		assertEquals(payPeriodViewModelMock.getEndDate(), payPeriod.getEndDate().toString());
-		assertEquals(payPeriodViewModelMock.getExpenses(), payPeriod.getExpenses());
-		assertEquals(payPeriodViewModelMock.getShifts(), payPeriod.getShiftsWorked());
+		assertEquals(timeViewModelMock.getHoursTimeEntry(), timeEntryMock.getBillableHours(), EPSILON);
+		assertEquals(timeViewModelMock.getDateTimeEntry(), timeEntryMock.getDate().toString());
+		assertEquals(timeViewModelMock.getTaskIdTimeEntry(), timeEntryMock.getTaskuId());
+		assertEquals(timeViewModelMock.getUserEmail(), timeEntryMock.getUserEmail());
 	}
 
 	@Test
 	public void convertPayPeriodConvertsIntoIntoViewModel() {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-		when(payPeriodMock.getShiftsWorked()).thenReturn(shifts);
-		when(payPeriodMock.getExpenses()).thenReturn(expenses);
 
-		PayPeriodViewModel viewModel = payPeriodConverterMock.convert(payPeriodMock);
+		timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock, timeEntries, expenses);
 
-		assertEquals(payPeriodMock.getStartDate().toString(), viewModel.getStartDate());
-		assertEquals(payPeriodMock.getEndDate().toString(), viewModel.getEndDate());
-		assertEquals(payPeriodMock.getExpenses(), viewModel.getExpenses());
-		assertEquals(payPeriodMock.getShiftsWorked(), viewModel.getShifts());
+		assertEquals(payPeriodMock.getStartDate().toString(), timeViewModelMock.getStartDate());
+		assertEquals(payPeriodMock.getEndDate().toString(), timeViewModelMock.getEndDate());
 	}
 }

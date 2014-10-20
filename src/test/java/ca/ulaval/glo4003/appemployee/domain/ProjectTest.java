@@ -1,53 +1,59 @@
 package ca.ulaval.glo4003.appemployee.domain;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskExistsException;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ProjectTest {
-	private static final String SAMPLE_PROJECTNUMBER = "1";
-	private static final String SAMPLE_PROJECTNAME = "SampleName";
-	private static final String SAMPLE_TASKNUMBER = "2";
-	private static final String UNEXISTING_TASKNUMBER = "3";
+	private static final String TASK_ID = "0001";
+	private static final String PROJECT_UID = TASK_ID;
+	private static final String PROJECTNAME = "SampleName";
+	private static final String USER_UID = "1234";
 
 	private Project project;
-	private Task taskMock;
 
 	@Before
-	public void init() {
-		project = new Project(SAMPLE_PROJECTNUMBER, SAMPLE_PROJECTNAME);
-		taskMock = mock(Task.class);
-		when(taskMock.getNumber()).thenReturn(SAMPLE_TASKNUMBER);
+	public void setUp() {
+		project = new Project(PROJECT_UID, PROJECTNAME);
 	}
 
 	@Test
-	public void addTaskAddsTaskCorrectlyToTheList() {
-		project.addTask(taskMock);
-		assertTrue(project.getTasks().contains(taskMock));
-	}
-
-	@Test(expected = TaskExistsException.class)
-	public void addTaskThrowsTaskExistsExceptionWhenSpecifyingAnExistingTask() {
-		project.addTask(taskMock);
-		project.addTask(taskMock);
+	public void canInstatiateProject() {
+		assertNotNull(project);
 	}
 
 	@Test
-	public void getTaskByNumberReturnsTheCorrectTask() {
-		project.addTask(taskMock);
-		assertSame(taskMock, project.getTaskByNumber(SAMPLE_TASKNUMBER));
+	public void addTaskIdAddsTaskCorrectlyToTheList() {
+		project.addTaskuId(TASK_ID);
+		assertTrue(project.getTaskuIds().contains(TASK_ID));
 	}
 
-	@Test(expected = TaskNotFoundException.class)
-	public void getProjectByNumberThrowsTaskNotFoundExceptionWhenSpecifyingAnUnexistingTask() {
-		project.addTask(taskMock);
-		project.getTaskByNumber(UNEXISTING_TASKNUMBER);
+	@Test(expected = TaskAlreadyExistsException.class)
+	public void addTaskIdThrowsTaskAlreadyExistsExceptionWhenAddingAnExistingId() {
+		project.addTaskuId(TASK_ID);
+		project.addTaskuId(TASK_ID);
+	}
+
+	@Test
+	public void whenUserIsAddedToProjectUserShouldBeInUsersList() {
+		project.addEmployeeToProject(USER_UID);
+		
+		assertTrue(project.getEmployeeuIds().contains(USER_UID));
+	}
+
+	@Test
+	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
+		project.addEmployeeToProject(USER_UID);
+		
+		assertTrue(project.userIsAlreadyAssigned(USER_UID));
+
 	}
 }

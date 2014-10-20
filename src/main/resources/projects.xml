@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<projects>
+  <projects>
+    <uId>0001</uId>
+    <name>Project1</name>
+    <taskuIds>0001</taskuIds>
+    <taskuIds>0002</taskuIds>
+    <useruIds>employee@employee.com</useruIds>
+    <useruIds>supervisor@supervisor.com</useruIds>
+    <expenseuIds>0001</expenseuIds>
+  </projects>
+  <projects>
+    <uId>0002</uId>
+    <name>Project2</name>
+    <taskuIds>0003</taskuIds>
+    <useruIds>employee@employee.com</useruIds>
+    <useruIds>supervisor@supervisor.com</useruIds>
+    <expenseuIds>0002</expenseuIds>
+    <expenseuIds>0003</expenseuIds>
+  </projects>
+</projects>

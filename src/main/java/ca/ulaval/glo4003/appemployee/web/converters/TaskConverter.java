@@ -14,22 +14,31 @@ public class TaskConverter {
 
 	public Collection<TaskViewModel> convert(List<Task> tasks) {
 		Collection<TaskViewModel> viewModels = new ArrayList<TaskViewModel>();
+
 		for (Task task : tasks) {
+
 			TaskViewModel viewModel = convert(task);
+
 			viewModels.add(viewModel);
 		}
+
 		return viewModels;
 	}
 
 	public Task convert(TaskViewModel taskViewModel) {
-		Task task = new Task(taskViewModel.getNumber(), taskViewModel.getName());
+		Task task = new Task(taskViewModel.getuId());
+		task.setName(taskViewModel.getName());
+		task.setAuthorizedUsers(taskViewModel.getAuthorizedUsers());
+
 		return task;
 	}
 
 	public TaskViewModel convert(Task task) {
 		TaskViewModel viewModel = new TaskViewModel();
-		viewModel.setNumber(task.getNumber());
+		viewModel.setuId(task.getuId());
 		viewModel.setName(task.getName());
+		viewModel.setAuthorizedUsers(task.getAuthorizedUsers());
+
 		return viewModel;
 	}
 }
