@@ -30,6 +30,7 @@ public class TimeControllerTest {
 
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
+	private static final String PREVIOUS_TIME_SHEET_JSP = "previousTime";
 	private static final String TIME_SHEET_JSP = "time";
 	private static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 	private static final String REDIRECT_LINK = "redirect:/";
@@ -82,6 +83,18 @@ public class TimeControllerTest {
 
 		assertEquals(TIME_SHEET_JSP, returnedForm);
 	}
+	
+	@Test
+	public void getPreviousTimeReturnsTimeSheet() {
+		when(userRepositoryMock.findByEmail(VALID_EMAIL)).thenReturn(userMock);
+		when(payPeriodServiceMock.getPreviousPayPeriod()).thenReturn(payPeriodMock);
+		when(userMock.getEmail()).thenReturn(VALID_EMAIL);
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+
+		String returnedForm = timeControllerMock.getPreviousTime(modelMapMock, sessionMock);
+
+		assertEquals(PREVIOUS_TIME_SHEET_JSP, returnedForm);
+	}
 
 	@Test
 	public void saveTimeReturnsSubmittedTimeSheetIfSuccessfulSubmit() throws Exception {
@@ -92,6 +105,19 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 
 		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
+
+		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
+	}
+	
+	@Test
+	public void savePreviousTimeReturnsSubmittedTimeSheetIfSuccessfulSubmit() throws Exception {
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(payPeriodServiceMock.getPreviousPayPeriod()).thenReturn(payPeriodMock);
+		when(timeConverter.convertToTimeEntry(payPeriodViewModelMock)).thenReturn(timeEntryMock);
+		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_UID);
+		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
+
+		String returnedForm = timeControllerMock.savePreviousTime(payPeriodViewModelMock, sessionMock);
 
 		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
 	}
@@ -113,10 +139,22 @@ public class TimeControllerTest {
 		String returnedForm = timeControllerMock.getTime(modelMapMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
+	
+	@Test
+	public void getPreviousTimeReturnRedirectsIfEmailAttributeIsNull() {
+		String returnedForm = timeControllerMock.getPreviousTime(modelMapMock, sessionMock);
+		assertEquals(REDIRECT_LINK, returnedForm);
+	}
 
 	@Test
 	public void saveTimeReturnsErrorIfTaskIdIsNull() throws Exception {
 		String returnedForm = timeControllerMock.saveTime(payPeriodViewModelMock, sessionMock);
+		assertEquals(ERROR_REDIRECT, returnedForm);
+	}
+
+	@Test
+	public void savePreviousTimeReturnsErrorIfTaskIdIsNull() throws Exception {
+		String returnedForm = timeControllerMock.savePreviousTime(payPeriodViewModelMock, sessionMock);
 		assertEquals(ERROR_REDIRECT, returnedForm);
 	}
 }
