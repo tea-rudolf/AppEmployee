@@ -49,7 +49,7 @@ public class UserService {
 
 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
-			if (entry.getUserEmail() == userId) {
+			if (entry !=null && entry.getUserEmail().equals(userId)) {
 				tasks.add(taskRepository.findByUid(entry.getuId()));
 			}
 		}
@@ -64,7 +64,7 @@ public class UserService {
 
 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
-			if (entry.getUserEmail() == userEmail) {
+			if (entry != null && entry.getUserEmail().equals(userEmail)) {
 				timeEntries.add(entry);
 			}
 		}
