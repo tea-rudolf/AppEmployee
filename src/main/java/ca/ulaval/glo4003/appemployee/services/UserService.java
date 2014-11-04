@@ -68,9 +68,7 @@ public class UserService {
 				timeEntries.add(entry);
 			}
 		}
-
 		return timeEntries;
-
 	}
 
 	public User findByEmail(String email) {
@@ -84,7 +82,6 @@ public class UserService {
 			User user = userRepository.findByEmail(email);
 			users.add(user);
 		}
-
 		return users;
 	}
 
