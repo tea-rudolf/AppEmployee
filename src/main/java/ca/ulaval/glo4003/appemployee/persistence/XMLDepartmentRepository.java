@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -17,7 +18,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.DepartmentRepository;
 public class XMLDepartmentRepository implements DepartmentRepository {
 
 	private XMLGenericMarshaller<DepartmentXMLAssembler> serializer;
-	private List<Department> departments = new ArrayList<Department>();
+	private HashMap<String, Department> departments = new HashMap<String, Department>();
 	private static String DEPARTMENTS_FILEPATH = "/departments.xml";
 
 	public XMLDepartmentRepository() throws Exception {
@@ -31,46 +32,40 @@ public class XMLDepartmentRepository implements DepartmentRepository {
 
 	@Override
 	public Department findByName(String departmentName) {
-		Department department = null;
-
-		for (Department aDepartment : departments) {
-			if (aDepartment.getName().equals(departmentName)) {
-				department = aDepartment;
-			}
-		}
-		return department;
+		return departments.get(departmentName);
 	}
 
 	@Override
-	public void persist(Department department) throws Exception {
-		if (departments.contains(department)) {
+	public void store(Department department) throws Exception {
+		if (departments.containsKey(department.getName())) {
 			throw new DepartmentAlreadyExistsException("Department already exists in repository.");
 		}
 
-		departments.add(department);
+		departments.put(department.getName(), department);
 		saveXML();
 	}
 
 	@Override
 	public void update(Department department) throws Exception {
-		int index = departments.indexOf(department);
-		if (index == -1) {
+		if (!departments.containsKey(department.getName())) {
 			throw new DepartmentNotFoundException("Department does not exist in repository.");
 		}
 
-		departments.set(index, department);
+		departments.put(department.getName(), department);
 		saveXML();
-
 	}
 
 	private void saveXML() throws Exception {
 		DepartmentXMLAssembler departmentAssembler = new DepartmentXMLAssembler();
-		departmentAssembler.setDepartments(departments);
+		departmentAssembler.setDepartments(new ArrayList<Department>(departments.values()));
 		serializer.marshall(departmentAssembler, DEPARTMENTS_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		departments = serializer.unmarshall(DEPARTMENTS_FILEPATH).getDepartments();
+		List<Department> deserializedDepartments = serializer.unmarshall(DEPARTMENTS_FILEPATH).getDepartments();
+		for (Department department : deserializedDepartments) {
+			departments.put(department.getName(), department);
+		}
 	}
 
 }
