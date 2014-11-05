@@ -37,8 +37,9 @@ public class DepartmentController {
 	}
 
 	@RequestMapping(value = "/createEmployee", method = RequestMethod.POST)
-	public String createEmployeeAccount(@PathVariable String currentUserId, @PathVariable String departmentId, Model model, UserViewModel userViewModel) {
-		departmentService.createUser(currentUserId, departmentId, userViewModel);
+	public String createEmployeeAccount(@PathVariable String currentUserId, @PathVariable String departmentName, Model model, UserViewModel userViewModel) {
+		// departmentService.createUser(currentUserId, departmentName,
+		// userViewModel);
 		return "redirect:/createEmployee";
 	}
 

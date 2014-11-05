@@ -15,6 +15,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @Service
@@ -49,7 +50,7 @@ public class UserService {
 
 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
-			if (entry !=null && entry.getUserEmail().equals(userId)) {
+			if (entry != null && entry.getUserEmail().equals(userId)) {
 				tasks.add(taskRepository.findByUid(entry.getuId()));
 			}
 		}
@@ -71,8 +72,13 @@ public class UserService {
 		return timeEntries;
 	}
 
-	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
+	public User findByEmail(String email) throws UserNotFoundException {
+		User user = userRepository.findByEmail(email);
+
+		if (user == null) {
+			throw new UserNotFoundException("User not found with following email : " + email);
+		}
+		return user;
 	}
 
 	public List<User> findUsersByEmail(List<String> emails) {

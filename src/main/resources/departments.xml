@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<departments>
+  <departments>
+    <name>Recherche et developpement</name>
+    <supervisorIds>0001</supervisorIds>
+    <employeeUids>0001</employeeUids>
+    <employeeUids>0002</employeeUids>
+  </departments>
+</departments>

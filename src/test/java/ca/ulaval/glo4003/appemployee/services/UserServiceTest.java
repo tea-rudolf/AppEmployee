@@ -1,12 +1,7 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +18,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 public class UserServiceTest {
@@ -106,6 +102,14 @@ public class UserServiceTest {
 		User user = userService.findByEmail(EMAIL);
 
 		assertEquals(userMock.getEmail(), user.getEmail());
+	}
+
+	@Test(expected = UserNotFoundException.class)
+	public void findByEmailThrowsExceptionWhenUserNotFound() {
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(null);
+		when(userMock.getEmail()).thenReturn(EMAIL);
+
+		userService.findByEmail(EMAIL);
 	}
 
 	@Test
