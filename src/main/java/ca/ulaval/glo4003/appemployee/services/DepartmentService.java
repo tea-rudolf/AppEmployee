@@ -50,7 +50,6 @@ public class DepartmentService {
 
 		department.addEmployee(userViewModel.getEmail());
 		departmentRepository.store(department);
-
 	}
 
 	private boolean supervisorIsAssignedToDepartment(String supervisorID, String departmentName) {
