@@ -27,6 +27,7 @@
 					<li><a href="/time">Manage time</a></li>
 					<li><a href="/expenses">Manage expenses</a></li>
 					<li><a href="/projects">Manage projects & tasks</a></li>
+					<li><a href="/departments">Manage departments</a></li>
 				</ul>
 			</div>
 		</div>

@@ -1,7 +1,10 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -68,7 +71,7 @@ public class DepartmentServiceTest {
 
 		departmentService.createUser(SUPERVISOR_ID, DEPARTMENT_NAME, userViewModelMock);
 
-		// verify(userRepositoryMock, times(1)).store(userMock);
+		//verify(userRepositoryMock, times(1)).store(userMock);
 	}
 
 	@Test(expected = EmployeeAlreadyExistsException.class)
