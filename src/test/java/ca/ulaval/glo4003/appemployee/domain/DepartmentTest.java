@@ -15,7 +15,7 @@ import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsExce
 
 @RunWith(MockitoJUnitRunner.class)
 public class DepartmentTest {
-	private static final String DEPARTMENTNAME = "DummyDept";
+	private static final String DEPARTMENT_NAME = "DummyDept";
 	private static final String USER_UID = "1234";
 	private static final List<String> supervisorIds = new ArrayList<String>();
 
@@ -23,7 +23,7 @@ public class DepartmentTest {
 
 	@Before
 	public void setUp() {
-		department = new Department(DEPARTMENTNAME);
+		department = new Department(DEPARTMENT_NAME);
 		supervisorIds.add(USER_UID);
 	}
 

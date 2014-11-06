@@ -54,9 +54,7 @@ public class UserService {
 				tasks.add(taskRepository.findByUid(entry.getuId()));
 			}
 		}
-
 		return tasks;
-
 	}
 
 	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
