@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -38,9 +37,10 @@ public class DepartmentController {
 	}
 
 	@RequestMapping(value = "/createEmployee", method = RequestMethod.POST)
-	public String createEmployeeAccount(@PathVariable String currentUserId, @PathVariable String departmentName, Model model, UserViewModel userViewModel) throws Exception {
-		 departmentService.createUser(currentUserId, departmentName, userViewModel);
-		 departmentService.assignUserToDepartment(userViewModel, currentUserId, departmentName);
+	public String createEmployeeAccount(@PathVariable String currentUserId, @PathVariable String departmentName, Model model, UserViewModel userViewModel)
+			throws Exception {
+		departmentService.createUser(currentUserId, departmentName, userViewModel);
+		departmentService.assignUserToDepartment(userViewModel, currentUserId, departmentName);
 		return "redirect:/createEmployee";
 	}
 

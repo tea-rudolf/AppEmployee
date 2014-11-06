@@ -14,6 +14,4 @@ public interface DepartmentRepository {
 
 	void store(Department department) throws Exception;
 
-	void update(Department department) throws Exception;
-
 }

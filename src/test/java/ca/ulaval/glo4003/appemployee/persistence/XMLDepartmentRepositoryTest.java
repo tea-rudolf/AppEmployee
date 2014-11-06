@@ -10,13 +10,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.department.Department;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 
 public class XMLDepartmentRepositoryTest {
 
 	private static final String DUMMY_NAME = "dummyName";
-	private static final String DUMMY_NAME2 = "dummyName2";
 
 	@Mock
 	private XMLGenericMarshaller<DepartmentXMLAssembler> marshallerMock;
@@ -47,24 +44,4 @@ public class XMLDepartmentRepositoryTest {
 		assertEquals(departmentMock, repository.findByName(DUMMY_NAME));
 	}
 
-	@Test(expected = DepartmentAlreadyExistsException.class)
-	public void storeThrowsExceptionWhenDepartmentAlreadyExists() throws Exception {
-		repository.store(departmentMock);
-		repository.store(departmentMock);
-	}
-
-	@Test
-	public void updateUpdatesDepartmentWhenDepartmentFoundInRepo() throws Exception {
-		when(departmentMock.getName()).thenReturn(DUMMY_NAME2);
-		repository.store(departmentMock);
-
-		repository.update(departmentMock);
-
-		assertEquals(departmentMock, repository.findByName(DUMMY_NAME2));
-	}
-
-	@Test(expected = DepartmentNotFoundException.class)
-	public void updateThrowsExceptionWhenDepartmentDoesNotExist() throws Exception {
-		repository.update(departmentMock);
-	}
 }

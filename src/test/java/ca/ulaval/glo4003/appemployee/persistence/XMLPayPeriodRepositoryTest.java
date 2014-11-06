@@ -31,7 +31,7 @@ public class XMLPayPeriodRepositoryTest {
 	public void findByDateReturnsCorrectPayPeriodIfFound() throws Exception {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-		xmlPayPeriodRepository.persist(payPeriodMock);
+		xmlPayPeriodRepository.store(payPeriodMock);
 
 		PayPeriod samplePayPeriod = xmlPayPeriodRepository.findByDate(ACTUAL_DATE);
 
@@ -43,7 +43,7 @@ public class XMLPayPeriodRepositoryTest {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 
-		xmlPayPeriodRepository.persist(payPeriodMock);
+		xmlPayPeriodRepository.store(payPeriodMock);
 
 		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE).getStartDate(), payPeriodMock.getStartDate());
 	}
