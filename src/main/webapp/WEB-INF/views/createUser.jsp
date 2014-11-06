@@ -1,0 +1,57 @@
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<html lang="en">
+<head>
+<%@include file="../includes/header.jsp"%>
+<title>AppEmployee - Create User</title>
+</head>
+
+<body>
+	<%@include file="../includes/navbar.jsp"%>
+
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h2 class="sub-header">New user</h2>
+		<form:form role="form" method="POST"
+			action="/departments/${departmentNumber}/department/createUser" modelAttribute="department">
+			<div class="form-group">
+				<form:hidden path="uId" />
+				<c:if
+					test="${not empty message && message.name == 'EmployeeAlreadyExistsException'}">
+					<div class="alert alert-danger" style="margin-top: 10px;"
+						role="alert">${message.message}</div>
+				</c:if>
+			</div>
+			<div class="form-group">
+				<form:label path="email">Email</form:label>
+				<form:input class="form-control" path="email" value="${email}"
+					required="required" />
+			</div>
+			<div class="form-group">
+				<form:label path="password">Password</form:label>
+				<form:input class="form-control" path="password" value="${password}"
+					required="required" />
+			</div>
+			<div class="form-group">
+				<form:label path="role">Role</form:label>
+				<form:input class="form-control" path="role" value="${role}"
+					required="required" />
+			</div>
+			<div class="form-group">
+				<form:label path="wage">Wage</form:label>
+				<form:input class="form-control" path="wage" value="${wage}"
+					required="required" />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Create user" class="btn btn-primary"></input>
+				<input type="button"
+					onclick="javascript: window.location.href = '/projects/${projectNumber}/edit'"
+					value="Cancel" class="btn btn-default"></input>
+			</div>
+		</form:form>
+	</div>
+
+	<%@include file="../includes/footer.jsp"%>
+
+</body>
+</html>
