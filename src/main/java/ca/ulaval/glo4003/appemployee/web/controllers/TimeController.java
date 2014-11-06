@@ -76,7 +76,7 @@ public class TimeController {
 		if (payPeriodForm.getTaskIdTimeEntry() == null) {
 			return "redirect:/time/errorNoTaskSelected";
 		}
-
+		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = payPeriodConverter.convertToTimeEntry(payPeriodForm);
 		timeEntryRepository.store(newTimeEntry);
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -113,7 +113,7 @@ public class TimeController {
 		if (payPeriodForm.getTaskIdTimeEntry() == null) {
 			return "redirect:/time/errorNoTaskSelected";
 		}
-
+		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = payPeriodConverter.convertToTimeEntry(payPeriodForm);
 		timeEntryRepository.store(newTimeEntry);
 		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();

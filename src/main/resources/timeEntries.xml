@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <timeEntries>
   <timeEntries>
-    <uId>0001</uId>
-    <billaHours>7.5</billaHours>
+    <uId>0c015760-660d-11e4-9803-0800200c9a66</uId>
+    <billableHours>7.5</billableHours>
     <date>2014-09-01</date>
-    <userId>jean.gauthier@employee.com</userId>
-    <taskId>0001</taskId>
+    <userEmail>jean.gauthier@employee.com</userEmail>
+    <taskuId>0001</taskuId>
     <comment>Hola</comment>
   </timeEntries>
   <timeEntries>
-    <uId>0002</uId>
-    <billaHours>6</billaHours>
+    <uId>0c015761-660d-11e4-9803-0800200c9a66</uId>
+    <billableHours>6</billableHours>
     <date>2014-09-02</date>
-    <userId>jean.gauthier@employee.com</userId>
-    <taskId>0002</taskId>
+    <userEmail>jean.gauthier@employee.com</userEmail>
+    <taskuId>0002</taskuId>
   </timeEntries>
   <timeEntries>
-    <uId>0003</uId>
-    <billaHours>5</billaHours>
+    <uId>0c015762-660d-11e4-9803-0800200c9a66</uId>
+    <billableHours>5</billableHours>
     <date>2014-09-03</date>
-    <userId>jean.gauthier@employee.com</userId>
-    <taskId>0003</taskId>
+    <userEmail>jean.gauthier@employee.com</userEmail>
+    <taskuId>0003</taskuId>
   </timeEntries>
 </timeEntries>

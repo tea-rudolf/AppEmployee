@@ -16,9 +16,7 @@ public class TaskConverter {
 		Collection<TaskViewModel> viewModels = new ArrayList<TaskViewModel>();
 
 		for (Task task : tasks) {
-
 			TaskViewModel viewModel = convert(task);
-
 			viewModels.add(viewModel);
 		}
 
@@ -26,10 +24,9 @@ public class TaskConverter {
 	}
 
 	public Task convert(TaskViewModel taskViewModel) {
-		Task task = new Task(taskViewModel.getuId());
+		Task task = new Task();
 		task.setName(taskViewModel.getName());
 		task.setAuthorizedUsers(taskViewModel.getAuthorizedUsers());
-
 		return task;
 	}
 
