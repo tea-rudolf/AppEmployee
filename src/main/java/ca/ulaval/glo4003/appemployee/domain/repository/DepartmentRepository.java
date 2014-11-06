@@ -12,7 +12,7 @@ public interface DepartmentRepository {
 
 	Department findByName(String departmentName);
 
-	void persist(Department department) throws Exception;
+	void store(Department department) throws Exception;
 
 	void update(Department department) throws Exception;
 
