@@ -157,4 +157,9 @@ public class ProjectService {
 			task.assignUserToTask(userId);
 		}
 	}
+	
+	public String getTaskName(String taskUId) {
+		Task task = taskRepository.findByUid(taskUId);
+		return task.getName();
+	}
 }

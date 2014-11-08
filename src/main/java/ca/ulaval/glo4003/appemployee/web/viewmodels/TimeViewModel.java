@@ -15,7 +15,9 @@ public class TimeViewModel {
 	private String userEmail;
 	private String commentTimeEntry;
 	private String taskIdTimeEntry;
-
+	private String taskNameTimeEntry;
+	private String timeEntryuId;
+	
 	public String getPayPeriodStartDate() {
 		return payPeriodStartDate;
 	}
@@ -64,13 +66,6 @@ public class TimeViewModel {
 		this.hoursTimeEntry = billableHoursTimeEntry;
 	}
 
-	public String getDateTimeEntry() {
-		return dateTimeEntry;
-	}
-
-	public void setDateTimeEntry(String dateTimeEntry) {
-		this.dateTimeEntry = dateTimeEntry;
-	}
 
 	public String getUserEmail() {
 		return userEmail;
@@ -94,6 +89,30 @@ public class TimeViewModel {
 
 	public void setCommentTimeEntry(String commentTimeEntry) {
 		this.commentTimeEntry = commentTimeEntry;
+	}
+
+	public String getTaskNameTimeEntry() {
+		return taskNameTimeEntry;
+	}
+
+	public void setTaskNameTimeEntry(String taskNameTimeEntry) {
+		this.taskNameTimeEntry = taskNameTimeEntry;
+	}
+
+	public String getTimeEntryuId() {
+		return timeEntryuId;
+	}
+
+	public void setTimeEntryuId(String timeEntryuId) {
+		this.timeEntryuId = timeEntryuId;
+	}
+
+	public String getDateTimeEntry() {
+		return dateTimeEntry;
+	}
+
+	public void setDateTimeEntry(String dateTimeEntry) {
+		this.dateTimeEntry = dateTimeEntry;
 	}
 
 }

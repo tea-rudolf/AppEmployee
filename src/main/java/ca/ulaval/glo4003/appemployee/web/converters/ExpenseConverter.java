@@ -34,6 +34,7 @@ public class ExpenseConverter {
 
 	public ExpenseViewModel convert(Expense expense) {
 		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
+		expenseViewModel.setuId(expense.getuId());
 		expenseViewModel.setAmount(expense.getAmount());
 		expenseViewModel.setComment(expense.getComment());
 		expenseViewModel.setDate(expense.getDate().toString());

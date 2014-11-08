@@ -7,24 +7,31 @@ import org.springframework.stereotype.Service;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.NoCurrentPayPeriodException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
+import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @Service
 public class PayPeriodService {
 
 	private PayPeriodRepository payPeriodRepository;
+	private TimeEntryRepository timeEntryRepository;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, UserRepository userRepository, TaskRepository taskRepository,
-			TimeEntryRepository timeEntryRepository, ExpenseRepository expenseRepository) {
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository) {
 		this.payPeriodRepository = payPeriodRepository;
+		this.timeEntryRepository = timeEntryRepository;
 	}
 
+	public void storeTimeEntry(TimeEntry entry) {
+		try {
+			timeEntryRepository.store(entry);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void updateCurrentPayPeriodTimeEntries(PayPeriod payPeriod) {
 		try {
 			payPeriodRepository.update(payPeriod);

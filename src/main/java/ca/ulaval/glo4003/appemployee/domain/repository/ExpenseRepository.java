@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.appemployee.domain.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -17,5 +18,7 @@ public interface ExpenseRepository {
 	List<Expense> findAllExpensesByUser(String userId);
 
 	Expense findByUid(String uId);
+	
+	Collection<Expense> findAll();
 
 }

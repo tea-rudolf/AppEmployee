@@ -29,7 +29,7 @@
 		<div></div>
 		<div>
 			<h6>
-				<a href="../time"><p>Go to current pay period</a>
+				<a href="/time"><p>Go to current pay period</a>
 			</h6>
 		</div>
 		<div></div>
@@ -68,6 +68,27 @@
 			<input type="submit" class="btn btn-primary" name="submit"
 				value="Save" />
 		</form:form>
+
+
+		<h3>Edit a existing time entry by clicking on it : </h3>
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-condensed">
+					<tr>
+						<th>Date</th>
+						<th>Task</th>
+						<th>Hours</th>
+						<th>Comment</th>
+					</tr>
+					<c:forEach var="timeEntry" items="${timeEntries}">
+						<tr
+							onClick="javascript:window.location.href = '/time/previousTime/${timeEntry.timeEntryuId}/edit'">
+							<td>${timeEntry.dateTimeEntry}</td>
+							<td>${timeEntry.taskNameTimeEntry}</td>
+							<td>${timeEntry.hoursTimeEntry}</td>
+							<td>${timeEntry.commentTimeEntry}</td>
+						</tr>
+					</c:forEach>
+				</table>
 	</div>
 
 	<%@include file="../includes/footer.jsp"%>

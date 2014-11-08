@@ -43,6 +43,26 @@
 			<br/>
 			<input type="submit" class="btn btn-primary" name="submit" value="Save" />
 		</form:form>
+
+
+		<h3>Edit a existing expense by clicking on it : </h3>
+			<div class="table-responsive">
+				<table class="table table-striped table-hover table-condensed">
+					<tr>
+						<th>Date</th>
+						<th>Hours</th>
+						<th>Comment</th>
+					</tr>
+					<c:forEach var="expense" items="${expenses}">
+						<tr
+							onClick="javascript:window.location.href = '/expenses/${expense.uId}/edit'">
+							<td>${expense.date}</td>
+							<td>${expense.amount}</td>
+							<td>${expense.comment}</td>
+						</tr>
+					</c:forEach>
+				</table>
+
 	</div>
 
 <%@include file="../includes/footer.jsp" %>

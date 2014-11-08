@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,5 +64,10 @@ public class XMLExpenseRepository implements ExpenseRepository {
 		for (Expense expense : deserializedExpenses) {
 			expenses.put(expense.getuId(), expense);
 		}
+	}
+
+	@Override
+	public Collection<Expense> findAll() {
+		return expenses.values();
 	}
 }

@@ -4,7 +4,7 @@
     <uId>0c015760-660d-11e4-9803-0800200c9a66</uId>
     <billableHours>7.5</billableHours>
     <date>2014-09-01</date>
-    <userEmail>jean.gauthier@employee.com</userEmail>
+    <userEmail>alexandre.pitt@supervisor.com</userEmail>
     <taskuId>0001</taskuId>
     <comment>Hola</comment>
   </timeEntries>
@@ -12,14 +12,14 @@
     <uId>0c015761-660d-11e4-9803-0800200c9a66</uId>
     <billableHours>6</billableHours>
     <date>2014-09-02</date>
-    <userEmail>jean.gauthier@employee.com</userEmail>
+    <userEmail>alexandre.pitt@supervisor.com</userEmail>
     <taskuId>0002</taskuId>
   </timeEntries>
   <timeEntries>
     <uId>0c015762-660d-11e4-9803-0800200c9a66</uId>
     <billableHours>5</billableHours>
     <date>2014-09-03</date>
-    <userEmail>jean.gauthier@employee.com</userEmail>
+    <userEmail>alexandre.pitt@supervisor.com</userEmail>
     <taskuId>0003</taskuId>
   </timeEntries>
 </timeEntries>
