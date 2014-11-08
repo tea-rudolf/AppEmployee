@@ -1,1 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<travels>
+  <travels>
+    <uId>0002</uId>
+    <distanceTravelled>800.50</distanceTravelled>
+    <date>2014-10-15</date>
+    <userEmail>jean.gauthier@employee.com</userEmail>
+    <comment>Trip to Montreal</comment>
+  </travels>
+</travels>

@@ -38,7 +38,6 @@ public class TravelConverter {
 		travelViewModel.setDistanceTravelled(travel.getDistanceTravelled());
 		travelViewModel.setComment(travel.getComment());
 		travelViewModel.setDate(travel.getDate().toString());
-		travelViewModel.setuId(travel.getuId());
 		travelViewModel.setUserEmail(travel.getUserEmail());
 		return travelViewModel;
 	}
