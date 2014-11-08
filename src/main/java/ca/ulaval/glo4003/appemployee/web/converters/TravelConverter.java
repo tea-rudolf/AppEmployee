@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
+import ca.ulaval.glo4003.appemployee.domain.travel.Vehicule;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 @Component
@@ -29,6 +30,11 @@ public class TravelConverter {
 		travel.setDate(new LocalDate(travelViewModel.getDate()));
 		travel.setUserEmail(travelViewModel.getUserEmail());
 		travel.setComment(travelViewModel.getComment());
+		if (travelViewModel.equals("PERSONAL")){
+			travel.setVehicule(Vehicule.PERSONNAL);
+		}else{
+			travel.setVehicule(Vehicule.ENTERPRISE);
+		}
 		return travel;
 	}
 	

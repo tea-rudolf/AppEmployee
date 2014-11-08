@@ -45,7 +45,7 @@
 					</tr>
 					<c:forEach var="travelEntry" items="${travelEntries}">
 						<tr
-							onClick="javascript:window.location.href = '/time/${travelEntry.timeEntryuId}/edit'">
+							onClick="javascript:window.location.href = '/time/${travelEntry.uId}/edit'">
 							<td>${travelEntry.date}</td>
 							<td>${travelEntry.vehicule}</td>
 							<td>${travelEntry.distanceTravelled}</td>
