@@ -40,6 +40,7 @@ public class TravelConverter {
 		travelViewModel.setDate(travel.getDate().toString());
 		travelViewModel.setuId(travel.getuId());
 		travelViewModel.setUserEmail(travel.getUserEmail());
+		travelViewModel.setVehicule(travel.getVehicule().toString());
 		return travelViewModel;
 	}
 

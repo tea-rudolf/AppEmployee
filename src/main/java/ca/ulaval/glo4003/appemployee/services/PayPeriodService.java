@@ -9,7 +9,9 @@ import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @Service
@@ -17,11 +19,13 @@ public class PayPeriodService {
 
 	private PayPeriodRepository payPeriodRepository;
 	private TimeEntryRepository timeEntryRepository;
+	private TravelRepository travelRepository;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository) {
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TravelRepository travelRepository) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;
+		this.travelRepository = travelRepository;
 	}
 
 	public void storeTimeEntry(TimeEntry entry) {
@@ -30,6 +34,16 @@ public class PayPeriodService {
 		} catch (Exception e) {
 			throw new RepositoryException(e.getMessage());
 		}
+	}
+	
+	public void storeTravel(Travel travel){
+		try {
+			travelRepository.store(travel);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	public void updateCurrentPayPeriodTimeEntries(PayPeriod payPeriod) {

@@ -6,20 +6,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
+import org.springframework.stereotype.Repository;
+
 import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 
-public class XMLTravelRepository implements TravelRepository{
-	
+@Repository
+@Singleton
+public class XMLTravelRepository implements TravelRepository {
+
 	private XMLGenericMarshaller<TravelXMLAssembler> serializer;
 	private Map<String, Travel> travels = new HashMap<String, Travel>();
 	private static String TRAVELS_FILEPATH = "/travels.xml";
-	
+
 	public XMLTravelRepository() throws Exception {
 		serializer = new XMLGenericMarshaller<TravelXMLAssembler>(TravelXMLAssembler.class);
 		parseXML();
 	}
-	
+
 	public XMLTravelRepository(XMLGenericMarshaller<TravelXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
@@ -28,7 +34,7 @@ public class XMLTravelRepository implements TravelRepository{
 	public void store(Travel travel) throws Exception {
 		travels.put(travel.getuId(), travel);
 		saveXML();
-		
+
 	}
 
 	@Override
@@ -52,7 +58,7 @@ public class XMLTravelRepository implements TravelRepository{
 	public Collection<Travel> findAll() {
 		return travels.values();
 	}
-	
+
 	private void saveXML() throws Exception {
 		TravelXMLAssembler travelAssembler = new TravelXMLAssembler();
 		travelAssembler.setTravels(new ArrayList<Travel>(travels.values()));

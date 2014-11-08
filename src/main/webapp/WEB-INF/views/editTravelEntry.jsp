@@ -2,24 +2,30 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html lang="en">
-	<head>
-		<%@include file="../includes/header.jsp" %>
-		<title>AppEmployee - Create Time Entry</title>
-	</head>
+<head>
+<%@include file="../includes/header.jsp"%>
+<title>AppEmployee - Edit Project</title>
+</head>
 
 <body>
 	<%@include file="../includes/navbar.jsp"%>
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-		<h2 class="sub-header">New time entry</h2>
+		<h2 class="sub-header">Edit a time entry</h2>
 				<h3>
 			Pay period from
 			<c:out value="${timeForm.payPeriodStartDate}" />
 			to
 			<c:out value="${timeForm.payPeriodEndDate}" />
 		</h3>
-		<form:form method="post" action="/time/add" modelAttribute="timeForm">
-			<div class="table-responsive">
+		<div></div>
+		<form:form role="form" method="POST"
+			action="/time/${timeEntry.timeEntryuId}/edit" modelAttribute="timeEntry">
+			<div class="form-group">
+				<form:hidden path="timeEntryuId" />
+			</div>
+	
+				<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
 						<th>Date</th>
@@ -48,9 +54,13 @@
 					</tr>
 				</table>
 			</div>
-			<br />
-			<input type="submit" class="btn btn-primary" name="submit"
-				value="Save" />
+
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary"></input> <input
+					type="button"
+					onclick="javascript:window.location.href = '/time/'"
+					value="Cancel" class="btn btn-default"></input>
+			</div>
 		</form:form>
 	</div>
 

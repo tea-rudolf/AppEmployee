@@ -13,12 +13,16 @@ import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
+import ca.ulaval.glo4003.appemployee.domain.travel.Vehicule;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 @Service
 public class UserService {
@@ -28,15 +32,17 @@ public class UserService {
 	private TaskRepository taskRepository;
 	private TimeEntryRepository timeEntryRepository;
 	private ExpenseRepository expenseRepository;
+	private TravelRepository travelRepository;
 
 	@Autowired
 	public UserService(UserRepository userRepository, PayPeriodRepository payPeriodRepository, TaskRepository taskRepository,
-			ExpenseRepository expenseRepository, TimeEntryRepository timeEntryRepository) {
+			ExpenseRepository expenseRepository, TimeEntryRepository timeEntryRepository, TravelRepository travelRepository) {
 		this.userRepository = userRepository;
 		this.payPeriodRepository = payPeriodRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
 		this.expenseRepository = expenseRepository;
+		this.travelRepository = travelRepository;
 	}
 
 	public void updateCurrentPayPeriod(PayPeriod payPeriod) {
@@ -117,19 +123,42 @@ public class UserService {
 	public List<Expense> getExpensesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
 
 		ArrayList<Expense> expenses = new ArrayList<Expense>();
-		System.out.println("1 = " + payPeriod.getStartDate());
-		System.out.println("2 = " + payPeriod.getEndDate());
-		System.out.println("3 = " + userEmail);
 		for (Expense expense : expenseRepository.findAll()) {
-			System.out.println("4");
 			if (expense.getUserEmail().equals(userEmail) && expense.getDate().isBefore(payPeriod.getEndDate())
 					&& expense.getDate().isAfter(payPeriod.getStartDate())) {
-				System.out.println("5");
 				expenses.add(expense);
 			}
 		}
-		System.out.println("6");
 		return expenses;
 	}
+
+	public List<Travel> getTravelEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
+		ArrayList<Travel> travels = new ArrayList<Travel>();
+		for (Travel travel : travelRepository.findAll()) {
+			if (travel.getUserEmail().equals(userEmail) && travel.getDate().isBefore(payPeriod.getEndDate())
+					&& travel.getDate().isAfter(payPeriod.getStartDate())) {
+				travels.add(travel);
+			}
+		}
+		return travels;
+	}
+
+	public void updateTravelEntry(String uId, TravelViewModel viewModel) {
+		Travel entry = travelRepository.findByUid(uId);
+		entry.setComment(viewModel.getComment());
+		entry.setDate(new LocalDate(viewModel.getDate()));
+		entry.setDistanceTravelled(viewModel.getDistanceTravelled());
+		entry.setUserEmail(viewModel.getUserEmail());
+		Vehicule v = Vehicule.ENTERPRISE;
+		entry.setVehicule(v);
+
+		try {
+			travelRepository.store(entry);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 }
