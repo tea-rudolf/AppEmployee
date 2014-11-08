@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +38,11 @@ public class XMLDepartmentRepository implements DepartmentRepository {
 	public void store(Department department) throws Exception {
 		departments.put(department.getName(), department);
 		saveXML();
+	}
+
+	@Override
+	public Collection<Department> findAll() {
+		return departments.values();
 	}
 
 	private void saveXML() throws Exception {

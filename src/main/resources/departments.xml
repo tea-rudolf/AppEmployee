@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <departments>
   <departments>
-    <name>Recherche et developpement</name>
-    <supervisorIds>0001</supervisorIds>
-    <employeeUids>0001</employeeUids>
-    <employeeUids>0002</employeeUids>
+    <name>Research and development</name>
+    <supervisorIds>s1@sup.com</supervisorIds>
+    <employeeIds>e1@emp.com</employeeIds>
+    <employeeIds>e2@emp.com</employeeIds>
   </departments>
 </departments>

@@ -4,22 +4,24 @@
     <uId>0001</uId>
     <billaHours>7.5</billaHours>
     <date>2014-09-01</date>
-    <userId>jean.gauthier@employee.com</userId>
+    <userId>e1@emp.com</userId>
     <taskId>0001</taskId>
-    <comment>Hola</comment>
+    <comment>Comment</comment>
   </timeEntries>
   <timeEntries>
     <uId>0002</uId>
     <billaHours>6</billaHours>
     <date>2014-09-02</date>
-    <userId>jean.gauthier@employee.com</userId>
+    <userId>e1@emp.com</userId>
     <taskId>0002</taskId>
+    <comment>Comment</comment>
   </timeEntries>
   <timeEntries>
     <uId>0003</uId>
     <billaHours>5</billaHours>
     <date>2014-09-03</date>
-    <userId>jean.gauthier@employee.com</userId>
+    <userId>e1@emp.com</userId>
     <taskId>0003</taskId>
+    <comment>Comment</comment>
   </timeEntries>
 </timeEntries>

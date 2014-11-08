@@ -1,5 +1,8 @@
 package ca.ulaval.glo4003.appemployee.services;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +28,6 @@ public class DepartmentService {
 	}
 
 	public void createUser(String supervisorID, String departmentName, UserViewModel userViewModel) throws Exception {
-
 		if (userRepository.findByEmail(userViewModel.getEmail()) != null) {
 			throw new EmployeeAlreadyExistsException("Employee you are trying to create already exists.");
 		}
@@ -52,6 +54,26 @@ public class DepartmentService {
 		departmentRepository.store(department);
 	}
 
+	public Collection<Department> retrieveDepartmentsList() {
+		return departmentRepository.findAll();
+	}
+
+	public Department findDepartmentByName(String departmentName) throws DepartmentNotFoundException {
+		Department department = departmentRepository.findByName(departmentName);
+
+		if (department == null) {
+			throw new DepartmentNotFoundException("Department not found with following name : " + departmentName);
+		}
+		return department;
+	}
+
+	public List<User> findEmployeesList(String departmentName) throws DepartmentNotFoundException {
+		Department department = findDepartmentByName(departmentName);
+		List<String> employeeIds = department.getEmployeeIds();
+		List<User> employees = userRepository.findByEmails(employeeIds);
+		return employees;
+	}
+
 	private boolean supervisorIsAssignedToDepartment(String supervisorID, String departmentName) {
 		boolean isAssigned = false;
 		Department department = departmentRepository.findByName(departmentName);
@@ -62,4 +84,5 @@ public class DepartmentService {
 
 		return isAssigned;
 	}
+
 }

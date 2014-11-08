@@ -11,11 +11,11 @@
 	<%@include file="../includes/navbar.jsp"%>
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-		<h2 class="sub-header">New user</h2>
+		<h2 class="sub-header">New employee</h2>
 		<form:form role="form" method="POST"
-			action="/departments/${departmentNumber}/department/createUser" modelAttribute="department">
+			action="/departments/${departmentName}/employees/createEmployee" modelAttribute="user">
 			<div class="form-group">
-				<form:hidden path="uId" />
+<%-- 				<form:hidden path="email" /> --%>
 				<c:if
 					test="${not empty message && message.name == 'EmployeeAlreadyExistsException'}">
 					<div class="alert alert-danger" style="margin-top: 10px;"
@@ -24,28 +24,28 @@
 			</div>
 			<div class="form-group">
 				<form:label path="email">Email</form:label>
-				<form:input class="form-control" path="email" value="${email}"
+				<form:input class="form-control" path="email" value="${user.email}"
 					required="required" />
 			</div>
 			<div class="form-group">
 				<form:label path="password">Password</form:label>
-				<form:input class="form-control" path="password" value="${password}"
+				<form:input class="form-control" path="password" value="${user.password}"
 					required="required" />
 			</div>
 			<div class="form-group">
 				<form:label path="role">Role</form:label>
-				<form:input class="form-control" path="role" value="${role}"
+				<form:input class="form-control" path="role" value="${user.role}"
 					required="required" />
 			</div>
 			<div class="form-group">
 				<form:label path="wage">Wage</form:label>
-				<form:input class="form-control" path="wage" value="${wage}"
+				<form:input class="form-control" path="wage" value="${user.wage}"
 					required="required" />
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Create user" class="btn btn-primary"></input>
 				<input type="button"
-					onclick="javascript: window.location.href = '/projects/${projectNumber}/edit'"
+					onclick="javascript: window.location.href = '/departments/${departmentName}/edit'"
 					value="Cancel" class="btn btn-default"></input>
 			</div>
 		</form:form>

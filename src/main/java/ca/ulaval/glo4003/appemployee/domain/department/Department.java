@@ -9,7 +9,7 @@ public class Department {
 
 	private String name = "";
 	private List<String> supervisorIds = new ArrayList<String>();
-	private List<String> employeeUids = new ArrayList<String>();
+	private List<String> employeeIds = new ArrayList<String>();
 
 	public Department() {
 	}
@@ -34,23 +34,24 @@ public class Department {
 		this.supervisorIds = supervisorIds;
 	}
 
-	public List<String> getEmployeeUids() {
-		return employeeUids;
+	public List<String> getEmployeeIds() {
+		return employeeIds;
 	}
 
-	public void setEmployeeuIds(List<String> employeeUids) {
-		this.employeeUids = employeeUids;
+	public void setEmployeeIds(List<String> employeeUids) {
+		this.employeeIds = employeeUids;
 	}
 
 	public void addEmployee(String employeeUid) {
-		if (employeeUids.contains(employeeUid)) {
+		if (employeeIds.contains(employeeUid)) {
 			throw new EmployeeAlreadyExistsException("Employee already assigned to this department.");
 		}
 
-		employeeUids.add(employeeUid);
+		employeeIds.add(employeeUid);
 	}
 
 	public boolean containsSupervisor(String supervisorId) {
 		return supervisorIds.contains(supervisorId);
 	}
+
 }

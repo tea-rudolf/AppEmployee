@@ -44,4 +44,10 @@ public class XMLDepartmentRepositoryTest {
 		assertEquals(departmentMock, repository.findByName(DUMMY_NAME));
 	}
 
+	@Test
+	public void findAllDepartmentReturnsAllDepartments() throws Exception {
+		repository.store(departmentMock);
+		assertEquals(1, repository.findAll().size());
+	}
+
 }

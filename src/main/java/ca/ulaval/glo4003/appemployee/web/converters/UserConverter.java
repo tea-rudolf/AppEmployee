@@ -11,16 +11,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 @Component
 public class UserConverter {
 
-	public User convert(UserViewModel userViewModel) {
-		User user = new User();
-		user.setEmail(userViewModel.getEmail());
-		user.setPassword(userViewModel.getPassword());
-		user.setWage(userViewModel.getWage());
-		user.setRole(userViewModel.getRole());
-
-		return user;
-	}
-
 	public List<UserViewModel> convert(List<User> users) {
 
 		List<UserViewModel> userViewModels = new ArrayList<UserViewModel>();

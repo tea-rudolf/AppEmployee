@@ -35,7 +35,7 @@ public class DepartmentTest {
 	@Test
 	public void addEmployeeAddsEmployeeCorrectlyToTheList() {
 		department.addEmployee(USER_UID);
-		assertTrue(department.getEmployeeUids().contains(USER_UID));
+		assertTrue(department.getEmployeeIds().contains(USER_UID));
 	}
 
 	@Test(expected = EmployeeAlreadyExistsException.class)

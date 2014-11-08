@@ -40,6 +40,17 @@ public class XMLUserRepository implements UserRepository {
 		saveXML();
 	}
 
+	@Override
+	public List<User> findByEmails(List<String> emails) {
+		List<User> users = new ArrayList<User>();
+
+		for (String email : emails) {
+			User user = findByEmail(email);
+			users.add(user);
+		}
+		return users;
+	}
+
 	private void saveXML() throws Exception {
 		UserXMLAssembler userXMLWrapper = new UserXMLAssembler();
 		userXMLWrapper.setUsers(new ArrayList<User>(users.values()));
