@@ -13,7 +13,9 @@ import org.springframework.ui.ModelMap;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
+import ca.ulaval.glo4003.appemployee.services.ExpenseService;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 
@@ -32,8 +34,9 @@ public class ExpensesControllerTest {
 	private ExpenseViewModel expenseViewModelMock;
 	private HttpSession sessionMock;
 	private PayPeriod payPeriodMock;
-	private ExpenseRepository expenseRepositoryMock;
 	private ExpenseConverter expenseConverterMock;
+	private ExpenseService expenseServiceMock;
+	private UserService userServiceMock;
 
 	@Before
 	public void init() {
@@ -43,9 +46,10 @@ public class ExpensesControllerTest {
 		expenseViewModelMock = mock(ExpenseViewModel.class);
 		sessionMock = mock(HttpSession.class);
 		payPeriodMock = mock(PayPeriod.class);
-		expenseRepositoryMock = mock(ExpenseRepository.class);
 		expenseConverterMock = mock(ExpenseConverter.class);
-		expensesControllerMock = new ExpensesController(expenseRepositoryMock, expenseConverterMock, payPeriodServiceMock);
+		expenseServiceMock = mock(ExpenseService.class);
+		userServiceMock = mock(UserService.class);
+		expensesControllerMock = new ExpensesController(expenseServiceMock, expenseConverterMock, payPeriodServiceMock, userServiceMock);
 	}
 
 	@Test

@@ -54,7 +54,7 @@ public class TimeConverter {
 		return model;
 	}
 
-	public TimeViewModel convert(PayPeriod payPeriod, List<TimeEntry> timeEntrys, List<Task> tasks) {
+	public TimeViewModel convert(PayPeriod payPeriod, List<Task> tasks) {
 		TimeViewModel payPeriodViewModel = new TimeViewModel();
 		payPeriodViewModel.setStartDate(payPeriod.getStartDate().toString());
 		payPeriodViewModel.setEndDate(payPeriod.getEndDate().toString());

@@ -15,11 +15,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.NoCurrentPayPeriodException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
+import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,27 +29,34 @@ public class PayPeriodServiceTest {
 	private static final LocalDate PREVIOUS_DATE = new LocalDate("2014-10-01");
 	private static final LocalDate PREVIOUS_START_DATE = new LocalDate("2014-09-25");
 
-	private UserRepository userRepositoryMock;
 	private PayPeriodRepository payPeriodRepositoryMock;
-	private TaskRepository taskRepositoryMock;
 	private TimeEntryRepository timeEntryRepositoryMock;
-	private ExpenseRepository expenseRepositoryMock;
 	private PayPeriod payPeriodMock;
 	private PayPeriod previousPayPeriodMock;
 	private PayPeriodService payPeriodServiceMock;
+	private TimeEntry timeEntryMock;
 
 	@Before
 	public void init() {
-		userRepositoryMock = mock(UserRepository.class);
 		payPeriodRepositoryMock = mock(PayPeriodRepository.class);
-		taskRepositoryMock = mock(TaskRepository.class);
 		timeEntryRepositoryMock = mock(TimeEntryRepository.class);
-		expenseRepositoryMock = mock(ExpenseRepository.class);
 		payPeriodServiceMock = mock(PayPeriodService.class);
 		payPeriodMock = mock(PayPeriod.class);
 		previousPayPeriodMock = mock(PayPeriod.class);
-		payPeriodServiceMock = new PayPeriodService(payPeriodRepositoryMock, userRepositoryMock, taskRepositoryMock, timeEntryRepositoryMock,
-				expenseRepositoryMock);
+		timeEntryMock = mock(TimeEntry.class);
+		payPeriodServiceMock = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock);
+	}
+	
+	@Test
+	public void storeTimeEntryCallsCorrectMethodInRepository() throws Exception{
+		payPeriodServiceMock.storeTimeEntry(timeEntryMock);
+		verify(timeEntryRepositoryMock, times(1)).store(timeEntryMock);
+	}
+	
+	@Test(expected=RepositoryException.class)
+	public void storeTimeEntryThrowsExceptionWhenTimeEntryRepositoryWasNotUpdated() throws Exception{
+		doThrow(new RepositoryException()).when(timeEntryRepositoryMock).store(timeEntryMock);
+		payPeriodServiceMock.storeTimeEntry(timeEntryMock);
 	}
 
 	@Test
