@@ -6,9 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Singleton;
+
+import org.springframework.stereotype.Repository;
+
 import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 
+@Repository
+@Singleton
 public class XMLTravelRepository implements TravelRepository{
 	
 	private XMLGenericMarshaller<TravelXMLAssembler> serializer;
