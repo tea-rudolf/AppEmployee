@@ -98,6 +98,7 @@ public class ProjectController {
 
 		Project project = projectService.getProjectById(projectNumber);
 		List<Task> tasks = projectService.getAllTasksByProjectId(project.getuId());
+
 		List<User> employees = projectService.getAllEmployeesByProjectId(project.getuId());
 		User currentUser = userService.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TaskViewModel> tasksViewModel = taskConverter.convert(tasks);
@@ -107,7 +108,7 @@ public class ProjectController {
 		model.addAttribute("employees", employeesViewModel);
 		model.addAttribute("project", projectConverter.convert(project));
 		model.addAttribute("role", currentUser.getRole());
-
+		
 		return "editProject";
 	}
 
@@ -142,8 +143,9 @@ public class ProjectController {
 	public String addTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
 
 		try {
-			projectService.addTask(taskConverter.convert(taskViewModel));
-			projectService.addTaskToProject(projectNumber, taskConverter.convert(taskViewModel).getuId());
+			Task task = taskConverter.convert(taskViewModel);
+			projectService.addTask(task);
+			projectService.addTaskToProject(projectNumber, task.getuId());
 		} catch (TaskAlreadyExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return taskCreation(projectNumber, model, taskViewModel, session);

@@ -35,7 +35,6 @@ public class TaskConverter {
 		viewModel.setuId(task.getuId());
 		viewModel.setName(task.getName());
 		viewModel.setAuthorizedUsers(task.getAuthorizedUsers());
-
 		return viewModel;
 	}
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,25 +56,41 @@ public class ExpensesController {
 		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
 		expenseViewModel.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
 		expenseViewModel.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
-
 		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
 
 		Collection<ExpenseViewModel> expensesViewModels = expenseConverter.convert(userService.getExpensesForUserForAPayPeriod(currentPayPeriod, session
 				.getAttribute(EMAIL_ATTRIBUTE).toString()));
-
 		model.addAttribute("expenses", expensesViewModels);
 
 		return EXPENSES_JSP;
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String saveExpenses(@ModelAttribute(EXPENSE_ATTRIBUTE) ExpenseViewModel expenseForm, HttpSession session) throws Exception {
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String createExpense(Model model, ExpenseViewModel expenseModel, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
+		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
+		expenseViewModel.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
+		expenseViewModel.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
+
+		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
+
+		return "createExpense";
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String saveExpense(Model model, ExpenseViewModel expenseForm, HttpSession session) throws Exception {
 
 		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Expense newExpense = expenseConverter.convert(expenseForm);
 		expenseService.store(newExpense);
 
 		return EXPENSES_SUBMIT_JSP;
+
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.GET)
@@ -97,9 +112,7 @@ public class ExpensesController {
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedExpense(@PathVariable String uId, ExpenseViewModel viewModel, HttpSession session) throws Exception {
-		System.out.println("uid2  = " + viewModel.getuId());
 		expenseService.updateExpense(uId, viewModel);
-		System.out.println("fiiinnnnn");
 		return "redirect:/expenses/";
 	}
 

@@ -19,30 +19,12 @@
 			to 
 			<c:out value="${expenseForm.payPeriodEndDate}"/>
 		</h2>
-				<div></div>
-		<div><h3>Add a expense</h3></div>
-		<div></div>
-		<form:form method="post" action="expenses" modelAttribute="expenseForm">
-			<div class="table-responsive">
-				<table class="table table-striped table-hover table-condensed">
-					<tr>
-						<th>Date</th>
-						<th>Amount</th>
-						<th>Comment</th>
-					</tr>
-						<tr>
-							<td><form:label path="date"></form:label>
-							<form:input class="form-control" type="date" min="${expenseForm.payPeriodStartDate}" max="${expenseForm.payPeriodEndDate}" path="date" value="${date}" required="required" /></td>
-							<td><form:label path="amount"></form:label>
-							<form:input class="form-control" path="amount" type="number" step="any" min="1" value="${amount}" required="required" /></td>
-							<td><form:label path="comment"></form:label>
-							<form:input class="form-control" path="comment" value="${comment}" /></td>
-						</tr>
-				</table>
-			</div>
-			<br/>
-			<input type="submit" class="btn btn-primary" name="submit" value="Save" />
-		</form:form>
+				<div style="text-align: left">
+			<a href="/expenses/add"><button type="button"
+					class="btn btn-primary">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;Create new expense
+				</button></a>
+		</div>
 
 
 		<h3>Edit a existing expense by clicking on it : </h3>

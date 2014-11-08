@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +32,9 @@ public class TimeController {
 	static final String EMAIL_ATTRIBUTE = "email";
 	static final String TIME_ATTRIBUTE = "timeForm";
 	static final String TIME_SHEET_JSP = "time";
+	static final String CREATE_TIME_JSP = "createTimeEntry";
 	static final String PREVIOUS_TIME_SHEET_JSP = "previousTime";
+	static final String CREATE_PREVIOUS_TIME_JSP = "createPreviousTimeEntry";
 	static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 	static final String EDIT_TIME_ENTRY_JSP = "editTimeEntry";
 	static final String EDIT_PREVIOUS_TIME_ENTRY_JSP = "editPreviousTimeEntry";
@@ -63,26 +64,37 @@ public class TimeController {
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeViewModel form = timeConverter.convert(currentPayPeriod, timeEntries, tasks);
+		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		Collection<TimeViewModel> timeEntriesViewModels = timeConverter.convert(userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, session
 				.getAttribute(EMAIL_ATTRIBUTE).toString()));
+
 		model.addAttribute("timeEntries", timeEntriesViewModels);
 
 		return TIME_SHEET_JSP;
 
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String saveTime(@ModelAttribute(TIME_ATTRIBUTE) TimeViewModel payPeriodForm, HttpSession session) throws Exception {
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String createTimeEntry(Model model, TimeViewModel timeViewModel, HttpSession session) {
 
-		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
-			return "redirect:/time/errorNoTaskSelected";
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
 		}
+
+		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
+		model.addAttribute(TIME_ATTRIBUTE, form);
+
+		return CREATE_TIME_JSP;
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String saveTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = timeConverter.convertToTimeEntry(payPeriodForm);
@@ -104,9 +116,8 @@ public class TimeController {
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeViewModel form = timeConverter.convert(currentPayPeriod, timeEntries, tasks);
+		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntry", timeConverter.convertToViewModel(userService.getTimeEntry(timeEntryuId)));
@@ -134,10 +145,9 @@ public class TimeController {
 		}
 
 		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
-		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(payPeriod, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
-		TimeViewModel form = timeConverter.convert(payPeriod, timeEntries, tasks);
+		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -150,16 +160,28 @@ public class TimeController {
 
 	}
 
-	@RequestMapping(value = "/previousTime", method = RequestMethod.POST)
-	public String savePreviousTime(@ModelAttribute(TIME_ATTRIBUTE) TimeViewModel payPeriodForm, HttpSession session) throws Exception {
+	@RequestMapping(value = "/previousTime/add", method = RequestMethod.GET)
+	public String createPreviousTimeEntry(Model model, TimeViewModel timeViewModel, HttpSession session) {
 
-		if (payPeriodForm.getTaskIdTimeEntry() == "NONE") {
-			return "redirect:/time/errorNoTaskSelected";
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
 		}
+
+		PayPeriod currentPayPeriod = payPeriodService.getPreviousPayPeriod();
+		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
+		model.addAttribute(TIME_ATTRIBUTE, form);
+
+		return CREATE_PREVIOUS_TIME_JSP;
+	}
+
+	@RequestMapping(value = "/previousTime/add", method = RequestMethod.POST)
+	public String savePreviousTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = timeConverter.convertToTimeEntry(payPeriodForm);
 		payPeriodService.storeTimeEntry(newTimeEntry);
+
 		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
 		payPeriod.addTimeEntry(newTimeEntry.getuId());
 		payPeriodService.updatePayPeriod(payPeriod);
@@ -175,10 +197,9 @@ public class TimeController {
 			return "redirect:/";
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(currentPayPeriod, session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeViewModel form = timeConverter.convert(currentPayPeriod, timeEntries, tasks);
+		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntry", timeConverter.convertToViewModel(userService.getTimeEntry(timeEntryuId)));
