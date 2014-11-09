@@ -92,6 +92,7 @@ public class DepartmentController {
 			departmentService.assignUserToDepartment(userViewModel, supervisorId, departmentName);
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return showCreateEmployeeAccountPage(departmentName, model, userViewModel, session);
 		}
 		return "redirect:/departments/{departmentName}/edit";
 	}
