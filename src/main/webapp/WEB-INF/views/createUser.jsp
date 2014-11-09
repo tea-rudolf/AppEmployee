@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html lang="en">
+
 <head>
 <%@include file="../includes/header.jsp"%>
 <title>AppEmployee - Create User</title>
@@ -37,6 +38,19 @@
 				<form:input class="form-control" path="role" value="${user.role}"
 					required="required" />
 			</div>
+
+<!-- 			<div class="dropdown"> -->
+<!-- 			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"> -->
+<!-- 			    Role -->
+<!-- 			    <span class="caret"></span> -->
+<!-- 			  </button> -->
+<!-- 			  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1"> -->
+<!-- 			    <li role="presentation"><a role="menuitem" tabindex="0" href="#">Action</a></li> -->
+<!-- 			    <li role="presentation"><a role="menuitem" tabindex="1" href="#">Another action</a></li> -->
+<!-- 			    <li role="presentation"><a role="menuitem" tabindex="2" href="#">Something else here</a></li> -->
+<!-- 			  </ul> -->
+<!-- 			</div> -->
+			
 			<div class="form-group">
 				<form:label path="wage">Wage</form:label>
 				<form:input class="form-control" path="wage" value="${user.wage}"

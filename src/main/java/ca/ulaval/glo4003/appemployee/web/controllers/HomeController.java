@@ -15,7 +15,7 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 @Controller
-@SessionAttributes({ "email" })
+@SessionAttributes({ "email", "role" })
 public class HomeController {
 
 	private UserRepository userRepository;
