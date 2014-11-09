@@ -31,6 +31,7 @@ public class ExpensesController {
 	static final String EXPENSES_JSP = "expenses";
 	static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
 	static final String EDIT_EXPENSE_JSP = "editExpense";
+	static final String CREATE_EXPENSE_JSP = "createExpense";
 
 	private ExpenseService expenseService;
 	private PayPeriodService payPeriodService;
@@ -79,7 +80,7 @@ public class ExpensesController {
 
 		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
 
-		return "createExpense";
+		return CREATE_EXPENSE_JSP;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
