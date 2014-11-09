@@ -11,7 +11,7 @@
   <%@include file="../includes/navbar.jsp"%>
 
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h2 class="sub-header">Employees (${department.name})</h2>
+    <h2 class="sub-header">${department.name}</h2>
     <form:form role="form" method="POST"
       action="/departments/${department.name}/edit" modelAttribute="department">
       <div class="form-group">
@@ -41,13 +41,6 @@
           </c:forEach>
         </tbody>
       </table>
-
-      <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary"></input> <input
-          type="button"
-          onclick="javascript:window.location.href = '/departments/'"
-          value="Cancel" class="btn btn-default"></input>
-      </div>
     </form:form>
   </div>
 

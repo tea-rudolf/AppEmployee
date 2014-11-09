@@ -24,7 +24,7 @@
 			</div>
 			<div class="form-group">
 				<form:label path="email">Email</form:label>
-				<form:input class="form-control" path="email" value="${user.email}"
+				<form:input class="form-control" type="email" path="email" value="${user.email}"
 					required="required" />
 			</div>
 			<div class="form-group">
