@@ -65,7 +65,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String projectCreation(Model model, ProjectViewModel projectViewModel, HttpSession session) {
+	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return "redirect:/";
@@ -76,7 +76,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String addProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
+	public String saveProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
 
 		try {
 			Project newProject = projectConverter.convert(projectViewModel);
@@ -84,13 +84,13 @@ public class ProjectController {
 			return String.format("redirect:/projects/%s/edit", newProject.getuId());
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return projectCreation(model, projectViewModel, session);
+			return createProject(model, projectViewModel, session);
 		}
 
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
-	public String projectModification(@PathVariable String projectNumber, Model model, HttpSession session) {
+	public String editProjet(@PathVariable String projectNumber, Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return "redirect:/";
@@ -113,7 +113,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
-	public String editProject(@PathVariable String projectNumber, ProjectViewModel viewModel, HttpSession session) throws Exception {
+	public String saveEditedProject(@PathVariable String projectNumber, ProjectViewModel viewModel, HttpSession session) throws Exception {
 
 		if (!viewModel.getUserEmail().equals("")) {
 			try {
@@ -128,7 +128,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
-	public String taskCreation(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
+	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return "redirect:/";
@@ -140,7 +140,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.POST)
-	public String addTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
+	public String saveTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
 
 		try {
 			Task task = taskConverter.convert(taskViewModel);
@@ -148,7 +148,7 @@ public class ProjectController {
 			projectService.addTaskToProject(projectNumber, task.getuId());
 		} catch (TaskAlreadyExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return taskCreation(projectNumber, model, taskViewModel, session);
+			return createTask(projectNumber, model, taskViewModel, session);
 		}
 
 		return String.format("redirect:/projects/%s/edit", projectNumber);
@@ -156,7 +156,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
-	public String taskModification(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
+	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return "redirect:/";
@@ -177,7 +177,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
-	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) throws Exception {
+	public String saveEditedTask(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) throws Exception {
 
 		if (!viewModel.getUserEmail().equals("")) {
 			try {

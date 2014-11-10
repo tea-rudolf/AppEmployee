@@ -70,4 +70,5 @@ public class XMLExpenseRepository implements ExpenseRepository {
 	public Collection<Expense> findAll() {
 		return expenses.values();
 	}
+
 }

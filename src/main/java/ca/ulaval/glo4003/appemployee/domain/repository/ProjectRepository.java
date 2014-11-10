@@ -17,5 +17,6 @@ public interface ProjectRepository {
 	Collection<Project> findAll();
 
 	void store(Project project) throws Exception;
+	
 
 }

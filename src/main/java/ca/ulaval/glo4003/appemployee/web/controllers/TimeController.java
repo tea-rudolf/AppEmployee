@@ -96,8 +96,12 @@ public class TimeController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
+		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
+			return "redirect:/time/errorNoTaskSelected";
+		}
+		
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeEntry newTimeEntry = timeConverter.convertToTimeEntry(payPeriodForm);
+		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
 		payPeriodService.storeTimeEntry(newTimeEntry);
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -120,7 +124,9 @@ public class TimeController {
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		model.addAttribute("timeEntry", timeConverter.convertToViewModel(userService.getTimeEntry(timeEntryuId)));
+		TimeViewModel modelToEdit =  timeConverter.convert(userService.getTimeEntry(timeEntryuId));
+		modelToEdit.setTimeEntryuId(timeEntryuId);
+		model.addAttribute("timeEntry", modelToEdit);
 
 		return EDIT_TIME_ENTRY_JSP;
 	}
@@ -132,7 +138,11 @@ public class TimeController {
 			return "redirect:/time/errorNoTaskSelected";
 		}
 
-		userService.updateTimeEntry(timeEntryuId, viewModel);
+		
+		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
+		newTimeEntry.setuId(timeEntryuId);
+		newTimeEntry.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		payPeriodService.storeTimeEntry(newTimeEntry);
 
 		return "redirect:/time/";
 	}
@@ -178,8 +188,12 @@ public class TimeController {
 	@RequestMapping(value = "/previousTime/add", method = RequestMethod.POST)
 	public String savePreviousTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
+		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
+			return "redirect:/time/errorNoTaskSelected";
+		}
+		
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeEntry newTimeEntry = timeConverter.convertToTimeEntry(payPeriodForm);
+		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
 		payPeriodService.storeTimeEntry(newTimeEntry);
 
 		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
@@ -202,7 +216,10 @@ public class TimeController {
 		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		model.addAttribute("timeEntry", timeConverter.convertToViewModel(userService.getTimeEntry(timeEntryuId)));
+		
+		TimeViewModel modelToEdit =  timeConverter.convert(userService.getTimeEntry(timeEntryuId));
+		modelToEdit.setTimeEntryuId(timeEntryuId);
+		model.addAttribute("timeEntry", modelToEdit);
 
 		return EDIT_PREVIOUS_TIME_ENTRY_JSP;
 	}
@@ -214,7 +231,10 @@ public class TimeController {
 			return "redirect:/time/errorNoTaskSelected";
 		}
 
-		userService.updateTimeEntry(timeEntryuId, viewModel);
+		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
+		newTimeEntry.setuId(timeEntryuId);
+		newTimeEntry.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		payPeriodService.storeTimeEntry(newTimeEntry);
 
 		return "redirect:/time/previousTime/";
 	}

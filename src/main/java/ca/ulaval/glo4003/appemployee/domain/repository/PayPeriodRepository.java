@@ -11,7 +11,7 @@ import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 @Singleton
 public interface PayPeriodRepository {
 
-	void persist(PayPeriod payPeriod) throws Exception;
+	void store(PayPeriod payPeriod) throws Exception;
 
 	void update(PayPeriod payPeriod) throws Exception;
 

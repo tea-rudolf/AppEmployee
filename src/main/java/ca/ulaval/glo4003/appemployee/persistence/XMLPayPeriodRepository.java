@@ -31,7 +31,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	}
 
 	@Override
-	public void persist(PayPeriod payPeriod) throws Exception {
+	public void store(PayPeriod payPeriod) throws Exception {
 		if (payPeriods.contains(payPeriod)) {
 			throw new PayPeriodAlreadyExistsException("PayPeriod already exists in repository.");
 		}

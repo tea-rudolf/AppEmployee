@@ -31,14 +31,6 @@ public class PayPeriodService {
 			throw new RepositoryException(e.getMessage());
 		}
 	}
-	
-	public void updateCurrentPayPeriodTimeEntries(PayPeriod payPeriod) {
-		try {
-			payPeriodRepository.update(payPeriod);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
-		}
-	}
 
 	public PayPeriod getCurrentPayPeriod() {
 		PayPeriod currentPayPeriod;

@@ -24,7 +24,7 @@
 			<div class="form-group">
 				<form:hidden path="timeEntryuId" />
 			</div>
-	
+
 				<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">
 					<tr>

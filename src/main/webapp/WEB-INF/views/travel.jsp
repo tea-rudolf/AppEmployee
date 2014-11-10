@@ -26,7 +26,7 @@
 
 		<div></div>
 				<div style="text-align: left">
-			<a href="/time/add"><button type="button"
+			<a href="/travel/add"><button type="button"
 					class="btn btn-primary">
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;Create new travel entry
 				</button></a>
@@ -45,7 +45,7 @@
 					</tr>
 					<c:forEach var="travelEntry" items="${travelEntries}">
 						<tr
-							onClick="javascript:window.location.href = '/time/${travelEntry.uId}/edit'">
+							onClick="javascript:window.location.href = '/travel/${travelEntry.uId}/edit'">
 							<td>${travelEntry.date}</td>
 							<td>${travelEntry.vehicule}</td>
 							<td>${travelEntry.distanceTravelled}</td>

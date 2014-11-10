@@ -33,12 +33,12 @@
 								min="${travelForm.payPeriodStartDate}"
 								max="${travelForm.payPeriodEndDate}" path="date"
 								value="${date}" required="required" /></td>
-						<td><form:select class="form-control" path="uId">
+						<td><form:select class="form-control" path="vehicule">
 								<form:option value="NONE"> --SELECT--</form:option>
 								<form:options items="${travelForm.availableVehicules}"></form:options>
 							</form:select></td>
 						<td><form:label path="distanceTravelled"></form:label> <form:input
-								class="form-control" type="number" min="1" max="24"
+								class="form-control" type="number" min="1" 
 								path="distanceTravelled" value="${distanceTravelled}"
 								required="required" /></td>
 						<td><form:label path="comment"></form:label> <form:input
