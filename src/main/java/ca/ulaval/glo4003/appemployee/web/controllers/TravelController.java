@@ -35,6 +35,9 @@ public class TravelController {
 	static final String TRAVEL_ENTRY_SUBMIT_JSP = "travelEntrySubmitted";
 	static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
 	static final String NO_VEHICULE_SELECTED_JSP = "noVehiculeSelectedError";
+	static final String SIMPLE_REDIRECT = "redirect:/";
+	static final String VEHICLE_ERROR_REDIRECT = "redirect:/travel/errorNoVehiculeSelected";
+	static final String TRAVEL_REDIRECT = "redirect:/travel/";
 
 	private PayPeriodService payPeriodService;
 	private UserService userService;
@@ -56,7 +59,7 @@ public class TravelController {
 	public String getTravel(ModelMap model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -80,7 +83,7 @@ public class TravelController {
 	public String createTravelEntry(Model model, TravelViewModel travelViewModel, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -94,10 +97,10 @@ public class TravelController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveTraveleEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
+	public String saveTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
 
 		if (travelForm.getVehicule().equals("NONE")) {
-			return "redirect:/time/errorNoTaskSelected";
+			return VEHICLE_ERROR_REDIRECT;
 		}
 
 		travelForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -114,7 +117,7 @@ public class TravelController {
 	public String editTravelEntry(@PathVariable String uId, Model model, HttpSession session) throws Exception {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -133,13 +136,13 @@ public class TravelController {
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedTravelEntry(@PathVariable String uId, TravelViewModel viewModel, HttpSession session) throws Exception {
 
-		if (viewModel.getVehicule() == null || viewModel.getVehicule() == "NONE") {
-			return "redirect:/travel/errorNoVehiculeSelected";
+		if (viewModel.getVehicule().equals(null) || viewModel.getVehicule().equals("NONE")) {
+			return VEHICLE_ERROR_REDIRECT;
 		}
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		travelService.update(uId, viewModel);
 
-		return "redirect:/travel/";
+		return TRAVEL_REDIRECT;
 	}
 
 	@RequestMapping(value = "/errorNoVehiculeSelected", method = RequestMethod.GET)
