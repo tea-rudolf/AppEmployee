@@ -39,6 +39,10 @@ public class TimeController {
 	static final String EDIT_TIME_ENTRY_JSP = "editTimeEntry";
 	static final String EDIT_PREVIOUS_TIME_ENTRY_JSP = "editPreviousTimeEntry";
 	static final String NO_TASK_SELECTED_JSP = "noTaskSelectedError";
+	static final String SIMPLE_REDIRECT = "redirect:/";
+	static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
+	static final String TIME_REDIRECT = "redirect:/time/";
+	static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime/";
 
 	private PayPeriodService payPeriodService;
 	private ProjectService projectService;
@@ -60,7 +64,7 @@ public class TimeController {
 	public String getTime(ModelMap model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -82,7 +86,7 @@ public class TimeController {
 	public String createTimeEntry(Model model, TimeViewModel timeViewModel, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -116,7 +120,7 @@ public class TimeController {
 	public String editTimeEntry(@PathVariable String timeEntryuId, Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
@@ -135,7 +139,7 @@ public class TimeController {
 	public String saveEditedTimeEntry(@PathVariable String timeEntryuId, TimeViewModel viewModel, HttpSession session) throws Exception {
 
 		if (viewModel.getTaskIdTimeEntry().equals("NONE")) {
-			return "redirect:/time/errorNoTaskSelected";
+			return ERROR_REDIRECT;
 		}
 
 		
@@ -144,14 +148,14 @@ public class TimeController {
 		newTimeEntry.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		payPeriodService.storeTimeEntry(newTimeEntry);
 
-		return "redirect:/time/";
+		return TIME_REDIRECT;
 	}
 
 	@RequestMapping(value = "/previousTime", method = RequestMethod.GET)
 	public String getPreviousTime(ModelMap model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
@@ -174,7 +178,7 @@ public class TimeController {
 	public String createPreviousTimeEntry(Model model, TimeViewModel timeViewModel, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.getPreviousPayPeriod();
@@ -208,7 +212,7 @@ public class TimeController {
 	public String editPreviousTimeEntry(@PathVariable String timeEntryuId, Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
@@ -228,7 +232,7 @@ public class TimeController {
 	public String savePreviousEditedTimeEntry(@PathVariable String timeEntryuId, TimeViewModel viewModel, HttpSession session) throws Exception {
 
 		if (viewModel.getTaskIdTimeEntry().equals("NONE")) {
-			return "redirect:/time/errorNoTaskSelected";
+			return ERROR_REDIRECT;
 		}
 
 		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
@@ -236,12 +240,6 @@ public class TimeController {
 		newTimeEntry.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		payPeriodService.storeTimeEntry(newTimeEntry);
 
-		return "redirect:/time/previousTime/";
+		return PREVIOUS_TIME_REDIRECT;
 	}
-
-	@RequestMapping(value = "/errorNoTaskSelected", method = RequestMethod.GET)
-	public String getErrorNoTaskSelected(ModelMap model, HttpSession session) {
-		return NO_TASK_SELECTED_JSP;
-	}
-
 }
