@@ -28,7 +28,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 @SessionAttributes({ "email" })
 public class DepartmentController {
 
-	static final String EMAIL_ATTRIBUTE = "email";
+	private static final String EMAIL_ATTRIBUTE = "email";
 	private DepartmentService departmentService;
 	private UserConverter userConverter;
 	private DepartmentConverter departmentConverter;
@@ -58,8 +58,8 @@ public class DepartmentController {
 			return "redirect:/";
 		}
 
-		Department department = departmentService.findDepartmentByName(departmentName);
-		List<User> employees = departmentService.findEmployeesList(departmentName);
+		Department department = departmentService.retrieveDepartmentByName(departmentName);
+		List<User> employees = departmentService.retrieveEmployeesList(departmentName);
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
 		model.addAttribute("department", departmentConverter.convert(department));
 		model.addAttribute("employees", employeesViewModel);

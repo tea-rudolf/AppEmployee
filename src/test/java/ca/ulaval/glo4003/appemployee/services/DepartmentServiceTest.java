@@ -1,10 +1,12 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -121,5 +123,54 @@ public class DepartmentServiceTest {
 		when(departmentMock.containsSupervisor(SUPERVISOR_ID)).thenReturn(false);
 
 		departmentService.assignUserToDepartment(userViewModelMock, SUPERVISOR_ID, DEPARTMENT_NAME);
+	}
+
+	@Test
+	public void retrieveDepartmentsListReturnsAllDepartments() {
+		Collection<Department> expectedDepartments = new ArrayList<Department>();
+		expectedDepartments.add(departmentMock);
+		when(departmentRepositoryMock.findAll()).thenReturn(expectedDepartments);
+
+		Collection<Department> returnedDepartments = departmentService.retrieveDepartmentsList();
+
+		assertEquals(expectedDepartments.size(), returnedDepartments.size());
+	}
+
+	@Test(expected = DepartmentNotFoundException.class)
+	public void retrieveDepartmentByNameThrowsExceptionWhenDepartmentDoesNotExist() throws Exception {
+		when(departmentRepositoryMock.findByName(DEPARTMENT_NAME)).thenReturn(null);
+		departmentService.retrieveDepartmentByName(DEPARTMENT_NAME);
+	}
+
+	@Test
+	public void retrieveDepartmentByNameFindsDepartmentWhenExists() throws Exception {
+		when(departmentRepositoryMock.findByName(DEPARTMENT_NAME)).thenReturn(departmentMock);
+		when(departmentMock.getName()).thenReturn(DEPARTMENT_NAME);
+
+		Department department = departmentService.retrieveDepartmentByName(DEPARTMENT_NAME);
+
+		assertEquals(departmentMock.getName(), department.getName());
+	}
+
+	@Test(expected = DepartmentNotFoundException.class)
+	public void retrieveEmployeesListThrowsExceptionWhenDepartmentDoesNotExist() throws Exception {
+		when(departmentRepositoryMock.findByName(DEPARTMENT_NAME)).thenReturn(null);
+		departmentService.retrieveEmployeesList(DEPARTMENT_NAME);
+	}
+
+	@Test
+	public void retrieveEmployeesListReturnsListWhenDepartmentExists() throws Exception {
+		List<String> expectedEmployeeIds = new ArrayList<String>();
+		expectedEmployeeIds.add(EMAIL);
+		List<User> expectedEmployees = new ArrayList<User>();
+		expectedEmployees.add(userMock);
+		when(departmentRepositoryMock.findByName(DEPARTMENT_NAME)).thenReturn(departmentMock);
+		when(departmentMock.getEmployeeIds()).thenReturn(expectedEmployeeIds);
+		when(userRepositoryMock.findByEmails(expectedEmployeeIds)).thenReturn(expectedEmployees);
+		when(userMock.getEmail()).thenReturn(EMAIL);
+
+		List<User> returnedEmployees = departmentService.retrieveEmployeesList(DEPARTMENT_NAME);
+
+		assertEquals(expectedEmployees.size(), returnedEmployees.size());
 	}
 }

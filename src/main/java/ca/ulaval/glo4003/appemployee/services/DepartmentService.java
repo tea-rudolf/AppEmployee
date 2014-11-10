@@ -58,7 +58,7 @@ public class DepartmentService {
 		return departmentRepository.findAll();
 	}
 
-	public Department findDepartmentByName(String departmentName) throws DepartmentNotFoundException {
+	public Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
 		Department department = departmentRepository.findByName(departmentName);
 
 		if (department == null) {
@@ -67,8 +67,8 @@ public class DepartmentService {
 		return department;
 	}
 
-	public List<User> findEmployeesList(String departmentName) throws DepartmentNotFoundException {
-		Department department = findDepartmentByName(departmentName);
+	public List<User> retrieveEmployeesList(String departmentName) throws DepartmentNotFoundException {
+		Department department = retrieveDepartmentByName(departmentName);
 		List<String> employeeIds = department.getEmployeeIds();
 		List<User> employees = userRepository.findByEmails(employeeIds);
 		return employees;
@@ -81,7 +81,6 @@ public class DepartmentService {
 		if (department != null && department.containsSupervisor(supervisorID)) {
 			isAssigned = true;
 		}
-
 		return isAssigned;
 	}
 
