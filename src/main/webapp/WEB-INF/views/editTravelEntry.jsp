@@ -19,9 +19,10 @@
 			to
 			<c:out value="${travelForm.payPeriodEndDate}" />
 		</h3>
-		<form:form method="post" action="/travel/add" modelAttribute="travelForm">
+		<form:form method="post" action="/travel/${travelForm.uId}/edit" modelAttribute="travelForm">
 					<div class="form-group">
 				<form:hidden path="uId" />
+				${travelForm.uId}
 			</div>
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">

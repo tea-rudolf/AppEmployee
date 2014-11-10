@@ -103,7 +103,7 @@ public class TravelController {
 		travelForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		Travel newTravelEntry = travelConverter.convert(travelForm);
-		newTravelEntry.setuId(travelForm.getuId());
+
 		travelService.store(newTravelEntry);
 
 		return TRAVEL_ENTRY_SUBMIT_JSP;
@@ -130,15 +130,14 @@ public class TravelController {
 		return EDIT_TRAVEL_ENTRY_JSP;
 	}
 
-	@RequestMapping(value = "/{timeEntryuId}/edit", method = RequestMethod.POST)
+	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedTravelEntry(@PathVariable String uId, TravelViewModel viewModel, HttpSession session) throws Exception {
 
 		if (viewModel.getVehicule() == null || viewModel.getVehicule() == "NONE") {
 			return "redirect:/travel/errorNoVehiculeSelected";
 		}
-
-		Travel newTravelEntry = travelConverter.convert(viewModel);
-		travelService.store(newTravelEntry);
+		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		travelService.update(uId, viewModel);
 
 		return "redirect:/travel/";
 	}

@@ -33,9 +33,9 @@ public class TravelService {
 
 	}
 	
-	public void update(String expenseUid, TravelViewModel viewModel) throws Exception {
+	public void update(String travelUid, TravelViewModel viewModel) throws Exception {
 		Travel newTravel = travelConverter.convert(viewModel);
-		newTravel.setuId(viewModel.getuId());
+		newTravel.setuId(travelUid);
 		store(newTravel);	
 	}
 
