@@ -90,7 +90,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
-	public String editProjet(@PathVariable String projectNumber, Model model, HttpSession session) {
+	public String editProject(@PathVariable String projectNumber, Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return "redirect:/";

@@ -103,7 +103,7 @@ public class TimeController {
 		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
 			return "redirect:/time/errorNoTaskSelected";
 		}
-		
+
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
 		payPeriodService.storeTimeEntry(newTimeEntry);
@@ -128,7 +128,7 @@ public class TimeController {
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		TimeViewModel modelToEdit =  timeConverter.convert(userService.getTimeEntry(timeEntryuId));
+		TimeViewModel modelToEdit = timeConverter.convert(userService.getTimeEntry(timeEntryuId));
 		modelToEdit.setTimeEntryuId(timeEntryuId);
 		model.addAttribute("timeEntry", modelToEdit);
 
@@ -142,11 +142,8 @@ public class TimeController {
 			return ERROR_REDIRECT;
 		}
 
-		
-		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
-		newTimeEntry.setuId(timeEntryuId);
-		newTimeEntry.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		payPeriodService.storeTimeEntry(newTimeEntry);
+		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		payPeriodService.updateTimeEntry(timeEntryuId, viewModel);
 
 		return TIME_REDIRECT;
 	}
@@ -195,7 +192,7 @@ public class TimeController {
 		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
 			return "redirect:/time/errorNoTaskSelected";
 		}
-		
+
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
 		payPeriodService.storeTimeEntry(newTimeEntry);
@@ -220,8 +217,8 @@ public class TimeController {
 		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		
-		TimeViewModel modelToEdit =  timeConverter.convert(userService.getTimeEntry(timeEntryuId));
+
+		TimeViewModel modelToEdit = timeConverter.convert(userService.getTimeEntry(timeEntryuId));
 		modelToEdit.setTimeEntryuId(timeEntryuId);
 		model.addAttribute("timeEntry", modelToEdit);
 
@@ -235,10 +232,8 @@ public class TimeController {
 			return ERROR_REDIRECT;
 		}
 
-		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
-		newTimeEntry.setuId(timeEntryuId);
-		newTimeEntry.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		payPeriodService.storeTimeEntry(newTimeEntry);
+		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		payPeriodService.updateTimeEntry(timeEntryuId, viewModel);
 
 		return PREVIOUS_TIME_REDIRECT;
 	}

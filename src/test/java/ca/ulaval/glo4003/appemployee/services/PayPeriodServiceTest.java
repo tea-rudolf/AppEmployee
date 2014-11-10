@@ -19,6 +19,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PayPeriodServiceTest {
@@ -35,6 +36,7 @@ public class PayPeriodServiceTest {
 	private PayPeriod previousPayPeriodMock;
 	private PayPeriodService payPeriodServiceMock;
 	private TimeEntry timeEntryMock;
+	private TimeConverter timeConverterMock;
 
 	@Before
 	public void init() {
@@ -44,17 +46,18 @@ public class PayPeriodServiceTest {
 		payPeriodMock = mock(PayPeriod.class);
 		previousPayPeriodMock = mock(PayPeriod.class);
 		timeEntryMock = mock(TimeEntry.class);
-		payPeriodServiceMock = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock);
+		timeConverterMock = mock(TimeConverter.class);
+		payPeriodServiceMock = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverterMock);
 	}
-	
+
 	@Test
-	public void storeTimeEntryCallsCorrectMethodInRepository() throws Exception{
+	public void storeTimeEntryCallsCorrectMethodInRepository() throws Exception {
 		payPeriodServiceMock.storeTimeEntry(timeEntryMock);
 		verify(timeEntryRepositoryMock, times(1)).store(timeEntryMock);
 	}
-	
-	@Test(expected=RepositoryException.class)
-	public void storeTimeEntryThrowsExceptionWhenTimeEntryRepositoryWasNotUpdated() throws Exception{
+
+	@Test(expected = RepositoryException.class)
+	public void storeTimeEntryThrowsExceptionWhenTimeEntryRepositoryWasNotUpdated() throws Exception {
 		doThrow(new RepositoryException()).when(timeEntryRepositoryMock).store(timeEntryMock);
 		payPeriodServiceMock.storeTimeEntry(timeEntryMock);
 	}
@@ -114,18 +117,6 @@ public class PayPeriodServiceTest {
 	@Test
 	public void updateCurrentPayPeriodCallsCorrectRepositoryMethod() throws Exception {
 		payPeriodServiceMock.updatePayPeriod(payPeriodMock);
-		verify(payPeriodRepositoryMock, times(1)).update(payPeriodMock);
-	}
-
-	@Test(expected = RepositoryException.class)
-	public void updateCurrentPayPeriodTimeEntriesThrowsExceptionWhenTimeEntriesWereNotUpdated() throws Exception {
-		doThrow(new RepositoryException()).when(payPeriodRepositoryMock).update(payPeriodMock);
-		payPeriodServiceMock.updateCurrentPayPeriodTimeEntries(payPeriodMock);
-	}
-
-	@Test
-	public void updateCurrentPayPeriodTimeEntriesCallsCorrectRepositoryMethod() throws Exception {
-		payPeriodServiceMock.updateCurrentPayPeriodTimeEntries(payPeriodMock);
 		verify(payPeriodRepositoryMock, times(1)).update(payPeriodMock);
 	}
 

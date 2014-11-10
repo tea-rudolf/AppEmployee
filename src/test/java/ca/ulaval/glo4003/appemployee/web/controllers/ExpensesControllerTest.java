@@ -40,7 +40,7 @@ public class ExpensesControllerTest {
 	private static final LocalDate END_DATE = new LocalDate("2014-10-26");
 
 	private List<Expense> expenses = new ArrayList<Expense>();
-	
+
 	private PayPeriodService payPeriodServiceMock;
 	private ExpensesController expensesControllerMock;
 	private ModelMap modelMapMock;
@@ -80,15 +80,15 @@ public class ExpensesControllerTest {
 
 		assertEquals(EXPENSES_JSP, returnedForm);
 	}
-	
+
 	@Test
-	public void getExpensesReturnsRedirectIfMissingAttribute(){
+	public void getExpensesReturnsRedirectIfMissingAttribute() {
 		String returnedForm = expensesControllerMock.getExpenses(modelMapMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
-	
+
 	@Test
-	public void getExpensesCallConvertMethod(){
+	public void getExpensesCallConvertMethod() {
 		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
@@ -96,25 +96,25 @@ public class ExpensesControllerTest {
 		when(userServiceMock.getExpensesForUserForAPayPeriod(payPeriodMock, VALID_EMAIL)).thenReturn(expenses);
 
 		expensesControllerMock.getExpenses(modelMapMock, sessionMock);
-		
+
 		verify(expenseConverterMock, times(1)).convert(expenses);
 	}
-	
+
 	@Test
-	public void createExpenseReturnsRedirectLinkIfMissingAttribute(){
+	public void createExpenseReturnsRedirectLinkIfMissingAttribute() {
 		String returnedForm = expensesControllerMock.createExpense(modelMock, expenseViewModelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
-	
+
 	@Test
-	public void createExpenseReturnsCreateExpenseForm(){
+	public void createExpenseReturnsCreateExpenseForm() {
 		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-		
+
 		String returnedForm = expensesControllerMock.createExpense(modelMock, expenseViewModelMock, sessionMock);
-		
+
 		assertEquals(CREATE_EXPENSE_JSP, returnedForm);
 	}
 
@@ -126,50 +126,50 @@ public class ExpensesControllerTest {
 
 		assertEquals(EXPENSES_SUBMIT_JSP, returnedForm);
 	}
-	
+
 	@Test
-	public void saveExpenseCallsConvertMethod() throws Exception{
+	public void saveExpenseCallsConvertMethod() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		expensesControllerMock.saveExpense(modelMock, expenseViewModelMock, sessionMock);
 		verify(expenseConverterMock, times(1)).convert(expenseViewModelMock);
 	}
-	
+
 	@Test
-	public void saveExpenseCallsStoreMethod() throws Exception{
+	public void saveExpenseCallsStoreMethod() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(expenseConverterMock.convert(expenseViewModelMock)).thenReturn(expenseMock);
 		expensesControllerMock.saveExpense(modelMock, expenseViewModelMock, sessionMock);
 		verify(expenseServiceMock, times(1)).store(expenseMock);
 	}
-	
+
 	@Test
-	public void editExpenseReturnsRedirectLinkIfMissingAttribute() throws Exception{
+	public void editExpenseReturnsRedirectLinkIfMissingAttribute() throws Exception {
 		String returnedForm = expensesControllerMock.editExpense(EXPENSE_UID, modelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
-	
+
 	@Test
-	public void editExpenseReturnsEditedExpenseForm() throws Exception{
+	public void editExpenseReturnsEditedExpenseForm() throws Exception {
 		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(expenseServiceMock.findByuId(EXPENSE_UID)).thenReturn(expenseMock);
 		when(expenseConverterMock.convert(expenseMock)).thenReturn(expenseViewModelMock);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-		
+
 		String returnedForm = expensesControllerMock.editExpense(EXPENSE_UID, modelMock, sessionMock);
-		
+
 		assertEquals(EDITED_EXPENSE_JSP, returnedForm);
 	}
-	
+
 	@Test
-	public void saveEditedExpenseCallsUpdateMethod() throws Exception{
+	public void saveEditedExpenseCallsUpdateMethod() throws Exception {
 		expensesControllerMock.saveEditedExpense(EXPENSE_UID, expenseViewModelMock, sessionMock);
-		verify(expenseServiceMock, times(1)).updateExpense(EXPENSE_UID, expenseViewModelMock);
+		verify(expenseServiceMock, times(1)).update(EXPENSE_UID, expenseViewModelMock);
 	}
-	
+
 	@Test
-	public void saveEditedExpenseReturnsRedirectExpenseLink() throws Exception{
+	public void saveEditedExpenseReturnsRedirectExpenseLink() throws Exception {
 		String returnedForm = expensesControllerMock.saveEditedExpense(EXPENSE_UID, expenseViewModelMock, sessionMock);
 		assertEquals(REDIRECT_EXPENSE_LINK, returnedForm);
 	}

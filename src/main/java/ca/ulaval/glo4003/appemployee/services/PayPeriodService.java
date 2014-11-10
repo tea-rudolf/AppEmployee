@@ -11,17 +11,21 @@ import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Service
 public class PayPeriodService {
 
 	private PayPeriodRepository payPeriodRepository;
 	private TimeEntryRepository timeEntryRepository;
+	private TimeConverter timeConverter;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository) {
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;
+		this.timeConverter = timeConverter;
 	}
 
 	public void storeTimeEntry(TimeEntry entry) {
@@ -54,6 +58,12 @@ public class PayPeriodService {
 		} catch (Exception e) {
 			throw new RepositoryException(e.getMessage());
 		}
+	}
+	
+	public void updateTimeEntry(String timeEntryUid, TimeViewModel viewModel) {
+		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
+		newTimeEntry.setuId(timeEntryUid);
+		storeTimeEntry(newTimeEntry);
 	}
 
 }
