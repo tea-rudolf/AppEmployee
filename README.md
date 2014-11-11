@@ -8,6 +8,6 @@
 * **Téa Rudolf**
 
 # Utilisateurs temporaires
-* ROLE EMPLOYEE **email:** jean.gauthier@employee.com **password:** employee1
-* ROLE SUPERVISOR **email:** alexandre.pitt@supervisor.com **password:** supervisor
-* ROLE ENTERPRISE **email:** enterprise@enterprise.com **password:** enterprise
+* ROLE EMPLOYEE **email:** emp@company.com **password:** emp
+* ROLE SUPERVISOR **email:** sup@company.com **password:** sup
+* ROLE ENTERPRISE **email:** ent@company.com **password:** ent
