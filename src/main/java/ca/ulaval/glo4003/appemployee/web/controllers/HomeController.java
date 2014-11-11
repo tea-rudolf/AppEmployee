@@ -15,57 +15,50 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 @Controller
-@SessionAttributes({ "email" })
+@SessionAttributes({ "email", "role" })
 public class HomeController {
 
-	private UserRepository userRepository;
-	static final String EMAIL_ATTRIBUTE = "email";
-	static final String ROLE_ATTRIBUTE = "role";
-	static final String HOME_VIEW = "home";
-	static final String LOGIN_FORM_ATTRIBUTE = "loginForm";
+    private UserRepository userRepository;
+    static final String EMAIL_ATTRIBUTE = "email";
+    static final String ROLE_ATTRIBUTE = "role";
+    static final String HOME_VIEW = "home";
+    static final String LOGIN_FORM_ATTRIBUTE = "loginForm";
 
-	@Autowired
-	public HomeController(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+    @Autowired
+    public HomeController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-	@ModelAttribute("loginForm")
-	public LoginFormViewModel defaultUser() {
-		return new LoginFormViewModel();
-	}
+    @ModelAttribute("loginForm")
+    public LoginFormViewModel defaultUser() {
+        return new LoginFormViewModel();
+    }
 
-	@RequestMapping("/")
-	public String displayLoginForm() {
-		return HOME_VIEW;
-	}
+    @RequestMapping("/")
+    public String displayLoginForm() {
+        return HOME_VIEW;
+    }
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView login(LoginFormViewModel form, ModelMap model) {
 
-		try {
-			User user = userRepository.findByEmail(form.getEmail());
-			if (user != null && user.validatePassword(form.getPassword())) {
-				model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
-				model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
+        User user = userRepository.findByEmail(form.getEmail());
+        if (user != null && user.validatePassword(form.getPassword())) {
+            model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
+            model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
 
-				return new ModelAndView(HOME_VIEW, model);
-			}
+            return new ModelAndView(HOME_VIEW, model);
+        } else {
+            model.addAttribute("alert", "Invalid username and/or password.");
+            model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
+            return new ModelAndView(HOME_VIEW);
+        }
+    }
 
-			model.addAttribute("alert", "Invalid username and/or password.");
-			model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
-			return new ModelAndView(HOME_VIEW);
-		} catch (Exception e) {
-			model.addAttribute("alert", "Invalid username and/or password.");
-			model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
-			return new ModelAndView(HOME_VIEW);
-		}
-
-	}
-
-	@RequestMapping(value = "**/logout")
-	public String logout(SessionStatus sessionStatus, ModelMap model) {
-		sessionStatus.setComplete();
-		model.clear();
-		return "redirect:/";
-	}
+    @RequestMapping(value = "**/logout")
+    public String logout(SessionStatus sessionStatus, ModelMap model) {
+        sessionStatus.setComplete();
+        model.clear();
+        return "redirect:/";
+    }
 }

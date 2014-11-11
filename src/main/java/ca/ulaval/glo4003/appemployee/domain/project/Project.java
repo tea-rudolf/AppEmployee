@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 
 public class Project {
@@ -80,9 +81,11 @@ public class Project {
 	}
 
 	public void addEmployeeToProject(String userId) {
-		if (!employeeuIds.contains(userId)) {
-			employeeuIds.add(userId);
+		if (employeeuIds.contains(userId)) {
+		    throw new EmployeeAlreadyExistsException("Employee already assigned to this project.");
 		}
+		
+		employeeuIds.add(userId);
 	}
 
 }

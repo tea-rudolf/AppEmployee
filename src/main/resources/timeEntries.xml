@@ -4,22 +4,24 @@
     <uId>0c015760-660d-11e4-9803-0800200c9a66</uId>
     <billableHours>7.5</billableHours>
     <date>2014-09-01</date>
-    <userEmail>alexandre.pitt@supervisor.com</userEmail>
-    <taskuId>0001</taskuId>
-    <comment>Hola</comment>
+    <userId>e1@emp.com</userId>
+    <taskId>0001</taskId>
+    <comment>Comment</comment>
   </timeEntries>
   <timeEntries>
     <uId>0c015761-660d-11e4-9803-0800200c9a66</uId>
     <billableHours>6</billableHours>
     <date>2014-09-02</date>
-    <userEmail>alexandre.pitt@supervisor.com</userEmail>
-    <taskuId>0002</taskuId>
+    <userId>e1@emp.com</userId>
+    <taskId>0002</taskId>
+    <comment>Comment</comment>
   </timeEntries>
   <timeEntries>
     <uId>0c015762-660d-11e4-9803-0800200c9a66</uId>
     <billableHours>5</billableHours>
     <date>2014-09-03</date>
-    <userEmail>alexandre.pitt@supervisor.com</userEmail>
-    <taskuId>0003</taskuId>
+    <userId>e1@emp.com</userId>
+    <taskId>0003</taskId>
+    <comment>Comment</comment>
   </timeEntries>
 </timeEntries>

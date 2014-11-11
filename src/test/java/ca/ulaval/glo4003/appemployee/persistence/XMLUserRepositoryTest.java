@@ -1,7 +1,10 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +18,7 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 public class XMLUserRepositoryTest {
 
 	private static final String VALID_EMAIL = "test@test.com";
+	private static final String VALID_EMAIL2 = "test2@test.com";
 	private static final String VALID_PASSWORD = "dummyPassword";
 	private static final double VALID_WAGE = 100.00;
 
@@ -48,4 +52,20 @@ public class XMLUserRepositoryTest {
 
 		assertEquals(userMock, repository.findByEmail(VALID_EMAIL));
 	}
+
+	@Test
+	public void findByEmailsFindsUsersByTheirEmails() throws Exception {
+		List<String> emails = new ArrayList<String>();
+		User dummyUser = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE, VALID_WAGE);
+		User dummyUser2 = new User(VALID_EMAIL2, VALID_EMAIL2, Role.EMPLOYEE, VALID_WAGE);
+		repository.store(dummyUser);
+		repository.store(dummyUser2);
+		emails.add(VALID_EMAIL);
+		emails.add(VALID_EMAIL2);
+
+		List<User> users = repository.findByEmails(emails);
+
+		assertEquals(2, users.size());
+	}
+
 }

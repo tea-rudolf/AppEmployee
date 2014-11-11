@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <users>
   <users>
-    <email>jean.gauthier@employee.com</email>
-    <password>employee1</password>
+    <email>john.doe@company.com</email>
+    <password>jd</password>
     <wage>90000.50</wage>
     <role>EMPLOYEE</role>
   </users>
   <users>
-    <email>chantale.duschene@employee.com</email>
-    <password>employee2</password>
+    <email>emp@company.com</email>
+    <password>emp</password>
     <wage>90000.50</wage>
     <role>EMPLOYEE</role>
   </users>
   <users>
-    <email>alexandre.pitt@supervisor.com</email>
-    <password>supervisor</password>
+    <email>sup@company.com</email>
+    <password>sup</password>
     <wage>100000</wage>
     <role>SUPERVISOR</role>
   </users>
   <users>
-    <email>enterprise@enterprise.com</email>
-    <password>enterprise</password>
+    <email>ent@company.com</email>
+    <password>ent</password>
     <wage>0</wage>
     <role>ENTERPRISE</role>
   </users>

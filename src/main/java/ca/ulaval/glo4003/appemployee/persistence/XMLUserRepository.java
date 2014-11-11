@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
 
 @Repository
 @Singleton
@@ -32,17 +31,24 @@ public class XMLUserRepository implements UserRepository {
 
 	@Override
 	public User findByEmail(String email) {
-		User user = users.get(email);
-		if (user == null) {
-			throw new UserNotFoundException("User not found with following email : " + email);
-		}
-		return user;
+		return users.get(email);
 	}
 
 	@Override
 	public void store(User user) throws Exception {
 		users.put(user.getEmail(), user);
 		saveXML();
+	}
+
+	@Override
+	public List<User> findByEmails(List<String> emails) {
+		List<User> users = new ArrayList<User>();
+
+		for (String email : emails) {
+			User user = findByEmail(email);
+			users.add(user);
+		}
+		return users;
 	}
 
 	private void saveXML() throws Exception {

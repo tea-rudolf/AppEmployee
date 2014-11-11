@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 
@@ -26,13 +27,20 @@ public class ProjectTest {
 	}
 
 	@Test
-	public void canInstatiateProject() {
+	public void canInstantiateProject() {
 		assertNotNull(project);
 	}
+	
+    @Test
+    public void canInstantiateProjectWithUid() {
+        Project dummyProject = new Project(PROJECT_UID);
+        assertNotNull(dummyProject);
+    }
 
 	@Test
 	public void addTaskIdAddsTaskCorrectlyToTheList() {
 		project.addTaskuId(TASK_ID);
+		
 		assertTrue(project.getTaskuIds().contains(TASK_ID));
 	}
 	
@@ -50,6 +58,12 @@ public class ProjectTest {
 		assertTrue(project.getEmployeeuIds().contains(USER_UID));
 	}
 
+    @Test(expected = EmployeeAlreadyExistsException.class)
+    public void addEmployeeThrowsEmployeeAlreadyExistsExceptionWhenAddingAnExistingId() {
+        project.addEmployeeToProject(USER_UID);
+        project.addEmployeeToProject(USER_UID);
+    }
+    
 	@Test
 	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
 		project.addEmployeeToProject(USER_UID);

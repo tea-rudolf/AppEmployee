@@ -17,8 +17,10 @@ import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Service
 public class UserService {
@@ -58,9 +60,7 @@ public class UserService {
 				tasks.add(taskRepository.findByUid(entry.getuId()));
 			}
 		}
-
 		return tasks;
-
 	}
 
 	public ArrayList<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
@@ -69,29 +69,24 @@ public class UserService {
 
 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
-
-			if (entry.getUserEmail().equals(userEmail)) {
+			if (entry != null && entry.getUserEmail().equals(userEmail)) {
 				timeEntries.add(entry);
 			}
 		}
-
 		return timeEntries;
-
 	}
 
-	public User findByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
+	public User retrieveByEmail(String email) throws UserNotFoundException {
+		User user = userRepository.findByEmail(email);
 
-	public List<User> findUsersByEmail(List<String> emails) {
-		List<User> users = new ArrayList<User>();
-
-		for (String email : emails) {
-			User user = userRepository.findByEmail(email);
-			users.add(user);
+		if (user == null) {
+			throw new UserNotFoundException("User not found with following email : " + email);
 		}
+		return user;
+	}
 
-		return users;
+	public List<User> retrieveUsersByEmail(List<String> emails) {
+		return userRepository.findByEmails(emails);
 	}
 
 	public TimeEntry getTimeEntry(String id) {
@@ -130,6 +125,11 @@ public class UserService {
 		}
 		System.out.println("6");
 		return expenses;
+	}
+
+	public void updateEmployeeInformation(UserViewModel userViewModel) throws Exception {
+		User employee = new User(userViewModel.getEmail(), userViewModel.getPassword(), userViewModel.getRole(), userViewModel.getWage());
+		userRepository.store(employee);
 	}
 
 }
