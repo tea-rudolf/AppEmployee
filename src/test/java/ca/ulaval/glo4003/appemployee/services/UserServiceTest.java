@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.services;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -20,12 +21,13 @@ import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class UserServiceTest {
 
 	private static final String TIME_ENTRY_ID = "id";
 	private static final String EMAIL = "employee1@employee.com";
-	private static final String EMAIL2 = "employee1@employee.com";
+	private static final String EMAIL2 = "employee2@employee.com";
 
 	private UserService userService;
 	private TaskRepository taskRepositoryMock;
@@ -37,7 +39,7 @@ public class UserServiceTest {
 	private TimeEntry timeEntryMock;
 	private Task taskMock;
 	private User userMock;
-	private User userMock2;
+	private UserViewModel userViewModelMock;
 
 	@Before
 	public void init() {
@@ -50,7 +52,7 @@ public class UserServiceTest {
 		timeEntryMock = mock(TimeEntry.class);
 		taskMock = mock(Task.class);
 		userMock = mock(User.class);
-		userMock2 = mock(User.class);
+		userViewModelMock = mock(UserViewModel.class);
 		userService = new UserService(userRepositoryMock, payPeriodRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock);
 	}
 
@@ -95,33 +97,37 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void findByEmailReturnsUser() {
+	public void retrieveByEmailReturnsUser() {
 		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
 		when(userMock.getEmail()).thenReturn(EMAIL);
 
-		User user = userService.findByEmail(EMAIL);
+		User user = userService.retrieveByEmail(EMAIL);
 
 		assertEquals(userMock.getEmail(), user.getEmail());
 	}
 
 	@Test(expected = UserNotFoundException.class)
-	public void findByEmailThrowsExceptionWhenUserNotFound() {
+	public void retrieveByEmailThrowsExceptionWhenUserNotFound() {
 		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(null);
 		when(userMock.getEmail()).thenReturn(EMAIL);
 
-		userService.findByEmail(EMAIL);
+		userService.retrieveByEmail(EMAIL);
 	}
 
 	@Test
-	public void findUsersByEmail() {
+	public void retrieveUsersByEmailCallsUserRepository() {
 		List<String> emails = new ArrayList<String>();
 		emails.add(EMAIL);
 		emails.add(EMAIL2);
-		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
-		when(userRepositoryMock.findByEmail(EMAIL2)).thenReturn(userMock2);
 
-		List<User> users = userService.findUsersByEmail(emails);
+		userService.retrieveUsersByEmail(emails);
 
-		assertEquals(2, users.size());
+		verify(userRepositoryMock, times(1)).findByEmails(emails);
+	}
+
+	@Test
+	public void updateEmployeeInformationCallsUserRepository() throws Exception {
+		userService.updateEmployeeInformation(userViewModelMock);
+		verify(userRepositoryMock, times(1)).store(any(User.class));
 	}
 }

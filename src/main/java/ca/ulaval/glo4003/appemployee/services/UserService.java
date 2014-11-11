@@ -17,6 +17,7 @@ import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Service
 public class UserService {
@@ -70,7 +71,7 @@ public class UserService {
 		return timeEntries;
 	}
 
-	public User findByEmail(String email) throws UserNotFoundException {
+	public User retrieveByEmail(String email) throws UserNotFoundException {
 		User user = userRepository.findByEmail(email);
 
 		if (user == null) {
@@ -79,14 +80,13 @@ public class UserService {
 		return user;
 	}
 
-	public List<User> findUsersByEmail(List<String> emails) {
-		List<User> users = new ArrayList<User>();
+	public List<User> retrieveUsersByEmail(List<String> emails) {
+		return userRepository.findByEmails(emails);
+	}
 
-		for (String email : emails) {
-			User user = userRepository.findByEmail(email);
-			users.add(user);
-		}
-		return users;
+	public void updateEmployeeInformation(UserViewModel userViewModel) throws Exception {
+		User employee = new User(userViewModel.getEmail(), userViewModel.getPassword(), userViewModel.getRole(), userViewModel.getWage());
+		userRepository.store(employee);
 	}
 
 }

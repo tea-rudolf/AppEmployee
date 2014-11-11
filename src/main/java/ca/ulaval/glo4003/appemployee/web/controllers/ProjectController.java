@@ -99,7 +99,7 @@ public class ProjectController {
 		Project project = projectService.getProjectById(projectNumber);
 		List<Task> tasks = projectService.getAllTasksByProjectId(project.getuId());
 		List<User> employees = projectService.getAllEmployeesByProjectId(project.getuId());
-		User currentUser = userService.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		User currentUser = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TaskViewModel> tasksViewModel = taskConverter.convert(tasks);
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
 
@@ -116,7 +116,7 @@ public class ProjectController {
 
 		if (!viewModel.getUserEmail().equals("")) {
 			try {
-				userService.findByEmail(viewModel.getUserEmail());
+				userService.retrieveByEmail(viewModel.getUserEmail());
 			} catch (UserNotFoundException userNotFound) {
 				return "redirect:/projects/userNotFoundError";
 			}
@@ -161,9 +161,9 @@ public class ProjectController {
 		}
 
 		Task task = projectService.getTaskById(taskNumber);
-		List<User> employees = userService.findUsersByEmail(task.getAuthorizedUsers());
+		List<User> employees = userService.retrieveUsersByEmail(task.getAuthorizedUsers());
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
-		User currentUser = userService.findByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		User currentUser = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		model.addAttribute("task", taskConverter.convert(task));
 		model.addAttribute("projectNumber", projectNumber);
@@ -179,7 +179,7 @@ public class ProjectController {
 
 		if (!viewModel.getUserEmail().equals("")) {
 			try {
-				userService.findByEmail(viewModel.getUserEmail());
+				userService.retrieveByEmail(viewModel.getUserEmail());
 			} catch (UserNotFoundException userNotFound) {
 				return "redirect:/projects/userNotFoundError";
 			}

@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
@@ -22,15 +23,19 @@ public class DepartmentControllerTest {
 	private static final String REDIRECT_LINK = "redirect:/";
 	private static final String EMAIL_ATTRIBUTE = "email";
 	private static final String DEPARTMENT_NAME = "dummyDepartment";
+	private static final String EMAIL = "test@test.com";
 
 	@Mock
-	private DepartmentService departmentService;
+	private DepartmentService departmentServiceMock;
 
 	@Mock
-	private UserConverter userConverter;
+	private UserService userServiceMock;
 
 	@Mock
-	private DepartmentConverter departmentConverter;
+	private UserConverter userConverterMock;
+
+	@Mock
+	private DepartmentConverter departmentConverterMock;
 
 	@Mock
 	private Model modelMock;
@@ -47,7 +52,7 @@ public class DepartmentControllerTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		departmentController = new DepartmentController(departmentService, userConverter, departmentConverter);
+		departmentController = new DepartmentController(departmentServiceMock, userServiceMock, userConverterMock, departmentConverterMock);
 	}
 
 	@Test
@@ -55,6 +60,13 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
 		String form = departmentController.showDepartmentsList(modelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, form);
+	}
+
+	@Test
+	public void showDepartmentsListReturnsDepartmentsListFormWhenSessionAttributeNotNull() {
+		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
+		String form = departmentController.showDepartmentsList(modelMock, sessionMock);
+		assertEquals("departmentsList", form);
 	}
 
 	@Test

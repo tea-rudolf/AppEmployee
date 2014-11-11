@@ -138,7 +138,7 @@ public class ProjectControllerTest {
 		when(projectServiceMock.getAllTasksByProjectId(SAMPLE_PROJECTNUMBER)).thenReturn(taskList);
 		when(projectServiceMock.getAllEmployeesByProjectId(eq(SAMPLE_PROJECTNUMBER))).thenReturn(employeeList);
 		when(taskConverterMock.convert(taskList)).thenReturn(taskViewModelCollection);
-		when(userServiceMock.findByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
+		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
 		when(userConverterMock.convert(employeeList)).thenReturn(userViewModelCollection);
 
 		projectController.projectModification(SAMPLE_PROJECTNUMBER, model, sessionMock);
@@ -198,8 +198,8 @@ public class ProjectControllerTest {
 		when(projectServiceMock.getTaskById(eq(SAMPLE_TASKNUMBER))).thenReturn(taskMock);
 		when(taskConverterMock.convert(taskMock)).thenReturn(taskViewModelMock);
 		when(taskMock.getAuthorizedUsers()).thenReturn(authorizedUsers);
-		when(userServiceMock.findUsersByEmail(authorizedUsers)).thenReturn(employeeList);
-		when(userServiceMock.findByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
+		when(userServiceMock.retrieveUsersByEmail(authorizedUsers)).thenReturn(employeeList);
+		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
 		when(userConverterMock.convert(employeeList)).thenReturn(userViewModelCollection);
 
 		projectController.taskModification(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);

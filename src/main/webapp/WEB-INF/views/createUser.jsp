@@ -5,7 +5,7 @@
 
 <head>
 <%@include file="../includes/header.jsp"%>
-<title>AppEmployee - Create User</title>
+<title>AppEmployee - Create Employee</title>
 </head>
 
 <body>

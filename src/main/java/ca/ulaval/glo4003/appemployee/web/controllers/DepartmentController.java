@@ -17,9 +17,9 @@ import ca.ulaval.glo4003.appemployee.domain.department.Department;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -30,12 +30,15 @@ public class DepartmentController {
 
 	private static final String EMAIL_ATTRIBUTE = "email";
 	private DepartmentService departmentService;
+	private UserService userService;
 	private UserConverter userConverter;
 	private DepartmentConverter departmentConverter;
 
 	@Autowired
-	public DepartmentController(DepartmentService departmentService, UserConverter userConverter, DepartmentConverter departmentConverter) {
+	public DepartmentController(DepartmentService departmentService, UserService userService, UserConverter userConverter,
+			DepartmentConverter departmentConverter) {
 		this.departmentService = departmentService;
+		this.userService = userService;
 		this.userConverter = userConverter;
 		this.departmentConverter = departmentConverter;
 	}
@@ -67,12 +70,6 @@ public class DepartmentController {
 		return "editDepartment";
 	}
 
-	@RequestMapping(value = "/{departmentName}/edit", method = RequestMethod.POST)
-	public String addEmployeeToDepartment(@PathVariable String departmentName, DepartmentViewModel departmentViewModel) {
-
-		return "redirect:/departments/";
-	}
-
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.GET)
 	public String showCreateEmployeeAccountPage(@PathVariable String departmentName, Model model, UserViewModel userViewModel, HttpSession session) {
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
@@ -90,11 +87,39 @@ public class DepartmentController {
 		try {
 			departmentService.createUser(supervisorId, departmentName, userViewModel);
 			departmentService.assignUserToDepartment(userViewModel, supervisorId, departmentName);
+			return "redirect:/departments/{departmentName}/edit";
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return showCreateEmployeeAccountPage(departmentName, model, userViewModel, session);
 		}
-		return "redirect:/departments/{departmentName}/edit";
+
+	}
+
+	@RequestMapping(value = "/{departmentName}/employees/{email}/edit", method = RequestMethod.GET)
+	public String showUpdateEmployeeInfo(@PathVariable String departmentName, @PathVariable String email, Model model, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return "redirect:/";
+		}
+
+		User employee = userService.retrieveByEmail(email);
+		UserViewModel userViewModel = userConverter.convert(employee);
+		model.addAttribute("user", userViewModel);
+		model.addAttribute("departmentName", departmentName);
+
+		return "editEmployee";
+	}
+
+	@RequestMapping(value = "/{departmentName}/employees/{email}/edit", method = RequestMethod.POST)
+	public String updateEmployeeInfo(@PathVariable String departmentName, UserViewModel userViewModel, Model model, HttpSession session) {
+		try {
+			userService.updateEmployeeInformation(userViewModel);
+			model.addAttribute("departmentName", departmentName);
+			return "redirect:/departments/{departmentName}/edit";
+		} catch (Exception e) {
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return "editEmployee";
+		}
 	}
 
 }
