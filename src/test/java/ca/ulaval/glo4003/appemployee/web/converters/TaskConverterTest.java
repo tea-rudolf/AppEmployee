@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,13 +56,12 @@ public class TaskConverterTest {
 
 	@Test
 	public void convertTaskViewModelToTask() {
-		when(taskViewModelMock.getuId()).thenReturn(FIRST_ID);
 		when(taskViewModelMock.getName()).thenReturn(FIRST_NAME);
 		when(taskViewModelMock.getAuthorizedUsers()).thenReturn(authorizedUsers);
 
 		taskMock = taskConverter.convert(taskViewModelMock);
 
-		assertEquals(taskViewModelMock.getuId(), taskMock.getuId());
+		assertNotNull(taskMock.getuId());
 		assertEquals(taskViewModelMock.getName(), taskMock.getName());
 		assertEquals(taskViewModelMock.getAuthorizedUsers(), taskMock.getAuthorizedUsers());
 	}

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyExistsException;
 
 public class Project {
 

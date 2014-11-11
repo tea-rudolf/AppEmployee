@@ -32,6 +32,12 @@
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>
 			</div>
+			<div class="col-xs-6 col-sm-3 placeholder">
+				<a href="travel"><img
+					src="../../resources/img/Employee Operations/manageTravel.png"
+					class="img-responsive" alt="Mountain View"
+					style="width: 200px; height: 200px"></a>
+			</div>
 		</div>
 
 		<h2 class="sub-header">Welcome!</h2>

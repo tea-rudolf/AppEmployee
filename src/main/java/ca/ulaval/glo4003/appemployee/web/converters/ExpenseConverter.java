@@ -27,6 +27,7 @@ public class ExpenseConverter {
 
 		for (Expense expense : expenses) {
 			ExpenseViewModel expenseViewModel = convert(expense);
+			expenseViewModel.setuId(expense.getuId());
 			expenseViewModels.add(expenseViewModel);
 		}
 		return expenseViewModels;

@@ -36,6 +36,7 @@
 					<c:if test='${sessionScope.role eq "SUPERVISOR" or sessionScope.role eq "ENTERPRISE"}'>
 						<li><a href="/departments">Manage departments</a></li>
 					</c:if>
+					<li><a href="/travel">Manage travel</a></li>
 				</ul>
 			</div>
 		</div>

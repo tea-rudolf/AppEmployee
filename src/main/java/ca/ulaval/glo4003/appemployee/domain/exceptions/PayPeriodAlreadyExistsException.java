@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain.payperiod;
+package ca.ulaval.glo4003.appemployee.domain.exceptions;
 
 public class PayPeriodAlreadyExistsException extends Exception {
 

@@ -14,8 +14,8 @@ import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 public interface TravelRepository {
 	
 	void store(Travel travel) throws Exception;
-
-	List<Travel> findAlltravelsByUser(String userId);
+	
+	List<Travel> findAllTravelsByUser(String userId);
 
 	Travel findByUid(String uId);
 	

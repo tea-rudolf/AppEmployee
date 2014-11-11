@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain.user;
+package ca.ulaval.glo4003.appemployee.domain.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
 

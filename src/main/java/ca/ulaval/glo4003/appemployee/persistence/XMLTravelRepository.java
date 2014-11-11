@@ -37,7 +37,7 @@ public class XMLTravelRepository implements TravelRepository {
 	}
 
 	@Override
-	public List<Travel> findAlltravelsByUser(String userId) {
+	public List<Travel> findAllTravelsByUser(String userId) {
 		List<Travel> travelsFound = new ArrayList<Travel>();
 
 		for (Travel travel : travels.values()) {

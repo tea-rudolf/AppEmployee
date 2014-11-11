@@ -10,17 +10,16 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
-import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class UserServiceTest {
@@ -32,9 +31,9 @@ public class UserServiceTest {
 	private UserService userService;
 	private TaskRepository taskRepositoryMock;
 	private UserRepository userRepositoryMock;
-	private PayPeriodRepository payPeriodRepositoryMock;
 	private ExpenseRepository expenseRepositoryMock;
 	private TimeEntryRepository timeEntryRepositoryMock;
+	private TravelRepository travelRepositoryMock;
 	private PayPeriod payPeriodMock;
 	private TimeEntry timeEntryMock;
 	private Task taskMock;
@@ -45,7 +44,6 @@ public class UserServiceTest {
 	public void init() {
 		userRepositoryMock = mock(UserRepository.class);
 		taskRepositoryMock = mock(TaskRepository.class);
-		payPeriodRepositoryMock = mock(PayPeriodRepository.class);
 		expenseRepositoryMock = mock(ExpenseRepository.class);
 		timeEntryRepositoryMock = mock(TimeEntryRepository.class);
 		payPeriodMock = mock(PayPeriod.class);
@@ -53,19 +51,7 @@ public class UserServiceTest {
 		taskMock = mock(Task.class);
 		userMock = mock(User.class);
 		userViewModelMock = mock(UserViewModel.class);
-		userService = new UserService(userRepositoryMock, payPeriodRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock);
-	}
-
-	@Test
-	public void updateCurrentPayPeriodCallsCorrectRepositoryMethod() throws Exception {
-		userService.updateCurrentPayPeriod(payPeriodMock);
-		verify(payPeriodRepositoryMock, times(1)).update(payPeriodMock);
-	}
-
-	@Test(expected = RepositoryException.class)
-	public void updateCurrentPayPeriodThrowsExceptionIfPayPeriodIsNotUpdated() throws Exception {
-		doThrow(new RepositoryException()).when(payPeriodRepositoryMock).update(payPeriodMock);
-		userService.updateCurrentPayPeriod(payPeriodMock);
+		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock);
 	}
 
 	@Test

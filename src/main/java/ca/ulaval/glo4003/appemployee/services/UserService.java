@@ -7,18 +7,18 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
+import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.domain.user.UserNotFoundException;
-import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -26,28 +26,36 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class UserService {
 
 	private UserRepository userRepository;
-	private PayPeriodRepository payPeriodRepository;
 	private TaskRepository taskRepository;
 	private TimeEntryRepository timeEntryRepository;
 	private ExpenseRepository expenseRepository;
+	private TravelRepository travelRepository;
 
 	@Autowired
-	public UserService(UserRepository userRepository, PayPeriodRepository payPeriodRepository, TaskRepository taskRepository,
-			ExpenseRepository expenseRepository, TimeEntryRepository timeEntryRepository) {
+	public UserService(UserRepository userRepository, TaskRepository taskRepository, ExpenseRepository expenseRepository,
+			TimeEntryRepository timeEntryRepository, TravelRepository travelRepository) {
 		this.userRepository = userRepository;
-		this.payPeriodRepository = payPeriodRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
 		this.expenseRepository = expenseRepository;
+		this.travelRepository = travelRepository;
 	}
 
-	public void updateCurrentPayPeriod(PayPeriod payPeriod) {
-		try {
-			payPeriodRepository.update(payPeriod);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
-		}
+	public User retrieveByEmail(String email) throws UserNotFoundException {
+		User user = userRepository.findByEmail(email);
 
+		if (user == null) {
+			throw new UserNotFoundException("User not found with following email : " + email);
+		}
+		return user;
+	}
+
+	public List<User> retrieveUsersByEmail(List<String> emails) {
+		return userRepository.findByEmails(emails);
+	}
+
+	public TimeEntry getTimeEntry(String id) {
+		return timeEntryRepository.findByUid(id);
 	}
 
 	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String userId) {
@@ -76,22 +84,28 @@ public class UserService {
 		return timeEntries;
 	}
 
-	public User retrieveByEmail(String email) throws UserNotFoundException {
-		User user = userRepository.findByEmail(email);
+	public List<Expense> getExpensesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
 
-		if (user == null) {
-			throw new UserNotFoundException("User not found with following email : " + email);
+		ArrayList<Expense> expenses = new ArrayList<Expense>();
+		for (Expense expense : expenseRepository.findAll()) {
+			if (expense.getUserEmail().equals(userEmail) && expense.getDate().isBefore(payPeriod.getEndDate().plusDays(1))
+					&& expense.getDate().isAfter(payPeriod.getStartDate().minusDays(1))) {
+				expenses.add(expense);
+			}
 		}
-		return user;
+
+		return expenses;
 	}
 
-	public List<User> retrieveUsersByEmail(List<String> emails) {
-		return userRepository.findByEmails(emails);
-	}
+	public List<Travel> getTravelEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
+		ArrayList<Travel> travels = new ArrayList<Travel>();
 
-	public TimeEntry getTimeEntry(String id) {
-
-		return timeEntryRepository.findByUid(id);
+		for (Travel travel : travelRepository.findAllTravelsByUser(userEmail)) {
+			if (travel.getDate().isBefore(payPeriod.getEndDate().plusDays(1)) && travel.getDate().isAfter(payPeriod.getStartDate().minusDays(1))) {
+				travels.add(travel);
+			}
+		}
+		return travels;
 	}
 
 	public void updateTimeEntry(String projectNumber, TimeViewModel viewModel) {
@@ -107,24 +121,6 @@ public class UserService {
 			e.printStackTrace();
 		}
 
-	}
-
-	public List<Expense> getExpensesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
-
-		ArrayList<Expense> expenses = new ArrayList<Expense>();
-		System.out.println("1 = " + payPeriod.getStartDate());
-		System.out.println("2 = " + payPeriod.getEndDate());
-		System.out.println("3 = " + userEmail);
-		for (Expense expense : expenseRepository.findAll()) {
-			System.out.println("4");
-			if (expense.getUserEmail().equals(userEmail) && expense.getDate().isBefore(payPeriod.getEndDate())
-					&& expense.getDate().isAfter(payPeriod.getStartDate())) {
-				System.out.println("5");
-				expenses.add(expense);
-			}
-		}
-		System.out.println("6");
-		return expenses;
 	}
 
 	public void updateEmployeeInformation(UserViewModel userViewModel) throws Exception {

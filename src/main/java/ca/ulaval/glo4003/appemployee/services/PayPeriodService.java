@@ -4,37 +4,33 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.ulaval.glo4003.appemployee.domain.payperiod.NoCurrentPayPeriodException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.NoCurrentPayPeriodException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Service
 public class PayPeriodService {
 
 	private PayPeriodRepository payPeriodRepository;
 	private TimeEntryRepository timeEntryRepository;
+	private TimeConverter timeConverter;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository) {
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;
+		this.timeConverter = timeConverter;
 	}
 
 	public void storeTimeEntry(TimeEntry entry) {
 		try {
 			timeEntryRepository.store(entry);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
-		}
-	}
-	
-	public void updateCurrentPayPeriodTimeEntries(PayPeriod payPeriod) {
-		try {
-			payPeriodRepository.update(payPeriod);
 		} catch (Exception e) {
 			throw new RepositoryException(e.getMessage());
 		}
@@ -62,6 +58,12 @@ public class PayPeriodService {
 		} catch (Exception e) {
 			throw new RepositoryException(e.getMessage());
 		}
+	}
+	
+	public void updateTimeEntry(String timeEntryUid, TimeViewModel viewModel) {
+		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
+		newTimeEntry.setuId(timeEntryUid);
+		storeTimeEntry(newTimeEntry);
 	}
 
 }

@@ -1,7 +1,12 @@
 package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import ca.ulaval.glo4003.appemployee.domain.travel.Vehicule;
+
 public class TravelViewModel {
-	
+
 	private String payPeriodStartDate;
 	private String payPeriodEndDate;
 	private double distanceTravelled;
@@ -9,7 +14,9 @@ public class TravelViewModel {
 	private String userEmail;
 	private String comment;
 	private String uId;
-	
+	private String vehicule;
+	private ArrayList<Vehicule> availableVehicules = new ArrayList<Vehicule>(Arrays.asList(Vehicule.values()));
+
 	public double getDistanceTravelled() {
 		return distanceTravelled;
 	}
@@ -64,6 +71,22 @@ public class TravelViewModel {
 
 	public void setPayPeriodEndDate(String payPeriodEndDate) {
 		this.payPeriodEndDate = payPeriodEndDate;
+	}
+
+	public String getVehicule() {
+		return vehicule;
+	}
+
+	public void setVehicule(String vehicule) {
+		this.vehicule = vehicule;
+	}
+
+	public ArrayList<Vehicule> getAvailableVehicules() {
+		return availableVehicules;
+	}
+
+	public void setAvailableVehicules(ArrayList<Vehicule> availableVehicules) {
+		this.availableVehicules = availableVehicules;
 	}
 
 }

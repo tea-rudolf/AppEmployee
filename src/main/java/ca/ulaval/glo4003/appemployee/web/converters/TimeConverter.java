@@ -28,27 +28,29 @@ public class TimeConverter {
 		Collection<TimeViewModel> viewModels = new ArrayList<TimeViewModel>();
 
 		for (TimeEntry entry : timeEntries) {
-			TimeViewModel viewModel = convertToViewModel(entry);
+			TimeViewModel viewModel = convert(entry);
+			viewModel.setTimeEntryuId(entry.getuId());
 			viewModels.add(viewModel);
+			System.out.println("uidentry = " + viewModel.getTimeEntryuId());
 		}
 		return viewModels;
 	}
 
-	public TimeEntry convertToTimeEntry(TimeViewModel payPeriodViewModel) {
+	public TimeEntry convert(TimeViewModel timeViewModel) {
 		TimeEntry timeEntry = new TimeEntry();
-		timeEntry.setBillableHours(payPeriodViewModel.getHoursTimeEntry());
-		timeEntry.setDate(new LocalDate(payPeriodViewModel.getDateTimeEntry()));
-		timeEntry.setTaskuId(payPeriodViewModel.getTaskIdTimeEntry());
-		timeEntry.setUserEmail(payPeriodViewModel.getUserEmail());
-		timeEntry.setComment(payPeriodViewModel.getCommentTimeEntry());
+		timeEntry.setBillableHours(timeViewModel.getHoursTimeEntry());
+		timeEntry.setDate(new LocalDate(timeViewModel.getDateTimeEntry()));
+		timeEntry.setTaskuId(timeViewModel.getTaskIdTimeEntry());
+		timeEntry.setUserEmail(timeViewModel.getUserEmail());
+		timeEntry.setComment(timeViewModel.getCommentTimeEntry());
 		return timeEntry;
 	}
 
-	public TimeViewModel convertToViewModel(TimeEntry timeEntry) {
+	public TimeViewModel convert(TimeEntry timeEntry) {
 		TimeViewModel model = new TimeViewModel();
-		model.setTimeEntryuId(timeEntry.getuId());
 		model.setDateTimeEntry(timeEntry.getDate().toString());
 		model.setHoursTimeEntry(timeEntry.getBillableHours());
+		model.setTaskIdTimeEntry(timeEntry.getTaskuId());
 		model.setTaskNameTimeEntry(projectService.getTaskName(timeEntry.getTaskuId()));
 		model.setCommentTimeEntry(timeEntry.getComment());
 		return model;

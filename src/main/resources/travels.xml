@@ -4,7 +4,8 @@
     <uId>0002</uId>
     <distanceTravelled>800.50</distanceTravelled>
     <date>2014-10-15</date>
-    <userEmail>jean.gauthier@employee.com</userEmail>
+    <userEmail>emp@company.com</userEmail>
     <comment>Trip to Montreal</comment>
+    <vehicule>PERSONNAL</vehicule>
   </travels>
 </travels>

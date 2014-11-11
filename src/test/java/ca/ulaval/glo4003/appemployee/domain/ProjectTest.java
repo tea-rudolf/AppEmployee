@@ -9,8 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
-import ca.ulaval.glo4003.appemployee.domain.task.TaskAlreadyExistsException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectTest {

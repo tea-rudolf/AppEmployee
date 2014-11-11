@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain.task;
+package ca.ulaval.glo4003.appemployee.domain.exceptions;
 
 public class TaskAlreadyExistsException extends RuntimeException {
 

@@ -8,9 +8,9 @@ import javax.inject.Singleton;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 
 @Repository

@@ -9,14 +9,14 @@ import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 
 @XmlRootElement(name = "travels")
 public class TravelXMLAssembler {
-	
+
 	private List<Travel> travels = new ArrayList<Travel>();
-	
-	public List<Travel> getTravels(){
+
+	public List<Travel> getTravels() {
 		return this.travels;
 	}
-	
-	public void setTravels(List<Travel> travels){
+
+	public void setTravels(List<Travel> travels) {
 		this.travels = travels;
 	}
 

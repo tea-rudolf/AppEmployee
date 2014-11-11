@@ -31,6 +31,7 @@ public class ExpensesController {
 	static final String EXPENSES_JSP = "expenses";
 	static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
 	static final String EDIT_EXPENSE_JSP = "editExpense";
+	static final String CREATE_EXPENSE_JSP = "createExpense";
 
 	private ExpenseService expenseService;
 	private PayPeriodService payPeriodService;
@@ -79,7 +80,7 @@ public class ExpensesController {
 
 		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
 
-		return "createExpense";
+		return CREATE_EXPENSE_JSP;
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -87,7 +88,10 @@ public class ExpensesController {
 
 		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Expense newExpense = expenseConverter.convert(expenseForm);
+		
 		expenseService.store(newExpense);
+		
+		
 
 		return EXPENSES_SUBMIT_JSP;
 
@@ -112,7 +116,9 @@ public class ExpensesController {
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedExpense(@PathVariable String uId, ExpenseViewModel viewModel, HttpSession session) throws Exception {
-		expenseService.updateExpense(uId, viewModel);
+		
+		expenseService.update(uId, viewModel);
+		
 		return "redirect:/expenses/";
 	}
 
