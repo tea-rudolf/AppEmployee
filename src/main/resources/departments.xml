@@ -2,8 +2,8 @@
 <departments>
   <departments>
     <name>Research and development</name>
-    <supervisorIds>s1@sup.com</supervisorIds>
-    <employeeIds>e1@emp.com</employeeIds>
-    <employeeIds>e2@emp.com</employeeIds>
+    <supervisorIds>sup@company.com</supervisorIds>
+    <employeeIds>emp@company.com</employeeIds>
+    <employeeIds>john.doe@company.com</employeeIds>
   </departments>
 </departments>
