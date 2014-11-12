@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,28 +38,28 @@ public class TravelConverterTest {
 		travelConverter = new TravelConverter();
 	}
 
-	// @Test
-	// public void convertTravelListsToViewModelsConvertAllOfThem() {
-	// Travel firstTravel = createTravel(FIRST_ID, FIRST_DISTANCE, FIRST_DATE);
-	// Travel secondTravel = createTravel(SECOND_ID, SECOND_DISTANCE,
-	// SECOND_DATE);
-	// List<Travel> travels = new ArrayList<Travel>();
-	// travels.add(firstTravel);
-	// travels.add(secondTravel);
-	//
-	// TravelViewModel[] viewModels =
-	// travelConverter.convert(travels).toArray(new TravelViewModel[1]);
-	//
-	// assertEquals(FIRST_DISTANCE, viewModels[0].getDistanceTravelled(),
-	// EPSILON);
-	// assertEquals(FIRST_ID, viewModels[0].getuId());
-	// assertEquals(FIRST_DATE.toString(), viewModels[0].getDate());
-	//
-	// assertEquals(SECOND_DISTANCE, viewModels[1].getDistanceTravelled(),
-	// EPSILON);
-	// assertEquals(SECOND_ID, viewModels[1].getuId());
-	// assertEquals(SECOND_DATE.toString(), viewModels[1].getDate());
-	// }
+//	 @Test
+//	 public void convertTravelListsToViewModelsConvertAllOfThem() {
+//	 Travel firstTravel = createTravel(FIRST_ID, FIRST_DISTANCE, FIRST_DATE);
+//	 Travel secondTravel = createTravel(SECOND_ID, SECOND_DISTANCE,
+//	 SECOND_DATE);
+//	 List<Travel> travels = new ArrayList<Travel>();
+//	 travels.add(firstTravel);
+//	 travels.add(secondTravel);
+//	
+//	 TravelViewModel[] viewModels =
+//	 travelConverter.convert(travels).toArray(new TravelViewModel[1]);
+//	
+//	 assertEquals(FIRST_DISTANCE, viewModels[0].getDistanceTravelled(),
+//	 EPSILON);
+//	 assertEquals(FIRST_ID, viewModels[0].getuId());
+//	 assertEquals(FIRST_DATE.toString(), viewModels[0].getDate());
+//	
+//	 assertEquals(SECOND_DISTANCE, viewModels[1].getDistanceTravelled(),
+//	 EPSILON);
+//	 assertEquals(SECOND_ID, viewModels[1].getuId());
+//	 assertEquals(SECOND_DATE.toString(), viewModels[1].getDate());
+//	 }
 
 	@Test
 	public void convertToTravelConvertsViewModelToTravel() {
@@ -64,6 +67,7 @@ public class TravelConverterTest {
 		when(travelViewModelMock.getDate()).thenReturn(FIRST_DATE.toString());
 		when(travelViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
 		when(travelViewModelMock.getComment()).thenReturn(COMMENT);
+		when(travelViewModelMock.getVehicule()).thenReturn(Vehicule.ENTERPRISE.toString());
 
 		travelMock = travelConverter.convert(travelViewModelMock);
 
@@ -71,6 +75,7 @@ public class TravelConverterTest {
 		assertEquals(travelViewModelMock.getDate(), travelMock.getDate().toString());
 		assertEquals(travelViewModelMock.getUserEmail(), travelMock.getUserEmail());
 		assertEquals(travelViewModelMock.getComment(), travelMock.getComment());
+		assertEquals(travelViewModelMock.getVehicule(), travelMock.getVehicule().toString());
 	}
 
 	@Test

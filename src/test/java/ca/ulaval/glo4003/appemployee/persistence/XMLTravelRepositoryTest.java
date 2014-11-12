@@ -13,9 +13,9 @@ import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 
 public class XMLTravelRepositoryTest {
 
-	private static final String TRAVEL_UID = "id";
-	private static final String USER = "test@employee.com";
-	private static final int TRAVELS_LIST_SIZE = 1;
+	private static final String TRAVEL_UID = "0001";
+	private static final String USER = "emp@company.com";
+	private static final int TRAVELS_LIST_SIZE = 2;
 	private static final int TEMPORARY_TRAVEL_LIST_SIZE = 2;
 
 	private XMLTravelRepository travelRepository;
