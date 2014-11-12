@@ -2,8 +2,6 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +20,11 @@ public class TravelConverterTest {
 	private static final LocalDate FIRST_DATE = new LocalDate("2014-11-08");
 	private static final String SECOND_ID = "2";
 	private static final double SECOND_DISTANCE = 200;
+	private static final Vehicule TRAVEL_VEHICLE = Vehicule.ENTERPRISE;
 	private static final LocalDate SECOND_DATE = new LocalDate("2014-11-07");
 	private static final double EPSILON = 0.001;
 	private static final String COMMENT = "comment";
-	private static final String USER_EMAIL = "employee@employee.com";
+	private static final String USER_EMAIL = "emp@company.com";
 
 	private TravelConverter travelConverter;
 	private TravelViewModel travelViewModelMock;
@@ -38,28 +37,28 @@ public class TravelConverterTest {
 		travelConverter = new TravelConverter();
 	}
 
-//	 @Test
-//	 public void convertTravelListsToViewModelsConvertAllOfThem() {
-//	 Travel firstTravel = createTravel(FIRST_ID, FIRST_DISTANCE, FIRST_DATE);
-//	 Travel secondTravel = createTravel(SECOND_ID, SECOND_DISTANCE,
-//	 SECOND_DATE);
-//	 List<Travel> travels = new ArrayList<Travel>();
-//	 travels.add(firstTravel);
-//	 travels.add(secondTravel);
-//	
-//	 TravelViewModel[] viewModels =
-//	 travelConverter.convert(travels).toArray(new TravelViewModel[1]);
-//	
-//	 assertEquals(FIRST_DISTANCE, viewModels[0].getDistanceTravelled(),
-//	 EPSILON);
-//	 assertEquals(FIRST_ID, viewModels[0].getuId());
-//	 assertEquals(FIRST_DATE.toString(), viewModels[0].getDate());
-//	
-//	 assertEquals(SECOND_DISTANCE, viewModels[1].getDistanceTravelled(),
-//	 EPSILON);
-//	 assertEquals(SECOND_ID, viewModels[1].getuId());
-//	 assertEquals(SECOND_DATE.toString(), viewModels[1].getDate());
-//	 }
+	 @Test
+	 public void convertTravelListsToViewModelsConvertAllOfThem() {
+	 Travel firstTravel = createTravel(FIRST_ID, FIRST_DISTANCE, FIRST_DATE, TRAVEL_VEHICLE);
+	 Travel secondTravel = createTravel(SECOND_ID, SECOND_DISTANCE,
+	 SECOND_DATE, TRAVEL_VEHICLE);
+	 List<Travel> travels = new ArrayList<Travel>();
+	 travels.add(firstTravel);
+	 travels.add(secondTravel);
+	
+	 TravelViewModel[] viewModels =
+	 travelConverter.convert(travels).toArray(new TravelViewModel[1]);
+	
+	 assertEquals(FIRST_DISTANCE, viewModels[0].getDistanceTravelled(),
+	 EPSILON);
+	 assertEquals(FIRST_ID, viewModels[0].getuId());
+	 assertEquals(FIRST_DATE.toString(), viewModels[0].getDate());
+	
+	 assertEquals(SECOND_DISTANCE, viewModels[1].getDistanceTravelled(),
+	 EPSILON);
+	 assertEquals(SECOND_ID, viewModels[1].getuId());
+	 assertEquals(SECOND_DATE.toString(), viewModels[1].getDate());
+	 }
 
 	@Test
 	public void convertToTravelConvertsViewModelToTravel() {
@@ -96,11 +95,12 @@ public class TravelConverterTest {
 		assertEquals(travelMock.getUserEmail(), travelViewModelMock.getUserEmail());
 	}
 
-	private Travel createTravel(String id, double distance, LocalDate date) {
+	private Travel createTravel(String id, double distance, LocalDate date, Vehicule vehicule) {
 		Travel travel = mock(Travel.class);
 		given(travel.getDistanceTravelled()).willReturn(distance);
 		given(travel.getuId()).willReturn(id);
 		given(travel.getDate()).willReturn(date);
+		given(travel.getVehicule()).willReturn(vehicule);
 		return travel;
 	}
 
