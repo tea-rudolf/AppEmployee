@@ -8,6 +8,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 
@@ -15,16 +18,22 @@ public class XMLTravelRepositoryTest {
 
 	private static final String TRAVEL_UID = "0001";
 	private static final String USER = "emp@company.com";
-	private static final int TRAVELS_LIST_SIZE = 2;
-	private static final int TEMPORARY_TRAVEL_LIST_SIZE = 2;
+	private static final int TRAVELS_LIST_SIZE = 1;
+	private static final int TEMPORARY_TRAVEL_LIST_SIZE = 1;
 
+	@InjectMocks
 	private XMLTravelRepository travelRepository;
+	
+	@Mock
+	private XMLGenericMarshaller<TravelXMLAssembler> marshallerMock;
+	
+	@Mock
 	private Travel travelMock;
 
 	@Before
 	public void init() throws Exception {
-		travelMock = mock(Travel.class);
-		travelRepository = new XMLTravelRepository();
+		MockitoAnnotations.initMocks(this);
+		travelRepository = new XMLTravelRepository(marshallerMock);
 	}
 
 	@Test
