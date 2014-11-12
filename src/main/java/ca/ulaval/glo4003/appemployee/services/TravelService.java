@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
+import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.converters.TravelConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
@@ -20,7 +21,7 @@ public class TravelService {
 		this.travelConverter = travelConverter;
 	}
 
-	public Travel findByuId(String uId) throws Exception {
+	public Travel findByuId(String uId){
 		return travelRepository.findByUid(uId);
 	}
 
@@ -28,12 +29,12 @@ public class TravelService {
 		try {
 			travelRepository.store(travel);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RepositoryException(e.getMessage());
 		}
 
 	}
 	
-	public void update(String travelUid, TravelViewModel viewModel) throws Exception {
+	public void update(String travelUid, TravelViewModel viewModel){
 		Travel newTravel = travelConverter.convert(viewModel);
 		newTravel.setuId(travelUid);
 		store(newTravel);	
