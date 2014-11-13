@@ -17,11 +17,11 @@
 			action="/departments/${departmentName}/employees/createEmployee" modelAttribute="user">
 			<div class="form-group">
 <%-- 				<form:hidden path="email" /> --%>
-				<c:if
-					test="${not empty message && message.name == 'EmployeeAlreadyExistsException'}">
+							<c:if
+					test="${not empty message }">
 					<div class="alert alert-danger" style="margin-top: 10px;"
 						role="alert">${message.message}</div>
-				</c:if>
+			</c:if>
 			</div>
 			<div class="form-group">
 				<form:label path="email">Email</form:label>

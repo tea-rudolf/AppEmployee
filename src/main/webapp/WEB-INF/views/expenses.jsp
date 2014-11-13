@@ -32,7 +32,7 @@
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
 						<th>Date</th>
-						<th>Hours</th>
+						<th>Amount</th>
 						<th>Comment</th>
 					</tr>
 					<c:forEach var="expense" items="${expenses}">

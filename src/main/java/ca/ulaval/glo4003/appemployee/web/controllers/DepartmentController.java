@@ -63,6 +63,7 @@ public class DepartmentController {
 
 		Department department = departmentService.retrieveDepartmentByName(departmentName);
 		List<User> employees = departmentService.retrieveEmployeesList(departmentName);
+
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
 		model.addAttribute("department", departmentConverter.convert(department));
 		model.addAttribute("employees", employeesViewModel);
@@ -84,9 +85,17 @@ public class DepartmentController {
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.POST)
 	public String createEmployeeAccount(@PathVariable String departmentName, Model model, UserViewModel userViewModel, HttpSession session) {
 		String supervisorId = session.getAttribute(EMAIL_ATTRIBUTE).toString();
+
 		try {
+
+			if (userViewModel.getRole().equals("NONE")) {
+				model.addAttribute("message", new MessageViewModel("No Role selected", "No role was selected!"));
+				return showCreateEmployeeAccountPage(departmentName, model, userViewModel, session);
+			}
+
 			departmentService.createUser(supervisorId, departmentName, userViewModel);
 			departmentService.assignUserToDepartment(userViewModel, supervisorId, departmentName);
+
 			return "redirect:/departments/{departmentName}/edit";
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
@@ -113,6 +122,12 @@ public class DepartmentController {
 	@RequestMapping(value = "/{departmentName}/employees/{email}/edit", method = RequestMethod.POST)
 	public String updateEmployeeInfo(@PathVariable String departmentName, UserViewModel userViewModel, Model model, HttpSession session) {
 		try {
+
+			if (userViewModel.getRole().equals("NONE")) {
+				model.addAttribute("message", new MessageViewModel("No Role selected", "No role was selected!"));
+				return showCreateEmployeeAccountPage(departmentName, model, userViewModel, session);
+			}
+
 			userService.updateEmployeeInformation(userViewModel);
 			model.addAttribute("departmentName", departmentName);
 			return "redirect:/departments/{departmentName}/edit";
