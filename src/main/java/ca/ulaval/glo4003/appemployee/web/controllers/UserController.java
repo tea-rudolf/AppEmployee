@@ -2,17 +2,17 @@ package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
@@ -44,20 +44,8 @@ public class UserController {
 		return "editProfile";
 	}
 
-	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
-	public String userModification(@PathVariable Model model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
-		}
-
-		User user = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		model.addAttribute("user", userConverter.convert(user));
-		return "editProfile";
-	}
-
 	@RequestMapping(value = "/editProfile", method = RequestMethod.POST)
-	public String updateUser(@PathVariable UserViewModel viewModel, HttpSession session) throws Exception {
+	public String updatePassword(@ModelAttribute("user") UserViewModel viewModel, HttpSession session) throws Exception {
 
 		if (!viewModel.getEmail().equals("")) {
 			try {
@@ -68,6 +56,7 @@ public class UserController {
 		}
 
 		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE).toString(), viewModel);
+		userService.updateEmployeeInformation(viewModel);
 		return "redirect:/editProfile/";
 	}
 
