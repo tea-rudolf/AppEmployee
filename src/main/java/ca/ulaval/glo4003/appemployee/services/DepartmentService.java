@@ -40,7 +40,7 @@ public class DepartmentService {
 		newUser.setEmail(userViewModel.getEmail());
 		newUser.setPassword(userViewModel.getPassword());
 		newUser.setWage(userViewModel.getWage());
-		
+
 		if (userViewModel.getRole().equals("EMPLOYEE")) {
 			newUser.setRole(Role.EMPLOYEE);
 		} else if (userViewModel.getRole().equals("ENTERPRISE")) {
@@ -48,7 +48,7 @@ public class DepartmentService {
 		} else if (userViewModel.getRole().equals("SUPERVISOR")) {
 			newUser.setRole(Role.SUPERVISOR);
 		}
-		
+
 		userRepository.store(newUser);
 	}
 

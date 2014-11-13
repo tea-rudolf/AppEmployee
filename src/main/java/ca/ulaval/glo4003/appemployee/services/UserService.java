@@ -56,7 +56,6 @@ public class UserService {
 	public List<User> retrieveUsersByEmail(List<String> emails) {
 		return userRepository.findByEmails(emails);
 	}
-	
 
 	public List<String> retrieveAllUserEmails() throws UserNotFoundException {
 		List<String> usersEmail = new ArrayList<String>();

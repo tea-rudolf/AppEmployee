@@ -146,5 +146,4 @@ public class TravelController {
 		return TRAVEL_REDIRECT;
 	}
 
-
 }

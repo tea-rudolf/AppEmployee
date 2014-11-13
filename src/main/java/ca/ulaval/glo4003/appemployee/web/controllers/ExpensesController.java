@@ -88,10 +88,8 @@ public class ExpensesController {
 
 		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Expense newExpense = expenseConverter.convert(expenseForm);
-		
+
 		expenseService.store(newExpense);
-		
-		
 
 		return EXPENSES_SUBMIT_JSP;
 
@@ -116,9 +114,9 @@ public class ExpensesController {
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedExpense(@PathVariable String uId, ExpenseViewModel viewModel, HttpSession session) throws Exception {
-		
+
 		expenseService.update(uId, viewModel);
-		
+
 		return "redirect:/expenses/";
 	}
 

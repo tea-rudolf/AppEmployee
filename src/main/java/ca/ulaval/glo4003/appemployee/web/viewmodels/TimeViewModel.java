@@ -17,7 +17,7 @@ public class TimeViewModel {
 	private String taskIdTimeEntry;
 	private String taskNameTimeEntry;
 	private String timeEntryuId;
-	
+
 	public String getPayPeriodStartDate() {
 		return payPeriodStartDate;
 	}
@@ -65,7 +65,6 @@ public class TimeViewModel {
 	public void setHoursTimeEntry(double billableHoursTimeEntry) {
 		this.hoursTimeEntry = billableHoursTimeEntry;
 	}
-
 
 	public String getUserEmail() {
 		return userEmail;

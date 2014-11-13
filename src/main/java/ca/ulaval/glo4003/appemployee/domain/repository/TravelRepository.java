@@ -12,13 +12,13 @@ import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 @Repository
 @Singleton
 public interface TravelRepository {
-	
+
 	void store(Travel travel) throws Exception;
-	
+
 	List<Travel> findAllTravelsByUser(String userId);
 
 	Travel findByUid(String uId);
-	
+
 	Collection<Travel> findAll();
 
 }

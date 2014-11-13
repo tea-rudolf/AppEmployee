@@ -59,7 +59,7 @@ public class PayPeriodService {
 			throw new RepositoryException(e.getMessage());
 		}
 	}
-	
+
 	public void updateTimeEntry(String timeEntryUid, TimeViewModel viewModel) {
 		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
 		newTimeEntry.setuId(timeEntryUid);

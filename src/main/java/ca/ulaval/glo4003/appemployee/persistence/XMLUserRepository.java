@@ -51,7 +51,7 @@ public class XMLUserRepository implements UserRepository {
 		}
 		return users;
 	}
-	
+
 	@Override
 	public Collection<User> findAll() {
 		return users.values();

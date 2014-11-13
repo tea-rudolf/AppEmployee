@@ -82,9 +82,9 @@ public class Project {
 
 	public void addEmployeeToProject(String userId) {
 		if (employeeuIds.contains(userId)) {
-		    throw new EmployeeAlreadyExistsException("Employee already assigned to this project.");
+			throw new EmployeeAlreadyExistsException("Employee already assigned to this project.");
 		}
-		
+
 		employeeuIds.add(userId);
 	}
 

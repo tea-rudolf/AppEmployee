@@ -35,10 +35,10 @@ public class Task {
 		this.uId = uId;
 	}
 
-	public void assignUserToTask(String userId) {		
+	public void assignUserToTask(String userId) {
 		if (authorizedUsers.contains(userId)) {
-		    throw new EmployeeAlreadyExistsException("Employee already assigned to this task.");
-		}		
+			throw new EmployeeAlreadyExistsException("Employee already assigned to this task.");
+		}
 		authorizedUsers.add(userId);
 	}
 

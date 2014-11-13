@@ -30,20 +30,19 @@ public class ProjectTest {
 	public void canInstantiateProject() {
 		assertNotNull(project);
 	}
-	
-    @Test
-    public void canInstantiateProjectWithUid() {
-        Project dummyProject = new Project(PROJECT_UID);
-        assertNotNull(dummyProject);
-    }
+
+	@Test
+	public void canInstantiateProjectWithUid() {
+		Project dummyProject = new Project(PROJECT_UID);
+		assertNotNull(dummyProject);
+	}
 
 	@Test
 	public void addTaskIdAddsTaskCorrectlyToTheList() {
 		project.addTaskuId(TASK_ID);
-		
+
 		assertTrue(project.getTaskuIds().contains(TASK_ID));
 	}
-	
 
 	@Test(expected = TaskAlreadyExistsException.class)
 	public void addTaskIdThrowsTaskAlreadyExistsExceptionWhenAddingAnExistingId() {
@@ -58,12 +57,12 @@ public class ProjectTest {
 		assertTrue(project.getEmployeeuIds().contains(USER_UID));
 	}
 
-    @Test(expected = EmployeeAlreadyExistsException.class)
-    public void addEmployeeThrowsEmployeeAlreadyExistsExceptionWhenAddingAnExistingId() {
-        project.addEmployeeToProject(USER_UID);
-        project.addEmployeeToProject(USER_UID);
-    }
-    
+	@Test(expected = EmployeeAlreadyExistsException.class)
+	public void addEmployeeThrowsEmployeeAlreadyExistsExceptionWhenAddingAnExistingId() {
+		project.addEmployeeToProject(USER_UID);
+		project.addEmployeeToProject(USER_UID);
+	}
+
 	@Test
 	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
 		project.addEmployeeToProject(USER_UID);

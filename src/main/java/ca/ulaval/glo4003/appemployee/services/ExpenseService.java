@@ -31,7 +31,7 @@ public class ExpenseService {
 	public void update(String expenseUid, ExpenseViewModel viewModel) throws Exception {
 		Expense newExpense = expenseConverter.convert(viewModel);
 		newExpense.setuId(viewModel.getuId());
-		store(newExpense);	
+		store(newExpense);
 	}
 
 }

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,10 +23,10 @@ public class XMLTravelRepositoryTest {
 
 	@InjectMocks
 	private XMLTravelRepository travelRepository;
-	
+
 	@Mock
 	private XMLGenericMarshaller<TravelXMLAssembler> marshallerMock;
-	
+
 	@Mock
 	private Travel travelMock;
 
