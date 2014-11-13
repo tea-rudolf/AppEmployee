@@ -6,18 +6,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class EmployeeBoardControllerTest {
-	
+
 	private static final String EMPLOYEE_FORM = "employee";
-	
+
 	private EmployeeBoardController employeeBoardController;
-	
+
 	@Before
-	public void init(){
+	public void init() {
 		employeeBoardController = new EmployeeBoardController();
 	}
-	
+
 	@Test
-	public void getReturnsValidFormIfSuccessful(){
+	public void getReturnsValidFormIfSuccessful() {
 		String returnedForm = employeeBoardController.get();
 		assertEquals(EMPLOYEE_FORM, returnedForm);
 	}

@@ -94,7 +94,6 @@ public class UserControllerTest {
 
 		assertEquals(USER_FORM, returnedForm);
 	}
-	
 
 	@Test
 	public void userModificationReturnsRedirectIfSessionAttributeIsNull() {
@@ -109,26 +108,26 @@ public class UserControllerTest {
 		String returnedForm = userController.updateUser(userViewModelMock, sessionMock);
 		assertEquals(returnedForm, EDIT_PROFILE_REDIRECT);
 	}
-	
+
 	@Test
-	public void updateUserReturnsErrorRedirectIfUserNotFound() throws Exception{
+	public void updateUserReturnsErrorRedirectIfUserNotFound() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
 		doThrow(new UserNotFoundException()).when(userServiceMock).retrieveByEmail(VALID_EMAIL);
 		String returnedForm = userController.updateUser(userViewModelMock, sessionMock);
 		assertEquals(EDIT_USER_NOT_FOUND_REDIRECT, returnedForm);
 	}
-	
+
 	@Test
-	public void updateUserCallsCorrectRepositoryMethod() throws Exception{
+	public void updateUserCallsCorrectRepositoryMethod() throws Exception {
 		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		userController.updateUser(userViewModelMock, sessionMock);
 		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL, userViewModelMock);
 	}
-	
+
 	@Test
-	public void getErrorNoTaskSelectReturnsValidFormWhenCalled(){
+	public void getErrorNoTaskSelectReturnsValidFormWhenCalled() {
 		String returnedForm = userController.getErrorNoTaskSelected(modelMapMock, sessionMock);
 		assertEquals(USER_NOT_FOUND_LINK, returnedForm);
 	}

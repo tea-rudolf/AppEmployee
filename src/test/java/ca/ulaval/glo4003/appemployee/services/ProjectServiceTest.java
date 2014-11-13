@@ -121,9 +121,9 @@ public class ProjectServiceTest {
 		projectService.updateProject(PROJECT_ID, projectViewModel);
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
-	
-	@Test(expected=RepositoryException.class)
-	public void addTaskToProjectThrowsExceptionWhenUnableToStore() throws Exception{
+
+	@Test(expected = RepositoryException.class)
+	public void addTaskToProjectThrowsExceptionWhenUnableToStore() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		doThrow(new RepositoryException()).when(projectRepositoryMock).store(projectMock);
 		projectService.addTaskToProject(PROJECT_ID, TASK_ID);
@@ -140,26 +140,26 @@ public class ProjectServiceTest {
 		doThrow(new RepositoryException()).when(taskRepositoryMock).store(taskMock);
 		projectService.addTask(taskMock);
 	}
-	
+
 	@Test(expected = RepositoryException.class)
-	public void updateTaskThrowsRepositoryExceptionIfUnableToStore() throws Exception{
+	public void updateTaskThrowsRepositoryExceptionIfUnableToStore() throws Exception {
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 		when(taskViewModelMock.getName()).thenReturn(TASK_NAME);
 		when(taskViewModelMock.getUserEmail()).thenReturn(DUMMY_USER_ID);
 		doThrow(new RepositoryException()).when(taskRepositoryMock).store(taskMock);
 		projectService.updateTask(PROJECT_ID, TASK_ID, taskViewModelMock);
 	}
-	
+
 	@Test
-	public void updateTaskAssignsUserEmailToTask(){
+	public void updateTaskAssignsUserEmailToTask() {
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 		when(taskViewModelMock.getName()).thenReturn(TASK_NAME);
 		when(taskViewModelMock.getUserEmail()).thenReturn(DUMMY_USER_ID);
 		when(userRepositoryMock.findByEmail(DUMMY_USER_ID)).thenReturn(userMock);
 		when(userMock.getEmail()).thenReturn(DUMMY_USER_ID);
-		
+
 		projectService.updateTask(PROJECT_ID, TASK_ID, taskViewModelMock);
-		
+
 		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
 	}
 
@@ -187,22 +187,22 @@ public class ProjectServiceTest {
 
 		assertTrue(sampleTaskList.contains(taskMock));
 	}
-	
+
 	@Test
-	public void getAllEmployeesByProjectIdReturnsListOfUsers(){
+	public void getAllEmployeesByProjectIdReturnsListOfUsers() {
 		List<String> sampleUsersList = new ArrayList<String>();
 		sampleUsersList.add(DUMMY_USER_ID);
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(projectMock.getEmployeeuIds()).thenReturn(sampleUsersList);
 		when(userRepositoryMock.findByEmail(DUMMY_USER_ID)).thenReturn(userMock);
-		
+
 		List<User> returnedUsersList = projectService.getAllEmployeesByProjectId(PROJECT_ID);
-		
+
 		assertTrue(returnedUsersList.contains(userMock));
 	}
-	
+
 	@Test
-	public void getAllTasksByUserIdCallsCorrectRepositoryMethod(){
+	public void getAllTasksByUserIdCallsCorrectRepositoryMethod() {
 		projectService.getAllTasksByUserId(DUMMY_USER_ID);
 		verify(projectRepositoryMock, times(1)).findAll();
 	}

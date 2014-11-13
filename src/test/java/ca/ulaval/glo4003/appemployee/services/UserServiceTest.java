@@ -101,9 +101,9 @@ public class UserServiceTest {
 
 		assertTrue(sampleTimeEntryList.contains(timeEntryMock));
 	}
-	
+
 	@Test
-	public void getExpensesForUserForAPayPeriodReturnsListOfExpenses(){
+	public void getExpensesForUserForAPayPeriodReturnsListOfExpenses() {
 		List<Expense> sampleExpenseList = new ArrayList<Expense>();
 		sampleExpenseList.add(expenseMock);
 		when(expenseRepositoryMock.findAll()).thenReturn(sampleExpenseList);
@@ -111,14 +111,14 @@ public class UserServiceTest {
 		when(payPeriodMock.getEndDate()).thenReturn(new LocalDate(DATE));
 		when(expenseMock.getDate()).thenReturn(new LocalDate(DATE).minusDays(2));
 		when(payPeriodMock.getStartDate()).thenReturn(new LocalDate(START_DATE));
-		
+
 		List<Expense> returnedExpenseList = userService.getExpensesForUserForAPayPeriod(payPeriodMock, EMAIL);
-		
+
 		assertTrue(returnedExpenseList.contains(expenseMock));
 	}
-	
+
 	@Test
-	public void getTimeEntryFindsCorrectTimeEntry(){
+	public void getTimeEntryFindsCorrectTimeEntry() {
 		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_ID);
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
 		TimeEntry returnedTimeEntry = userService.getTimeEntry(TIME_ENTRY_ID);
@@ -153,30 +153,30 @@ public class UserServiceTest {
 
 		verify(userRepositoryMock, times(1)).findByEmails(emails);
 	}
-	
+
 	@Test
-	public void retrieveUsersByEmailReturnsListOfUsers(){
+	public void retrieveUsersByEmailReturnsListOfUsers() {
 		List<String> emails = new ArrayList<String>();
 		emails.add(EMAIL);
 		emails.add(EMAIL2);
-		
+
 		when(userMock.getEmail()).thenReturn(EMAIL);
 		when(secondUserMock.getEmail()).thenReturn(EMAIL2);
-		
+
 		List<User> users = new ArrayList<User>();
 		users.add(userMock);
 		users.add(secondUserMock);
-		
+
 		when(userRepositoryMock.findByEmails(emails)).thenReturn(users);
-		
+
 		List<User> returnedUsersList = userService.retrieveUsersByEmail(emails);
-		
+
 		assertTrue(returnedUsersList.contains(userMock));
 		assertTrue(returnedUsersList.contains(secondUserMock));
 	}
-	
+
 	@Test
-	public void retrieveAllUserEmailsReturnsListOfEmails(){
+	public void retrieveAllUserEmailsReturnsListOfEmails() {
 		List<User> users = new ArrayList<User>();
 		users.add(userMock);
 		when(userRepositoryMock.findAll()).thenReturn(users);
@@ -204,26 +204,25 @@ public class UserServiceTest {
 		doThrow(new RepositoryException()).when(userRepositoryMock).store(userMock);
 		userService.updatePassword(EMAIL, userViewModelMock);
 	}
-	
+
 	@Test
-	public void updateTimeEntryCallsCorrectRepositoryMethodIfSuccessful() throws Exception{
+	public void updateTimeEntryCallsCorrectRepositoryMethodIfSuccessful() throws Exception {
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
 		when(timeViewModelMock.getHoursTimeEntry()).thenReturn(HOURS);
 		when(timeViewModelMock.getCommentTimeEntry()).thenReturn(COMMENT);
 		when(timeViewModelMock.getDateTimeEntry()).thenReturn(DATE);
 		when(timeViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_ID);
-		
+
 		userService.updateTimeEntry(TIME_ENTRY_ID, timeViewModelMock);
-		
+
 		verify(timeEntryRepositoryMock, times(1)).store(timeEntryMock);
 	}
-	
+
 	@Test(expected = RepositoryException.class)
-	public void updateTimeEntryThrowsRepositoryExceptionIfCannotStore() throws Exception{
+	public void updateTimeEntryThrowsRepositoryExceptionIfCannotStore() throws Exception {
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
 		doThrow(new RepositoryException()).when(timeEntryRepositoryMock).store(timeEntryMock);
 		userService.updateTimeEntry(TIME_ENTRY_ID, timeViewModelMock);
 	}
-
 
 }
