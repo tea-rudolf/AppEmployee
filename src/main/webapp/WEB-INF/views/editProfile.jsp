@@ -17,6 +17,8 @@
       modelAttribute="user">
       <div class="form-group">
         <form:hidden path="email" />
+        <form:hidden path="role" />
+        <form:hidden path="wage" />
       </div>
       <div class="form-group">
         <form:label path="password">New Password</form:label>
@@ -26,7 +28,7 @@
 
       <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary"></input> <input
-          type="button" onclick="javascript:window.location.href = '/home/'"
+          type="button" onclick="javascript:window.location.href = '/employee/'"
           value="Cancel" class="btn btn-default"></input>
       </div>
     </form:form>

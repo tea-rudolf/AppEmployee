@@ -56,8 +56,7 @@ public class UserController {
 		}
 
 		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE).toString(), viewModel);
-		userService.updateEmployeeInformation(viewModel);
-		return "redirect:/home";
+		return "redirect:/employee";
 	}
 
 	@RequestMapping(value = "/userNotFoundError", method = RequestMethod.GET)
