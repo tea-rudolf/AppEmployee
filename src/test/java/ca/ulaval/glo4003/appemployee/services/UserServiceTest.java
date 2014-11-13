@@ -26,9 +26,6 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
-import ca.ulaval.glo4003.appemployee.domain.travel.Vehicule;
-import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
@@ -38,12 +35,8 @@ public class UserServiceTest {
 
 	private static final String TIME_ENTRY_ID = "id";
 	private static final String EMPLOYEE_ROLE = "EMPLOYEE";
-	private static final String ENTERPRISE_ROLE = "ENTERPRISE";
-	private static final String SUPERVISOR_ROLE = "SUPERVISOR";
 	private static final String EMAIL = "employee1@employee.com";
 	private static final String EMAIL2 = "employee2@employee.com";
-	private static final String PASSWORD = "password";
-	private static final double WAGE = 100.00;
 	private static final double HOURS = 7.00;
 	private static final String COMMENT = "comment";
 	private static final String DATE = "2014-11-13";
@@ -63,7 +56,6 @@ public class UserServiceTest {
 	private UserViewModel userViewModelMock;
 	private TimeViewModel timeViewModelMock;
 	private Expense expenseMock;
-	private Travel travelMock;
 
 	@Before
 	public void init() {
@@ -79,7 +71,6 @@ public class UserServiceTest {
 		userViewModelMock = mock(UserViewModel.class);
 		timeViewModelMock = mock(TimeViewModel.class);
 		expenseMock = mock(Expense.class);
-		travelMock = mock(Travel.class);
 		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock);
 	}
 
