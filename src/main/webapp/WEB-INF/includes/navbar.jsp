@@ -17,7 +17,7 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#" style="color: white">Connected as :
+				<li><a href="/editProfile" style="color: white">Connected as :
 							${sessionScope.email} </a></li>
 					<li><a href="logout">Disconnect</a></li>
 				</ul>

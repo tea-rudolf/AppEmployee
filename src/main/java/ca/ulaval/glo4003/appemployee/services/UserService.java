@@ -19,6 +19,7 @@ import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -126,6 +127,17 @@ public class UserService {
 	public void updateEmployeeInformation(UserViewModel userViewModel) throws Exception {
 		User employee = new User(userViewModel.getEmail(), userViewModel.getPassword(), userViewModel.getRole(), userViewModel.getWage());
 		userRepository.store(employee);
+	}
+
+	public void updatePassword(String email, UserViewModel viewModel) {
+		User user = userRepository.findByEmail(email);
+		user.setPassword(viewModel.getPassword());
+
+		try {
+			userRepository.store(user);
+		} catch (Exception e) {
+			throw new RepositoryException(e.getMessage());
+		}
 	}
 
 }

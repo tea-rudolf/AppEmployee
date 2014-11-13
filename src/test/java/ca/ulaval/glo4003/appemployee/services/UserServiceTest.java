@@ -20,6 +20,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class UserServiceTest {
@@ -116,4 +117,29 @@ public class UserServiceTest {
 		userService.updateEmployeeInformation(userViewModelMock);
 		verify(userRepositoryMock, times(1)).store(any(User.class));
 	}
+
+	public void updateUserCallsCorrectRepositoryMethod() throws Exception {
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
+		userService.updatePassword(EMAIL, userViewModelMock);
+		verify(userRepositoryMock, times(1)).store(userMock);
+	}
+
+	@Test(expected = RepositoryException.class)
+	public void updateUserThrowsExceptionWhenUserIsNotUpdated() throws Exception {
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
+		doThrow(new RepositoryException()).when(userRepositoryMock).store(userMock);
+		userService.updatePassword(EMAIL, userViewModelMock);
+	}
+
+	@Test
+	public void updateUserSetsUserPassword() {
+		// when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
+		// when(userMock.getPassword()).thenReturn("dummyPassword");
+		//
+		// userService.updatePassword(EMAIL, userViewModelMock);
+		//
+		// assertEquals(userViewModelMock.getPassword(),
+		// userMock.getPassword());
+	}
+
 }
