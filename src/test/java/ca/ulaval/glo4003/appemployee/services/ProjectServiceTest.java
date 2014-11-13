@@ -25,8 +25,10 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 public class ProjectServiceTest {
 	private static final String TASK_ID = "0001";
 	private static final String PROJECT_ID = "0001";
+	private static final String TASK_NAME = "PaperFilling";
 	private static final String PROJECT_NAME = "ProjectShanna";
 	private static final String DUMMY_USER_ID = "1234";
+	private static final String EMPTY_USER_ID = "";
 
 	private ProjectService projectService;
 	private ProjectRepository projectRepositoryMock;
@@ -48,6 +50,15 @@ public class ProjectServiceTest {
 		userRepositoryMock = mock(UserRepository.class);
 		project = new Project(PROJECT_ID, PROJECT_NAME);
 		projectService = new ProjectService(projectRepositoryMock, taskRepositoryMock, userRepositoryMock);
+	}
+
+	@Test
+	public void getTaskNameReturnTaskName() {
+
+		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+		when(taskMock.getName()).thenReturn(TASK_NAME);
+
+		assertEquals(projectService.getTaskName(TASK_ID), TASK_NAME);
 	}
 
 	@Test
@@ -75,11 +86,19 @@ public class ProjectServiceTest {
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
 
-	@Test(expected = RepositoryException.class)
-	public void updateProjectThrowsExceptionWhenProjectIsNotUpdated() throws Exception {
+	@Test
+	public void updateProjectWhenUserEmailEmptyShouldNotCallAddEmployeeToProject() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-		doThrow(new RepositoryException()).when(projectRepositoryMock).store(projectMock);
+		projectViewModel.setUserEmail(EMPTY_USER_ID);
 		projectService.updateProject(PROJECT_ID, projectViewModel);
+		verify(projectMock, times(0)).addEmployeeToProject(EMPTY_USER_ID);
+	}
+
+	@Test
+	public void updateProjectWhenUserDoesNotExistShouldNotCallAddEmployeeToProject() throws Exception {
+		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
+		when(userRepositoryMock.findByEmail(DUMMY_USER_ID)).thenReturn(null);
+		verify(projectMock, times(0)).addEmployeeToProject(DUMMY_USER_ID);
 	}
 
 	@Test

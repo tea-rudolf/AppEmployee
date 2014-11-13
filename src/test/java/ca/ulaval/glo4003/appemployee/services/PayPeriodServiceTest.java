@@ -14,16 +14,19 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.NoCurrentPayPeriodException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PayPeriodServiceTest {
 
+	private static final String ENTRY_UID = "1125";
 	private static final LocalDate VALID_DATE = new LocalDate();
 	private static final LocalDate START_DATE = new LocalDate("2014-10-02");
 	private static final LocalDate END_DATE = new LocalDate("2014-10-15");
@@ -37,6 +40,7 @@ public class PayPeriodServiceTest {
 	private PayPeriodService payPeriodServiceMock;
 	private TimeEntry timeEntryMock;
 	private TimeConverter timeConverterMock;
+	private TimeViewModel viewModelMock;
 
 	@Before
 	public void init() {
@@ -48,11 +52,20 @@ public class PayPeriodServiceTest {
 		timeEntryMock = mock(TimeEntry.class);
 		timeConverterMock = mock(TimeConverter.class);
 		payPeriodServiceMock = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverterMock);
+		viewModelMock = mock(TimeViewModel.class);
 	}
 
 	@Test
 	public void storeTimeEntryCallsCorrectMethodInRepository() throws Exception {
 		payPeriodServiceMock.storeTimeEntry(timeEntryMock);
+		verify(timeEntryRepositoryMock, times(1)).store(timeEntryMock);
+	}
+
+	@Test
+	public void updateTimeEntryCallsCorrectMethodInRepository() throws Exception {
+		when(timeConverterMock.convert(viewModelMock)).thenReturn(timeEntryMock);
+
+		payPeriodServiceMock.updateTimeEntry(ENTRY_UID, viewModelMock);
 		verify(timeEntryRepositoryMock, times(1)).store(timeEntryMock);
 	}
 
@@ -71,6 +84,14 @@ public class PayPeriodServiceTest {
 		PayPeriod samplePayPeriod = payPeriodServiceMock.getCurrentPayPeriod();
 
 		assertEquals(samplePayPeriod.getEndDate(), payPeriodMock.getEndDate());
+	}
+
+	@Test(expected = NoCurrentPayPeriodException.class)
+	public void getCurrentPayPeriodThrowNoCurrentPayPeriodExceptionWhenNotFound() {
+		doThrow(new PayPeriodNotFoundException()).when(payPeriodRepositoryMock).findByDate(new LocalDate());
+
+		payPeriodServiceMock.getCurrentPayPeriod();
+
 	}
 
 	@Test

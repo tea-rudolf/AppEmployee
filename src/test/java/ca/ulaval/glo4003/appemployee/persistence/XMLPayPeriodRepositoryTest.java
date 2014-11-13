@@ -8,6 +8,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 
@@ -52,4 +53,18 @@ public class XMLPayPeriodRepositoryTest {
 	public void findPayPeriodThrowsExceptionIfPayPeriodNotFound() {
 		xmlPayPeriodRepository.findByDate(WRONG_DATE);
 	}
+
+	@Test(expected = PayPeriodAlreadyExistsException.class)
+	public void storeAlreadyExistingPayPeriodThrowsPayPeriodAlreadyExistsException() throws Exception {
+		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
+		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
+		xmlPayPeriodRepository.store(payPeriodMock);
+		xmlPayPeriodRepository.store(payPeriodMock);
+	}
+
+	@Test(expected = PayPeriodNotFoundException.class)
+	public void updatePayPeriodThrowsPayPeriodNotFoundExceptionIfPayPeriodNotFound() throws Exception {
+		xmlPayPeriodRepository.update(payPeriodMock);
+	}
+
 }
