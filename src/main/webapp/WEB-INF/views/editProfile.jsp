@@ -20,13 +20,13 @@
       </div>
       <div class="form-group">
         <form:label path="password">New Password</form:label>
-        <form:input type="password" class="form-control"
+        <form:input type="password" required="required" class="form-control"
           placeholder="Password" path="password" />
       </div>
 
       <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary"></input> <input
-          type="button" onclick="javascript:window.location.href = '/editProfile/'"
+          type="button" onclick="javascript:window.location.href = '/home/'"
           value="Cancel" class="btn btn-default"></input>
       </div>
     </form:form>

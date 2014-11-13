@@ -44,7 +44,7 @@ public class UserController {
 		return "editProfile";
 	}
 
-	@RequestMapping(value = "/editProfile", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String updatePassword(@ModelAttribute("user") UserViewModel viewModel, HttpSession session) throws Exception {
 
 		if (!viewModel.getEmail().equals("")) {
@@ -57,7 +57,7 @@ public class UserController {
 
 		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE).toString(), viewModel);
 		userService.updateEmployeeInformation(viewModel);
-		return "redirect:/editProfile/";
+		return "redirect:/home";
 	}
 
 	@RequestMapping(value = "/userNotFoundError", method = RequestMethod.GET)
