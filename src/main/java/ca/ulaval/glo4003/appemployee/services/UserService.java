@@ -130,7 +130,7 @@ public class UserService {
 		try {
 			timeEntryRepository.store(entry);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RepositoryException(e.getMessage());
 		}
 
 	}
