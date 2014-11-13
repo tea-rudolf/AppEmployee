@@ -18,15 +18,24 @@
 			<div class="form-group">
 				<form:hidden path="uId" />
 			</div>
+			<c:if
+					test="${not empty message }">
+					<div class="alert alert-danger" style="margin-top: 10px;"
+						role="alert">${message.message}</div>
+			</c:if>
 			<div class="form-group">
 				<form:label path="name">Name</form:label>
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />
-				<c:if test="${role eq 'SUPERVISOR'}">
-					<form:label path="userEmail">Assign a user email (optional)</form:label>
-					<form:input class="form-control" path="userEmail"
-						value="${userEmail}" />
-				</c:if>
+			<c:if test="${role eq 'SUPERVISOR'}">
+				<div class="form-group">
+					<b>Assign a user email (optional)</b>
+					<td><form:select class="form-control" path="userEmail">
+						<form:option value="NONE"> --SELECT--</form:option>
+						<form:options items="${task.availableUsers}"></form:options>
+					</form:select></td>
+				</div>
+			</c:if>
 			</div>
 
 

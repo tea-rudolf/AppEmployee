@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.joda.time.LocalDate;
@@ -18,6 +19,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
+import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
@@ -53,6 +55,16 @@ public class UserService {
 
 	public List<User> retrieveUsersByEmail(List<String> emails) {
 		return userRepository.findByEmails(emails);
+	}
+	
+
+	public List<String> retrieveAllUserEmails() throws UserNotFoundException {
+		List<String> usersEmail = new ArrayList<String>();
+		Collection<User> users = userRepository.findAll();
+		for (User user : users) {
+			usersEmail.add(user.getEmail());
+		}
+		return usersEmail;
 	}
 
 	public TimeEntry getTimeEntry(String id) {
@@ -125,7 +137,20 @@ public class UserService {
 	}
 
 	public void updateEmployeeInformation(UserViewModel userViewModel) throws Exception {
-		User employee = new User(userViewModel.getEmail(), userViewModel.getPassword(), userViewModel.getRole(), userViewModel.getWage());
+
+		User employee = new User();
+		employee.setEmail(userViewModel.getEmail());
+		employee.setPassword(userViewModel.getPassword());
+		employee.setWage(userViewModel.getWage());
+
+		if (userViewModel.getRole().equals("EMPLOYEE")) {
+			employee.setRole(Role.EMPLOYEE);
+		} else if (userViewModel.getRole().equals("ENTERPRISE")) {
+			employee.setRole(Role.ENTERPRISE);
+		} else if (userViewModel.getRole().equals("SUPERVISOR")) {
+			employee.setRole(Role.SUPERVISOR);
+		}
+
 		userRepository.store(employee);
 	}
 

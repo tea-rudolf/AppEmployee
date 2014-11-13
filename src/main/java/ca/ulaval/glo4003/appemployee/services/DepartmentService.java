@@ -12,6 +12,7 @@ import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsExce
 import ca.ulaval.glo4003.appemployee.domain.exceptions.SupervisorAccessException;
 import ca.ulaval.glo4003.appemployee.domain.repository.DepartmentRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
+import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -35,7 +36,19 @@ public class DepartmentService {
 			throw new SupervisorAccessException("You do not have supervisor rights in this department.");
 		}
 
-		User newUser = new User(userViewModel.getEmail(), userViewModel.getPassword(), userViewModel.getRole(), userViewModel.getWage());
+		User newUser = new User();
+		newUser.setEmail(userViewModel.getEmail());
+		newUser.setPassword(userViewModel.getPassword());
+		newUser.setWage(userViewModel.getWage());
+		
+		if (userViewModel.getRole().equals("EMPLOYEE")) {
+			newUser.setRole(Role.EMPLOYEE);
+		} else if (userViewModel.getRole().equals("ENTERPRISE")) {
+			newUser.setRole(Role.ENTERPRISE);
+		} else if (userViewModel.getRole().equals("SUPERVISOR")) {
+			newUser.setRole(Role.SUPERVISOR);
+		}
+		
 		userRepository.store(newUser);
 	}
 

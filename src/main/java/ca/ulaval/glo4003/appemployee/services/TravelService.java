@@ -21,7 +21,7 @@ public class TravelService {
 		this.travelConverter = travelConverter;
 	}
 
-	public Travel findByuId(String uId){
+	public Travel findByuId(String uId) {
 		return travelRepository.findByUid(uId);
 	}
 
@@ -33,12 +33,11 @@ public class TravelService {
 		}
 
 	}
-	
-	public void update(String travelUid, TravelViewModel viewModel){
+
+	public void update(String travelUid, TravelViewModel viewModel) {
 		Travel newTravel = travelConverter.convert(viewModel);
 		newTravel.setuId(travelUid);
-		store(newTravel);	
+		store(newTravel);
 	}
-
 
 }

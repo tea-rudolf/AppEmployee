@@ -12,17 +12,20 @@
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h2 class="sub-header">Edit a time entry</h2>
-<h2 class="sub-header">New travel entry</h2>
 				<h3>
 			Pay period from
 			<c:out value="${travelForm.payPeriodStartDate}" />
 			to
 			<c:out value="${travelForm.payPeriodEndDate}" />
 		</h3>
+							<c:if
+					test="${not empty message }">
+					<div class="alert alert-danger" style="margin-top: 10px;"
+						role="alert">${message.message}</div>
+			</c:if>
 		<form:form method="post" action="/travel/${travelForm.uId}/edit" modelAttribute="travelForm">
 					<div class="form-group">
 				<form:hidden path="uId" />
-				${travelForm.uId}
 			</div>
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">

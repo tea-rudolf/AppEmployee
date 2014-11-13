@@ -1,5 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 
 public class UserViewModel {
@@ -7,7 +10,8 @@ public class UserViewModel {
 	private String email;
 	private String password;
 	private double wage;
-	private Role role;
+	private String role;
+	private ArrayList<Role> availableRoles = new ArrayList<Role>(Arrays.asList(Role.values()));
 
 	public String getEmail() {
 		return email;
@@ -33,12 +37,20 @@ public class UserViewModel {
 		this.wage = wage;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public ArrayList<Role> getAvailableRoles() {
+		return availableRoles;
+	}
+
+	public void setAvailableRoles(ArrayList<Role> availableRoles) {
+		this.availableRoles = availableRoles;
 	}
 
 }

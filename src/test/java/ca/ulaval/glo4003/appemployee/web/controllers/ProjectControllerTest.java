@@ -154,7 +154,7 @@ public class ProjectControllerTest {
 
 	@Test
 	public void editProjectCallsTheCorrectServiceMethods() throws Exception {
-		projectController.saveEditedProject(SAMPLE_PROJECTNUMBER, projectViewModel, sessionMock);
+		projectController.saveEditedProject(SAMPLE_PROJECTNUMBER, model, projectViewModel, sessionMock);
 		verify(projectServiceMock).updateProject(SAMPLE_PROJECTNUMBER, projectViewModel);
 	}
 
@@ -216,7 +216,7 @@ public class ProjectControllerTest {
 
 	@Test
 	public void editTaskCallsTheCorrectServiceMethods() throws Exception {
-		projectController.saveEditedTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModel, sessionMock);
+		projectController.saveEditedTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, taskViewModel, sessionMock);
 		verify(projectServiceMock).updateTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, taskViewModel);
 	}
 

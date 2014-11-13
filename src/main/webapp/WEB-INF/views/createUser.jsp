@@ -33,29 +33,21 @@
 				<form:input class="form-control" path="password" value="${user.password}"
 					required="required" />
 			</div>
+
 			<div class="form-group">
-				<form:label path="role">Role</form:label>
-				<form:input class="form-control" path="role" value="${user.role}"
-					required="required" />
+				<b>Role</b>
+				<td><form:select class="form-control" path="role">
+					<form:option value="NONE"> --SELECT--</form:option>
+					<form:options items="${user.availableRoles}"></form:options>
+				</form:select></td>
 			</div>
 
-<!-- 			<div class="dropdown"> -->
-<!-- 			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"> -->
-<!-- 			    Role -->
-<!-- 			    <span class="caret"></span> -->
-<!-- 			  </button> -->
-<!-- 			  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1"> -->
-<!-- 			    <li role="presentation"><a role="menuitem" tabindex="0" href="#">Action</a></li> -->
-<!-- 			    <li role="presentation"><a role="menuitem" tabindex="1" href="#">Another action</a></li> -->
-<!-- 			    <li role="presentation"><a role="menuitem" tabindex="2" href="#">Something else here</a></li> -->
-<!-- 			  </ul> -->
-<!-- 			</div> -->
-			
 			<div class="form-group">
 				<form:label path="wage">Wage</form:label>
 				<form:input class="form-control" path="wage" value="${user.wage}"
 					required="required" />
 			</div>
+
 			<div class="form-group">
 				<input type="submit" value="Create user" class="btn btn-primary"></input>
 				<input type="button"

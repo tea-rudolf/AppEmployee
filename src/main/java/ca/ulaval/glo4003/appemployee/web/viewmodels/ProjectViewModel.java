@@ -14,6 +14,7 @@ public class ProjectViewModel {
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
 	private String userEmail = "";
+	private List<String> availableUsers = new ArrayList<String>();
 
 	public String getuId() {
 		return uId;
@@ -77,6 +78,14 @@ public class ProjectViewModel {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+
+	public List<String> getAvailableUsers() {
+		return availableUsers;
+	}
+
+	public void setAvailableUsers(List<String> list) {
+		this.availableUsers = list;
 	}
 
 }

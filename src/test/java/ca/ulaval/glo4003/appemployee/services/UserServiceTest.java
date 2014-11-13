@@ -26,6 +26,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class UserServiceTest {
 
 	private static final String TIME_ENTRY_ID = "id";
+	private static final String A_ROLE = "EMPLOYE";
 	private static final String EMAIL = "employee1@employee.com";
 	private static final String EMAIL2 = "employee2@employee.com";
 
@@ -114,6 +115,7 @@ public class UserServiceTest {
 
 	@Test
 	public void updateEmployeeInformationCallsUserRepository() throws Exception {
+		when(userViewModelMock.getRole()).thenReturn(A_ROLE);
 		userService.updateEmployeeInformation(userViewModelMock);
 		verify(userRepositoryMock, times(1)).store(any(User.class));
 	}

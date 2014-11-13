@@ -27,7 +27,7 @@ public class UserConverter {
 		userViewModel.setEmail(user.getEmail());
 		userViewModel.setPassword(user.getPassword());
 		userViewModel.setWage(user.getWage());
-		userViewModel.setRole(user.getRole());
+		userViewModel.setRole(user.getRole().toString());
 
 		return userViewModel;
 	}

@@ -41,7 +41,6 @@ public class TimeControllerTest {
 	private static final String TIME_SHEET_JSP = "time";
 	private static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 	private static final String REDIRECT_LINK = "redirect:/";
-	private static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
 	private static final String TIME_REDIRECT = "redirect:/time/";
 	private static final String TIME_ENTRY_UID = "0001";
 	private static final String CREATE_TIME_JSP = "createTimeEntry";
@@ -165,17 +164,10 @@ public class TimeControllerTest {
 	}
 
 	@Test
-	public void saveEditedTimeEntryReturnsErrorRedirectIfMissingTasks() throws Exception {
-		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn("NONE");
-		String returnedForm = timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock, sessionMock);
-		assertEquals(ERROR_REDIRECT, returnedForm);
-	}
-
-	@Test
 	public void saveEditedTimeEntryReturnsCorrectRedirectLink() throws Exception {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		String returnedForm = timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 		assertEquals(TIME_REDIRECT, returnedForm);
 	}
 
@@ -183,7 +175,7 @@ public class TimeControllerTest {
 	public void saveEditedTimeEntryCallsUpdateMethod() throws Exception {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock, sessionMock);
+		timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 		verify(payPeriodServiceMock, times(1)).updateTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock);
 	}
 
@@ -269,17 +261,10 @@ public class TimeControllerTest {
 	}
 
 	@Test
-	public void savePreviousEditedTimeEntryReturnsErrorRedirectIfMissingTasks() throws Exception {
-		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn("NONE");
-		String returnedForm = timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock, sessionMock);
-		assertEquals(ERROR_REDIRECT, returnedForm);
-	}
-
-	@Test
 	public void savePreviousEditedTimeEntryReturnsValidFormIfSuccessful() throws Exception {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		String returnedForm = timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 		assertEquals(PREVIOUS_TIME_REDIRECT, returnedForm);
 	}
 
@@ -287,7 +272,7 @@ public class TimeControllerTest {
 	public void savePreviousEditedTimeEntryCallsUpdateMethod() throws Exception {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock, sessionMock);
+		timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 		verify(payPeriodServiceMock, times(1)).updateTimeEntry(TIME_ENTRY_UID, payPeriodViewModelMock);
 	}
 }

@@ -35,10 +35,8 @@ public class TravelControllerTest {
 	private static final String CREATE_TRAVEL_JSP = "createTravelEntry";
 	private static final String TRAVEL_ENTRY_SUBMIT_JSP = "travelEntrySubmitted";
 	private static final String VEHICLE = "ENTERPRISE";
-	private static final String VEHICLE_ERROR_REDIRECT = "redirect:/travel/errorNoVehiculeSelected";
 	private static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
 	private static final String TRAVEL_REDIRECT = "redirect:/travel/";
-	private static final String NO_VEHICULE_SELECTED_JSP = "noVehiculeSelectedError";
 
 	private TravelController travelController;
 	private PayPeriodService payPeriodServiceMock;
@@ -116,13 +114,6 @@ public class TravelControllerTest {
 	}
 
 	@Test
-	public void saveTravelEntryReturnsErrorRedirectLinkIfMissingVehicle() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
-		String returnedForm = travelController.saveTravelEntry(modelMock, travelViewModelMock, sessionMock);
-		assertEquals(VEHICLE_ERROR_REDIRECT, returnedForm);
-	}
-
-	@Test
 	public void saveTravelEntryCallsStoreMethod() throws Exception {
 		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
@@ -155,29 +146,16 @@ public class TravelControllerTest {
 	public void saveEditedTravelEntryReturnsValidRedirectLinkIfSuccessFul() throws Exception {
 		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		String returnedForm = travelController.saveEditedTravelEntry(TRAVEL_UID, travelViewModelMock, sessionMock);
+		String returnedForm = travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
 		assertEquals(TRAVEL_REDIRECT, returnedForm);
-	}
-
-	@Test
-	public void saveEditedTravelEntryReturnsErrorRedirectIfNoVehicle() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
-		String returnedForm = travelController.saveEditedTravelEntry(TRAVEL_UID, travelViewModelMock, sessionMock);
-		assertEquals(VEHICLE_ERROR_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void saveEditedTravelEntryCallsUpdateMethod() throws Exception {
 		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		travelController.saveEditedTravelEntry(TRAVEL_UID, travelViewModelMock, sessionMock);
+		travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
 		verify(travelServiceMock, times(1)).update(TRAVEL_UID, travelViewModelMock);
-	}
-
-	@Test
-	public void getErrorNoVehiculeSelectedReturnsNoVehicleForm() {
-		String returnedForm = travelController.getErrorNoVehiculeSelected(modelMapMock, sessionMock);
-		assertEquals(NO_VEHICULE_SELECTED_JSP, returnedForm);
 	}
 
 }

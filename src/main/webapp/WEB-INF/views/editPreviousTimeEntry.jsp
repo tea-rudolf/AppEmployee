@@ -18,6 +18,11 @@
 			to
 			<c:out value="${timeForm.payPeriodEndDate}" />
 		</h3>
+					<c:if
+					test="${not empty message }">
+					<div class="alert alert-danger" style="margin-top: 10px;"
+						role="alert">${message.message}</div>
+			</c:if>
 		<div></div>
 		<form:form role="form" method="POST"
 			action="/time/previousTime/${timeEntry.timeEntryuId}/edit" modelAttribute="timeEntry">

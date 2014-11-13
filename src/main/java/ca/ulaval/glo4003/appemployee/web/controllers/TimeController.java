@@ -22,6 +22,7 @@ import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Controller
@@ -38,7 +39,6 @@ public class TimeController {
 	static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
 	static final String EDIT_TIME_ENTRY_JSP = "editTimeEntry";
 	static final String EDIT_PREVIOUS_TIME_ENTRY_JSP = "editPreviousTimeEntry";
-	static final String NO_TASK_SELECTED_JSP = "noTaskSelectedError";
 	static final String SIMPLE_REDIRECT = "redirect:/";
 	static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
 	static final String TIME_REDIRECT = "redirect:/time/";
@@ -101,7 +101,8 @@ public class TimeController {
 	public String saveTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
 		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
-			return "redirect:/time/errorNoTaskSelected";
+			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
+			return createTimeEntry(model, payPeriodForm, session);
 		}
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -136,10 +137,11 @@ public class TimeController {
 	}
 
 	@RequestMapping(value = "/{timeEntryuId}/edit", method = RequestMethod.POST)
-	public String saveEditedTimeEntry(@PathVariable String timeEntryuId, TimeViewModel viewModel, HttpSession session) throws Exception {
+	public String saveEditedTimeEntry(@PathVariable String timeEntryuId, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
 
 		if (viewModel.getTaskIdTimeEntry().equals("NONE")) {
-			return ERROR_REDIRECT;
+			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
+			return editTimeEntry(timeEntryuId, model, session);
 		}
 
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -190,7 +192,8 @@ public class TimeController {
 	public String savePreviousTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
 		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
-			return "redirect:/time/errorNoTaskSelected";
+			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
+			return createPreviousTimeEntry(model, payPeriodForm, session);
 		}
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -226,10 +229,11 @@ public class TimeController {
 	}
 
 	@RequestMapping(value = "/previousTime/{timeEntryuId}/edit", method = RequestMethod.POST)
-	public String savePreviousEditedTimeEntry(@PathVariable String timeEntryuId, TimeViewModel viewModel, HttpSession session) throws Exception {
+	public String savePreviousEditedTimeEntry(@PathVariable String timeEntryuId, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
 
 		if (viewModel.getTaskIdTimeEntry().equals("NONE")) {
-			return ERROR_REDIRECT;
+			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
+			return editPreviousTimeEntry(timeEntryuId, model, session);
 		}
 
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());

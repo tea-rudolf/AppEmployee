@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,11 @@ public class XMLUserRepository implements UserRepository {
 			users.add(user);
 		}
 		return users;
+	}
+	
+	@Override
+	public Collection<User> findAll() {
+		return users.values();
 	}
 
 	private void saveXML() throws Exception {

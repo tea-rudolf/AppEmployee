@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
@@ -106,25 +104,31 @@ public class ProjectController {
 
 		model.addAttribute("tasks", tasksViewModel);
 		model.addAttribute("employees", employeesViewModel);
-		model.addAttribute("project", projectConverter.convert(project));
+		ProjectViewModel projectViewModel = projectConverter.convert(project);
+		projectViewModel.setAvailableUsers(userService.retrieveAllUserEmails());
+		model.addAttribute("project", projectViewModel);
 		model.addAttribute("role", currentUser.getRole());
-		
+
 		return "editProject";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
-	public String saveEditedProject(@PathVariable String projectNumber, ProjectViewModel viewModel, HttpSession session) throws Exception {
+	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel, HttpSession session) throws Exception {
 
-		if (!viewModel.getUserEmail().equals("")) {
-			try {
+		try {
+
+			if (!viewModel.getUserEmail().equals("NONE")) {
 				userService.retrieveByEmail(viewModel.getUserEmail());
-			} catch (UserNotFoundException userNotFound) {
-				return "redirect:/projects/userNotFoundError";
 			}
+
+			projectService.updateProject(projectNumber, viewModel);
+			return "redirect:/projects/";
+
+		} catch (Exception e) {
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return editProject(projectNumber, model, session);
 		}
 
-		projectService.updateProject(projectNumber, viewModel);
-		return "redirect:/projects/";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
@@ -167,7 +171,11 @@ public class ProjectController {
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
 		User currentUser = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
-		model.addAttribute("task", taskConverter.convert(task));
+		TaskViewModel taskViewModel = taskConverter.convert(task);
+		taskViewModel.setAvailableUsers(userService.retrieveAllUserEmails());
+		model.addAttribute("project", taskViewModel);
+
+		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
 		model.addAttribute("employees", employeesViewModel);
 		model.addAttribute("role", currentUser.getRole());
@@ -177,24 +185,24 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
-	public String saveEditedTask(@PathVariable String projectNumber, @PathVariable String taskNumber, TaskViewModel viewModel, HttpSession session) throws Exception {
+	public String saveEditedTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, TaskViewModel viewModel, HttpSession session)
+			throws Exception {
 
-		if (!viewModel.getUserEmail().equals("")) {
-			try {
+		try {
+
+			if (!viewModel.getUserEmail().equals("NONE")) {
 				userService.retrieveByEmail(viewModel.getUserEmail());
-			} catch (UserNotFoundException userNotFound) {
-				return "redirect:/projects/userNotFoundError";
 			}
+
+			projectService.updateTask(projectNumber, taskNumber, viewModel);
+
+			return String.format("redirect:/projects/%s/edit", projectNumber);
+
+		} catch (Exception e) {
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return editTask(projectNumber, taskNumber, model, session);
 		}
 
-		projectService.updateTask(projectNumber, taskNumber, viewModel);
-
-		return String.format("redirect:/projects/%s/edit", projectNumber);
-	}
-
-	@RequestMapping(value = "/userNotFoundError", method = RequestMethod.GET)
-	public String getErrorNoTaskSelected(ModelMap model, HttpSession session) {
-		return "userNotFoundError";
 	}
 
 }

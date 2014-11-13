@@ -21,6 +21,7 @@ import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TravelConverter;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 @Controller
@@ -34,9 +35,7 @@ public class TravelController {
 	static final String CREATE_TRAVEL_JSP = "createTravelEntry";
 	static final String TRAVEL_ENTRY_SUBMIT_JSP = "travelEntrySubmitted";
 	static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
-	static final String NO_VEHICULE_SELECTED_JSP = "noVehiculeSelectedError";
 	static final String SIMPLE_REDIRECT = "redirect:/";
-	static final String VEHICLE_ERROR_REDIRECT = "redirect:/travel/errorNoVehiculeSelected";
 	static final String TRAVEL_REDIRECT = "redirect:/travel/";
 
 	private PayPeriodService payPeriodService;
@@ -100,7 +99,8 @@ public class TravelController {
 	public String saveTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
 
 		if (travelForm.getVehicule().equals("NONE")) {
-			return VEHICLE_ERROR_REDIRECT;
+			model.addAttribute("message", new MessageViewModel("No Vehicule selected", "No vehicule was selected!"));
+			return createTravelEntry(model, travelForm, session);
 		}
 
 		travelForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -134,10 +134,11 @@ public class TravelController {
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
-	public String saveEditedTravelEntry(@PathVariable String uId, TravelViewModel viewModel, HttpSession session) throws Exception {
+	public String saveEditedTravelEntry(@PathVariable String uId, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
 
 		if (viewModel.getVehicule().equals(null) || viewModel.getVehicule().equals("NONE")) {
-			return VEHICLE_ERROR_REDIRECT;
+			model.addAttribute("message", new MessageViewModel("No Vehicule selected", "No vehicule was selected!"));
+			return editTravelEntry(uId, model, session);
 		}
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		travelService.update(uId, viewModel);
@@ -145,9 +146,5 @@ public class TravelController {
 		return TRAVEL_REDIRECT;
 	}
 
-	@RequestMapping(value = "/errorNoVehiculeSelected", method = RequestMethod.GET)
-	public String getErrorNoVehiculeSelected(ModelMap model, HttpSession session) {
-		return NO_VEHICULE_SELECTED_JSP;
-	}
 
 }

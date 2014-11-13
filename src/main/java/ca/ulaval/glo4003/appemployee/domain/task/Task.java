@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
+
 public class Task {
 	private String uId;
 	private String name;
@@ -33,10 +35,11 @@ public class Task {
 		this.uId = uId;
 	}
 
-	public void assignUserToTask(String userId) {
-		if (!authorizedUsers.contains(userId)) {
-			authorizedUsers.add(userId);
-		}			
+	public void assignUserToTask(String userId) {		
+		if (authorizedUsers.contains(userId)) {
+		    throw new EmployeeAlreadyExistsException("Employee already assigned to this task.");
+		}		
+		authorizedUsers.add(userId);
 	}
 
 	public List<String> getAuthorizedUsers() {

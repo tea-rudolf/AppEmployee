@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.appemployee.domain.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -17,4 +18,6 @@ public interface UserRepository {
 	User findByEmail(String email);
 
 	List<User> findByEmails(List<String> emails);
+
+	Collection<User> findAll();
 }

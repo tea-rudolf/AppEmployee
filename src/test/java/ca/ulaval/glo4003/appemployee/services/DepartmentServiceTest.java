@@ -56,7 +56,7 @@ public class DepartmentServiceTest {
 		departmentService = new DepartmentService(departmentRepositoryMock, userRepositoryMock);
 		when(userViewModelMock.getEmail()).thenReturn(EMAIL);
 		when(userViewModelMock.getPassword()).thenReturn(PASSWORD);
-		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE);
+		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
 		when(userViewModelMock.getWage()).thenReturn(WAGE);
 	}
 
