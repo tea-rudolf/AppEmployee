@@ -23,6 +23,12 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class UserController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
+	static final String SIMPLE_REDIRECT = "redirect:/";
+	static final String EDIT_PROFILE_REDIRECT = "redirect:/editProfile/";
+	static final String EDIT_USER_NOT_FOUND_REDIRECT = "redirect:/editProfile/userNotFoundError";
+	static final String USER_NOT_FOUND_LINK = "userNotFoundError";
+	static final String EDIT_PROFILE_FORM = "editProfile";
+	
 
 	private UserService userService;
 	private UserConverter userConverter;
@@ -37,23 +43,23 @@ public class UserController {
 	public String getUser(Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		model.addAttribute("user", userConverter.convert(userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString())));
-		return "editProfile";
+		return EDIT_PROFILE_FORM;
 	}
 
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
 	public String userModification(@PathVariable Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		User user = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("user", userConverter.convert(user));
-		return "editProfile";
+		return EDIT_PROFILE_FORM;
 	}
 
 	@RequestMapping(value = "/editProfile", method = RequestMethod.POST)
@@ -63,17 +69,17 @@ public class UserController {
 			try {
 				userService.retrieveByEmail(viewModel.getEmail());
 			} catch (UserNotFoundException userNotFound) {
-				return "redirect:/editProfile/userNotFoundError";
+				return EDIT_USER_NOT_FOUND_REDIRECT;
 			}
 		}
 
 		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE).toString(), viewModel);
-		return "redirect:/editProfile/";
+		return EDIT_PROFILE_REDIRECT;
 	}
 
 	@RequestMapping(value = "/userNotFoundError", method = RequestMethod.GET)
 	public String getErrorNoTaskSelected(ModelMap model, HttpSession session) {
-		return "userNotFoundError";
+		return USER_NOT_FOUND_LINK;
 	}
 
 }

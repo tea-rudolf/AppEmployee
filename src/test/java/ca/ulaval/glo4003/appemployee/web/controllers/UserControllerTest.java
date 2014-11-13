@@ -1,8 +1,11 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
@@ -23,11 +27,14 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class UserControllerTest {
 	private static final String EMAIL_KEY = "email";
-	private static final String VALID_EMAIL = "employee@employee.com";
+	private static final String VALID_EMAIL = "emp@company.com";
 	private static final String REDIRECT_LINK = "redirect:/";
+	private static final String USER_FORM = "editProfile";
+	private static final String EDIT_PROFILE_REDIRECT = "redirect:/editProfile/";
+	private static final String EDIT_USER_NOT_FOUND_REDIRECT = "redirect:/editProfile/userNotFoundError";
+	private static final String USER_NOT_FOUND_LINK = "userNotFoundError";
 
 	private HttpSession sessionMock;
-	private Model model = new ExtendedModelMap();
 	private UserController userController;
 	private ProjectViewModel projectViewModel;
 	private TaskViewModel taskViewModel;
@@ -36,8 +43,9 @@ public class UserControllerTest {
 	private UserService userServiceMock;
 	private User currentUserMock;
 	private User userMock;
-	private UserViewModel userViewModel;
 	private UserViewModel userViewModelMock;
+	private Model modelMock;
+	private ModelMap modelMapMock;
 	private List<UserViewModel> userViewModelCollection = new ArrayList<UserViewModel>();
 
 	@Before
@@ -52,7 +60,8 @@ public class UserControllerTest {
 		taskViewModel = new TaskViewModel();
 		taskViewModel.setUserEmail("");
 		userMock = mock(User.class);
-		userViewModel = new UserViewModel();
+		modelMock = mock(Model.class);
+		modelMapMock = mock(ModelMap.class);
 		userController = new UserController(userServiceMock, userConverterMock);
 	}
 
@@ -60,16 +69,16 @@ public class UserControllerTest {
 	public void getUserUpdatesTheModelCorrectly() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
-		when(userConverterMock.convert(userMock)).thenReturn(userViewModel);
+		when(userConverterMock.convert(userMock)).thenReturn(userViewModelMock);
 
-		userController.getUser(model, sessionMock);
+		String returnedForm = userController.getUser(modelMock, sessionMock);
 
-		// assertSame(model.asMap().get("users"), userViewModel);
+		assertSame(USER_FORM, returnedForm);
 	}
 
 	@Test
 	public void getUserReturnRedirectIfSessionAttributeIsNull() {
-		String returnedForm = userController.getUser(model, sessionMock);
+		String returnedForm = userController.getUser(modelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
@@ -81,20 +90,46 @@ public class UserControllerTest {
 		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
 		when(userConverterMock.convert(employeeList)).thenReturn(userViewModelCollection);
 
-		userController.userModification(model, sessionMock);
+		String returnedForm = userController.userModification(modelMock, sessionMock);
 
-		// assertSame(model.asMap().get("user"), userViewModelMock);
+		assertEquals(USER_FORM, returnedForm);
 	}
+	
 
 	@Test
 	public void userModificationReturnsRedirectIfSessionAttributeIsNull() {
-		String returnedForm = userController.userModification(model, sessionMock);
+		String returnedForm = userController.userModification(modelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
-	public void updateUserCallsTheCorrectServiceMethods() throws Exception {
-		// userController.updateUser(userViewModel, sessionMock);
-		// verify(userServiceMock).updateUser(EMAIL_KEY, userViewModel);
+	public void updateUserReturnsValidFormIfSuccessful() throws Exception {
+		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		String returnedForm = userController.updateUser(userViewModelMock, sessionMock);
+		assertEquals(returnedForm, EDIT_PROFILE_REDIRECT);
+	}
+	
+	@Test
+	public void updateUserReturnsErrorRedirectIfUserNotFound() throws Exception{
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
+		doThrow(new UserNotFoundException()).when(userServiceMock).retrieveByEmail(VALID_EMAIL);
+		String returnedForm = userController.updateUser(userViewModelMock, sessionMock);
+		assertEquals(EDIT_USER_NOT_FOUND_REDIRECT, returnedForm);
+	}
+	
+	@Test
+	public void updateUserCallsCorrectRepositoryMethod() throws Exception{
+		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		userController.updateUser(userViewModelMock, sessionMock);
+		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL, userViewModelMock);
+	}
+	
+	@Test
+	public void getErrorNoTaskSelectReturnsValidFormWhenCalled(){
+		String returnedForm = userController.getErrorNoTaskSelected(modelMapMock, sessionMock);
+		assertEquals(USER_NOT_FOUND_LINK, returnedForm);
 	}
 }
