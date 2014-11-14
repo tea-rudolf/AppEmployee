@@ -19,8 +19,10 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class UserServiceTest {
@@ -28,6 +30,9 @@ public class UserServiceTest {
 	private static final String TIME_ENTRY_ID = "id";
 	private static final String EMAIL = "employee1@employee.com";
 	private static final String EMAIL2 = "employee2@employee.com";
+	private static final String PASSWORD = "password";
+	private static final double WAGE = 0;
+	
 
 	private UserService userService;
 	private TaskRepository taskRepositoryMock;
@@ -37,6 +42,8 @@ public class UserServiceTest {
 	private TravelRepository travelRepositoryMock;
 	private PayPeriod payPeriodMock;
 	private TimeEntry timeEntryMock;
+	private UserViewModel userViewModel;
+	private User user;
 	private Task taskMock;
 	private User userMock;
 	private UserViewModel userViewModelMock;
@@ -48,9 +55,12 @@ public class UserServiceTest {
 		expenseRepositoryMock = mock(ExpenseRepository.class);
 		timeEntryRepositoryMock = mock(TimeEntryRepository.class);
 		payPeriodMock = mock(PayPeriod.class);
+		userViewModel = new UserViewModel();
+		userViewModel.setPassword(PASSWORD);
 		timeEntryMock = mock(TimeEntry.class);
 		taskMock = mock(Task.class);
 		userMock = mock(User.class);
+		user = new User(EMAIL, PASSWORD, null, WAGE );
 		userViewModelMock = mock(UserViewModel.class);
 		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock);
 	}
@@ -118,28 +128,25 @@ public class UserServiceTest {
 		verify(userRepositoryMock, times(1)).store(any(User.class));
 	}
 
-	public void updateUserCallsCorrectRepositoryMethod() throws Exception {
+	public void updatePasswordCallsCorrectRepositoryMethod() throws Exception {
 		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
 		userService.updatePassword(EMAIL, userViewModelMock);
 		verify(userRepositoryMock, times(1)).store(userMock);
 	}
 
 	@Test(expected = RepositoryException.class)
-	public void updateUserThrowsExceptionWhenUserIsNotUpdated() throws Exception {
+	public void updatePasswordThrowsExceptionWhenUserIsNotUpdated() throws Exception {
 		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
 		doThrow(new RepositoryException()).when(userRepositoryMock).store(userMock);
 		userService.updatePassword(EMAIL, userViewModelMock);
 	}
 
 	@Test
-	public void updateUserSetsUserPassword() {
-		// when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
-		// when(userMock.getPassword()).thenReturn("dummyPassword");
-		//
-		// userService.updatePassword(EMAIL, userViewModelMock);
-		//
-		// assertEquals(userViewModelMock.getPassword(),
-		// userMock.getPassword());
+	public void updatePasswordSetsNewPassword() {
+			when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(user);
+			userService.updatePassword(EMAIL, userViewModel);
+			assertEquals(userViewModel.getPassword(), user.getPassword());
+		}
 	}
 
-}
+
