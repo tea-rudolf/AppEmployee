@@ -8,9 +8,6 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
@@ -23,25 +20,11 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 @RunWith(MockitoJUnitRunner.class)
 public class PayPeriodServiceTest {
 
-	@Mock
 	private PayPeriodRepository payPeriodRepositoryMock;
-
-	@Mock
 	private TimeEntryRepository timeEntryRepositoryMock;
-
-	@Mock
 	private PayPeriod payPeriodMock;
-
-	@Mock
 	private PayPeriod previousPayPeriodMock;
-
-	@Mock
-	private TimeEntry timeEntryMock;
-
-	@Mock
 	private TimeViewModel timeViewModelMock;
-
-	@InjectMocks
 	private PayPeriodService payPeriodService;
 
 	private static final LocalDate CURRENT_DATE = new LocalDate();
@@ -49,7 +32,11 @@ public class PayPeriodServiceTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		payPeriodRepositoryMock = mock(PayPeriodRepository.class);
+		timeEntryRepositoryMock = mock(TimeEntryRepository.class);
+		payPeriodMock = mock(PayPeriod.class);
+		previousPayPeriodMock = mock(PayPeriod.class);
+		timeViewModelMock = mock(TimeViewModel.class);
 		payPeriodService = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock);
 	}
 
