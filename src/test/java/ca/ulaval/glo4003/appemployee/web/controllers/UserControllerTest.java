@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.*;
-
 import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpSession;
@@ -37,9 +36,7 @@ public class UserControllerTest {
 	private UserService userServiceMock;
 	private UserViewModel userViewModel;
 
-	
 	private UserViewModel userViewModelMock;
-
 
 	@Before
 	public void init() {
@@ -52,7 +49,7 @@ public class UserControllerTest {
 		taskViewModel = new TaskViewModel();
 		taskViewModel.setUserEmail("");
 		userViewModel = new UserViewModel();
-		userViewModel.setEmail("");
+		userViewModel.setEmail(EMAIL_KEY);
 		userViewModel.setPassword(PASSWORD);
 		userViewModel.setWage(WAGE);
 		user = new User(EMAIL_KEY, PASSWORD, null, WAGE);
@@ -64,7 +61,7 @@ public class UserControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(user);
 		when(userConverterMock.convert(user)).thenReturn(userViewModel);
-		String returnedForm =	userController.getUser(model, sessionMock);
+		String returnedForm = userController.getUser(model, sessionMock);
 
 		assertEquals(EDIT_PROFILE_JSP, returnedForm);
 	}
@@ -78,20 +75,24 @@ public class UserControllerTest {
 	@Test
 	public void userNewPasswordUpdatesReturnsEmployee() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(user);;
-	//	String returnedForm = userController.updatePassword(userViewModelMock, sessionMock);
-	//	assertEquals(EMPLOYEE_REDIRECT, returnedForm);
+		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
+		String returnedForm = userController.updatePassword(userViewModelMock, sessionMock);
+		assertEquals(EMPLOYEE_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void userModificationReturnsRedirectIfSessionAttributeIsNull() throws Exception {
-	//	String returnedForm = userController.updatePassword(userViewModel, sessionMock);
-	//	assertEquals(REDIRECT_LINK, returnedForm);
+		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		String returnedForm = userController.updatePassword(userViewModelMock, sessionMock);
+		assertEquals(EMPLOYEE_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void updateUserCallsTheCorrectServiceMethods() throws Exception {
-	//	 userController.updatePassword(userViewModel, sessionMock);
-	//	 verify(userServiceMock).updatePassword(EMAIL_KEY, userViewModel);
+		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		userController.updatePassword(userViewModelMock, sessionMock);
+		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL, userViewModelMock);
 	}
 }
