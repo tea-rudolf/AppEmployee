@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.appemployee.web.controllers;
 import javax.servlet.http.HttpSession;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,13 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class UserController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
+	static final String EDIT_PROFILE_JSP = "editProfile";
+	static final String REDIRECT = "redirect:/";
+	static final String EDIT_PROFILE_ERROR_REDIRECT = "redirect:/editProfile/userNotFoundError";
+	static final String EMPLOYEE_REDIRECT = "redirect:/employee";
+	static final String USER_NOT_FOUND = "userNotFoundError";
+	
+	
 
 	private UserService userService;
 	private UserConverter userConverter;
@@ -37,11 +45,11 @@ public class UserController {
 	public String getUser(Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return REDIRECT;
 		}
 
 		model.addAttribute("user", userConverter.convert(userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString())));
-		return "editProfile";
+		return EDIT_PROFILE_JSP;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -51,17 +59,17 @@ public class UserController {
 			try {
 				userService.retrieveByEmail(viewModel.getEmail());
 			} catch (UserNotFoundException userNotFound) {
-				return "redirect:/editProfile/userNotFoundError";
+				return EDIT_PROFILE_ERROR_REDIRECT;
 			}
 		}
 
 		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE).toString(), viewModel);
-		return "redirect:/employee";
+		return EMPLOYEE_REDIRECT;
 	}
 
 	@RequestMapping(value = "/userNotFoundError", method = RequestMethod.GET)
 	public String getErrorNoTaskSelected(ModelMap model, HttpSession session) {
-		return "userNotFoundError";
+		return USER_NOT_FOUND;
 	}
 
 }

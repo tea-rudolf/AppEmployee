@@ -60,7 +60,7 @@ public class UserServiceTest {
 		timeEntryMock = mock(TimeEntry.class);
 		taskMock = mock(Task.class);
 		userMock = mock(User.class);
-		user = new User(EMAIL, PASSWORD, null, WAGE );
+		user = new User(EMAIL, PASSWORD, null, WAGE);
 		userViewModelMock = mock(UserViewModel.class);
 		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock);
 	}
