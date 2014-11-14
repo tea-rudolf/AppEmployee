@@ -70,7 +70,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/userNotFoundError", method = RequestMethod.GET)
-	public String getErrorNoTaskSelected(ModelMap model, HttpSession session) {
+	public String getErrorUserNotFound(ModelMap model, HttpSession session) {
 		return USER_NOT_FOUND;
 	}
 

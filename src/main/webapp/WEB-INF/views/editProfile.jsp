@@ -7,7 +7,6 @@
 <%@include file="../includes/header.jsp"%>
 <title>AppEmployee - Profile</title>
 </head>
-
 <body>
   <%@include file="../includes/navbar.jsp"%>
 

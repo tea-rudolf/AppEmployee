@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
@@ -25,8 +26,9 @@ public class UserControllerTest {
 	private static final double WAGE = 0;
 	private static final String EDIT_PROFILE_JSP = "editProfile";
 	static final String EMPLOYEE_REDIRECT = "redirect:/employee";
-
-	private HttpSession sessionMock;
+	static final String USER_NOT_FOUND = "userNotFoundError";
+	private ModelMap modelMapMock;
+		private HttpSession sessionMock;
 	private Model model = new ExtendedModelMap();
 	private UserController userController;
 	private ProjectViewModel projectViewModel;
@@ -46,6 +48,7 @@ public class UserControllerTest {
 		userServiceMock = mock(UserService.class);
 		projectViewModel = new ProjectViewModel();
 		projectViewModel.setUserEmail("");
+		modelMapMock = mock(ModelMap.class);
 		taskViewModel = new TaskViewModel();
 		taskViewModel.setUserEmail("");
 		userViewModel = new UserViewModel();
@@ -94,5 +97,11 @@ public class UserControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		userController.updatePassword(userViewModelMock, sessionMock);
 		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL, userViewModelMock);
+	}
+	
+	@Test
+	public void getErrorUserNotFoundReturnsUserNotFoundForm() {
+		String returnedForm = userController.getErrorUserNotFound(modelMapMock, sessionMock);
+		assertEquals(USER_NOT_FOUND, returnedForm);
 	}
 }
