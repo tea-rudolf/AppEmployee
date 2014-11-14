@@ -1,10 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,23 +24,22 @@ public class UserControllerTest {
 	private static final String REDIRECT_LINK = "redirect:/";
 	private static final String PASSWORD = "password";
 	private static final double WAGE = 0;
+	private static final String EDIT_PROFILE_JSP = "editProfile";
+	static final String EMPLOYEE_REDIRECT = "redirect:/employee";
 
 	private HttpSession sessionMock;
 	private Model model = new ExtendedModelMap();
 	private UserController userController;
 	private ProjectViewModel projectViewModel;
 	private TaskViewModel taskViewModel;
-	private List<User> employeeList = new ArrayList<User>();
 	private User user;
 	private UserConverter userConverterMock;
 	private UserService userServiceMock;
-	private UserViewModel viewModel = new UserViewModel();
-	private User currentUserMock;
-	private User userMock;
-	
 	private UserViewModel userViewModel;
+
+	
 	private UserViewModel userViewModelMock;
-	private List<UserViewModel> userViewModelCollection = new ArrayList<UserViewModel>();
+
 
 	@Before
 	public void init() {
@@ -50,54 +47,51 @@ public class UserControllerTest {
 		userViewModelMock = mock(UserViewModel.class);
 		userConverterMock = mock(UserConverter.class);
 		userServiceMock = mock(UserService.class);
-		currentUserMock = mock(User.class);
 		projectViewModel = new ProjectViewModel();
 		projectViewModel.setUserEmail("");
 		taskViewModel = new TaskViewModel();
 		taskViewModel.setUserEmail("");
-		userMock = mock(User.class);
 		userViewModel = new UserViewModel();
+		userViewModel.setEmail("");
+		userViewModel.setPassword(PASSWORD);
+		userViewModel.setWage(WAGE);
 		user = new User(EMAIL_KEY, PASSWORD, null, WAGE);
 		userController = new UserController(userServiceMock, userConverterMock);
 	}
 
 	@Test
-	public void getUserUpdatesTheModelCorrectly() {
+	public void getUserReturnsEditProfile() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(user);
 		when(userConverterMock.convert(user)).thenReturn(userViewModel);
-		userController.getUser(model, sessionMock);
-	//	assertSame(model..asMap().get("user"), userViewModel);
+		String returnedForm =	userController.getUser(model, sessionMock);
+
+		assertEquals(EDIT_PROFILE_JSP, returnedForm);
 	}
 
 	@Test
 	public void getUserReturnRedirectIfSessionAttributeIsNull() {
 		String returnedForm = userController.getUser(model, sessionMock);
-	//	assertEquals(REDIRECT_LINK, returnedForm);
+		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
-	public void userModificationUpdatesTheModelCorrectly() throws Exception {
+	public void userNewPasswordUpdatesReturnsEmployee() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(userServiceMock.retrieveByEmail(VALID_EMAIL)).thenReturn(userMock);
-		when(userConverterMock.convert(userMock)).thenReturn(userViewModelMock);
-		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(currentUserMock);
-		when(userConverterMock.convert(employeeList)).thenReturn(userViewModelCollection);
-
-	//	userController.updatePassword(viewModel, sessionMock);
-
-	//	assertSame(model.asMap().get("user"), userViewModelMock);
+		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(user);;
+	//	String returnedForm = userController.updatePassword(userViewModelMock, sessionMock);
+	//	assertEquals(EMPLOYEE_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void userModificationReturnsRedirectIfSessionAttributeIsNull() throws Exception {
-	//	String returnedForm = userController.updatePassword(viewModel, sessionMock);
+	//	String returnedForm = userController.updatePassword(userViewModel, sessionMock);
 	//	assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
 	public void updateUserCallsTheCorrectServiceMethods() throws Exception {
-		// userController.updateUser(userViewModel, sessionMock);
-		// verify(userServiceMock).updateUser(EMAIL_KEY, userViewModel);
+	//	 userController.updatePassword(userViewModel, sessionMock);
+	//	 verify(userServiceMock).updatePassword(EMAIL_KEY, userViewModel);
 	}
 }
