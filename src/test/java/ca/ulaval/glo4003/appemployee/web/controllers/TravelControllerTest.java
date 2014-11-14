@@ -74,7 +74,7 @@ public class TravelControllerTest {
 	@Test
 	public void getTravelReturnsTravelFormIfSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
+		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(userServiceMock.getTravelEntriesForUserForAPayPeriod(payPeriodMock, VALID_EMAIL)).thenReturn(travels);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
@@ -93,7 +93,7 @@ public class TravelControllerTest {
 	@Test
 	public void createTravelEntryReturnsCreationFormIfSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
+		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 
@@ -128,7 +128,7 @@ public class TravelControllerTest {
 	@Test
 	public void editTravelEntryReturnsEditFormIfSuccessful() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(payPeriodServiceMock.getCurrentPayPeriod()).thenReturn(payPeriodMock);
+		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(travelServiceMock.findByuId(TRAVEL_UID)).thenReturn(travelMock);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);

@@ -36,10 +36,10 @@ public class TravelServiceTest {
 
 	@Test
 	public void findByUidFindsCorrectTravel() throws Exception {
-		when(travelMock.getuId()).thenReturn(TRAVEL_UID);
+		when(travelMock.getUid()).thenReturn(TRAVEL_UID);
 		when(travelRepositoryMock.findByUid(TRAVEL_UID)).thenReturn(travelMock);
 		Travel sampleTravel = travelService.findByuId(TRAVEL_UID);
-		assertEquals(travelMock.getuId(), sampleTravel.getuId());
+		assertEquals(travelMock.getUid(), sampleTravel.getUid());
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class TravelServiceTest {
 	public void updateCallsCorrectDomainMethod() {
 		when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
 		travelService.update(NEW_UID, travelViewModelMock);
-		verify(travelMock, times(1)).setuId(NEW_UID);
+		verify(travelMock, times(1)).setUid(NEW_UID);
 	}
 
 }

@@ -31,7 +31,7 @@ public class XMLTaskRepository implements TaskRepository {
 
 	@Override
 	public void store(Task task) throws Exception {
-		tasks.put(task.getuId(), task);
+		tasks.put(task.getUid(), task);
 		saveXML();
 	}
 
@@ -54,7 +54,7 @@ public class XMLTaskRepository implements TaskRepository {
 	private void parseXML() throws Exception {
 		List<Task> deserializedTasks = serializer.unmarshall(TASKS_FILEPATH).getTasks();
 		for (Task task : deserializedTasks) {
-			tasks.put(task.getuId(), task);
+			tasks.put(task.getUid(), task);
 		}
 	}
 

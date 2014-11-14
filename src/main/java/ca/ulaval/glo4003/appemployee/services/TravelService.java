@@ -36,7 +36,7 @@ public class TravelService {
 
 	public void update(String travelUid, TravelViewModel viewModel) {
 		Travel newTravel = travelConverter.convert(viewModel);
-		newTravel.setuId(travelUid);
+		newTravel.setUid(travelUid);
 		store(newTravel);
 	}
 

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <projects>
   <projects>
-    <uId>0001</uId>
+    <uid>0001</uid>
     <name>Project1</name>
-    <taskuIds>0001</taskuIds>
-    <taskuIds>0002</taskuIds>
-    <employeeuIds>emp@company.com</employeeuIds>
-    <employeeuIds>sup@company.com</employeeuIds>
-    <expenseuIds>0001</expenseuIds>
+    <taskUids>0001</taskUids>
+    <taskUids>0002</taskUids>
+    <employeeUids>emp@company.com</employeeUids>
+    <employeeUids>sup@company.com</employeeUids>
+    <expenseUids>0001</expenseUids>
   </projects>
   <projects>
-    <uId>0002</uId>
+    <uid>0002</uid>
     <name>Project2</name>
-    <taskuIds>0003</taskuIds>
-    <useruIds>emp@compnay.com</useruIds>
-    <useruIds>sup@company.com</useruIds>
-    <expenseuIds>0002</expenseuIds>
-    <expenseuIds>0003</expenseuIds>
+    <taskUids>0003</taskUids>
+    <expenseUids>0002</expenseUids>
+    <expenseUids>0003</expenseUids>
   </projects>
 </projects>

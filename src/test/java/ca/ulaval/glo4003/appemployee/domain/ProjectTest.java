@@ -39,22 +39,22 @@ public class ProjectTest {
 
 	@Test
 	public void addTaskIdAddsTaskCorrectlyToTheList() {
-		project.addTaskuId(TASK_ID);
+		project.addTaskUid(TASK_ID);
 
-		assertTrue(project.getTaskuIds().contains(TASK_ID));
+		assertTrue(project.getTaskUids().contains(TASK_ID));
 	}
 
 	@Test(expected = TaskAlreadyExistsException.class)
 	public void addTaskIdThrowsTaskAlreadyExistsExceptionWhenAddingAnExistingId() {
-		project.addTaskuId(TASK_ID);
-		project.addTaskuId(TASK_ID);
+		project.addTaskUid(TASK_ID);
+		project.addTaskUid(TASK_ID);
 	}
 
 	@Test
 	public void whenUserIsAddedToProjectUserShouldBeInUsersList() {
 		project.addEmployeeToProject(USER_UID);
 
-		assertTrue(project.getEmployeeuIds().contains(USER_UID));
+		assertTrue(project.getEmployeeUids().contains(USER_UID));
 	}
 
 	@Test(expected = EmployeeAlreadyExistsException.class)

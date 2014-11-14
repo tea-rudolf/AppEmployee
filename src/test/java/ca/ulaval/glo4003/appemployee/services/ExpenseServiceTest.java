@@ -1,59 +1,75 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.ExpenseNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
-import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 
 public class ExpenseServiceTest {
 
-	private static final String Expense_UID = "0002";
-	private static final String NEW_UID = "0003";
-
+	@Mock
 	private ExpenseRepository expenseRepositoryMock;
-	private ExpenseConverter expenseConverterMock;
-	private ExpenseService expenseService;
+
+	@Mock
 	private Expense expenseMock;
+
+	@Mock
 	private ExpenseViewModel expenseViewModelMock;
 
+	private static final String UID = "1234";
+	private static final double AMOUNT = 500.50;
+	private static final String DATE = "2014-11-13";
+	private static final String USER_EMAIL = "test@company.com";
+	private static final String COMMENT = "this is a comment";
+
+	@InjectMocks
+	private ExpenseService expenseService;
+
 	@Before
-	public void init() {
-		expenseRepositoryMock = mock(ExpenseRepository.class);
-		expenseConverterMock = mock(ExpenseConverter.class);
-		expenseMock = mock(Expense.class);
-		expenseViewModelMock = mock(ExpenseViewModel.class);
-		expenseService = new ExpenseService(expenseRepositoryMock, expenseConverterMock);
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
+		expenseService = new ExpenseService(expenseRepositoryMock);
 	}
 
 	@Test
-	public void findByUidFindsCorrectExpense() throws Exception {
-		when(expenseMock.getuId()).thenReturn(Expense_UID);
-		when(expenseRepositoryMock.findByUid(Expense_UID)).thenReturn(expenseMock);
-		Expense sampleExpense = expenseService.findByuId(Expense_UID);
-		assertEquals(expenseMock.getuId(), sampleExpense.getuId());
+	public void canInstantiateService() {
+		assertNotNull(expenseService);
+	}
+
+	@Test(expected = ExpenseNotFoundException.class)
+	public void retrieveExpenseByUidThrowsExceptionWhenExpenseDoesNotExist() throws Exception {
+		when(expenseRepositoryMock.findByUid(UID)).thenReturn(null);
+		expenseService.retrieveExpenseByUid(UID);
 	}
 
 	@Test
-	public void storeCallsCorrectRepositoryMethod() throws Exception {
-		expenseService.store(expenseMock);
-		verify(expenseRepositoryMock, times(1)).store(expenseMock);
+	public void retrieveExpenseByUidFindsExpenseWhenExists() throws Exception {
+		when(expenseRepositoryMock.findByUid(UID)).thenReturn(expenseMock);
+		Expense expense = expenseService.retrieveExpenseByUid(UID);
+		assertEquals(expenseMock, expense);
 	}
 
 	@Test
-	public void updateCallsCorrectDomainMethod() throws Exception {
-		when(expenseConverterMock.convert(expenseViewModelMock)).thenReturn(expenseMock);
-		when(expenseViewModelMock.getuId()).thenReturn(NEW_UID);
-		expenseService.update(NEW_UID, expenseViewModelMock);
-		verify(expenseMock, times(1)).setuId(NEW_UID);
+	public void saveExpenseCallsStoreRepository() throws Exception {
+		when(expenseViewModelMock.getuId()).thenReturn(UID);
+		when(expenseViewModelMock.getAmount()).thenReturn(AMOUNT);
+		when(expenseViewModelMock.getDate()).thenReturn(DATE);
+		when(expenseViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
+		when(expenseViewModelMock.getComment()).thenReturn(COMMENT);
+
+		expenseService.saveExpense(expenseViewModelMock);
+
+		verify(expenseRepositoryMock, times(1)).store(any(Expense.class));
 	}
 
 }

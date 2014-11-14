@@ -6,18 +6,22 @@ import org.joda.time.LocalDate;
 
 public class Expense {
 
-	private String uId;
+	private String uid;
 	private double amount;
 	private LocalDate date;
 	private String userEmail;
 	private String comment;
 
 	public Expense() {
-		this.uId = UUID.randomUUID().toString();
+		this.uid = UUID.randomUUID().toString();
 	}
 
-	public Expense(String uId) {
-		this.uId = uId;
+	public Expense(String uid, double amount, LocalDate date, String userEmail, String comment) {
+		this.uid = uid;
+		this.amount = amount;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.comment = comment;
 	}
 
 	public void setAmount(double amount) {
@@ -44,12 +48,12 @@ public class Expense {
 		return comment;
 	}
 
-	public String getuId() {
-		return uId;
+	public String getUid() {
+		return uid;
 	}
 
-	public void setuId(String uId) {
-		this.uId = uId;
+	public void setUid(String uId) {
+		this.uid = uId;
 	}
 
 	public String getUserEmail() {

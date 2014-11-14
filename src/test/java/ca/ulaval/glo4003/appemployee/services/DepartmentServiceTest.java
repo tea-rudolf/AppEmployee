@@ -1,11 +1,8 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +46,7 @@ public class DepartmentServiceTest {
 
 	private static final double WAGE = 45000.00;
 	private static final String PASSWORD = "1234";
-	private static final String EMAIL = "test@test.com";
+	private static final String EMAIL = "test@company.com";
 	private static final String DEPARTMENT_NAME = "dummyDepartment";
 	private static final String SUPERVISOR_ID = "0001";
 

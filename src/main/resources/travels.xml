@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <travels>
   <travels>
-    <uId>0002</uId>
+    <uid>0002</uid>
     <distanceTravelled>800.50</distanceTravelled>
     <date>2014-10-15</date>
     <userEmail>emp@company.com</userEmail>

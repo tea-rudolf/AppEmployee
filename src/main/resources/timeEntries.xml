@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <timeEntries>
   <timeEntries>
-    <uId>0c015760-660d-11e4-9803-0800200c9a66</uId>
+    <uid>0c015760-660d-11e4-9803-0800200c9a66</uid>
     <billableHours>7.5</billableHours>
     <date>2014-09-01</date>
     <userId>e1@emp.com</userId>
-    <taskId>0001</taskId>
+    <taskUid>0001</taskUid>
     <comment>Comment</comment>
   </timeEntries>
   <timeEntries>
-    <uId>0c015761-660d-11e4-9803-0800200c9a66</uId>
+    <uid>0c015761-660d-11e4-9803-0800200c9a66</uid>
     <billableHours>6</billableHours>
     <date>2014-09-02</date>
     <userId>e1@emp.com</userId>
-    <taskId>0002</taskId>
+    <taskUid>0002</taskUid>
     <comment>Comment</comment>
   </timeEntries>
   <timeEntries>
-    <uId>0c015762-660d-11e4-9803-0800200c9a66</uId>
+    <uid>0c015762-660d-11e4-9803-0800200c9a66</uid>
     <billableHours>5</billableHours>
     <date>2014-09-03</date>
     <userId>e1@emp.com</userId>
-    <taskId>0003</taskId>
+    <taskUid>0003</taskUid>
     <comment>Comment</comment>
   </timeEntries>
 </timeEntries>

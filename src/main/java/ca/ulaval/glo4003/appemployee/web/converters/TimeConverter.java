@@ -29,7 +29,7 @@ public class TimeConverter {
 
 		for (TimeEntry entry : timeEntries) {
 			TimeViewModel viewModel = convert(entry);
-			viewModel.setTimeEntryuId(entry.getuId());
+			viewModel.setTimeEntryuId(entry.getUid());
 			viewModels.add(viewModel);
 			System.out.println("uidentry = " + viewModel.getTimeEntryuId());
 		}
@@ -40,7 +40,7 @@ public class TimeConverter {
 		TimeEntry timeEntry = new TimeEntry();
 		timeEntry.setBillableHours(timeViewModel.getHoursTimeEntry());
 		timeEntry.setDate(new LocalDate(timeViewModel.getDateTimeEntry()));
-		timeEntry.setTaskuId(timeViewModel.getTaskIdTimeEntry());
+		timeEntry.setTaskUid(timeViewModel.getTaskIdTimeEntry());
 		timeEntry.setUserEmail(timeViewModel.getUserEmail());
 		timeEntry.setComment(timeViewModel.getCommentTimeEntry());
 		return timeEntry;
@@ -50,8 +50,8 @@ public class TimeConverter {
 		TimeViewModel model = new TimeViewModel();
 		model.setDateTimeEntry(timeEntry.getDate().toString());
 		model.setHoursTimeEntry(timeEntry.getBillableHours());
-		model.setTaskIdTimeEntry(timeEntry.getTaskuId());
-		model.setTaskNameTimeEntry(projectService.getTaskName(timeEntry.getTaskuId()));
+		model.setTaskIdTimeEntry(timeEntry.getTaskUid());
+		model.setTaskNameTimeEntry(projectService.getTaskName(timeEntry.getTaskUid()));
 		model.setCommentTimeEntry(timeEntry.getComment());
 		return model;
 	}

@@ -42,7 +42,7 @@ public class XMLProjectRepository implements ProjectRepository {
 
 	@Override
 	public void store(Project project) throws Exception {
-		projects.put(project.getuId(), project);
+		projects.put(project.getUid(), project);
 		saveXML();
 	}
 
@@ -55,7 +55,7 @@ public class XMLProjectRepository implements ProjectRepository {
 	private void parseXML() throws Exception {
 		List<Project> deserializedProjects = serializer.unmarshall(PROJECTS_FILEPATH).getProjects();
 		for (Project project : deserializedProjects) {
-			projects.put(project.getuId(), project);
+			projects.put(project.getUid(), project);
 		}
 	}
 

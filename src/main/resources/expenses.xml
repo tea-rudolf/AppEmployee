@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <expenses>
   <expenses>
-    <uId>0001</uId>
+    <uid>0001</uid>
     <amount>800.50</amount>
     <date>2014-10-15</date>
     <userEmail>emp@company.com</userEmail>

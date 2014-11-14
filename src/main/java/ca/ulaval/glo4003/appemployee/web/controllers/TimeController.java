@@ -67,7 +67,7 @@ public class TimeController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
@@ -89,7 +89,7 @@ public class TimeController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
@@ -107,10 +107,10 @@ public class TimeController {
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
-		payPeriodService.storeTimeEntry(newTimeEntry);
+		// payPeriodService.saveTimeEntry(newTimeEntry);
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
-		currentPayPeriod.addTimeEntry(newTimeEntry.getuId());
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
+		currentPayPeriod.addTimeEntry(newTimeEntry.getUid());
 		payPeriodService.updatePayPeriod(currentPayPeriod);
 
 		return TIME_SHEET_SUBMIT_JSP;
@@ -124,7 +124,7 @@ public class TimeController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 
@@ -145,7 +145,7 @@ public class TimeController {
 		}
 
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		payPeriodService.updateTimeEntry(timeEntryuId, viewModel);
+		payPeriodService.saveTimeEntry(viewModel);
 
 		return TIME_REDIRECT;
 	}
@@ -157,7 +157,7 @@ public class TimeController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
+		PayPeriod payPeriod = payPeriodService.retrievePreviousPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
@@ -180,7 +180,7 @@ public class TimeController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getPreviousPayPeriod();
+		PayPeriod currentPayPeriod = payPeriodService.retrievePreviousPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
@@ -198,14 +198,13 @@ public class TimeController {
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
-		payPeriodService.storeTimeEntry(newTimeEntry);
+		payPeriodService.saveTimeEntry(payPeriodForm);
 
-		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
-		payPeriod.addTimeEntry(newTimeEntry.getuId());
+		PayPeriod payPeriod = payPeriodService.retrievePreviousPayPeriod();
+		payPeriod.addTimeEntry(newTimeEntry.getUid());
 		payPeriodService.updatePayPeriod(payPeriod);
 
 		return TIME_SHEET_SUBMIT_JSP;
-
 	}
 
 	@RequestMapping(value = "/previousTime/{timeEntryuId}/edit", method = RequestMethod.GET)
@@ -215,7 +214,7 @@ public class TimeController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod payPeriod = payPeriodService.getPreviousPayPeriod();
+		PayPeriod payPeriod = payPeriodService.retrievePreviousPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
 
@@ -237,7 +236,7 @@ public class TimeController {
 		}
 
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		payPeriodService.updateTimeEntry(timeEntryuId, viewModel);
+		payPeriodService.saveTimeEntry(viewModel);
 
 		return PREVIOUS_TIME_REDIRECT;
 	}

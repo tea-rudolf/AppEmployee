@@ -32,7 +32,7 @@ public class TaskConverter {
 
 	public TaskViewModel convert(Task task) {
 		TaskViewModel viewModel = new TaskViewModel();
-		viewModel.setuId(task.getuId());
+		viewModel.setuId(task.getUid());
 		viewModel.setName(task.getName());
 		viewModel.setAuthorizedUsers(task.getAuthorizedUsers());
 		return viewModel;

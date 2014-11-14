@@ -63,32 +63,32 @@ public class ProjectConverterTest {
 		projectMock = projectConverter.convert(projectViewModelMock);
 
 		assertEquals(projectViewModelMock.getName(), projectMock.getName());
-		assertEquals(projectViewModelMock.getTaskIds(), projectMock.getTaskuIds());
-		assertEquals(projectViewModelMock.getUserIds(), projectMock.getEmployeeuIds());
-		assertEquals(projectViewModelMock.getExpenseIds(), projectMock.getExpenseuIds());
+		assertEquals(projectViewModelMock.getTaskIds(), projectMock.getTaskUids());
+		assertEquals(projectViewModelMock.getUserIds(), projectMock.getEmployeeUids());
+		assertEquals(projectViewModelMock.getExpenseIds(), projectMock.getExpenseUids());
 	}
 
 	@Test
 	public void convertProjectlToProjectViewMode() {
-		when(projectMock.getuId()).thenReturn(FIRST_ID);
+		when(projectMock.getUid()).thenReturn(FIRST_ID);
 		when(projectMock.getName()).thenReturn(FIRST_NAME);
-		when(projectMock.getTaskuIds()).thenReturn(TASK_IDS);
-		when(projectMock.getEmployeeuIds()).thenReturn(USER_IDS);
-		when(projectMock.getExpenseuIds()).thenReturn(EXPENSES_IDS);
+		when(projectMock.getTaskUids()).thenReturn(TASK_IDS);
+		when(projectMock.getEmployeeUids()).thenReturn(USER_IDS);
+		when(projectMock.getExpenseUids()).thenReturn(EXPENSES_IDS);
 
 		projectViewModelMock = projectConverter.convert(projectMock);
 
-		assertEquals(projectMock.getuId(), projectViewModelMock.getuId());
+		assertEquals(projectMock.getUid(), projectViewModelMock.getuId());
 		assertEquals(projectMock.getName(), projectViewModelMock.getName());
-		assertEquals(projectMock.getTaskuIds(), projectViewModelMock.getTaskIds());
-		assertEquals(projectMock.getEmployeeuIds(), projectViewModelMock.getUserIds());
-		assertEquals(projectMock.getExpenseuIds(), projectViewModelMock.getExpenseIds());
+		assertEquals(projectMock.getTaskUids(), projectViewModelMock.getTaskIds());
+		assertEquals(projectMock.getEmployeeUids(), projectViewModelMock.getUserIds());
+		assertEquals(projectMock.getExpenseUids(), projectViewModelMock.getExpenseIds());
 	}
 
 	private Project createProject(String number, String name) {
 		Project project = mock(Project.class);
 		given(project.getName()).willReturn(name);
-		given(project.getuId()).willReturn(number);
+		given(project.getUid()).willReturn(number);
 		return project;
 	}
 }

@@ -32,34 +32,22 @@ public class DepartmentService {
 		if (userRepository.findByEmail(userViewModel.getEmail()) != null) {
 			throw new EmployeeAlreadyExistsException("Employee you are trying to create already exists.");
 		}
-		if (!supervisorIsAssignedToDepartment(supervisorID, departmentName)) {
+		if (!isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
 			throw new SupervisorAccessException("You do not have supervisor rights in this department.");
 		}
 
-		User newUser = new User();
-		newUser.setEmail(userViewModel.getEmail());
-		newUser.setPassword(userViewModel.getPassword());
-		newUser.setWage(userViewModel.getWage());
-
-		if (userViewModel.getRole().equals("EMPLOYEE")) {
-			newUser.setRole(Role.EMPLOYEE);
-		} else if (userViewModel.getRole().equals("ENTERPRISE")) {
-			newUser.setRole(Role.ENTERPRISE);
-		} else if (userViewModel.getRole().equals("SUPERVISOR")) {
-			newUser.setRole(Role.SUPERVISOR);
-		}
-
-		userRepository.store(newUser);
+		User user = new User(userViewModel.getEmail(), userViewModel.getPassword(), Role.valueOf(userViewModel.getRole()), userViewModel.getWage());
+		userRepository.store(user);
 	}
 
 	public void assignUserToDepartment(UserViewModel userViewModel, String supervisorID, String departmentName) throws Exception {
 
 		Department department = departmentRepository.findByName(departmentName);
 		if (department == null) {
-			throw new DepartmentNotFoundException();
+			throw new DepartmentNotFoundException("Department does not exist");
 		}
 
-		if (!supervisorIsAssignedToDepartment(supervisorID, departmentName)) {
+		if (!isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
 			throw new SupervisorAccessException("You do not have supervisor rights in this department.");
 		}
 
@@ -87,7 +75,7 @@ public class DepartmentService {
 		return employees;
 	}
 
-	private boolean supervisorIsAssignedToDepartment(String supervisorID, String departmentName) {
+	private boolean isSupervisorAssignedToDepartment(String supervisorID, String departmentName) {
 		boolean isAssigned = false;
 		Department department = departmentRepository.findByName(departmentName);
 

@@ -29,7 +29,7 @@ public class XMLProjectRepositoryTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		repository = new XMLProjectRepository(marshallerMock);
-		when(projectMock.getuId()).thenReturn(VALID_UID);
+		when(projectMock.getUid()).thenReturn(VALID_UID);
 	}
 
 	@Test

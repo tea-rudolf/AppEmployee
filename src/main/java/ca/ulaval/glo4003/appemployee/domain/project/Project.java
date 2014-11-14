@@ -9,31 +9,31 @@ import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyExistsExceptio
 
 public class Project {
 
-	private String uId;
+	private String uid;
 	private String name = "";
-	private List<String> taskuIds = new ArrayList<String>();
-	private List<String> employeeuIds = new ArrayList<String>();
-	private List<String> expenseuIds = new ArrayList<String>();
+	private List<String> taskUids = new ArrayList<String>();
+	private List<String> employeeUids = new ArrayList<String>();
+	private List<String> expenseUids = new ArrayList<String>();
 
 	public Project() {
-		this.uId = UUID.randomUUID().toString();
+		this.uid = UUID.randomUUID().toString();
 	}
 
-	public Project(String uId) {
-		this.uId = uId;
+	public Project(String uid) {
+		this.uid = uid;
 	}
 
-	public Project(String uId, String name) {
-		this.uId = uId;
+	public Project(String uid, String name) {
+		this.uid = uid;
 		this.name = name;
 	}
 
-	public String getuId() {
-		return uId;
+	public String getUid() {
+		return uid;
 	}
 
-	public void setuId(String uId) {
-		this.uId = uId;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	public String getName() {
@@ -44,48 +44,48 @@ public class Project {
 		this.name = name;
 	}
 
-	public List<String> getTaskuIds() {
-		return taskuIds;
+	public List<String> getTaskUids() {
+		return taskUids;
 	}
 
-	public void setTaskuIds(List<String> taskuIds) {
-		this.taskuIds = taskuIds;
+	public void setTaskuIds(List<String> taskUids) {
+		this.taskUids = taskUids;
 	}
 
-	public List<String> getEmployeeuIds() {
-		return employeeuIds;
+	public List<String> getEmployeeUids() {
+		return employeeUids;
 	}
 
-	public void setEmployeeuIds(List<String> useruIds) {
-		this.employeeuIds = useruIds;
+	public void setEmployeeUids(List<String> userUids) {
+		this.employeeUids = userUids;
 	}
 
-	public List<String> getExpenseuIds() {
-		return expenseuIds;
+	public List<String> getExpenseUids() {
+		return expenseUids;
 	}
 
-	public void setExpenseuIds(List<String> expenseIds) {
-		this.expenseuIds = expenseIds;
+	public void setExpenseUids(List<String> expenseIds) {
+		this.expenseUids = expenseIds;
 	}
 
-	public void addTaskuId(String taskuId) {
-		if (taskuIds.contains(taskuId)) {
+	public void addTaskUid(String taskUid) {
+		if (taskUids.contains(taskUid)) {
 			throw new TaskAlreadyExistsException("Task already assigned to this project.");
 		}
 
-		taskuIds.add(taskuId);
+		taskUids.add(taskUid);
 	}
 
 	public boolean userIsAlreadyAssigned(String userId) {
-		return employeeuIds.contains(userId);
+		return employeeUids.contains(userId);
 	}
 
 	public void addEmployeeToProject(String userId) {
-		if (employeeuIds.contains(userId)) {
+		if (employeeUids.contains(userId)) {
 			throw new EmployeeAlreadyExistsException("Employee already assigned to this project.");
 		}
 
-		employeeuIds.add(userId);
+		employeeUids.add(userId);
 	}
 
 }

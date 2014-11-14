@@ -28,7 +28,7 @@ public class XMLTimeEntryRepositoryTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		repository = new XMLTimeEntryRepository(marshallerMock);
-		when(timeEntryMock.getuId()).thenReturn(VALID_UID);
+		when(timeEntryMock.getUid()).thenReturn(VALID_UID);
 	}
 
 	@Test

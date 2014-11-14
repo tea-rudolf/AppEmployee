@@ -1,8 +1,9 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -14,6 +15,10 @@ import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 public class XMLExpenseRepositoryTest {
 
 	private static final String VALID_UID = "1234";
+	private static final double AMOUNT = 500.50;
+	private static final LocalDate DATE = new LocalDate();
+	private static final String USER_EMAIL = "test@company.com";
+	private static final String COMMENT = "nothing to say";
 
 	@Mock
 	private XMLGenericMarshaller<ExpenseXMLAssembler> marshallerMock;
@@ -31,12 +36,12 @@ public class XMLExpenseRepositoryTest {
 	public void init() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		repository = new XMLExpenseRepository();
-		when(expenseMock.getuId()).thenReturn(VALID_UID);
+		when(expenseMock.getUid()).thenReturn(VALID_UID);
 	}
 
 	@Test
 	public void findByuIdFindsExpenseById() throws Exception {
-		Expense dummyExpense = new Expense(VALID_UID);
+		Expense dummyExpense = new Expense(VALID_UID, AMOUNT, DATE, USER_EMAIL, COMMENT);
 		repository.store(dummyExpense);
 
 		assertEquals(dummyExpense, repository.findByUid(VALID_UID));

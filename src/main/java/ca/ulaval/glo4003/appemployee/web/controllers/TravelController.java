@@ -61,7 +61,7 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		List<Travel> travels = userService.getTravelEntriesForUserForAPayPeriod(currentPayPeriod, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TravelViewModel form = new TravelViewModel();
 		form.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
@@ -85,7 +85,7 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		TravelViewModel form = new TravelViewModel();
 		form.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
 		form.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
@@ -120,7 +120,7 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.getCurrentPayPeriod();
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 
 		Travel travel = travelService.findByuId(uId);
 		TravelViewModel mod = travelConverter.convert(travel);

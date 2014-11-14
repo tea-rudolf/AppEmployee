@@ -4,14 +4,11 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.ulaval.glo4003.appemployee.domain.exceptions.NoCurrentPayPeriodException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
-import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Service
@@ -19,51 +16,35 @@ public class PayPeriodService {
 
 	private PayPeriodRepository payPeriodRepository;
 	private TimeEntryRepository timeEntryRepository;
-	private TimeConverter timeConverter;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter) {
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;
-		this.timeConverter = timeConverter;
 	}
 
-	public void storeTimeEntry(TimeEntry entry) {
-		try {
-			timeEntryRepository.store(entry);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
+	public PayPeriod retrieveCurrentPayPeriod() throws PayPeriodNotFoundException {
+		LocalDate currentDate = new LocalDate();
+		PayPeriod currentPayPeriod = payPeriodRepository.findByDate(currentDate);
+
+		if (currentPayPeriod == null) {
+			throw new PayPeriodNotFoundException("Cannot find project pay period containing date " + currentDate.toString());
 		}
-	}
-
-	public PayPeriod getCurrentPayPeriod() {
-		PayPeriod currentPayPeriod;
-
-		try {
-			currentPayPeriod = payPeriodRepository.findByDate(new LocalDate());
-		} catch (PayPeriodNotFoundException exception) {
-			throw new NoCurrentPayPeriodException(exception.getMessage());
-		}
-
 		return currentPayPeriod;
 	}
 
-	public PayPeriod getPreviousPayPeriod() {
-		return payPeriodRepository.findByDate(this.getCurrentPayPeriod().getStartDate().minusDays(1));
+	public PayPeriod retrievePreviousPayPeriod() {
+		return payPeriodRepository.findByDate(retrieveCurrentPayPeriod().getStartDate().minusDays(1));
 	}
 
-	public void updatePayPeriod(PayPeriod payPeriod) {
-		try {
-			payPeriodRepository.update(payPeriod);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
-		}
+	public void updatePayPeriod(PayPeriod payPeriod) throws Exception {
+		payPeriodRepository.update(payPeriod);
 	}
 
-	public void updateTimeEntry(String timeEntryUid, TimeViewModel viewModel) {
-		TimeEntry newTimeEntry = timeConverter.convert(viewModel);
-		newTimeEntry.setuId(timeEntryUid);
-		storeTimeEntry(newTimeEntry);
+	public void saveTimeEntry(TimeViewModel timeEntryViewModel) throws Exception {
+		TimeEntry timeEntry = new TimeEntry(timeEntryViewModel.getTimeEntryuId(), timeEntryViewModel.getHoursTimeEntry(), new LocalDate(
+				timeEntryViewModel.getDateTimeEntry()), timeEntryViewModel.getUserEmail(), timeEntryViewModel.getTaskIdTimeEntry(),
+				timeEntryViewModel.getCommentTimeEntry());
+		timeEntryRepository.store(timeEntry);
 	}
-
 }

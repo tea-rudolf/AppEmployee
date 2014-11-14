@@ -6,7 +6,7 @@ import org.joda.time.LocalDate;
 
 public class Travel {
 
-	private String uId;
+	private String uid;
 	private double distanceTravelled;
 	private LocalDate date;
 	private String userEmail;
@@ -14,11 +14,11 @@ public class Travel {
 	private Vehicule vehicule;
 
 	public Travel() {
-		this.uId = UUID.randomUUID().toString();
+		this.uid = UUID.randomUUID().toString();
 	}
 
-	public Travel(String uId) {
-		this.uId = uId;
+	public Travel(String uid) {
+		this.uid = uid;
 	}
 
 	public void setDistanceTravelled(double distanceTravelled) {
@@ -37,12 +37,12 @@ public class Travel {
 		return date;
 	}
 
-	public void setuId(String uId) {
-		this.uId = uId;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
-	public String getuId() {
-		return uId;
+	public String getUid() {
+		return uid;
 	}
 
 	public void setUserEmail(String userEmail) {

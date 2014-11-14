@@ -1,9 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +61,7 @@ public class ExpenseConverterTest {
 		when(expenseMock.getAmount()).thenReturn(FIRST_AMOUNT);
 		when(expenseMock.getComment()).thenReturn(COMMENT);
 		when(expenseMock.getDate()).thenReturn(FIRST_DATE);
-		when(expenseMock.getuId()).thenReturn(FIRST_ID);
+		when(expenseMock.getUid()).thenReturn(FIRST_ID);
 		when(expenseMock.getUserEmail()).thenReturn(USER_EMAIL);
 
 		expenseViewModelMock = expenseConverter.convert(expenseMock);
@@ -70,29 +69,14 @@ public class ExpenseConverterTest {
 		assertEquals(expenseMock.getAmount(), expenseViewModelMock.getAmount(), EPSILON);
 		assertEquals(expenseMock.getComment(), expenseViewModelMock.getComment());
 		assertEquals(expenseMock.getDate().toString(), expenseViewModelMock.getDate());
-		assertEquals(expenseMock.getuId(), expenseViewModelMock.getuId());
+		assertEquals(expenseMock.getUid(), expenseViewModelMock.getuId());
 		assertEquals(expenseMock.getUserEmail(), expenseViewModelMock.getUserEmail());
-	}
-
-	@Test
-	public void convertExpenseViewModelToExpense() {
-		when(expenseViewModelMock.getAmount()).thenReturn(FIRST_AMOUNT);
-		when(expenseViewModelMock.getDate()).thenReturn(FIRST_DATE.toString());
-		when(expenseViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
-		when(expenseViewModelMock.getComment()).thenReturn(COMMENT);
-
-		expenseMock = expenseConverter.convert(expenseViewModelMock);
-
-		assertEquals(expenseViewModelMock.getAmount(), expenseMock.getAmount(), EPSILON);
-		assertEquals(expenseViewModelMock.getDate(), expenseMock.getDate().toString());
-		assertEquals(expenseViewModelMock.getUserEmail(), expenseMock.getUserEmail());
-		assertEquals(expenseViewModelMock.getComment(), expenseMock.getComment());
 	}
 
 	private Expense createExpense(String number, double amount, LocalDate date) {
 		Expense expense = mock(Expense.class);
 		given(expense.getAmount()).willReturn(amount);
-		given(expense.getuId()).willReturn(number);
+		given(expense.getUid()).willReturn(number);
 		given(expense.getDate()).willReturn(date);
 		return expense;
 	}

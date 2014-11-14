@@ -28,7 +28,7 @@ public class XMLTaskRepositoryTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		repository = new XMLTaskRepository(marshallerMock);
-		when(taskMock.getuId()).thenReturn(VALID_UID);
+		when(taskMock.getUid()).thenReturn(VALID_UID);
 	}
 
 	@Test

@@ -52,14 +52,13 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 
 	@Override
 	public PayPeriod findByDate(LocalDate date) {
-
-		for (PayPeriod payPeriod : payPeriods) {
-			if (date.isAfter(payPeriod.getStartDate().minusDays(1)) && date.isBefore(payPeriod.getEndDate().plusDays(1))) {
-				return payPeriod;
+		PayPeriod payPeriod = null;
+		for (PayPeriod aPayPeriod : payPeriods) {
+			if (date.isAfter(aPayPeriod.getStartDate().minusDays(1)) && date.isBefore(aPayPeriod.getEndDate().plusDays(1))) {
+				payPeriod = aPayPeriod;
 			}
 		}
-
-		throw new PayPeriodNotFoundException("Cannot find project pay period containing date " + date.toString());
+		return payPeriod;
 	}
 
 	private void saveXML() throws Exception {

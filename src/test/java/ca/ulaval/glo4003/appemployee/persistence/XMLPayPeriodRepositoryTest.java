@@ -1,8 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -17,7 +16,6 @@ public class XMLPayPeriodRepositoryTest {
 	private static final LocalDate START_DATE = new LocalDate("2014-09-29");
 	private static final LocalDate END_DATE = new LocalDate("2014-10-12");
 	private static final LocalDate ACTUAL_DATE = new LocalDate("2014-10-02");
-	private static final LocalDate WRONG_DATE = new LocalDate("2016-10-10");
 
 	private XMLPayPeriodRepository xmlPayPeriodRepository;
 	private PayPeriod payPeriodMock;
@@ -47,11 +45,6 @@ public class XMLPayPeriodRepositoryTest {
 		xmlPayPeriodRepository.store(payPeriodMock);
 
 		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE).getStartDate(), payPeriodMock.getStartDate());
-	}
-
-	@Test(expected = PayPeriodNotFoundException.class)
-	public void findPayPeriodThrowsExceptionIfPayPeriodNotFound() {
-		xmlPayPeriodRepository.findByDate(WRONG_DATE);
 	}
 
 	@Test(expected = PayPeriodAlreadyExistsException.class)

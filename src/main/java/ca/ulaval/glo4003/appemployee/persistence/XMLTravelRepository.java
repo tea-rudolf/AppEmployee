@@ -32,7 +32,7 @@ public class XMLTravelRepository implements TravelRepository {
 
 	@Override
 	public void store(Travel travel) throws Exception {
-		travels.put(travel.getuId(), travel);
+		travels.put(travel.getUid(), travel);
 		saveXML();
 	}
 
@@ -67,7 +67,7 @@ public class XMLTravelRepository implements TravelRepository {
 	private void parseXML() throws Exception {
 		List<Travel> deserializedTravels = serializer.unmarshall(TRAVELS_FILEPATH).getTravels();
 		for (Travel travel : deserializedTravels) {
-			travels.put(travel.getuId(), travel);
+			travels.put(travel.getUid(), travel);
 		}
 	}
 

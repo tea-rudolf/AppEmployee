@@ -81,7 +81,7 @@ public class UserServiceTest {
 		when(payPeriodMock.getTimeEntryIds()).thenReturn(sampleIdList);
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
 		when(timeEntryMock.getUserEmail()).thenReturn(EMAIL);
-		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_ID);
+		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_ID);
 		when(taskRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(taskMock);
 
 		List<Task> simpleTaskList = userService.getTasksForUserForAPayPeriod(payPeriodMock, EMAIL);
@@ -119,10 +119,10 @@ public class UserServiceTest {
 
 	@Test
 	public void getTimeEntryFindsCorrectTimeEntry() {
-		when(timeEntryMock.getuId()).thenReturn(TIME_ENTRY_ID);
+		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_ID);
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
 		TimeEntry returnedTimeEntry = userService.getTimeEntry(TIME_ENTRY_ID);
-		assertEquals(timeEntryMock.getuId(), returnedTimeEntry.getuId());
+		assertEquals(timeEntryMock.getUid(), returnedTimeEntry.getUid());
 	}
 
 	@Test

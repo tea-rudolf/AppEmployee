@@ -38,7 +38,7 @@ public class XMLTravelRepositoryTest {
 
 	@Test
 	public void storeAddsTravelToRepository() throws Exception {
-		when(travelMock.getuId()).thenReturn(TRAVEL_UID);
+		when(travelMock.getUid()).thenReturn(TRAVEL_UID);
 		travelRepository.store(travelMock);
 		Travel expectedTravel = travelRepository.findByUid(TRAVEL_UID);
 		assertEquals(travelMock, expectedTravel);
@@ -46,7 +46,7 @@ public class XMLTravelRepositoryTest {
 
 	@Test
 	public void findAllTravelsByUserReturnsCorrectTasks() throws Exception {
-		when(travelMock.getuId()).thenReturn(TRAVEL_UID);
+		when(travelMock.getUid()).thenReturn(TRAVEL_UID);
 		when(travelMock.getUserEmail()).thenReturn(USER);
 		travelRepository.store(travelMock);
 		List<Travel> sampleTravelList = travelRepository.findAllTravelsByUser(USER);
@@ -55,7 +55,7 @@ public class XMLTravelRepositoryTest {
 
 	@Test
 	public void findByUidFindsCorrectTravel() throws Exception {
-		when(travelMock.getuId()).thenReturn(TRAVEL_UID);
+		when(travelMock.getUid()).thenReturn(TRAVEL_UID);
 		travelRepository.store(travelMock);
 		Travel expectedTravel = travelRepository.findByUid(TRAVEL_UID);
 		assertEquals(travelMock, expectedTravel);
@@ -63,7 +63,7 @@ public class XMLTravelRepositoryTest {
 
 	@Test
 	public void findAllFindsAllTravels() throws Exception {
-		when(travelMock.getuId()).thenReturn(TRAVEL_UID);
+		when(travelMock.getUid()).thenReturn(TRAVEL_UID);
 		travelRepository.store(travelMock);
 		Collection<Travel> expectedCollection = travelRepository.findAll();
 		assertEquals(TEMPORARY_TRAVEL_LIST_SIZE, expectedCollection.size());

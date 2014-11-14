@@ -51,7 +51,7 @@ public class ProjectService {
 			project.addEmployeeToProject(viewModel.getUserEmail());
 
 			for (Task task : getAllTasksByProjectId(projectId)) {
-				assignUserToTask(viewModel.getUserEmail(), projectId, task.getuId());
+				assignUserToTask(viewModel.getUserEmail(), projectId, task.getUid());
 			}
 		}
 
@@ -64,7 +64,7 @@ public class ProjectService {
 
 	public void addTaskToProject(String projectId, String taskId) {
 		Project project = projectRepository.findById(projectId);
-		project.addTaskuId(taskId);
+		project.addTaskUid(taskId);
 		try {
 			projectRepository.store(project);
 		} catch (Exception e) {
@@ -105,7 +105,7 @@ public class ProjectService {
 
 	public List<Task> getAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
-		List<String> projectTasksId = project.getTaskuIds();
+		List<String> projectTasksId = project.getTaskUids();
 		List<Task> tasks = new ArrayList<Task>();
 		for (String taskId : projectTasksId) {
 			Task task = taskRepository.findByUid(taskId);
@@ -116,7 +116,7 @@ public class ProjectService {
 
 	public List<User> getAllEmployeesByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
-		List<String> projectEmployeesEmail = project.getEmployeeuIds();
+		List<String> projectEmployeesEmail = project.getEmployeeUids();
 		List<User> employees = new ArrayList<User>();
 
 		for (String employeeEmail : projectEmployeesEmail) {
@@ -133,7 +133,7 @@ public class ProjectService {
 		for (Project project : projects) {
 
 			if (project.userIsAlreadyAssigned(userId)) {
-				List<Task> projectTasks = getAllTasksByProjectId(project.getuId());
+				List<Task> projectTasks = getAllTasksByProjectId(project.getUid());
 				tasks.addAll(projectTasks);
 			}
 		}

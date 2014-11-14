@@ -77,7 +77,7 @@ public class UserService {
 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
 			if (entry != null && entry.getUserEmail().equals(userId)) {
-				tasks.add(taskRepository.findByUid(entry.getuId()));
+				tasks.add(taskRepository.findByUid(entry.getUid()));
 			}
 		}
 		return tasks;
@@ -125,7 +125,7 @@ public class UserService {
 		entry.setBillableHours(viewModel.getHoursTimeEntry());
 		entry.setComment(viewModel.getCommentTimeEntry());
 		entry.setDate(new LocalDate(viewModel.getDateTimeEntry()));
-		entry.setTaskuId(viewModel.getTaskIdTimeEntry());
+		entry.setTaskUid(viewModel.getTaskIdTimeEntry());
 
 		try {
 			timeEntryRepository.store(entry);

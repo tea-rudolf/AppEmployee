@@ -37,7 +37,7 @@ public class XMLExpenseRepository implements ExpenseRepository {
 
 	@Override
 	public void store(Expense expense) throws Exception {
-		expenses.put(expense.getuId(), expense);
+		expenses.put(expense.getUid(), expense);
 		saveXML();
 	}
 
@@ -53,6 +53,11 @@ public class XMLExpenseRepository implements ExpenseRepository {
 		return foundExpenses;
 	}
 
+	@Override
+	public Collection<Expense> findAll() {
+		return expenses.values();
+	}
+
 	private void saveXML() throws Exception {
 		ExpenseXMLAssembler expenseAssembler = new ExpenseXMLAssembler();
 		expenseAssembler.setExpenses(new ArrayList<Expense>(expenses.values()));
@@ -62,13 +67,8 @@ public class XMLExpenseRepository implements ExpenseRepository {
 	private void parseXML() throws Exception {
 		List<Expense> deserializedExpenses = serializer.unmarshall(EXPENSES_FILEPATH).getExpenses();
 		for (Expense expense : deserializedExpenses) {
-			expenses.put(expense.getuId(), expense);
+			expenses.put(expense.getUid(), expense);
 		}
-	}
-
-	@Override
-	public Collection<Expense> findAll() {
-		return expenses.values();
 	}
 
 }

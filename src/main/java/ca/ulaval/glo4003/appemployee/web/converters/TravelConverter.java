@@ -19,7 +19,7 @@ public class TravelConverter {
 
 		for (Travel travel : travels) {
 			TravelViewModel travelViewModel = convert(travel);
-			travelViewModel.setuId(travel.getuId());
+			travelViewModel.setuId(travel.getUid());
 			travelViewModels.add(travelViewModel);
 		}
 		return travelViewModels;
@@ -42,7 +42,7 @@ public class TravelConverter {
 
 	public TravelViewModel convert(Travel travel) {
 		TravelViewModel travelViewModel = new TravelViewModel();
-		travelViewModel.setuId(travel.getuId());
+		travelViewModel.setuId(travel.getUid());
 		travelViewModel.setDistanceTravelled(travel.getDistanceTravelled());
 		travelViewModel.setComment(travel.getComment());
 		travelViewModel.setDate(travel.getDate().toString());

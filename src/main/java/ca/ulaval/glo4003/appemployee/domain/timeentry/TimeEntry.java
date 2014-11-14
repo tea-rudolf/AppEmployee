@@ -6,19 +6,28 @@ import org.joda.time.LocalDate;
 
 public class TimeEntry {
 
-	private String uId;
+	private String uid;
 	private double billableHours;
 	private LocalDate date;
 	private String userEmail;
-	private String taskuId;
+	private String taskUid;
 	private String comment;
 
 	public TimeEntry() {
-		this.uId = UUID.randomUUID().toString();
+		this.uid = UUID.randomUUID().toString();
 	}
 
-	public TimeEntry(String uId) {
-		this.uId = uId;
+	public TimeEntry(String uid, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) {
+		this.uid = uid;
+		this.billableHours = billableHours;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.taskUid = taskUid;
+		this.comment = comment;
+	}
+
+	public TimeEntry(String uid) {
+		this.uid = uid;
 	}
 
 	public double getBillableHours() {
@@ -45,20 +54,20 @@ public class TimeEntry {
 		this.userEmail = userEmail;
 	}
 
-	public String getuId() {
-		return uId;
+	public String getUid() {
+		return uid;
 	}
 
-	public void setuId(String uId) {
-		this.uId = uId;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
-	public String getTaskuId() {
-		return taskuId;
+	public String getTaskUid() {
+		return taskUid;
 	}
 
-	public void setTaskuId(String taskuId) {
-		this.taskuId = taskuId;
+	public void setTaskUid(String taskUid) {
+		this.taskUid = taskUid;
 	}
 
 	public String getComment() {

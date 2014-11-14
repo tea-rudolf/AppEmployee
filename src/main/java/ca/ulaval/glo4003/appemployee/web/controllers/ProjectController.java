@@ -79,7 +79,7 @@ public class ProjectController {
 		try {
 			Project newProject = projectConverter.convert(projectViewModel);
 			projectService.addProject(newProject);
-			return String.format("redirect:/projects/%s/edit", newProject.getuId());
+			return String.format("redirect:/projects/%s/edit", newProject.getUid());
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return createProject(model, projectViewModel, session);
@@ -95,9 +95,9 @@ public class ProjectController {
 		}
 
 		Project project = projectService.getProjectById(projectNumber);
-		List<Task> tasks = projectService.getAllTasksByProjectId(project.getuId());
+		List<Task> tasks = projectService.getAllTasksByProjectId(project.getUid());
 
-		List<User> employees = projectService.getAllEmployeesByProjectId(project.getuId());
+		List<User> employees = projectService.getAllEmployeesByProjectId(project.getUid());
 		User currentUser = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TaskViewModel> tasksViewModel = taskConverter.convert(tasks);
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
@@ -149,7 +149,7 @@ public class ProjectController {
 		try {
 			Task task = taskConverter.convert(taskViewModel);
 			projectService.addTask(task);
-			projectService.addTaskToProject(projectNumber, task.getuId());
+			projectService.addTaskToProject(projectNumber, task.getUid());
 		} catch (TaskAlreadyExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return createTask(projectNumber, model, taskViewModel, session);

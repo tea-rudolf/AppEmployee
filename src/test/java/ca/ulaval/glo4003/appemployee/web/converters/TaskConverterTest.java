@@ -61,20 +61,20 @@ public class TaskConverterTest {
 
 		taskMock = taskConverter.convert(taskViewModelMock);
 
-		assertNotNull(taskMock.getuId());
+		assertNotNull(taskMock.getUid());
 		assertEquals(taskViewModelMock.getName(), taskMock.getName());
 		assertEquals(taskViewModelMock.getAuthorizedUsers(), taskMock.getAuthorizedUsers());
 	}
 
 	@Test
 	public void convertTaskToTaskViewModel() {
-		when(taskMock.getuId()).thenReturn(FIRST_ID);
+		when(taskMock.getUid()).thenReturn(FIRST_ID);
 		when(taskMock.getName()).thenReturn(FIRST_NAME);
 		when(taskMock.getAuthorizedUsers()).thenReturn(authorizedUsers);
 
 		taskViewModelMock = taskConverter.convert(taskMock);
 
-		assertEquals(taskMock.getuId(), taskViewModelMock.getuId());
+		assertEquals(taskMock.getUid(), taskViewModelMock.getuId());
 		assertEquals(taskMock.getName(), taskViewModelMock.getName());
 		assertEquals(taskMock.getAuthorizedUsers(), taskViewModelMock.getAuthorizedUsers());
 	}
@@ -82,7 +82,7 @@ public class TaskConverterTest {
 	private Task createTask(String number, String name) {
 		Task task = mock(Task.class);
 		given(task.getName()).willReturn(name);
-		given(task.getuId()).willReturn(number);
+		given(task.getUid()).willReturn(number);
 		given(task.getAuthorizedUsers()).willReturn(authorizedUsers);
 		return task;
 	}

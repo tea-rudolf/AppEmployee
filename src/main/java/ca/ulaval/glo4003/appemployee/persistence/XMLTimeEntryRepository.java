@@ -31,7 +31,7 @@ public class XMLTimeEntryRepository implements TimeEntryRepository {
 
 	@Override
 	public void store(TimeEntry timeEntry) throws Exception {
-		timeEntries.put(timeEntry.getuId(), timeEntry);
+		timeEntries.put(timeEntry.getUid(), timeEntry);
 		saveXML();
 	}
 
@@ -49,7 +49,7 @@ public class XMLTimeEntryRepository implements TimeEntryRepository {
 	private void parseXML() throws Exception {
 		List<TimeEntry> deserializedTimeEntries = serializer.unmarshall(TIMEENTRIES_FILEPATH).getTimeEntries();
 		for (TimeEntry timeEntry : deserializedTimeEntries) {
-			timeEntries.put(timeEntry.getuId(), timeEntry);
+			timeEntries.put(timeEntry.getUid(), timeEntry);
 		}
 	}
 

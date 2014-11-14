@@ -180,7 +180,7 @@ public class ProjectServiceTest {
 		List<String> sampleList = new ArrayList<String>();
 		sampleList.add(TASK_ID);
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-		when(projectMock.getTaskuIds()).thenReturn(sampleList);
+		when(projectMock.getTaskUids()).thenReturn(sampleList);
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
 
 		List<Task> sampleTaskList = projectService.getAllTasksByProjectId(PROJECT_ID);
@@ -193,7 +193,7 @@ public class ProjectServiceTest {
 		List<String> sampleUsersList = new ArrayList<String>();
 		sampleUsersList.add(DUMMY_USER_ID);
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
-		when(projectMock.getEmployeeuIds()).thenReturn(sampleUsersList);
+		when(projectMock.getEmployeeUids()).thenReturn(sampleUsersList);
 		when(userRepositoryMock.findByEmail(DUMMY_USER_ID)).thenReturn(userMock);
 
 		List<User> returnedUsersList = projectService.getAllEmployeesByProjectId(PROJECT_ID);
