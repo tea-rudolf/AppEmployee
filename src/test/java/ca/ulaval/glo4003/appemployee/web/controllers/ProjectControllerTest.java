@@ -181,16 +181,6 @@ public class ProjectControllerTest {
 		verify(projectServiceMock).addNewTaskToProject(taskViewModelMock, SAMPLE_PROJECTNUMBER);
 	}
 
-//	@Test
-//	public void saveTaskReturnsAnErrorMessageOnTaskExistsException() throws Exception {
-//		when(taskConverterMock.convert(taskViewModelMock)).thenReturn(taskMock);
-//		doThrow(new TaskAlreadyExistsException()).when(projectServiceMock).saveTask(taskMock);
-//
-//		projectController.saveTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
-//
-//		assertEquals(model.asMap().get("message").getClass(), MessageViewModel.class);
-//	}
-
 	@Test
 	public void taskModificationUpdatesTheModelCorrectly() {
 		List<String> authorizedUsers = new ArrayList<String>();

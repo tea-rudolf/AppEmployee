@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.appemployee.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -9,10 +10,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
@@ -31,6 +35,7 @@ public class ProjectServiceTest {
 	private static final String PROJECT_NAME = "ProjectShanna";
 	private static final String DUMMY_USER_ID = "emp@company.com";
 	private static final String EMPTY_USER_ID = "";
+	private static final List<String> PROJECT_USERS = Arrays.asList("bla@bla.com", "hello@hello.com", "dummy@dummy.com");
 
 	private ProjectService projectService;
 	private ProjectRepository projectRepositoryMock;
@@ -227,5 +232,17 @@ public class ProjectServiceTest {
 
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
 		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
+	}
+	
+	@Test
+	public void givenProjectWithUsersWhenAddingTaskToProjectTaskWillHaveSameUsersAsProject() throws Exception {
+		given(projectRepositoryMock.findById(PROJECT_ID)).willReturn(projectMock);
+		when(projectMock.getEmployeeUids()).thenReturn(PROJECT_USERS);
+		ArgumentCaptor<Task> taskArgumentCaptor = ArgumentCaptor.forClass(Task.class);
+		
+		projectService.addNewTaskToProject(taskViewModelMock, PROJECT_ID);
+		verify(taskRepositoryMock, times(1)).store(taskArgumentCaptor.capture());
+		Task createdTask = taskArgumentCaptor.getValue();
+		assertEquals(PROJECT_USERS, createdTask.getAuthorizedUsers());	
 	}
 }
