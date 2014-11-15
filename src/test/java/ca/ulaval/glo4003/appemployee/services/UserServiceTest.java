@@ -1,13 +1,8 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +36,8 @@ public class UserServiceTest {
 	private static final String COMMENT = "comment";
 	private static final String DATE = "2014-11-13";
 	private static final String START_DATE = "2014-10-30";
+	private static final String PASSWORD = "password";
+	private static final double WAGE = 0;
 
 	private UserService userService;
 	private TaskRepository taskRepositoryMock;
@@ -50,6 +47,8 @@ public class UserServiceTest {
 	private TravelRepository travelRepositoryMock;
 	private PayPeriod payPeriodMock;
 	private TimeEntry timeEntryMock;
+	private UserViewModel userViewModel;
+	private User user;
 	private Task taskMock;
 	private User userMock;
 	private User secondUserMock;
@@ -64,10 +63,13 @@ public class UserServiceTest {
 		expenseRepositoryMock = mock(ExpenseRepository.class);
 		timeEntryRepositoryMock = mock(TimeEntryRepository.class);
 		payPeriodMock = mock(PayPeriod.class);
+		userViewModel = new UserViewModel();
+		userViewModel.setPassword(PASSWORD);
 		timeEntryMock = mock(TimeEntry.class);
 		taskMock = mock(Task.class);
 		userMock = mock(User.class);
 		secondUserMock = mock(User.class);
+		user = new User(EMAIL, PASSWORD, null, WAGE);
 		userViewModelMock = mock(UserViewModel.class);
 		timeViewModelMock = mock(TimeViewModel.class);
 		expenseMock = mock(Expense.class);
@@ -206,16 +208,10 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void updateTimeEntryCallsCorrectRepositoryMethodIfSuccessful() throws Exception {
-		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
-		when(timeViewModelMock.getHoursTimeEntry()).thenReturn(HOURS);
-		when(timeViewModelMock.getCommentTimeEntry()).thenReturn(COMMENT);
-		when(timeViewModelMock.getDateTimeEntry()).thenReturn(DATE);
-		when(timeViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_ID);
-
-		userService.updateTimeEntry(TIME_ENTRY_ID, timeViewModelMock);
-
-		verify(timeEntryRepositoryMock, times(1)).store(timeEntryMock);
+	public void updatePasswordSetsNewPassword() {
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(user);
+		userService.updatePassword(EMAIL, userViewModel);
+		assertEquals(userViewModel.getPassword(), user.getPassword());
 	}
 
 	@Test(expected = RepositoryException.class)
