@@ -237,7 +237,7 @@ public class ProjectServiceTest {
 	@Test
 	public void givenProjectWithUsersWhenAddingTaskToProjectTaskWillHaveSameUsersAsProject() throws Exception {
 		given(projectRepositoryMock.findById(PROJECT_ID)).willReturn(projectMock);
-		when(projectMock.getEmployeeUids()).thenReturn(PROJECT_USERS);
+		given(projectMock.getEmployeeUids()).willReturn(PROJECT_USERS);
 		ArgumentCaptor<Task> taskArgumentCaptor = ArgumentCaptor.forClass(Task.class);
 		
 		projectService.addNewTaskToProject(taskViewModelMock, PROJECT_ID);
