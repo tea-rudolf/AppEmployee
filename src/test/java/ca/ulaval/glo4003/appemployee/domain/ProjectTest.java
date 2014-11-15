@@ -67,7 +67,7 @@ public class ProjectTest {
 	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
 		project.addEmployeeToProject(USER_UID);
 
-		assertTrue(project.userIsAlreadyAssigned(USER_UID));
+		assertTrue(project.userIsAlreadyAssignedToProject(USER_UID));
 
 	}
 }

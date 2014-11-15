@@ -47,12 +47,8 @@ public class ProjectService {
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
 
-		if (!viewModel.getUserEmail().equals("") && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+		if (!viewModel.getUserEmail().isEmpty() && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
 			project.addEmployeeToProject(viewModel.getUserEmail());
-
-			for (Task task : getAllTasksByProjectId(projectId)) {
-				assignUserToTask(viewModel.getUserEmail(), projectId, task.getUid());
-			}
 		}
 
 		try {
@@ -62,7 +58,7 @@ public class ProjectService {
 		}
 	}
 
-	public void addTaskToProject(String projectId, String taskId) {
+	public void saveTaskToProject(String projectId, String taskId) {
 		Project project = projectRepository.findById(projectId);
 		project.addTaskUid(taskId);
 		try {
@@ -72,7 +68,7 @@ public class ProjectService {
 		}
 	}
 
-	public void addTask(Task task) {
+	public void saveTask(Task task) {
 		try {
 			taskRepository.store(task);
 		} catch (Exception e) {
@@ -132,7 +128,7 @@ public class ProjectService {
 
 		for (Project project : projects) {
 
-			if (project.userIsAlreadyAssigned(userId)) {
+			if (project.userIsAlreadyAssignedToProject(userId)) {
 				List<Task> projectTasks = getAllTasksByProjectId(project.getUid());
 				tasks.addAll(projectTasks);
 			}
@@ -144,7 +140,7 @@ public class ProjectService {
 		Project project = projectRepository.findById(projectId);
 		Task task = taskRepository.findByUid(taskUId);
 
-		if (project.userIsAlreadyAssigned(userId)) {
+		if (task != null && project != null && project.userIsAlreadyAssignedToProject(userId)) {
 			task.assignUserToTask(userId);
 		} else {
 			project.addEmployeeToProject(userId);
@@ -155,5 +151,15 @@ public class ProjectService {
 	public String getTaskName(String taskUId) {
 		Task task = taskRepository.findByUid(taskUId);
 		return task.getName();
+	}
+
+	public void addNewTaskToProject(TaskViewModel taskViewModel, String projectNumber) {
+		Project project = projectRepository.findById(projectNumber);
+		
+		if (project != null) {
+			Task newTask = new Task(taskViewModel.getName(), project.getEmployeeUids());
+			saveTask(newTask);
+			saveTaskToProject(projectNumber, newTask.getUid());	
+		}		
 	}
 }

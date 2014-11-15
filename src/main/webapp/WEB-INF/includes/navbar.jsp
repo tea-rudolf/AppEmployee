@@ -13,7 +13,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<img src="/resources/img/InvertColorsLogo_mini.png" style="width: 39%; height: 8%"/>
+				<a class="navbar-brand" href="#">AppEmployee</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">

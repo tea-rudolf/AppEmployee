@@ -126,19 +126,19 @@ public class ProjectServiceTest {
 	public void addTaskToProjectThrowsExceptionWhenUnableToStore() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		doThrow(new RepositoryException()).when(projectRepositoryMock).store(projectMock);
-		projectService.addTaskToProject(PROJECT_ID, TASK_ID);
+		projectService.saveTaskToProject(PROJECT_ID, TASK_ID);
 	}
 
 	@Test
 	public void addTaskCallsCorrectRepositoryMethod() throws Exception {
-		projectService.addTask(taskMock);
+		projectService.saveTask(taskMock);
 		verify(taskRepositoryMock, times(1)).store(taskMock);
 	}
 
 	@Test(expected = RepositoryException.class)
 	public void addTaskThrowsExceptionIftaskIsNotCorrectlyAdded() throws Exception {
 		doThrow(new RepositoryException()).when(taskRepositoryMock).store(taskMock);
-		projectService.addTask(taskMock);
+		projectService.saveTask(taskMock);
 	}
 
 	@Test(expected = RepositoryException.class)
@@ -211,7 +211,7 @@ public class ProjectServiceTest {
 	public void givenUnassignedUserWhenAssigningUserToTaskThenAddsUserToProjectAndTask() {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
-		when(projectMock.userIsAlreadyAssigned(DUMMY_USER_ID)).thenReturn(false);
+		when(projectMock.userIsAlreadyAssignedToProject(DUMMY_USER_ID)).thenReturn(false);
 
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
 
@@ -223,7 +223,7 @@ public class ProjectServiceTest {
 	public void givenAssignedUserWhenAssigningToTaskThenAddsUserToTask() {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
-		when(projectMock.userIsAlreadyAssigned(DUMMY_USER_ID)).thenReturn(true);
+		when(projectMock.userIsAlreadyAssignedToProject(DUMMY_USER_ID)).thenReturn(true);
 
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
 		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);

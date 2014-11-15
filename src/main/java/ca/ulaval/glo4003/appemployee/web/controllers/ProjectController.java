@@ -96,16 +96,17 @@ public class ProjectController {
 
 		Project project = projectService.getProjectById(projectNumber);
 		List<Task> tasks = projectService.getAllTasksByProjectId(project.getUid());
-
 		List<User> employees = projectService.getAllEmployeesByProjectId(project.getUid());
 		User currentUser = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		
 		Collection<TaskViewModel> tasksViewModel = taskConverter.convert(tasks);
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
+		ProjectViewModel projectViewModel = projectConverter.convert(project);
+		
+		projectViewModel.setAvailableUsers(userService.retrieveAllUserEmails());
 
 		model.addAttribute("tasks", tasksViewModel);
 		model.addAttribute("employees", employeesViewModel);
-		ProjectViewModel projectViewModel = projectConverter.convert(project);
-		projectViewModel.setAvailableUsers(userService.retrieveAllUserEmails());
 		model.addAttribute("project", projectViewModel);
 		model.addAttribute("role", currentUser.getRole());
 
@@ -116,7 +117,7 @@ public class ProjectController {
 	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel, HttpSession session) throws Exception {
 
 		try {
-
+			// Gestion de NONE doit être faite au niveau du jsp
 			if (!viewModel.getUserEmail().equals("NONE")) {
 				userService.retrieveByEmail(viewModel.getUserEmail());
 			}
@@ -147,9 +148,7 @@ public class ProjectController {
 	public String saveTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
 
 		try {
-			Task task = taskConverter.convert(taskViewModel);
-			projectService.addTask(task);
-			projectService.addTaskToProject(projectNumber, task.getUid());
+			projectService.addNewTaskToProject(taskViewModel, projectNumber);
 		} catch (TaskAlreadyExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return createTask(projectNumber, model, taskViewModel, session);

@@ -18,6 +18,12 @@ public class Task {
 	public Task(String uid) {
 		this.uid = uid;
 	}
+	
+	public Task(String name, List<String> authorizedUsers) {
+		this();
+		this.name = name;
+		this.authorizedUsers = authorizedUsers;
+	}
 
 	public String getName() {
 		return name;
@@ -49,5 +55,12 @@ public class Task {
 	public void setAuthorizedUsers(List<String> authorizedUsers) {
 		this.authorizedUsers = authorizedUsers;
 	}
+
+//	public void assignUsersToTask(List<String> employeeUids) {
+//		for (String employeeUid:employeeUids) {
+//			
+//		}
+//		
+//	}
 
 }
