@@ -15,5 +15,7 @@
     <taskUids>0003</taskUids>
     <expenseUids>0002</expenseUids>
     <expenseUids>0003</expenseUids>
+    <employeeUids>emp@company.com</employeeUids>
+    <employeeUids>sup@company.com</employeeUids>
   </projects>
 </projects>
