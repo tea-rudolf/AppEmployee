@@ -8,14 +8,14 @@
     <comment>Trip to Montreal</comment>
   </expenses>
   <expenses>
-    <uId>0002</uId>
+    <uid>0002</uid>
     <amount>200.00</amount>
     <date>2014-10-10</date>
     <userEmail>sup@company.com</userEmail>
     <comment>Diner with client</comment>
   </expenses>
   <expenses>
-    <uId>0003</uId>
+    <uid>0003</uid>
     <amount>100.50</amount>
     <date>2014-10-07</date>
     <userEmail>emp@company.com</userEmail>

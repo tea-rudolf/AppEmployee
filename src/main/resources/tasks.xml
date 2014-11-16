@@ -3,21 +3,18 @@
   <tasks>
     <uid>0001</uid>
     <name>Task1</name>
-    <comment>task 1 comment</comment>
     <authorizedUsers>emp@company.com</authorizedUsers>
     <authorizedUsers>sup@company.com</authorizedUsers>
   </tasks>
   <tasks>
     <uid>0002</uid>
     <name>Task2</name>
-    <comment>task 2 comment</comment>
     <authorizedUsers>emp@company.com</authorizedUsers>
     <authorizedUsers>sup@company.com</authorizedUsers>
   </tasks>
   <tasks>
     <uid>0003</uid>
     <name>Task3</name>
-    <comment>task 3 comment</comment>
     <authorizedUsers>emp@company.com</authorizedUsers>
     <authorizedUsers>sup@company.com</authorizedUsers>
   </tasks>
