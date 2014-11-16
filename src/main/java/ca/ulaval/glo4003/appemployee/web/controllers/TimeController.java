@@ -106,7 +106,9 @@ public class TimeController {
 		}
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
-		payPeriodService.saveTimeEntry(payPeriodForm);
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
+
+		payPeriodService.createTimeEntry(payPeriodForm, currentPayPeriod);
 
 		return TIME_SHEET_SUBMIT_JSP;
 
@@ -140,7 +142,7 @@ public class TimeController {
 		}
 
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		payPeriodService.saveTimeEntry(viewModel);
+		payPeriodService.updateTimeEntry(viewModel);
 
 		return TIME_REDIRECT;
 	}
@@ -192,12 +194,9 @@ public class TimeController {
 		}
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
-		payPeriodService.saveTimeEntry(payPeriodForm);
-
+		
 		PayPeriod payPeriod = payPeriodService.retrievePreviousPayPeriod();
-		payPeriod.addTimeEntry(newTimeEntry.getUid());
-		payPeriodService.updatePayPeriod(payPeriod);
+		payPeriodService.createTimeEntry(payPeriodForm, payPeriod);
 
 		return TIME_SHEET_SUBMIT_JSP;
 	}
@@ -231,7 +230,7 @@ public class TimeController {
 		}
 
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		payPeriodService.saveTimeEntry(viewModel);
+		payPeriodService.updateTimeEntry(viewModel);
 
 		return PREVIOUS_TIME_REDIRECT;
 	}

@@ -27,6 +27,12 @@
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />
 			</div>
+			<c:if test="${role eq 'EMPLOYEE'}">
+				<form:hidden path="userEmail" />
+			</c:if>
+			<c:if test="${role eq 'ENTERPRISE'}">
+				<form:hidden path="userEmail" />
+			</c:if>
 			<c:if test="${role eq 'SUPERVISOR'}">
 			<div class="form-group">
 				<b>Assign a user email (optional)</b>

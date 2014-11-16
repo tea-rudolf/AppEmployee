@@ -15,6 +15,7 @@ import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,6 +27,7 @@ public class PayPeriodServiceTest {
 	private PayPeriod previousPayPeriodMock;
 	private TimeViewModel timeViewModelMock;
 	private PayPeriodService payPeriodService;
+	private TimeConverter timeConverter;
 
 	private static final LocalDate CURRENT_DATE = new LocalDate();
 	private static final int PAYPERIOD_DURATION = 13;
@@ -37,7 +39,8 @@ public class PayPeriodServiceTest {
 		payPeriodMock = mock(PayPeriod.class);
 		previousPayPeriodMock = mock(PayPeriod.class);
 		timeViewModelMock = mock(TimeViewModel.class);
-		payPeriodService = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock);
+		timeConverter = mock(TimeConverter.class);
+		payPeriodService = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverter);
 	}
 
 	@Test
@@ -90,7 +93,7 @@ public class PayPeriodServiceTest {
 
 	@Test
 	public void saveTimeEntryCallsTimeEntryRepository() throws Exception {
-		payPeriodService.saveTimeEntry(timeViewModelMock);
+		payPeriodService.createTimeEntry(timeViewModelMock, payPeriodMock);
 		verify(timeEntryRepositoryMock, times(1)).store(any(TimeEntry.class));
 	}
 

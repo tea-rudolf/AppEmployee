@@ -48,11 +48,11 @@ public class ExpenseConverterTest {
 		ExpenseViewModel[] viewModels = expenseConverter.convert(expenses).toArray(new ExpenseViewModel[1]);
 
 		assertEquals(FIRST_AMOUNT, viewModels[0].getAmount(), EPSILON);
-		assertEquals(FIRST_ID, viewModels[0].getuId());
+		assertEquals(FIRST_ID, viewModels[0].getUid());
 		assertEquals(FIRST_DATE.toString(), viewModels[0].getDate());
 
 		assertEquals(SECOND_AMOUNT, viewModels[1].getAmount(), EPSILON);
-		assertEquals(SECOND_ID, viewModels[1].getuId());
+		assertEquals(SECOND_ID, viewModels[1].getUid());
 		assertEquals(SECOND_DATE.toString(), viewModels[1].getDate());
 	}
 
@@ -69,7 +69,7 @@ public class ExpenseConverterTest {
 		assertEquals(expenseMock.getAmount(), expenseViewModelMock.getAmount(), EPSILON);
 		assertEquals(expenseMock.getComment(), expenseViewModelMock.getComment());
 		assertEquals(expenseMock.getDate().toString(), expenseViewModelMock.getDate());
-		assertEquals(expenseMock.getUid(), expenseViewModelMock.getuId());
+		assertEquals(expenseMock.getUid(), expenseViewModelMock.getUid());
 		assertEquals(expenseMock.getUserEmail(), expenseViewModelMock.getUserEmail());
 	}
 

@@ -44,11 +44,20 @@ public class PayPeriodService {
 		payPeriodRepository.update(payPeriod);
 	}
 
-	public void saveTimeEntry(TimeViewModel timeEntryViewModel) throws Exception {
+	public void createTimeEntry(TimeViewModel timeEntryViewModel, PayPeriod payPeriod) throws Exception {
 		TimeEntry newTimeEntry = timeConverter.convert(timeEntryViewModel);
-		PayPeriod currentPayPeriod = retrieveCurrentPayPeriod();
-		currentPayPeriod.addTimeEntry(newTimeEntry.getUid());
-		updatePayPeriod(currentPayPeriod);
+		payPeriod.addTimeEntry(newTimeEntry.getUid());
+		updatePayPeriod(payPeriod);
 		timeEntryRepository.store(newTimeEntry);
+	}
+	
+	public void updateTimeEntry(TimeViewModel timeViewModel) throws Exception {
+		TimeEntry timeEntry = timeEntryRepository.findByUid(timeViewModel.getTimeEntryuId());
+		timeEntry.setBillableHours(timeViewModel.getHoursTimeEntry());
+		timeEntry.setDate(new LocalDate(timeViewModel.getDateTimeEntry()));
+		timeEntry.setTaskUid(timeViewModel.getTaskIdTimeEntry());
+		timeEntry.setUserEmail(timeViewModel.getUserEmail());
+		timeEntry.setComment(timeViewModel.getCommentTimeEntry());
+		timeEntryRepository.store(timeEntry);
 	}
 }

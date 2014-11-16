@@ -56,6 +56,10 @@ public class Task {
 		this.authorizedUsers = authorizedUsers;
 	}
 
+	public boolean userIsAssignedToTask(String userId) {
+		return authorizedUsers.contains(userId);
+	}
+	
 //	public void assignUsersToTask(List<String> employeeUids) {
 //		for (String employeeUid:employeeUids) {
 //			

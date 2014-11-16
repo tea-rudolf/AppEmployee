@@ -8,7 +8,7 @@ public class ExpenseViewModel {
 	private String date;
 	private String userEmail;
 	private String comment;
-	private String uId;
+	private String uid;
 
 	public double getAmount() {
 		return amount;
@@ -42,14 +42,6 @@ public class ExpenseViewModel {
 		this.comment = comment;
 	}
 
-	public String getuId() {
-		return uId;
-	}
-
-	public void setuId(String uId) {
-		this.uId = uId;
-	}
-
 	public String getPayPeriodStartDate() {
 		return payPeriodStartDate;
 	}
@@ -64,6 +56,14 @@ public class ExpenseViewModel {
 
 	public void setPayPeriodEndDate(String payPeriodEndDate) {
 		this.payPeriodEndDate = payPeriodEndDate;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 }

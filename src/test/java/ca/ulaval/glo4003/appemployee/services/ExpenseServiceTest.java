@@ -52,13 +52,13 @@ public class ExpenseServiceTest {
 
 	@Test
 	public void saveExpenseCallsStoreRepository() throws Exception {
-		when(expenseViewModelMock.getuId()).thenReturn(UID);
+		when(expenseViewModelMock.getUid()).thenReturn(UID);
 		when(expenseViewModelMock.getAmount()).thenReturn(AMOUNT);
 		when(expenseViewModelMock.getDate()).thenReturn(DATE);
 		when(expenseViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
 		when(expenseViewModelMock.getComment()).thenReturn(COMMENT);
 
-		expenseService.saveExpense(expenseViewModelMock);
+		expenseService.createExpense(expenseViewModelMock);
 
 		verify(expenseRepositoryMock, times(1)).store(any(Expense.class));
 	}

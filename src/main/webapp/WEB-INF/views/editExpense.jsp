@@ -20,9 +20,9 @@
 		</h3>
 		<div></div>
 		<form:form role="form" method="POST"
-			action="/expenses/${expense.uId}/edit" modelAttribute="expense">
+			action="/expenses/${expense.uid}/edit" modelAttribute="expense">
 			<div class="form-group">
-				<form:hidden path="uId" />
+				<form:hidden path="uid" />
 				<form:hidden path="userEmail" />
 			</div>
 	

@@ -37,7 +37,7 @@
 					</tr>
 					<c:forEach var="expense" items="${expenses}">
 						<tr
-							onClick="javascript:window.location.href = '/expenses/${expense.uId}/edit'">
+							onClick="javascript:window.location.href = '/expenses/${expense.uid}/edit'">
 							<td>${expense.date}</td>
 							<td>${expense.amount}</td>
 							<td>${expense.comment}</td>

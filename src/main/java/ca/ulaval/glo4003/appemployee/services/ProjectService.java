@@ -44,11 +44,13 @@ public class ProjectService {
 	}
 
 	public void updateProject(String projectId, ProjectViewModel viewModel) {
+
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
 
 		if (!viewModel.getUserEmail().isEmpty() && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
 			project.addEmployeeToProject(viewModel.getUserEmail());
+			addEmployeToTasksOfProject(projectId, viewModel.getUserEmail());
 		}
 
 		try {
@@ -56,6 +58,15 @@ public class ProjectService {
 		} catch (Exception e) {
 			throw new RepositoryException(e.getMessage());
 		}
+	}
+
+	private void addEmployeToTasksOfProject(String projectId, String userEmail) {
+		for (Task task : getAllTasksByProjectId(projectId)) {
+			if (!task.userIsAssignedToTask(userEmail)) {
+				task.assignUserToTask(userEmail);
+			}
+		}
+
 	}
 
 	public void saveTaskToProject(String projectId, String taskId) {
@@ -127,7 +138,7 @@ public class ProjectService {
 		List<Task> tasks = new ArrayList<Task>();
 
 		for (Project project : projects) {
-			if (project.userIsAlreadyAssignedToProject(userId)) {
+			if (project.userIsAssignedToProject(userId)) {
 				List<Task> projectTasks = getAllTasksByProjectId(project.getUid());
 				tasks.addAll(projectTasks);
 			}
@@ -139,7 +150,7 @@ public class ProjectService {
 		Project project = projectRepository.findById(projectId);
 		Task task = taskRepository.findByUid(taskUId);
 
-		if (task != null && project != null && project.userIsAlreadyAssignedToProject(userId)) {
+		if (task != null && project != null && project.userIsAssignedToProject(userId)) {
 			task.assignUserToTask(userId);
 		} else {
 			project.addEmployeeToProject(userId);
@@ -154,11 +165,11 @@ public class ProjectService {
 
 	public void addNewTaskToProject(TaskViewModel taskViewModel, String projectNumber) {
 		Project project = projectRepository.findById(projectNumber);
-		
+
 		if (project != null) {
 			Task newTask = new Task(taskViewModel.getName(), project.getEmployeeUids());
 			saveTask(newTask);
-			saveTaskToProject(projectNumber, newTask.getUid());	
-		}		
+			saveTaskToProject(projectNumber, newTask.getUid());
+		}
 	}
 }

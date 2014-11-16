@@ -216,7 +216,7 @@ public class ProjectServiceTest {
 	public void givenUnassignedUserWhenAssigningUserToTaskThenAddsUserToProjectAndTask() {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
-		when(projectMock.userIsAlreadyAssignedToProject(DUMMY_USER_ID)).thenReturn(false);
+		when(projectMock.userIsAssignedToProject(DUMMY_USER_ID)).thenReturn(false);
 
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
 
@@ -228,7 +228,7 @@ public class ProjectServiceTest {
 	public void givenAssignedUserWhenAssigningToTaskThenAddsUserToTask() {
 		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
-		when(projectMock.userIsAlreadyAssignedToProject(DUMMY_USER_ID)).thenReturn(true);
+		when(projectMock.userIsAssignedToProject(DUMMY_USER_ID)).thenReturn(true);
 
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
 		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);

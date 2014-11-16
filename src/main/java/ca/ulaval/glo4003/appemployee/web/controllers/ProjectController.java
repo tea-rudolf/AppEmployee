@@ -98,11 +98,11 @@ public class ProjectController {
 		List<Task> tasks = projectService.getAllTasksByProjectId(project.getUid());
 		List<User> employees = projectService.getAllEmployeesByProjectId(project.getUid());
 		User currentUser = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		
+
 		Collection<TaskViewModel> tasksViewModel = taskConverter.convert(tasks);
 		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
 		ProjectViewModel projectViewModel = projectConverter.convert(project);
-		
+
 		projectViewModel.setAvailableUsers(userService.retrieveAllUserEmails());
 
 		model.addAttribute("tasks", tasksViewModel);
@@ -111,21 +111,24 @@ public class ProjectController {
 		model.addAttribute("role", currentUser.getRole());
 
 		return "editProject";
+
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
 	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel, HttpSession session) throws Exception {
 
 		try {
-			// Gestion de NONE doit être faite au niveau du jsp
-			if (!viewModel.getUserEmail().equals("NONE")) {
+
+			if (!viewModel.getUserEmail().equals("NONE") && !viewModel.getUserEmail().equals("")) {
 				userService.retrieveByEmail(viewModel.getUserEmail());
 			}
 
 			projectService.updateProject(projectNumber, viewModel);
+
 			return "redirect:/projects/";
 
 		} catch (Exception e) {
+
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return editProject(projectNumber, model, session);
 		}
@@ -189,7 +192,7 @@ public class ProjectController {
 
 		try {
 
-			if (!viewModel.getUserEmail().equals("NONE")) {
+			if (!viewModel.getUserEmail().equals("NONE") && !viewModel.getUserEmail().equals("")) {
 				userService.retrieveByEmail(viewModel.getUserEmail());
 			}
 

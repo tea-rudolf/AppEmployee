@@ -76,7 +76,7 @@ public class Project {
 		taskUids.add(taskUid);
 	}
 
-	public boolean userIsAlreadyAssignedToProject(String userId) {
+	public boolean userIsAssignedToProject(String userId) {
 		return employeeUids.contains(userId);
 	}
 

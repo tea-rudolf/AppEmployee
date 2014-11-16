@@ -28,10 +28,23 @@ public class ExpenseService {
 		return expense;
 	}
 
-	public void saveExpense(ExpenseViewModel viewModel) throws Exception {
-		Expense expense = new Expense(viewModel.getuId(), viewModel.getAmount(), new LocalDate(viewModel.getDate()), viewModel.getUserEmail(),
-				viewModel.getComment());
+	public void createExpense(ExpenseViewModel viewModel) throws Exception {
+		Expense expense = new Expense();
+		expense.setAmount(viewModel.getAmount());
+		expense.setComment(viewModel.getComment());
+		expense.setDate(new LocalDate(viewModel.getDate()));
+		System.out.println("expense date " + expense.getDate());
+		expense.setUserEmail(viewModel.getUserEmail());
 		expenseRepository.store(expense);
 	}
 
+	public void updateExpense(ExpenseViewModel viewModel) throws Exception {
+		Expense expense = this.expenseRepository.findByUid(viewModel.getUid());
+		expense.setAmount(viewModel.getAmount());
+		expense.setComment(viewModel.getComment());
+		expense.setDate(new LocalDate(viewModel.getDate()));
+		expense.setUserEmail(viewModel.getUserEmail());
+		expenseRepository.store(expense);
+	}
+	
 }

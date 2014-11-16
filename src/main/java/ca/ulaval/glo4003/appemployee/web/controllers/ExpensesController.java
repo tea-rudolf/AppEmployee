@@ -85,7 +85,7 @@ public class ExpensesController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveExpense(Model model, ExpenseViewModel expenseForm, HttpSession session) throws Exception {
 		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		expenseService.saveExpense(expenseForm);
+		expenseService.createExpense(expenseForm);
 
 		return EXPENSES_SUBMIT_JSP;
 	}
@@ -110,7 +110,7 @@ public class ExpensesController {
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedExpense(@PathVariable String uId, ExpenseViewModel viewModel, HttpSession session) throws Exception {
 
-		expenseService.saveExpense(viewModel);
+		expenseService.updateExpense(viewModel);
 
 		return "redirect:/expenses/";
 	}

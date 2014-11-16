@@ -17,7 +17,7 @@ public class ExpenseConverter {
 
 		for (Expense expense : expenses) {
 			ExpenseViewModel expenseViewModel = convert(expense);
-			expenseViewModel.setuId(expense.getUid());
+			expenseViewModel.setUid(expense.getUid());
 			expenseViewModels.add(expenseViewModel);
 		}
 		return expenseViewModels;
@@ -25,11 +25,11 @@ public class ExpenseConverter {
 
 	public ExpenseViewModel convert(Expense expense) {
 		ExpenseViewModel expenseViewModel = new ExpenseViewModel();
-		expenseViewModel.setuId(expense.getUid());
+		expenseViewModel.setUid(expense.getUid());
 		expenseViewModel.setAmount(expense.getAmount());
 		expenseViewModel.setComment(expense.getComment());
 		expenseViewModel.setDate(expense.getDate().toString());
-		expenseViewModel.setuId(expense.getUid());
+		expenseViewModel.setUid(expense.getUid());
 		expenseViewModel.setUserEmail(expense.getUserEmail());
 
 		return expenseViewModel;

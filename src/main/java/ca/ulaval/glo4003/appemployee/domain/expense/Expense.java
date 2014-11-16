@@ -15,7 +15,7 @@ public class Expense {
 	public Expense() {
 		this.uid = UUID.randomUUID().toString();
 	}
-
+	
 	public Expense(String uid, double amount, LocalDate date, String userEmail, String comment) {
 		this.uid = uid;
 		this.amount = amount;
@@ -32,14 +32,6 @@ public class Expense {
 		return amount;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public LocalDate getDate() {
-		return date;
-	}
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
@@ -52,8 +44,8 @@ public class Expense {
 		return uid;
 	}
 
-	public void setUid(String uId) {
-		this.uid = uId;
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	public String getUserEmail() {
@@ -62,5 +54,13 @@ public class Expense {
 
 	public void setUserEmail(String userId) {
 		this.userEmail = userId;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 }
