@@ -2,7 +2,6 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;

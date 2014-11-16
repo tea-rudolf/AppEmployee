@@ -32,8 +32,6 @@ public class UserServiceTest {
 	private static final String EMPLOYEE_ROLE = "EMPLOYEE";
 	private static final String EMAIL = "employee1@employee.com";
 	private static final String EMAIL2 = "employee2@employee.com";
-	private static final double HOURS = 7.00;
-	private static final String COMMENT = "comment";
 	private static final String DATE = "2014-11-13";
 	private static final String START_DATE = "2014-10-30";
 	private static final String PASSWORD = "password";

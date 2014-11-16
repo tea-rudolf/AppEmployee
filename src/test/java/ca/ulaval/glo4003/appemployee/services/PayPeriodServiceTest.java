@@ -28,8 +28,11 @@ public class PayPeriodServiceTest {
 	private TimeViewModel timeViewModelMock;
 	private PayPeriodService payPeriodService;
 	private TimeConverter timeConverter;
+	private TimeEntry timeEntry;
+
 
 	private static final LocalDate CURRENT_DATE = new LocalDate();
+	private static final String A_UID = "0001";
 	private static final int PAYPERIOD_DURATION = 13;
 
 	@Before
@@ -40,6 +43,7 @@ public class PayPeriodServiceTest {
 		previousPayPeriodMock = mock(PayPeriod.class);
 		timeViewModelMock = mock(TimeViewModel.class);
 		timeConverter = mock(TimeConverter.class);
+		timeEntry = mock(TimeEntry.class);
 		payPeriodService = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverter);
 	}
 
@@ -93,6 +97,8 @@ public class PayPeriodServiceTest {
 
 	@Test
 	public void saveTimeEntryCallsTimeEntryRepository() throws Exception {
+		when(timeConverter.convert(timeViewModelMock)).thenReturn(timeEntry);
+		when(timeEntry.getUid()).thenReturn(A_UID);
 		payPeriodService.createTimeEntry(timeViewModelMock, payPeriodMock);
 		verify(timeEntryRepositoryMock, times(1)).store(any(TimeEntry.class));
 	}

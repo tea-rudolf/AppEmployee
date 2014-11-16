@@ -17,10 +17,6 @@ public class Travel {
 		this.uid = UUID.randomUUID().toString();
 	}
 
-	public Travel(String uid) {
-		this.uid = uid;
-	}
-
 	public void setDistanceTravelled(double distanceTravelled) {
 		this.distanceTravelled = distanceTravelled;
 	}

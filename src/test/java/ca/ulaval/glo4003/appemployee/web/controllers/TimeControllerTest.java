@@ -173,7 +173,7 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
-		verify(payPeriodServiceMock, times(1)).createTimeEntry(payPeriodViewModelMock, payPeriodMock);
+		verify(payPeriodServiceMock, times(1)).updateTimeEntry(payPeriodViewModelMock);
 	}
 
 	@Test
@@ -234,7 +234,7 @@ public class TimeControllerTest {
 
 		timeControllerMock.savePreviousTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
 
-		verify(payPeriodServiceMock, times(1)).updatePayPeriod(payPeriodMock);
+		verify(payPeriodServiceMock, times(1)).createTimeEntry(payPeriodViewModelMock, payPeriodMock);
 	}
 
 	@Test
@@ -270,6 +270,6 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
-		verify(payPeriodServiceMock, times(1)).createTimeEntry(payPeriodViewModelMock, payPeriodMock);
+		verify(payPeriodServiceMock, times(1)).updateTimeEntry(payPeriodViewModelMock);
 	}
 }

@@ -122,7 +122,7 @@ public class TravelControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
 		travelController.saveTravelEntry(modelMock, travelViewModelMock, sessionMock);
-		verify(travelServiceMock, times(1)).store(travelMock);
+		verify(travelServiceMock, times(1)).createTravel(travelViewModelMock);
 	}
 
 	@Test
