@@ -45,5 +45,5 @@ public class ExpenseService {
 		expense.setUserEmail(viewModel.getUserEmail());
 		expenseRepository.store(expense);
 	}
-	
+
 }

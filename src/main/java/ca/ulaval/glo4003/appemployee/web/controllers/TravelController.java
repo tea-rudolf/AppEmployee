@@ -106,7 +106,6 @@ public class TravelController {
 		travelForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		travelService.createTravel(travelForm);
 
-
 		return TRAVEL_ENTRY_SUBMIT_JSP;
 
 	}

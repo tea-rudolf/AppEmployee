@@ -30,7 +30,6 @@ public class PayPeriodServiceTest {
 	private TimeConverter timeConverter;
 	private TimeEntry timeEntry;
 
-
 	private static final LocalDate CURRENT_DATE = new LocalDate();
 	private static final String A_UID = "0001";
 	private static final int PAYPERIOD_DURATION = 13;

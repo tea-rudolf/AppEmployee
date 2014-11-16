@@ -90,7 +90,7 @@ public class HomeControllerTest {
 
 		verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE, ALERT_MESSAGE);
 	}
-	
+
 	@Test
 	public void getDisplayLoginFormReturnsHomeViewForm() {
 		String returnedForm = homeController.displayLoginForm();

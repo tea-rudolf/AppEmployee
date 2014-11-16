@@ -15,7 +15,7 @@ public class Expense {
 	public Expense() {
 		this.uid = UUID.randomUUID().toString();
 	}
-	
+
 	public Expense(String uid, double amount, LocalDate date, String userEmail, String comment) {
 		this.uid = uid;
 		this.amount = amount;

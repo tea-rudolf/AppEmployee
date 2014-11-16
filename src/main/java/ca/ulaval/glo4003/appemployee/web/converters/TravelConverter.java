@@ -31,7 +31,7 @@ public class TravelConverter {
 		travel.setDate(new LocalDate(travelViewModel.getDate()));
 		travel.setUserEmail(travelViewModel.getUserEmail());
 		travel.setComment(travelViewModel.getComment());
-		
+
 		if (travelViewModel.getVehicule().equals("PERSONNAL")) {
 			travel.setVehicule(Vehicule.PERSONNAL);
 		} else {

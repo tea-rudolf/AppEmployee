@@ -193,7 +193,7 @@ public class TimeController {
 		}
 
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		
+
 		PayPeriod payPeriod = payPeriodService.retrievePreviousPayPeriod();
 		payPeriodService.createTimeEntry(payPeriodForm, payPeriod);
 

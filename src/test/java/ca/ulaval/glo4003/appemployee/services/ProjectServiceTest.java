@@ -232,16 +232,16 @@ public class ProjectServiceTest {
 		projectService.assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
 		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
 	}
-	
+
 	@Test
 	public void givenProjectWithUsersWhenAddingTaskToProjectTaskWillHaveSameUsersAsProject() throws Exception {
 		given(projectRepositoryMock.findById(PROJECT_ID)).willReturn(projectMock);
 		given(projectMock.getEmployeeUids()).willReturn(PROJECT_USERS);
 		ArgumentCaptor<Task> taskArgumentCaptor = ArgumentCaptor.forClass(Task.class);
-		
+
 		projectService.addNewTaskToProject(taskViewModelMock, PROJECT_ID);
 		verify(taskRepositoryMock, times(1)).store(taskArgumentCaptor.capture());
 		Task createdTask = taskArgumentCaptor.getValue();
-		assertEquals(PROJECT_USERS, createdTask.getAuthorizedUsers());	
+		assertEquals(PROJECT_USERS, createdTask.getAuthorizedUsers());
 	}
 }

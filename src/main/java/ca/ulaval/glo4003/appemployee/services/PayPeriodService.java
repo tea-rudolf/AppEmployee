@@ -50,7 +50,7 @@ public class PayPeriodService {
 		updatePayPeriod(payPeriod);
 		timeEntryRepository.store(newTimeEntry);
 	}
-	
+
 	public void updateTimeEntry(TimeViewModel timeViewModel) throws Exception {
 		TimeEntry timeEntry = timeEntryRepository.findByUid(timeViewModel.getTimeEntryuId());
 		timeEntry.setBillableHours(timeViewModel.getHoursTimeEntry());
