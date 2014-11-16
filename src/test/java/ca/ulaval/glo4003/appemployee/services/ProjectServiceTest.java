@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
@@ -58,7 +59,7 @@ public class ProjectServiceTest {
 		userRepositoryMock = mock(UserRepository.class);
 		taskViewModelMock = mock(TaskViewModel.class);
 		userMock = mock(User.class);
-		projectService = new ProjectService(projectRepositoryMock, taskRepositoryMock, userRepositoryMock);
+		projectService = Mockito.spy(new ProjectService(projectRepositoryMock, taskRepositoryMock, userRepositoryMock));
 	}
 
 	@Test
@@ -157,6 +158,7 @@ public class ProjectServiceTest {
 	@Test
 	public void updateTaskAssignsUserEmailToTask() {
 		when(taskRepositoryMock.findByUid(TASK_ID)).thenReturn(taskMock);
+		when(projectRepositoryMock.findById(PROJECT_ID)).thenReturn(projectMock);
 		when(taskViewModelMock.getName()).thenReturn(TASK_NAME);
 		when(taskViewModelMock.getUserEmail()).thenReturn(DUMMY_USER_ID);
 		when(userRepositoryMock.findByEmail(DUMMY_USER_ID)).thenReturn(userMock);
@@ -164,7 +166,7 @@ public class ProjectServiceTest {
 
 		projectService.updateTask(PROJECT_ID, TASK_ID, taskViewModelMock);
 
-		verify(taskMock, times(1)).assignUserToTask(DUMMY_USER_ID);
+		verify(projectService, times(1)).assignUserToTask(DUMMY_USER_ID,PROJECT_ID, PROJECT_ID);
 	}
 
 	@Test

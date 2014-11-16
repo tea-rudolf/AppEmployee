@@ -90,9 +90,10 @@ public class ProjectService {
 	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) {
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
-
+		
 		if (!viewModel.getUserEmail().equals("") && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
-			task.assignUserToTask(viewModel.getUserEmail());
+			//task.assignUserToTask(viewModel.getUserEmail());
+			assignUserToTask(viewModel.getUserEmail(), projectId, taskId); 
 		}
 
 		try {

@@ -45,6 +45,7 @@ public class Task {
 		if (authorizedUsers.contains(userId)) {
 			throw new EmployeeAlreadyExistsException("Employee already assigned to this task.");
 		}
+
 		authorizedUsers.add(userId);
 	}
 
