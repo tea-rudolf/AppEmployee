@@ -9,6 +9,7 @@ import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Service
@@ -16,11 +17,13 @@ public class PayPeriodService {
 
 	private PayPeriodRepository payPeriodRepository;
 	private TimeEntryRepository timeEntryRepository;
+	private TimeConverter timeConverter;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository) {
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;
+		this.timeConverter = timeConverter;
 	}
 
 	public PayPeriod retrieveCurrentPayPeriod() throws PayPeriodNotFoundException {
@@ -42,9 +45,10 @@ public class PayPeriodService {
 	}
 
 	public void saveTimeEntry(TimeViewModel timeEntryViewModel) throws Exception {
-		TimeEntry timeEntry = new TimeEntry(timeEntryViewModel.getTimeEntryuId(), timeEntryViewModel.getHoursTimeEntry(), new LocalDate(
-				timeEntryViewModel.getDateTimeEntry()), timeEntryViewModel.getUserEmail(), timeEntryViewModel.getTaskIdTimeEntry(),
-				timeEntryViewModel.getCommentTimeEntry());
-		timeEntryRepository.store(timeEntry);
+		TimeEntry newTimeEntry = timeConverter.convert(timeEntryViewModel);
+		PayPeriod currentPayPeriod = retrieveCurrentPayPeriod();
+		currentPayPeriod.addTimeEntry(newTimeEntry.getUid());
+		updatePayPeriod(currentPayPeriod);
+		timeEntryRepository.store(newTimeEntry);
 	}
 }

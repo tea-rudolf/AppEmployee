@@ -14,11 +14,11 @@ public class TimeEntry {
 	private String comment;
 
 	public TimeEntry() {
-		this.uid = UUID.randomUUID().toString();
+		this.setUid(UUID.randomUUID().toString());
 	}
 
 	public TimeEntry(String uid, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) {
-		this.uid = uid;
+		this.setUid(uid);
 		this.billableHours = billableHours;
 		this.date = date;
 		this.userEmail = userEmail;
@@ -27,7 +27,7 @@ public class TimeEntry {
 	}
 
 	public TimeEntry(String uid) {
-		this.uid = uid;
+		this.setUid(uid);
 	}
 
 	public double getBillableHours() {
@@ -54,14 +54,6 @@ public class TimeEntry {
 		this.userEmail = userEmail;
 	}
 
-	public String getUid() {
-		return uid;
-	}
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
 	public String getTaskUid() {
 		return taskUid;
 	}
@@ -76,6 +68,14 @@ public class TimeEntry {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 }

@@ -127,7 +127,6 @@ public class ProjectService {
 		List<Task> tasks = new ArrayList<Task>();
 
 		for (Project project : projects) {
-
 			if (project.userIsAlreadyAssignedToProject(userId)) {
 				List<Task> projectTasks = getAllTasksByProjectId(project.getUid());
 				tasks.addAll(projectTasks);

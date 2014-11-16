@@ -91,6 +91,7 @@ public class TimeController {
 
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
 
@@ -99,19 +100,13 @@ public class TimeController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
-
 		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
 			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
 			return createTimeEntry(model, payPeriodForm, session);
 		}
-
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeEntry newTimeEntry = timeConverter.convert(payPeriodForm);
-		// payPeriodService.saveTimeEntry(newTimeEntry);
 
-		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		currentPayPeriod.addTimeEntry(newTimeEntry.getUid());
-		payPeriodService.updatePayPeriod(currentPayPeriod);
+		payPeriodService.saveTimeEntry(payPeriodForm);
 
 		return TIME_SHEET_SUBMIT_JSP;
 

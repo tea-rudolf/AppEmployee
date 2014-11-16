@@ -12,6 +12,14 @@ public class Project {
 	private String uid;
 	private String name = "";
 	private List<String> taskUids = new ArrayList<String>();
+	public List<String> getTaskUids() {
+		return taskUids;
+	}
+
+	public void setTaskUids(List<String> taskUids) {
+		this.taskUids = taskUids;
+	}
+
 	private List<String> employeeUids = new ArrayList<String>();
 	private List<String> expenseUids = new ArrayList<String>();
 
@@ -42,14 +50,6 @@ public class Project {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<String> getTaskUids() {
-		return taskUids;
-	}
-
-	public void setTaskuIds(List<String> taskUids) {
-		this.taskUids = taskUids;
 	}
 
 	public List<String> getEmployeeUids() {
