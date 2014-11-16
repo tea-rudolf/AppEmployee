@@ -4,10 +4,6 @@ public class ExpenseNotFoundException extends Exception {
 
 	private static final long serialVersionUID = 7767825991526775076L;
 
-	public ExpenseNotFoundException() {
-		super();
-	}
-
 	public ExpenseNotFoundException(String message) {
 		super(message);
 	}

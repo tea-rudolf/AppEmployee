@@ -8,7 +8,4 @@ public class ProjectExistsException extends RuntimeException {
 		super();
 	}
 
-	public ProjectExistsException(String message) {
-		super(message);
-	}
 }
