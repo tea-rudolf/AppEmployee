@@ -51,7 +51,7 @@ public class TravelServiceTest {
 	@Test
 	public void updateCallsCorrectDomainMethod() {
 		when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
-		travelService.update(NEW_UID, travelViewModelMock);
+		travelService.updateTravel(NEW_UID, travelViewModelMock);
 		verify(travelMock, times(1)).setUid(NEW_UID);
 	}
 

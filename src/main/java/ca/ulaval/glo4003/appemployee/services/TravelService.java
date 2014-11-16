@@ -34,10 +34,15 @@ public class TravelService {
 
 	}
 
-	public void update(String travelUid, TravelViewModel viewModel) {
+	public void updateTravel(String travelUid, TravelViewModel viewModel) {
 		Travel newTravel = travelConverter.convert(viewModel);
 		newTravel.setUid(travelUid);
 		store(newTravel);
+	}
+
+	public void createTravel(TravelViewModel travelForm) {
+		Travel newTravelEntry = travelConverter.convert(travelForm);
+		store(newTravelEntry);
 	}
 
 }

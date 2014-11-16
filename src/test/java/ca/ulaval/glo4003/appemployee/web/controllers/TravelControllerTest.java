@@ -158,7 +158,7 @@ public class TravelControllerTest {
 		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
-		verify(travelServiceMock, times(1)).update(TRAVEL_UID, travelViewModelMock);
+		verify(travelServiceMock, times(1)).updateTravel(TRAVEL_UID, travelViewModelMock);
 	}
 
 }

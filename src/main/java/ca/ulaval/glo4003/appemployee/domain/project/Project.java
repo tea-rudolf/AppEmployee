@@ -12,6 +12,7 @@ public class Project {
 	private String uid;
 	private String name = "";
 	private List<String> taskUids = new ArrayList<String>();
+
 	public List<String> getTaskUids() {
 		return taskUids;
 	}

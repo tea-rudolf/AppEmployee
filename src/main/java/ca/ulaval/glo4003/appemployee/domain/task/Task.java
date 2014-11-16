@@ -18,7 +18,7 @@ public class Task {
 	public Task(String uid) {
 		this.uid = uid;
 	}
-	
+
 	public Task(String name, List<String> authorizedUsers) {
 		this();
 		this.name = name;
@@ -59,12 +59,5 @@ public class Task {
 	public boolean userIsAssignedToTask(String userId) {
 		return authorizedUsers.contains(userId);
 	}
-	
-//	public void assignUsersToTask(List<String> employeeUids) {
-//		for (String employeeUid:employeeUids) {
-//			
-//		}
-//		
-//	}
 
 }

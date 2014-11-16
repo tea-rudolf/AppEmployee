@@ -104,10 +104,8 @@ public class TravelController {
 		}
 
 		travelForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		travelService.createTravel(travelForm);
 
-		Travel newTravelEntry = travelConverter.convert(travelForm);
-
-		travelService.store(newTravelEntry);
 
 		return TRAVEL_ENTRY_SUBMIT_JSP;
 
@@ -141,7 +139,7 @@ public class TravelController {
 			return editTravelEntry(uId, model, session);
 		}
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		travelService.update(uId, viewModel);
+		travelService.updateTravel(uId, viewModel);
 
 		return TRAVEL_REDIRECT;
 	}

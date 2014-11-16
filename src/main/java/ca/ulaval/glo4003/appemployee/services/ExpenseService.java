@@ -33,7 +33,6 @@ public class ExpenseService {
 		expense.setAmount(viewModel.getAmount());
 		expense.setComment(viewModel.getComment());
 		expense.setDate(new LocalDate(viewModel.getDate()));
-		System.out.println("expense date " + expense.getDate());
 		expense.setUserEmail(viewModel.getUserEmail());
 		expenseRepository.store(expense);
 	}

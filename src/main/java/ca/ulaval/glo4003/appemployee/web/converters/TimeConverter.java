@@ -31,7 +31,6 @@ public class TimeConverter {
 			TimeViewModel viewModel = convert(entry);
 			viewModel.setTimeEntryuId(entry.getUid());
 			viewModels.add(viewModel);
-			System.out.println("uidentry = " + viewModel.getTimeEntryuId());
 		}
 		return viewModels;
 	}
