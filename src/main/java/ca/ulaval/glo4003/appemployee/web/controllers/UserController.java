@@ -51,7 +51,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String updatePassword(@ModelAttribute("user") UserViewModel viewModel, HttpSession session) throws Exception {
 
-		if (!viewModel.getEmail().equals("")) {
+		if (!viewModel.getEmail().isEmpty()) {
 			try {
 				userService.retrieveByEmail(viewModel.getEmail());
 			} catch (UserNotFoundException userNotFound) {

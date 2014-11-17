@@ -192,7 +192,7 @@ public class ProjectController {
 
 		try {
 
-			if (!viewModel.getUserEmail().equals("NONE") && !viewModel.getUserEmail().equals("")) {
+			if (!viewModel.getUserEmail().equals("NONE") && !viewModel.getUserEmail().isEmpty()) {
 				userService.retrieveByEmail(viewModel.getUserEmail());
 			}
 
