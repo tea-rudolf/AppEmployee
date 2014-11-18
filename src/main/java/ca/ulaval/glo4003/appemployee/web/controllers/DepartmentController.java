@@ -29,6 +29,13 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class DepartmentController {
 
 	private static final String EMAIL_ATTRIBUTE = "email";
+	private static final String SIMPLE_REDIRECT = "redirect:/";
+	private static final String DEPARTMENT_LIST_FORM = "departmentsList";
+	private static final String EDIT_DEPARTMENT_FORM = "editDepartment";
+	private static final String CREATE_USER_FORM = "createUser";
+	private static final String EDIT_DEPARTMENT_REDIRECT = "redirect:/departments/{departmentName}/edit";
+	private static final String EDIT_EMPLOYEE_FORM = "editEmployee";
+	
 	private DepartmentService departmentService;
 	private UserService userService;
 	private UserConverter userConverter;
@@ -47,18 +54,18 @@ public class DepartmentController {
 	public String showDepartmentsList(Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		model.addAttribute("departments", departmentService.retrieveDepartmentsList());
-		return "departmentsList";
+		return DEPARTMENT_LIST_FORM;
 	}
 
 	@RequestMapping(value = "/{departmentName}/edit", method = RequestMethod.GET)
 	public String showEmployeesList(@PathVariable String departmentName, Model model, HttpSession session) throws DepartmentNotFoundException {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		Department department = departmentService.retrieveDepartmentByName(departmentName);
@@ -68,18 +75,18 @@ public class DepartmentController {
 		model.addAttribute("department", departmentConverter.convert(department));
 		model.addAttribute("employees", employeesViewModel);
 
-		return "editDepartment";
+		return EDIT_DEPARTMENT_FORM;
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.GET)
 	public String showCreateEmployeeAccountPage(@PathVariable String departmentName, Model model, UserViewModel userViewModel, HttpSession session) {
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		model.addAttribute("departmentName", departmentName);
 		model.addAttribute("user", userViewModel);
-		return "createUser";
+		return CREATE_USER_FORM;
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.POST)
@@ -96,7 +103,7 @@ public class DepartmentController {
 			departmentService.createUser(supervisorId, departmentName, userViewModel);
 			departmentService.assignUserToDepartment(userViewModel, supervisorId, departmentName);
 
-			return "redirect:/departments/{departmentName}/edit";
+			return EDIT_DEPARTMENT_REDIRECT;
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return showCreateEmployeeAccountPage(departmentName, model, userViewModel, session);
@@ -108,7 +115,7 @@ public class DepartmentController {
 	public String showUpdateEmployeeInfo(@PathVariable String departmentName, @PathVariable String email, Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
+			return SIMPLE_REDIRECT;
 		}
 
 		User employee = userService.retrieveByEmail(email);
@@ -116,7 +123,7 @@ public class DepartmentController {
 		model.addAttribute("user", userViewModel);
 		model.addAttribute("departmentName", departmentName);
 
-		return "editEmployee";
+		return EDIT_EMPLOYEE_FORM;
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/{email}/edit", method = RequestMethod.POST)
@@ -130,10 +137,10 @@ public class DepartmentController {
 
 			userService.updateEmployeeInformation(userViewModel);
 			model.addAttribute("departmentName", departmentName);
-			return "redirect:/departments/{departmentName}/edit";
+			return EDIT_DEPARTMENT_REDIRECT;
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return "editEmployee";
+			return EDIT_EMPLOYEE_FORM;
 		}
 	}
 
