@@ -32,13 +32,13 @@ public class DepartmentTest {
 
 	@Test
 	public void canInstatiateDepartment() {
-		Department department = new Department();
+		department = new Department();
 		assertNotNull(department);
 	}
 	
 	@Test
 	public void canInstatiateDepartmentWithName() {
-		Department department = new Department(DEPARTMENT_NAME);
+	department = new Department(DEPARTMENT_NAME);
 		assertNotNull(department);
 	}
 
