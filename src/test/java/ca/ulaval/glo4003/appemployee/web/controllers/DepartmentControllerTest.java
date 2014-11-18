@@ -2,6 +2,8 @@ package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,6 +136,15 @@ public class DepartmentControllerTest {
 	}
 	
 	@Test
+	public void createEmployeeAccountRedirectsToEditionPageWhenExceptionIsThrown() throws Exception{
+		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
+		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
+		doThrow(new Exception()).when(departmentServiceMock).createUser(EMAIL, DEPARTMENT_NAME, userViewModelMock);
+		String returnedForm = departmentController.createEmployeeAccount(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
+		assertEquals(CREATE_USER_FORM, returnedForm);
+	}
+	
+	@Test
 	public void showUpdateEmployeeInfoRedirectsWhenSessionAttributeIsMissing() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
 		String returnedForm = departmentController.showUpdateEmployeeInfo(DEPARTMENT_NAME, EMAIL, modelMock, sessionMock);
@@ -162,6 +173,15 @@ public class DepartmentControllerTest {
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
 		String returnedForm = departmentController.updateEmployeeInfo(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
 		assertEquals(EDIT_DEPARTMENT_REDIRECT, returnedForm);
+	}
+	
+	@Test
+	public void updateEmployeeInfoReturnsEditEmployeeFormWhenExceptionIsThrown() throws Exception{
+		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
+		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
+		doThrow(new Exception()).when(userServiceMock).updateEmployeeInformation(userViewModelMock);
+		String returnedForm = departmentController.updateEmployeeInfo(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
+		assertEquals(EDIT_EMPLOYEE_FORM, returnedForm);
 	}
 	
 
