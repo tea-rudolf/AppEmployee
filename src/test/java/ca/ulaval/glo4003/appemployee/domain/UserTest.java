@@ -17,13 +17,13 @@ public class UserTest {
 	private static final String VALID_PASSWORD = "1234";
 	private static final String VALID_EMAIL = "test@test.com";
 	private static final double WAGE = 10000.00;
-	private static Role ROLE = Role.EMPLOYEE;
+	private static Role role = Role.EMPLOYEE;
 
 	private User user;
 
 	@Before
 	public void setUp() {
-		user = new User(VALID_EMAIL, VALID_PASSWORD, ROLE, WAGE);
+		user = new User(VALID_EMAIL, VALID_PASSWORD, role, WAGE);
 	}
 
 	@Test
