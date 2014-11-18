@@ -10,6 +10,10 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import ca.ulaval.glo4003.appemployee.domain.department.Department;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
@@ -22,26 +26,34 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class DepartmentServiceTest {
 
-	private UserRepository userRepositoryMock;
-	private DepartmentRepository departmentRepositoryMock;
-	private UserViewModel userViewModelMock;
-	private User userMock;
-	private Department departmentMock;
-	private DepartmentService departmentService;
-
 	private static final double WAGE = 45000.00;
 	private static final String PASSWORD = "1234";
 	private static final String EMAIL = "test@company.com";
 	private static final String DEPARTMENT_NAME = "dummyDepartment";
 	private static final String SUPERVISOR_ID = "0001";
+	
+	@Mock
+	private UserRepository userRepositoryMock;
+	
+	@Mock
+	private DepartmentRepository departmentRepositoryMock;
+	
+	@Mock
+	private UserViewModel userViewModelMock;
+	
+	@Mock
+	private User userMock;
+	
+	@Mock
+	private Department departmentMock;
+	
+	@InjectMocks
+	private DepartmentService departmentService;
+
 
 	@Before
 	public void setUp() {
-		userRepositoryMock = mock(UserRepository.class);
-		departmentRepositoryMock = mock(DepartmentRepository.class);
-		userViewModelMock = mock(UserViewModel.class);
-		userMock = mock(User.class);
-		departmentMock = mock(Department.class);
+		MockitoAnnotations.initMocks(this);
 		departmentService = new DepartmentService(departmentRepositoryMock, userRepositoryMock);
 		when(userViewModelMock.getEmail()).thenReturn(EMAIL);
 		when(userViewModelMock.getPassword()).thenReturn(PASSWORD);

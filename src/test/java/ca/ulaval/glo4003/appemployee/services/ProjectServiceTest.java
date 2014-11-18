@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,7 +15,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
@@ -37,28 +39,38 @@ public class ProjectServiceTest {
 	private static final String EMPTY_USER_ID = "";
 	private static final List<String> PROJECT_USERS = Arrays.asList("bla@bla.com", "hello@hello.com", "dummy@dummy.com");
 
-	private ProjectService projectService;
+	@Mock
 	private ProjectRepository projectRepositoryMock;
+	
+	@Mock
 	private Project projectMock;
-	private ProjectViewModel projectViewModel;
+	
+	@Mock
 	private Task taskMock;
+	
+	@Mock
 	private TaskRepository taskRepositoryMock;
+	
+	@Mock
 	private UserRepository userRepositoryMock;
+	
+	@Mock
 	private TaskViewModel taskViewModelMock;
+	
+	@Mock
 	private User userMock;
+	
+	@InjectMocks
+	private ProjectViewModel projectViewModel;
+	
+	@InjectMocks
+	private ProjectService projectService;
 
 	@Before
 	public void init() {
-		projectRepositoryMock = mock(ProjectRepository.class);
-		mock(ProjectService.class);
-		projectMock = mock(Project.class);
+		MockitoAnnotations.initMocks(this);
 		projectViewModel = new ProjectViewModel();
 		projectViewModel.setName(PROJECT_NAME);
-		taskMock = mock(Task.class);
-		taskRepositoryMock = mock(TaskRepository.class);
-		userRepositoryMock = mock(UserRepository.class);
-		taskViewModelMock = mock(TaskViewModel.class);
-		userMock = mock(User.class);
 		projectService = Mockito.spy(new ProjectService(projectRepositoryMock, taskRepositoryMock, userRepositoryMock));
 	}
 
@@ -166,7 +178,7 @@ public class ProjectServiceTest {
 
 		projectService.updateTask(PROJECT_ID, TASK_ID, taskViewModelMock);
 
-		verify(projectService, times(1)).assignUserToTask(DUMMY_USER_ID,PROJECT_ID, PROJECT_ID);
+		verify(projectService, times(1)).assignUserToTask(DUMMY_USER_ID, PROJECT_ID, PROJECT_ID);
 	}
 
 	@Test

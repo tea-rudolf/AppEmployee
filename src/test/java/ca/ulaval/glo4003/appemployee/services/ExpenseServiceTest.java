@@ -6,6 +6,10 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import ca.ulaval.glo4003.appemployee.domain.exceptions.ExpenseNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
@@ -19,13 +23,21 @@ public class ExpenseServiceTest {
 	private static final String USER_EMAIL = "test@company.com";
 	private static final String COMMENT = "this is a comment";
 
-	private ExpenseService expenseService;
+	@Mock
 	private ExpenseRepository expenseRepositoryMock;
+	
+	@Mock
 	private Expense expenseMock;
+	
+	@Mock
 	private ExpenseViewModel expenseViewModelMock;
+	
+	@InjectMocks
+	private ExpenseService expenseService;
 
 	@Before
 	public void setUp() {
+		MockitoAnnotations.initMocks(this);
 		expenseRepositoryMock = mock(ExpenseRepository.class);
 		expenseMock = mock(Expense.class);
 		expenseViewModelMock = mock(ExpenseViewModel.class);

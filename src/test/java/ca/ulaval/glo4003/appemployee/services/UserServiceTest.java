@@ -10,6 +10,9 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
@@ -37,40 +40,60 @@ public class UserServiceTest {
 	private static final String PASSWORD = "password";
 	private static final double WAGE = 0;
 
-	private UserService userService;
+	@Mock
 	private TaskRepository taskRepositoryMock;
+	
+	@Mock
 	private UserRepository userRepositoryMock;
+	
+	@Mock
 	private ExpenseRepository expenseRepositoryMock;
+	
+	@Mock
 	private TimeEntryRepository timeEntryRepositoryMock;
+	
+	@Mock
 	private TravelRepository travelRepositoryMock;
+	
+	@Mock
 	private PayPeriod payPeriodMock;
+	
+	@Mock
 	private TimeEntry timeEntryMock;
-	private UserViewModel userViewModel;
-	private User user;
+	
+	@Mock
 	private Task taskMock;
+	
+	@Mock
 	private User userMock;
-	private User secondUserMock;
+	
+	@Mock
 	private UserViewModel userViewModelMock;
+	
+	@Mock
 	private TimeViewModel timeViewModelMock;
+	
+	@Mock
 	private Expense expenseMock;
+	
+	@Mock
+	private User secondUserMock;
+	
+	@InjectMocks
+	private User user;
+	
+	@InjectMocks
+	private UserViewModel userViewModel;
+	
+	@InjectMocks
+	private UserService userService;
 
 	@Before
 	public void init() {
-		userRepositoryMock = mock(UserRepository.class);
-		taskRepositoryMock = mock(TaskRepository.class);
-		expenseRepositoryMock = mock(ExpenseRepository.class);
-		timeEntryRepositoryMock = mock(TimeEntryRepository.class);
-		payPeriodMock = mock(PayPeriod.class);
+		MockitoAnnotations.initMocks(this);
 		userViewModel = new UserViewModel();
 		userViewModel.setPassword(PASSWORD);
-		timeEntryMock = mock(TimeEntry.class);
-		taskMock = mock(Task.class);
-		userMock = mock(User.class);
-		secondUserMock = mock(User.class);
 		user = new User(EMAIL, PASSWORD, null, WAGE);
-		userViewModelMock = mock(UserViewModel.class);
-		timeViewModelMock = mock(TimeViewModel.class);
-		expenseMock = mock(Expense.class);
 		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock);
 	}
 
