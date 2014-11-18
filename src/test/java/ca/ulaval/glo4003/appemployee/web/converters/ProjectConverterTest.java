@@ -10,6 +10,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
@@ -24,14 +27,18 @@ public class ProjectConverterTest {
 	private static final List<String> USER_IDS = new ArrayList<String>();
 	private static final List<String> EXPENSES_IDS = new ArrayList<String>();
 
-	private ProjectConverter projectConverter;
+	@Mock
 	private ProjectViewModel projectViewModelMock;
+	
+	@Mock
 	private Project projectMock;
+	
+	@InjectMocks
+	private ProjectConverter projectConverter;
 
 	@Before
 	public void init() {
-		projectViewModelMock = mock(ProjectViewModel.class);
-		projectMock = mock(Project.class);
+		MockitoAnnotations.initMocks(this);
 		projectConverter = new ProjectConverter();
 	}
 

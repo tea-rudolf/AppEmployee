@@ -10,6 +10,9 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
@@ -31,18 +34,25 @@ public class PayPeriodConverterTest {
 
 	private List<Task> expenses = new ArrayList<Task>();
 
-	private TimeConverter payPeriodConverterMock;
+	
+	@Mock
 	private PayPeriod payPeriodMock;
+	
+	@Mock
 	private TimeViewModel timeViewModelMock;
+	
+	@Mock
 	private TimeEntry timeEntryMock;
+	
+	@Mock
 	private ProjectService projectServiceMock;
+	
+	@InjectMocks
+	private TimeConverter payPeriodConverterMock;
 
 	@Before
 	public void init() {
-		payPeriodMock = mock(PayPeriod.class);
-		timeViewModelMock = mock(TimeViewModel.class);
-		timeEntryMock = mock(TimeEntry.class);
-		projectServiceMock = mock(ProjectService.class);
+		MockitoAnnotations.initMocks(this);
 		payPeriodConverterMock = new TimeConverter(projectServiceMock);
 	}
 

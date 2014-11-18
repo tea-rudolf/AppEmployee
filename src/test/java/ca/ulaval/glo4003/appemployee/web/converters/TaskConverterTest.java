@@ -12,6 +12,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
@@ -23,14 +26,18 @@ public class TaskConverterTest {
 	private static final String SECOND_ID = "789103";
 	private ArrayList<String> authorizedUsers;
 
-	private TaskConverter taskConverter;
+	@Mock
 	private TaskViewModel taskViewModelMock;
+	
+	@Mock
 	private Task taskMock;
-
+	
+	@InjectMocks
+	private TaskConverter taskConverter;
+	
 	@Before
 	public void setUp() {
-		taskViewModelMock = mock(TaskViewModel.class);
-		taskMock = mock(Task.class);
+		MockitoAnnotations.initMocks(this);
 		taskConverter = new TaskConverter();
 		authorizedUsers = new ArrayList<String>(Arrays.asList("FIRST_ID", "SECOND_ID"));
 	}

@@ -9,6 +9,9 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
@@ -25,14 +28,18 @@ public class ExpenseConverterTest {
 	private static final String COMMENT = "comment";
 	private static final String USER_EMAIL = "employee@employee.com";
 
-	private ExpenseConverter expenseConverter;
+	@Mock
 	private ExpenseViewModel expenseViewModelMock;
+	
+	@Mock
 	private Expense expenseMock;
+	
+	@InjectMocks
+	private ExpenseConverter expenseConverter;
 
 	@Before
 	public void init() {
-		expenseViewModelMock = mock(ExpenseViewModel.class);
-		expenseMock = mock(Expense.class);
+		MockitoAnnotations.initMocks(this);
 		expenseConverter = new ExpenseConverter();
 	}
 

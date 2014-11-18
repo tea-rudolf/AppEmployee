@@ -11,6 +11,9 @@ import java.util.List;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.domain.travel.Vehicule;
@@ -29,14 +32,18 @@ public class TravelConverterTest {
 	private static final String COMMENT = "comment";
 	private static final String USER_EMAIL = "emp@company.com";
 
-	private TravelConverter travelConverter;
+	@Mock
 	private TravelViewModel travelViewModelMock;
+	
+	@Mock
 	private Travel travelMock;
+	
+	@InjectMocks
+	private TravelConverter travelConverter;
 
 	@Before
 	public void init() {
-		travelViewModelMock = mock(TravelViewModel.class);
-		travelMock = mock(Travel.class);
+		MockitoAnnotations.initMocks(this);
 		travelConverter = new TravelConverter();
 	}
 
