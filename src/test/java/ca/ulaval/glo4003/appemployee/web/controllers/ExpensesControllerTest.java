@@ -11,6 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
@@ -38,31 +41,42 @@ public class ExpensesControllerTest {
 
 	private List<Expense> expenses = new ArrayList<Expense>();
 
+	@Mock
 	private PayPeriodService payPeriodServiceMock;
-	private ExpensesController expensesControllerMock;
+		
+	@Mock
 	private ModelMap modelMapMock;
+	
+	@Mock
 	private Model modelMock;
+	
+	@Mock
 	private ExpenseViewModel expenseViewModelMock;
+	
+	@Mock
 	private HttpSession sessionMock;
+	
+	@Mock
 	private PayPeriod payPeriodMock;
+	
+	@Mock
 	private ExpenseConverter expenseConverterMock;
+	
+	@Mock
 	private ExpenseService expenseServiceMock;
+	
+	@Mock
 	private UserService userServiceMock;
+	
+	@Mock
 	private Expense expenseMock;
+	
+	@InjectMocks
+	private ExpensesController expensesControllerMock;
 
 	@Before
 	public void init() {
-		payPeriodServiceMock = mock(PayPeriodService.class);
-		expensesControllerMock = mock(ExpensesController.class);
-		modelMapMock = mock(ModelMap.class);
-		modelMock = mock(Model.class);
-		expenseViewModelMock = mock(ExpenseViewModel.class);
-		sessionMock = mock(HttpSession.class);
-		payPeriodMock = mock(PayPeriod.class);
-		expenseConverterMock = mock(ExpenseConverter.class);
-		expenseServiceMock = mock(ExpenseService.class);
-		userServiceMock = mock(UserService.class);
-		expenseMock = mock(Expense.class);
+		MockitoAnnotations.initMocks(this);
 		expensesControllerMock = new ExpensesController(expenseServiceMock, expenseConverterMock, payPeriodServiceMock, userServiceMock);
 	}
 
