@@ -138,22 +138,22 @@ public class ExpensesControllerTest {
 		assertEquals(EXPENSES_SUBMIT_JSP, returnedForm);
 	}
 
-	// @Test
-	// public void saveExpenseCallsConvertMethod() throws Exception {
-	// when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-	// expensesControllerMock.saveExpense(modelMock, expenseViewModelMock,
-	// sessionMock);
-	// verify(expenseConverterMock, times(1)).convert(expenseViewModelMock);
-	// }
-	//
-	// @Test
-	// public void saveExpenseCallsStoreMethod() throws Exception {
-	// when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-	// when(expenseConverterMock.convert(expenseViewModelMock)).thenReturn(expenseMock);
-	// expensesControllerMock.saveExpense(modelMock, expenseViewModelMock,
-	// sessionMock);
-	// verify(expenseServiceMock, times(1)).saveExpense(expenseMock);
-	// }
+//	 @Test
+//	 public void saveExpenseCallsConvertMethod() throws Exception {
+//	 when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+//	 expensesControllerMock.saveExpense(modelMock, expenseViewModelMock,
+//	 sessionMock);
+//	 verify(expenseConverterMock, times(1)).convert(expenseViewModelMock);
+//	 }
+//	
+//	 @Test
+//	 public void saveExpenseCallsStoreMethod() throws Exception {
+//	 when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+//	 when(expenseConverterMock.convert(expenseViewModelMock)).thenReturn(expenseMock);
+//	 expensesControllerMock.saveExpense(modelMock, expenseViewModelMock,
+//	 sessionMock);
+//	 verify(expenseServiceMock, times(1)).saveExpense(expenseMock);
+//	 }
 
 	@Test
 	public void editExpenseReturnsRedirectLinkIfMissingAttribute() throws Exception {

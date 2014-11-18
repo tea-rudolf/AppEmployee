@@ -1,10 +1,14 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,19 +30,29 @@ public class HomeControllerTest {
 	private static final String ALERT_MESSAGE = "Invalid username and/or password.";
 	static final String HOME_VIEW = "home";
 
-	private HomeController homeController;
+	@Mock
+	private ExpensesController expensesControllerMock;
+		
+	@Mock
 	private LoginFormViewModel loginFormViewModelMock;
+	
+	@Mock
 	private ModelMap modelMapMock;
+	
+	@Mock
 	private UserRepository userRepositoryMock;
+	
+	@Mock
 	private User userMock;
+	
+	@InjectMocks
+	private HomeController homeController;
+	
 	private Role role;
 
 	@Before
 	public void init() {
-		loginFormViewModelMock = mock(LoginFormViewModel.class);
-		modelMapMock = mock(ModelMap.class);
-		userRepositoryMock = mock(UserRepository.class);
-		userMock = mock(User.class);
+		MockitoAnnotations.initMocks(this);
 		role = Role.EMPLOYEE;
 		homeController = new HomeController(userRepositoryMock);
 	}
