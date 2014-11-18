@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -142,6 +141,17 @@ public class TravelControllerTest {
 		travelController.saveTravelEntry(modelMock, travelViewModelMock, sessionMock);
 		verify(travelServiceMock, times(1)).createTravel(travelViewModelMock);
 	}
+	
+	@Test
+	public void saveTravelEntryReturnsCreateEntryFormIfMissingVehicle() throws Exception{
+		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
+		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
+		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
+		String returnedForm = travelController.saveTravelEntry(modelMock, travelViewModelMock, sessionMock);
+		assertEquals(CREATE_TRAVEL_JSP, returnedForm);
+	}
 
 	@Test
 	public void editTravelEntryReturnsEditFormIfSuccessful() throws Exception {
@@ -177,6 +187,19 @@ public class TravelControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
 		verify(travelServiceMock, times(1)).updateTravel(TRAVEL_UID, travelViewModelMock);
+	}
+	
+	@Test
+	public void saveEditedTravelEntryReturnsEditEntryFormIfMissingVehicle() throws Exception{
+		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
+		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
+		when(travelServiceMock.findByuId(TRAVEL_UID)).thenReturn(travelMock);
+		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
+		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
+		when(travelConverterMock.convert(travelMock)).thenReturn(travelViewModelMock);
+		String returnedForm = travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
+		assertEquals(EDIT_TRAVEL_ENTRY_JSP, returnedForm);
 	}
 
 }

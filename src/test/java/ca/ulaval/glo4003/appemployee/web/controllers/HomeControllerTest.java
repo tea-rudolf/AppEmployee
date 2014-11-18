@@ -1,18 +1,22 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
+
+
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
@@ -28,7 +32,8 @@ public class HomeControllerTest {
 	private static final String ROLE_ATTRIBUTE = "role";
 	private static final String ALERT_ATTRIBUTE = "alert";
 	private static final String ALERT_MESSAGE = "Invalid username and/or password.";
-	static final String HOME_VIEW = "home";
+	private static final String HOME_VIEW = "home";
+	private static final String SIMPLE_REDIRECT = "redirect:/";
 
 	@Mock
 	private ExpensesController expensesControllerMock;
@@ -45,6 +50,9 @@ public class HomeControllerTest {
 	@Mock
 	private User userMock;
 	
+	@Mock
+	private SessionStatus sessionStatusMock;
+	
 	@InjectMocks
 	private HomeController homeController;
 
@@ -55,6 +63,12 @@ public class HomeControllerTest {
 		MockitoAnnotations.initMocks(this);
 		role = Role.EMPLOYEE;
 		homeController = new HomeController(userRepositoryMock);
+	}
+	
+	@Test
+	public void defaultUserReturnsNewLoginFormViewModel(){
+		LoginFormViewModel returnedModel = homeController.defaultUser();
+		assertNotNull(returnedModel);
 	}
 
 	@Test
@@ -109,5 +123,11 @@ public class HomeControllerTest {
 	public void getDisplayLoginFormReturnsHomeViewForm() {
 		String returnedForm = homeController.displayLoginForm();
 		assertEquals(HOME_VIEW, returnedForm);
+	}
+	
+	@Test
+	public void logoutRedirectsWhenSuccessful(){
+		String returnedForm = homeController.logout(sessionStatusMock, modelMapMock);
+		assertEquals(SIMPLE_REDIRECT, returnedForm);
 	}
 }

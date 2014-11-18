@@ -23,6 +23,7 @@ public class HomeController {
 	static final String ROLE_ATTRIBUTE = "role";
 	static final String HOME_VIEW = "home";
 	static final String LOGIN_FORM_ATTRIBUTE = "loginForm";
+	static final String SIMPLE_REDIRECT = "redirect:/";
 
 	@Autowired
 	public HomeController(UserRepository userRepository) {
@@ -59,6 +60,6 @@ public class HomeController {
 	public String logout(SessionStatus sessionStatus, ModelMap model) {
 		sessionStatus.setComplete();
 		model.clear();
-		return "redirect:/";
+		return SIMPLE_REDIRECT;
 	}
 }

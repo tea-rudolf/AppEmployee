@@ -14,7 +14,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.department.Department;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DepartmentTest {
