@@ -134,12 +134,12 @@ public class ProjectService {
 		return employees;
 	}
 
-	public List<Task> getAllTasksByUserId(String userId) {
+	public List<Task> getAllTasksByCurrentUserId(String currentUserId) {
 		Collection<Project> projects = projectRepository.findAll();
 		List<Task> tasks = new ArrayList<Task>();
 
 		for (Project project : projects) {
-			if (project.userIsAssignedToProject(userId)) {
+			if (project.userIsAssignedToProject(currentUserId)) {
 				List<Task> projectTasks = getAllTasksByProjectId(project.getUid());
 				tasks.addAll(projectTasks);
 			}
@@ -147,15 +147,15 @@ public class ProjectService {
 		return tasks;
 	}
 
-	public void assignUserToTask(String userId, String projectId, String taskUId) {
+	public void assignUserToTask(String currentUserId, String projectId, String taskUId) {
 		Project project = projectRepository.findById(projectId);
 		Task task = taskRepository.findByUid(taskUId);
 
-		if (task != null && project != null && project.userIsAssignedToProject(userId)) {
-			task.assignUserToTask(userId);
+		if (task != null && project != null && project.userIsAssignedToProject(currentUserId)) {
+			task.assignUserToTask(currentUserId);
 		} else {
-			project.addEmployeeToProject(userId);
-			task.assignUserToTask(userId);
+			project.addEmployeeToProject(currentUserId);
+			task.assignUserToTask(currentUserId);
 		}
 	}
 

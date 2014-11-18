@@ -209,7 +209,7 @@ public class ProjectServiceTest {
 
 	@Test
 	public void getAllTasksByUserIdCallsCorrectRepositoryMethod() {
-		projectService.getAllTasksByUserId(DUMMY_USER_ID);
+		projectService.getAllTasksByCurrentUserId(DUMMY_USER_ID);
 		verify(projectRepositoryMock, times(1)).findAll();
 	}
 

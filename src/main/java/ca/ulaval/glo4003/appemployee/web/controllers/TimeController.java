@@ -67,7 +67,7 @@ public class TimeController {
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		List<Task> tasks = projectService.getAllTasksByCurrentUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -89,7 +89,7 @@ public class TimeController {
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		List<Task> tasks = projectService.getAllTasksByCurrentUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
@@ -121,7 +121,7 @@ public class TimeController {
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		List<Task> tasks = projectService.getAllTasksByCurrentUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
@@ -154,7 +154,7 @@ public class TimeController {
 		}
 
 		PayPeriod payPeriod = payPeriodService.retrievePreviousPayPeriod();
-		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		List<Task> tasks = projectService.getAllTasksByCurrentUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
 
@@ -177,7 +177,7 @@ public class TimeController {
 		}
 
 		PayPeriod currentPayPeriod = payPeriodService.retrievePreviousPayPeriod();
-		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		List<Task> tasks = projectService.getAllTasksByCurrentUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(currentPayPeriod, tasks);
 		model.addAttribute(TIME_ATTRIBUTE, form);
 
@@ -208,7 +208,7 @@ public class TimeController {
 		}
 
 		PayPeriod payPeriod = payPeriodService.retrievePreviousPayPeriod();
-		List<Task> tasks = projectService.getAllTasksByUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		List<Task> tasks = projectService.getAllTasksByCurrentUserId(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel form = timeConverter.convert(payPeriod, tasks);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);

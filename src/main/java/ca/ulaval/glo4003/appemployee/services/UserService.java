@@ -70,13 +70,13 @@ public class UserService {
 		return timeEntryRepository.findByUid(id);
 	}
 
-	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String userId) {
+	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String currentUserId) {
 
 		List<Task> tasks = new ArrayList<Task>();
 
 		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
 			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
-			if (entry != null && entry.getUserEmail().equals(userId)) {
+			if (entry != null && entry.getUserEmail().equals(currentUserId)) {
 				tasks.add(taskRepository.findByUid(entry.getUid()));
 			}
 		}
