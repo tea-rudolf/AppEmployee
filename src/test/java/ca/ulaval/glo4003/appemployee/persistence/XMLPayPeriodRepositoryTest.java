@@ -6,6 +6,9 @@ import static org.mockito.Mockito.*;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
@@ -17,13 +20,16 @@ public class XMLPayPeriodRepositoryTest {
 	private static final LocalDate END_DATE = new LocalDate("2014-10-12");
 	private static final LocalDate ACTUAL_DATE = new LocalDate("2014-10-02");
 
-	private XMLPayPeriodRepository xmlPayPeriodRepository;
+	@Mock
 	private PayPeriod payPeriodMock;
+	
+	@InjectMocks
+	private XMLPayPeriodRepository xmlPayPeriodRepository;
 
 	@Before
 	public void init() throws Exception {
+		MockitoAnnotations.initMocks(this);
 		xmlPayPeriodRepository = new XMLPayPeriodRepository();
-		payPeriodMock = mock(PayPeriod.class);
 	}
 
 	@Test
