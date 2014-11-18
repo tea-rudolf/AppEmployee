@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,6 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
@@ -40,41 +42,71 @@ public class ProjectControllerTest {
 	private static final String VALID_EMAIL = "employee@employee.com";
 	private static final String REDIRECT_LINK = "redirect:/";
 
+	@Mock
 	private HttpSession sessionMock;
+	
 	private Model model = new ExtendedModelMap();
-	private ProjectController projectController;
+		
+	@Mock
 	private ProjectService projectServiceMock;
+	
+	@Mock
 	private ProjectConverter projectConverterMock;
+	
+	@Mock
 	private ProjectViewModel projectViewModelMock;
+	
+	@Mock
 	private ProjectViewModel projectViewModel;
+	
+	@Mock
 	private Project projectMock;
-	private List<Project> projectList = new ArrayList<Project>();
-	private Collection<ProjectViewModel> projectViewModelCollection = new ArrayList<ProjectViewModel>();
+	
+	@Mock
 	private Task taskMock;
+	
+	@Mock
 	private TaskConverter taskConverterMock;
+	
+	@Mock
 	private TaskViewModel taskViewModelMock;
+	
+	@Mock
 	private TaskViewModel taskViewModel;
-	private List<Task> taskList = new ArrayList<Task>();
-	private List<User> employeeList = new ArrayList<User>();
-	private Collection<TaskViewModel> taskViewModelCollection = new ArrayList<TaskViewModel>();
+		
+	@Mock
 	private UserConverter userConverterMock;
+	
+	@Mock
 	private UserService userServiceMock;
+	
+	@Mock
 	private User currentUserMock;
+		
+	@InjectMocks
+	private ProjectController projectController;
+	
+	@InjectMocks
 	private List<UserViewModel> userViewModelCollection = new ArrayList<UserViewModel>();
+	
+	@InjectMocks
+	private List<Task> taskList = new ArrayList<Task>();
+	
+	@InjectMocks
+	private List<User> employeeList = new ArrayList<User>();
+	
+	@InjectMocks
+	private Collection<TaskViewModel> taskViewModelCollection = new ArrayList<TaskViewModel>();
+	
+	@InjectMocks
+	private List<Project> projectList = new ArrayList<Project>();
+	
+	@InjectMocks
+	private Collection<ProjectViewModel> projectViewModelCollection = new ArrayList<ProjectViewModel>();
 
 	@Before
 	public void init() {
-		sessionMock = mock(HttpSession.class);
-		projectMock = mock(Project.class);
-		projectServiceMock = mock(ProjectService.class);
-		projectConverterMock = mock(ProjectConverter.class);
-		projectViewModelMock = mock(ProjectViewModel.class);
-		taskMock = mock(Task.class);
-		taskConverterMock = mock(TaskConverter.class);
-		taskViewModelMock = mock(TaskViewModel.class);
-		userConverterMock = mock(UserConverter.class);
-		userServiceMock = mock(UserService.class);
-		currentUserMock = mock(User.class);
+		MockitoAnnotations.initMocks(this);
 		projectViewModel = new ProjectViewModel();
 		projectViewModel.setUserEmail("");
 		taskViewModel = new TaskViewModel();

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
@@ -41,33 +44,48 @@ public class TravelControllerTest {
 	private static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
 	private static final String TRAVEL_REDIRECT = "redirect:/travel/";
 
-	private TravelController travelController;
+	@Mock
 	private PayPeriodService payPeriodServiceMock;
+	
+	@Mock
 	private TaskRepository taskRepositoryMock;
+	
+	@Mock
 	private UserService userServiceMock;
+	
+	@Mock
 	private TravelConverter travelConverterMock;
+	
+	@Mock
 	private TravelService travelServiceMock;
+	
+	@Mock
 	private HttpSession sessionMock;
+	
+	@Mock
 	private PayPeriod payPeriodMock;
+	
+	@Mock
 	private ModelMap modelMapMock;
+	
+	@Mock
 	private Model modelMock;
+	
+	@Mock
 	private TravelViewModel travelViewModelMock;
+	
+	@Mock
 	private Travel travelMock;
+		
+	@InjectMocks
+	private TravelController travelController;	
+
+	@InjectMocks
 	private List<Travel> travels = new ArrayList<Travel>();
 
 	@Before
 	public void init() {
-		payPeriodServiceMock = mock(PayPeriodService.class);
-		taskRepositoryMock = mock(TaskRepository.class);
-		userServiceMock = mock(UserService.class);
-		travelConverterMock = mock(TravelConverter.class);
-		travelServiceMock = mock(TravelService.class);
-		payPeriodMock = mock(PayPeriod.class);
-		sessionMock = mock(HttpSession.class);
-		modelMapMock = mock(ModelMap.class);
-		modelMock = mock(Model.class);
-		travelViewModelMock = mock(TravelViewModel.class);
-		travelMock = mock(Travel.class);
+		MockitoAnnotations.initMocks(this);
 		travelController = new TravelController(payPeriodServiceMock, taskRepositoryMock, userServiceMock, travelConverterMock, travelServiceMock);
 	}
 

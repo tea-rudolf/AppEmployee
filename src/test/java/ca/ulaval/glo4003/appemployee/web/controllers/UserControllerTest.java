@@ -7,6 +7,9 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -27,28 +30,45 @@ public class UserControllerTest {
 	private static final String EDIT_PROFILE_JSP = "editProfile";
 	static final String EMPLOYEE_REDIRECT = "redirect:/employee";
 	static final String USER_NOT_FOUND = "userNotFoundError";
-	private ModelMap modelMapMock;
-	private HttpSession sessionMock;
-	private Model model = new ExtendedModelMap();
-	private UserController userController;
-	private ProjectViewModel projectViewModel;
-	private TaskViewModel taskViewModel;
-	private User user;
-	private UserConverter userConverterMock;
-	private UserService userServiceMock;
-	private UserViewModel userViewModel;
 
+	@Mock
+	private ModelMap modelMapMock;
+
+	@Mock
+	private HttpSession sessionMock;
+
+	@Mock
+	private UserConverter userConverterMock;
+
+	@Mock
+	private UserService userServiceMock;
+
+	@Mock
 	private UserViewModel userViewModelMock;
+
+	@InjectMocks
+	private UserController userController;
+
+	@InjectMocks
+	private UserViewModel userViewModel;
+	
+	@InjectMocks
+	private Model model = new ExtendedModelMap();
+	
+	@InjectMocks
+	private ProjectViewModel projectViewModel;
+	
+	@InjectMocks
+	private TaskViewModel taskViewModel;
+	
+	@InjectMocks
+	private User user;
 
 	@Before
 	public void init() {
-		sessionMock = mock(HttpSession.class);
-		userViewModelMock = mock(UserViewModel.class);
-		userConverterMock = mock(UserConverter.class);
-		userServiceMock = mock(UserService.class);
+		MockitoAnnotations.initMocks(this);
 		projectViewModel = new ProjectViewModel();
 		projectViewModel.setUserEmail("");
-		modelMapMock = mock(ModelMap.class);
 		taskViewModel = new TaskViewModel();
 		taskViewModel.setUserEmail("");
 		userViewModel = new UserViewModel();

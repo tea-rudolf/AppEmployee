@@ -47,7 +47,7 @@ public class HomeControllerTest {
 	
 	@InjectMocks
 	private HomeController homeController;
-	
+
 	private Role role;
 
 	@Before

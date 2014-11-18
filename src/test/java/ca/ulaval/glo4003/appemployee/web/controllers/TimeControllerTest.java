@@ -11,6 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -46,37 +49,51 @@ public class TimeControllerTest {
 	private static final String CREATE_PREVIOUS_TIME_JSP = "createPreviousTimeEntry";
 	private static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime/";
 
+	@Mock
 	private PayPeriodService payPeriodServiceMock;
+	
+	@Mock
 	private TimeConverter timeConverterMock;
-	private TimeController timeControllerMock;
+	
+	@Mock
 	private ModelMap modelMapMock;
+	
+	@Mock
 	private TimeViewModel payPeriodViewModelMock;
+	
+	@Mock
 	private HttpSession sessionMock;
+	
+	@Mock
 	private PayPeriod payPeriodMock;
+	
+	@Mock
 	private User userMock;
+	
+	@Mock
 	private UserRepository userRepositoryMock;
+	
+	@Mock
 	private TaskRepository taskRepositoryMock;
+	
+	@Mock
 	private UserService userServiceMock;
+	
+	@Mock
 	private TimeEntry timeEntryMock;
+	
+	@Mock
 	private ProjectService projectServiceMock;
+	
+	@Mock
 	private Model modelMock;
+	
+	@InjectMocks
+	private TimeController timeControllerMock;
 
 	@Before
 	public void init() {
-		payPeriodServiceMock = mock(PayPeriodService.class);
-		timeConverterMock = mock(TimeConverter.class);
-		timeControllerMock = mock(TimeController.class);
-		modelMapMock = mock(ModelMap.class);
-		modelMock = mock(Model.class);
-		payPeriodViewModelMock = mock(TimeViewModel.class);
-		sessionMock = mock(HttpSession.class);
-		payPeriodMock = mock(PayPeriod.class);
-		userMock = mock(User.class);
-		userRepositoryMock = mock(UserRepository.class);
-		taskRepositoryMock = mock(TaskRepository.class);
-		userServiceMock = mock(UserService.class);
-		timeEntryMock = mock(TimeEntry.class);
-		projectServiceMock = mock(ProjectService.class);
+		MockitoAnnotations.initMocks(this);
 		timeControllerMock = new TimeController(payPeriodServiceMock, timeConverterMock, taskRepositoryMock, userServiceMock, projectServiceMock);
 	}
 
