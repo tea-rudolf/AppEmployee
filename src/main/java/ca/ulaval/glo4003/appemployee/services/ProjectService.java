@@ -91,7 +91,7 @@ public class ProjectService {
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
 		
-		if (!viewModel.getUserEmail().equals("") && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+		if (!viewModel.getUserEmail().isEmpty() && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
 			//task.assignUserToTask(viewModel.getUserEmail());
 			assignUserToTask(viewModel.getUserEmail(), projectId, taskId); 
 		}
