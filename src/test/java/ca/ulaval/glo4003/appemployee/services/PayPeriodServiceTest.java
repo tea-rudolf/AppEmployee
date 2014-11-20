@@ -44,10 +44,13 @@ public class PayPeriodServiceTest {
 	private TimeViewModel timeViewModelMock;
 	
 	@Mock
-	private TimeConverter timeConverter;
+	private TimeConverter timeConverterMock;
 	
 	@Mock
-	private TimeEntry timeEntry;
+	private TimeEntry timeEntryMock;
+	
+	@Mock
+	private UserService userServiceMock;
 	
 	@InjectMocks
 	private PayPeriodService payPeriodService;
@@ -55,7 +58,7 @@ public class PayPeriodServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		payPeriodService = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverter);
+		payPeriodService = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverterMock, userServiceMock);
 	}
 
 	@Test
@@ -108,8 +111,8 @@ public class PayPeriodServiceTest {
 
 	@Test
 	public void saveTimeEntryCallsTimeEntryRepository() throws Exception {
-		when(timeConverter.convert(timeViewModelMock)).thenReturn(timeEntry);
-		when(timeEntry.getUid()).thenReturn(A_UID);
+		when(timeConverterMock.convert(timeViewModelMock)).thenReturn(timeEntryMock);
+		when(timeEntryMock.getUid()).thenReturn(A_UID);
 		payPeriodService.createTimeEntry(timeViewModelMock, payPeriodMock);
 		verify(timeEntryRepositoryMock, times(1)).store(any(TimeEntry.class));
 	}

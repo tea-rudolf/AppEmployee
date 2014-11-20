@@ -1,11 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -15,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
@@ -32,9 +27,6 @@ public class PayPeriodConverterTest {
 	private static final double EPSILON = 0.001;
 	private static final String COMMENT = "imacomment";
 
-	private List<Task> expenses = new ArrayList<Task>();
-
-	
 	@Mock
 	private PayPeriod payPeriodMock;
 	
@@ -95,7 +87,7 @@ public class PayPeriodConverterTest {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 
-		timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock, expenses);
+		timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock, USER_EMAIL);
 
 		assertEquals(payPeriodMock.getStartDate().toString(), timeViewModelMock.getStartDate());
 		assertEquals(payPeriodMock.getEndDate().toString(), timeViewModelMock.getEndDate());

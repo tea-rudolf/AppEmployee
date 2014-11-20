@@ -2,14 +2,11 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
@@ -55,11 +52,11 @@ public class TimeConverter {
 		return model;
 	}
 
-	public TimeViewModel convert(PayPeriod payPeriod, List<Task> tasks) {
+	public TimeViewModel convert(PayPeriod payPeriod, String userEmail) {
 		TimeViewModel payPeriodViewModel = new TimeViewModel();
 		payPeriodViewModel.setStartDate(payPeriod.getStartDate().toString());
 		payPeriodViewModel.setEndDate(payPeriod.getEndDate().toString());
-		payPeriodViewModel.setAvailableTasks(tasks);
+		payPeriodViewModel.setAvailableTasks(projectService.getAllTasksByCurrentUserId(userEmail));
 		return payPeriodViewModel;
 	}
 }

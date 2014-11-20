@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.appemployee.services;
 
+import java.util.Collection;
+
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +20,14 @@ public class PayPeriodService {
 	private PayPeriodRepository payPeriodRepository;
 	private TimeEntryRepository timeEntryRepository;
 	private TimeConverter timeConverter;
+	private UserService userService;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter) {
+	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter, UserService userService) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;
 		this.timeConverter = timeConverter;
+		this.userService = userService;
 	}
 
 	public PayPeriod retrieveCurrentPayPeriod() throws PayPeriodNotFoundException {
@@ -59,5 +63,25 @@ public class PayPeriodService {
 		timeEntry.setUserEmail(timeViewModel.getUserEmail());
 		timeEntry.setComment(timeViewModel.getCommentTimeEntry());
 		timeEntryRepository.store(timeEntry);
+	}
+	
+	public TimeViewModel retrieveViewModelForCurrentPayPeriod(String userEmail){
+		return timeConverter.convert(retrieveCurrentPayPeriod(), userEmail);
+	}
+	
+	public Collection<TimeViewModel> retrieveTimeEntriesViewModelsForCurrentPayPeriod(String userEmail){
+		return timeConverter.convert(userService.getTimeEntriesForUserForAPayPeriod(retrieveCurrentPayPeriod(), userEmail));
+	}
+	
+	public TimeViewModel retrieveViewModelForDesiredTimeEntry(String timeEntryUid){
+		return timeConverter.convert(userService.getTimeEntry(timeEntryUid));
+	}
+	
+	public TimeViewModel retrieveViewModelForPreviousPayPeriod(String userEmail){
+		return timeConverter.convert(retrievePreviousPayPeriod(), userEmail);
+	}
+	
+	public Collection<TimeViewModel> retrieveTimeEntriesViewModelsForPreviousPayPeriod(String userEmail){
+		return timeConverter.convert(userService.getTimeEntriesForUserForAPayPeriod(retrievePreviousPayPeriod(), userEmail));
 	}
 }
