@@ -16,7 +16,7 @@ public class TimeViewModel {
 	private String commentTimeEntry;
 	private String taskIdTimeEntry;
 	private String taskNameTimeEntry;
-	private String timeEntryuId;
+	private String timeEntryUid;
 
 	public String getPayPeriodStartDate() {
 		return payPeriodStartDate;
@@ -98,13 +98,6 @@ public class TimeViewModel {
 		this.taskNameTimeEntry = taskNameTimeEntry;
 	}
 
-	public String getTimeEntryuId() {
-		return timeEntryuId;
-	}
-
-	public void setTimeEntryuId(String timeEntryuId) {
-		this.timeEntryuId = timeEntryuId;
-	}
 
 	public String getDateTimeEntry() {
 		return dateTimeEntry;
@@ -112,6 +105,14 @@ public class TimeViewModel {
 
 	public void setDateTimeEntry(String dateTimeEntry) {
 		this.dateTimeEntry = dateTimeEntry;
+	}
+
+	public String getTimeEntryUid() {
+		return timeEntryUid;
+	}
+
+	public void setTimeEntryUid(String timeEntryUid) {
+		this.timeEntryUid = timeEntryUid;
 	}
 
 }

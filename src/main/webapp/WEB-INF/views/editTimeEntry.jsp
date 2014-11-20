@@ -25,9 +25,9 @@
 			</c:if>
 		<div></div>
 		<form:form role="form" method="POST"
-			action="/time/${timeEntry.timeEntryuId}/edit" modelAttribute="timeEntry">
+			action="/time/${timeEntry.timeEntryUid}/edit" modelAttribute="timeEntry">
 			<div class="form-group">
-				<form:hidden path="timeEntryuId" />
+				<form:hidden path="timeEntryUid" />
 			</div>
 
 				<div class="table-responsive">

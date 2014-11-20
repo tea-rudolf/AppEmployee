@@ -40,7 +40,7 @@ public class TimeController {
 	static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime/";
 
 	private PayPeriodService payPeriodService;
-	
+
 	@Autowired
 	public TimeController(PayPeriodService payPeriodService, TimeConverter payPeriodConverter, TaskRepository taskRepository, UserService userService,
 			ProjectService projectService) {
@@ -55,7 +55,8 @@ public class TimeController {
 		}
 		
 		TimeViewModel form = payPeriodService.retrieveViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		Collection<TimeViewModel> timeEntriesViewModels = payPeriodService.retrieveTimeEntriesViewModelsForCurrentPayPeriod(EMAIL_ATTRIBUTE);
+		Collection<TimeViewModel> timeEntriesViewModels = payPeriodService.retrieveTimeEntriesViewModelsForCurrentPayPeriod(session.getAttribute(
+				EMAIL_ATTRIBUTE).toString());
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
@@ -79,12 +80,12 @@ public class TimeController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
-		
+
 		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
 			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
 			return createTimeEntry(model, payPeriodForm, session);
 		}
-		
+
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		payPeriodService.createTimeEntry(payPeriodForm, payPeriodService.retrieveCurrentPayPeriod());
 
@@ -98,11 +99,11 @@ public class TimeController {
 			return LOGIN_REDIRECT;
 		}
 
-		TimeViewModel form = payPeriodService.retrieveViewModelForCurrentPayPeriod(EMAIL_ATTRIBUTE);
+		TimeViewModel form = payPeriodService.retrieveViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel modelToEdit = payPeriodService.retrieveViewModelForDesiredTimeEntry(timeEntryUid);
-		
+
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		modelToEdit.setTimeEntryuId(timeEntryUid);
+		modelToEdit.setTimeEntryUid(timeEntryUid);
 		model.addAttribute("timeEntry", modelToEdit);
 
 		return EDIT_TIME_ENTRY_JSP;
@@ -129,9 +130,10 @@ public class TimeController {
 			return LOGIN_REDIRECT;
 		}
 
-		TimeViewModel form = payPeriodService.retrieveViewModelForPreviousPayPeriod(EMAIL_ATTRIBUTE);
-		Collection<TimeViewModel> timeEntriesViewModels = payPeriodService.retrieveTimeEntriesViewModelsForPreviousPayPeriod(EMAIL_ATTRIBUTE);
-		
+		TimeViewModel form = payPeriodService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		Collection<TimeViewModel> timeEntriesViewModels = payPeriodService.retrieveTimeEntriesViewModelsForPreviousPayPeriod(session.getAttribute(
+				EMAIL_ATTRIBUTE).toString());
+
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("timeEntries", timeEntriesViewModels);
@@ -146,7 +148,7 @@ public class TimeController {
 			return LOGIN_REDIRECT;
 		}
 
-		TimeViewModel form = payPeriodService.retrieveViewModelForPreviousPayPeriod(EMAIL_ATTRIBUTE);
+		TimeViewModel form = payPeriodService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute(TIME_ATTRIBUTE, form);
 
 		return CREATE_PREVIOUS_TIME_JSP;
@@ -173,11 +175,11 @@ public class TimeController {
 			return LOGIN_REDIRECT;
 		}
 
-		TimeViewModel form = payPeriodService.retrieveViewModelForPreviousPayPeriod(EMAIL_ATTRIBUTE);
+		TimeViewModel form = payPeriodService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel modelToEdit = payPeriodService.retrieveViewModelForDesiredTimeEntry(timeEntryUid);
-		
+
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		modelToEdit.setTimeEntryuId(timeEntryUid);
+		modelToEdit.setTimeEntryUid(timeEntryUid);
 		model.addAttribute("timeEntry", modelToEdit);
 
 		return EDIT_PREVIOUS_TIME_ENTRY_JSP;
@@ -196,5 +198,5 @@ public class TimeController {
 
 		return PREVIOUS_TIME_REDIRECT;
 	}
-	
+
 }

@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,16 @@ public class TimeConverter {
 
 	public Collection<TimeViewModel> convert(ArrayList<TimeEntry> timeEntries) {
 		Collection<TimeViewModel> viewModels = new ArrayList<TimeViewModel>();
+		System.out.println("timeEntries size dans converter 1" + timeEntries.size());
 
 		for (TimeEntry entry : timeEntries) {
 			TimeViewModel viewModel = convert(entry);
-			viewModel.setTimeEntryuId(entry.getUid());
+			viewModel.setTimeEntryUid(entry.getUid());
 			viewModels.add(viewModel);
 		}
+		
+		System.out.println("viewModels size dans converter 1" + viewModels.size());
+		
 		return viewModels;
 	}
 
@@ -53,6 +58,7 @@ public class TimeConverter {
 	}
 
 	public TimeViewModel convert(PayPeriod payPeriod, String userEmail) {
+		System.out.println("Retrieving with email 2  : " + userEmail);
 		TimeViewModel payPeriodViewModel = new TimeViewModel();
 		payPeriodViewModel.setStartDate(payPeriod.getStartDate().toString());
 		payPeriodViewModel.setEndDate(payPeriod.getEndDate().toString());

@@ -56,7 +56,7 @@ public class PayPeriodService {
 	}
 
 	public void updateTimeEntry(TimeViewModel timeViewModel) throws Exception {
-		TimeEntry timeEntry = timeEntryRepository.findByUid(timeViewModel.getTimeEntryuId());
+		TimeEntry timeEntry = timeEntryRepository.findByUid(timeViewModel.getTimeEntryUid());
 		timeEntry.setBillableHours(timeViewModel.getHoursTimeEntry());
 		timeEntry.setDate(new LocalDate(timeViewModel.getDateTimeEntry()));
 		timeEntry.setTaskUid(timeViewModel.getTaskIdTimeEntry());
@@ -66,10 +66,14 @@ public class PayPeriodService {
 	}
 	
 	public TimeViewModel retrieveViewModelForCurrentPayPeriod(String userEmail){
+		
 		return timeConverter.convert(retrieveCurrentPayPeriod(), userEmail);
 	}
 	
 	public Collection<TimeViewModel> retrieveTimeEntriesViewModelsForCurrentPayPeriod(String userEmail){
+		
+		
+		
 		return timeConverter.convert(userService.getTimeEntriesForUserForAPayPeriod(retrieveCurrentPayPeriod(), userEmail));
 	}
 	
@@ -78,6 +82,7 @@ public class PayPeriodService {
 	}
 	
 	public TimeViewModel retrieveViewModelForPreviousPayPeriod(String userEmail){
+		System.out.println("Retrieving with email : " + userEmail);
 		return timeConverter.convert(retrievePreviousPayPeriod(), userEmail);
 	}
 	

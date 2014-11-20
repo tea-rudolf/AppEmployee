@@ -55,7 +55,7 @@
 					</tr>
 					<c:forEach var="timeEntry" items="${timeEntries}">
 						<tr
-							onClick="javascript:window.location.href = '/time/previousTime/${timeEntry.timeEntryuId}/edit'">
+							onClick="javascript:window.location.href = '/time/previousTime/${timeEntry.timeEntryUid}/edit'">
 							<td>${timeEntry.dateTimeEntry}</td>
 							<td>${timeEntry.taskNameTimeEntry}</td>
 							<td>${timeEntry.hoursTimeEntry}</td>

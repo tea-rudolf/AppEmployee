@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.department.Department;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
+import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Controller
@@ -30,11 +34,13 @@ public class DepartmentController {
 
 	private static final String EMAIL_ATTRIBUTE = "email";
 	private static final String SIMPLE_REDIRECT = "redirect:/";
+	private static final String CREATE_DEPARTMENT_FORM = "createDepartment";
 	private static final String DEPARTMENT_LIST_FORM = "departmentsList";
 	private static final String EDIT_DEPARTMENT_FORM = "editDepartment";
 	private static final String CREATE_USER_FORM = "createUser";
 	private static final String EDIT_DEPARTMENT_REDIRECT = "redirect:/departments/{departmentName}/edit";
 	private static final String EDIT_EMPLOYEE_FORM = "editEmployee";
+	
 	
 	private DepartmentService departmentService;
 	private UserService userService;
@@ -59,6 +65,31 @@ public class DepartmentController {
 
 		model.addAttribute("departments", departmentService.retrieveDepartmentsList());
 		return DEPARTMENT_LIST_FORM;
+	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String createDepartment(Model model, DepartmentViewModel departmentViewModel, HttpSession session) {
+
+		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
+			return SIMPLE_REDIRECT;
+		}
+
+		model.addAttribute("department", departmentViewModel);
+		return CREATE_DEPARTMENT_FORM;
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public String saveDepartment(Model model, DepartmentViewModel departmentViewModel, HttpSession session) throws Exception {
+
+		try {
+			//To do
+			departmentService.saveDepartement(departmentViewModel);
+			return DEPARTMENT_LIST_FORM;
+		} catch (ProjectExistsException e) {
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return createDepartment(model, departmentViewModel, session);
+		}
+
 	}
 
 	@RequestMapping(value = "/{departmentName}/edit", method = RequestMethod.GET)

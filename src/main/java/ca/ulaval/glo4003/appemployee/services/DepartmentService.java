@@ -14,6 +14,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.DepartmentRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Service
@@ -83,6 +84,11 @@ public class DepartmentService {
 			isAssigned = true;
 		}
 		return isAssigned;
+	}
+
+	public void saveDepartement(DepartmentViewModel departmentViewModel) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
