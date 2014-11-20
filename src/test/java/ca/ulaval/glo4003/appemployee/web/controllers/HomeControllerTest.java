@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.servlet.http.HttpSession;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -51,6 +53,9 @@ public class HomeControllerTest {
 
 	@InjectMocks
 	private HomeController homeController;
+	
+	@Mock
+	private HttpSession sessionMock;
 
 	private Role role;
 
@@ -73,7 +78,7 @@ public class HomeControllerTest {
 		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 
-		ModelAndView sampleForm = homeController.login(loginFormViewModelMock, modelMapMock);
+		ModelAndView sampleForm = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock);
 
 		assertEquals("home", sampleForm.getViewName());
 	}
@@ -85,7 +90,7 @@ public class HomeControllerTest {
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 		when(userMock.validatePassword(USER_PASSWORD)).thenReturn(true);
 
-		homeController.login(loginFormViewModelMock, modelMapMock);
+		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock);
 
 		verify(modelMapMock, times(1)).addAttribute(EMAIL_ATTRIBUTE, USER_EMAIL);
 	}
@@ -98,7 +103,7 @@ public class HomeControllerTest {
 		when(userMock.validatePassword(USER_PASSWORD)).thenReturn(true);
 		when(userMock.getRole()).thenReturn(role);
 
-		homeController.login(loginFormViewModelMock, modelMapMock);
+		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock);
 
 		verify(modelMapMock, times(1)).addAttribute(ROLE_ATTRIBUTE, role);
 	}
@@ -110,7 +115,7 @@ public class HomeControllerTest {
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 		when(userMock.validatePassword(USER_PASSWORD)).thenReturn(false);
 
-		homeController.login(loginFormViewModelMock, modelMapMock);
+		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock);
 
 		verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE, ALERT_MESSAGE);
 	}
