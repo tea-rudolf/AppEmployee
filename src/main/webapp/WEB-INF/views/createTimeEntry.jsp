@@ -39,7 +39,6 @@
 								max="${timeForm.payPeriodEndDate}" path="dateTimeEntry"
 								value="${dateTimeEntry}" required="required" /></td>
 						<td><form:select class="form-control" path="taskIdTimeEntry">
-								<form:option value="NONE"> --SELECT--</form:option>
 								<form:options items="${timeForm.availableTasks}" itemValue="uid"
 									itemLabel="name"></form:options>
 							</form:select></td>
