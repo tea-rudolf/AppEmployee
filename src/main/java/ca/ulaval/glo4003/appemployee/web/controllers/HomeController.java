@@ -1,5 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +21,8 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 public class HomeController {
 
 	private UserRepository userRepository;
+	//À rename lol
+	static final Integer TIME_OF_INACTION_TO_DISCONNECT = 462;
 	static final String EMAIL_ATTRIBUTE = "email";
 	static final String ROLE_ATTRIBUTE = "role";
 	static final String HOME_VIEW = "home";
@@ -41,13 +45,13 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(LoginFormViewModel form, ModelMap model) {
+	public ModelAndView login(LoginFormViewModel form, ModelMap model, HttpSession session) {
 
 		User user = userRepository.findByEmail(form.getEmail());
 		if (user != null && user.validatePassword(form.getPassword())) {
 			model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
 			model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
-
+			session.setMaxInactiveInterval(TIME_OF_INACTION_TO_DISCONNECT);
 			return new ModelAndView(HOME_VIEW, model);
 		} else {
 			model.addAttribute("alert", "Invalid username and/or password.");

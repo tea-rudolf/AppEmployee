@@ -58,6 +58,7 @@ public class TimeConverter {
 		TimeViewModel payPeriodViewModel = new TimeViewModel();
 		payPeriodViewModel.setStartDate(payPeriod.getStartDate().toString());
 		payPeriodViewModel.setEndDate(payPeriod.getEndDate().toString());
+		payPeriodViewModel.setUserEmail(userEmail);
 		payPeriodViewModel.setAvailableTasks(projectService.getAllTasksByCurrentUserId(userEmail));
 		return payPeriodViewModel;
 	}

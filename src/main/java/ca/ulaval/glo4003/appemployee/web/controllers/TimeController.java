@@ -81,11 +81,6 @@ public class TimeController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
-		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
-			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
-			return createTimeEntry(model, payPeriodForm, session);
-		}
-
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		payPeriodService.createTimeEntry(payPeriodForm, payPeriodService.retrieveCurrentPayPeriod());
 
@@ -111,11 +106,6 @@ public class TimeController {
 
 	@RequestMapping(value = "/{timeEntryUid}/edit", method = RequestMethod.POST)
 	public String saveEditedTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
-
-		if (viewModel.getTaskIdTimeEntry().equals("NONE")) {
-			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
-			return editTimeEntry(timeEntryUid, model, session);
-		}
 
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		payPeriodService.updateTimeEntry(viewModel);
@@ -157,12 +147,6 @@ public class TimeController {
 	@RequestMapping(value = "/previousTime/add", method = RequestMethod.POST)
 	public String savePreviousTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 
-		if (payPeriodForm.getTaskIdTimeEntry().equals("NONE")) {
-			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
-			return createPreviousTimeEntry(model, payPeriodForm, session);
-		}
-
-		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		payPeriodService.createTimeEntry(payPeriodForm, payPeriodService.retrievePreviousPayPeriod());
 
 		return TIME_SHEET_SUBMIT_JSP;
@@ -193,7 +177,6 @@ public class TimeController {
 			return editPreviousTimeEntry(timeEntryUid, model, session);
 		}
 
-		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		payPeriodService.updateTimeEntry(viewModel);
 
 		return PREVIOUS_TIME_REDIRECT;
