@@ -45,39 +45,39 @@ public class TravelControllerTest {
 
 	@Mock
 	private PayPeriodService payPeriodServiceMock;
-	
+
 	@Mock
 	private TaskRepository taskRepositoryMock;
-	
+
 	@Mock
 	private UserService userServiceMock;
-	
+
 	@Mock
 	private TravelConverter travelConverterMock;
-	
+
 	@Mock
 	private TravelService travelServiceMock;
-	
+
 	@Mock
 	private HttpSession sessionMock;
-	
+
 	@Mock
 	private PayPeriod payPeriodMock;
-	
+
 	@Mock
 	private ModelMap modelMapMock;
-	
+
 	@Mock
 	private Model modelMock;
-	
+
 	@Mock
 	private TravelViewModel travelViewModelMock;
-	
+
 	@Mock
 	private Travel travelMock;
-		
+
 	@InjectMocks
-	private TravelController travelController;	
+	private TravelController travelController;
 
 	@InjectMocks
 	private List<Travel> travels = new ArrayList<Travel>();
@@ -141,9 +141,9 @@ public class TravelControllerTest {
 		travelController.saveTravelEntry(modelMock, travelViewModelMock, sessionMock);
 		verify(travelServiceMock, times(1)).createTravel(travelViewModelMock);
 	}
-	
+
 	@Test
-	public void saveTravelEntryReturnsCreateEntryFormIfMissingVehicle() throws Exception{
+	public void saveTravelEntryReturnsCreateEntryFormIfMissingVehicle() throws Exception {
 		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
@@ -188,9 +188,9 @@ public class TravelControllerTest {
 		travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
 		verify(travelServiceMock, times(1)).updateTravel(TRAVEL_UID, travelViewModelMock);
 	}
-	
+
 	@Test
-	public void saveEditedTravelEntryReturnsEditEntryFormIfMissingVehicle() throws Exception{
+	public void saveEditedTravelEntryReturnsEditEntryFormIfMissingVehicle() throws Exception {
 		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);

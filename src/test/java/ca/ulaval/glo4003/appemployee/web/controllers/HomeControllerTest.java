@@ -6,10 +6,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
-
-
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -37,22 +33,22 @@ public class HomeControllerTest {
 
 	@Mock
 	private ExpensesController expensesControllerMock;
-		
+
 	@Mock
 	private LoginFormViewModel loginFormViewModelMock;
-	
+
 	@Mock
 	private ModelMap modelMapMock;
-	
+
 	@Mock
 	private UserRepository userRepositoryMock;
-	
+
 	@Mock
 	private User userMock;
-	
+
 	@Mock
 	private SessionStatus sessionStatusMock;
-	
+
 	@InjectMocks
 	private HomeController homeController;
 
@@ -64,9 +60,9 @@ public class HomeControllerTest {
 		role = Role.EMPLOYEE;
 		homeController = new HomeController(userRepositoryMock);
 	}
-	
+
 	@Test
-	public void defaultUserReturnsNewLoginFormViewModel(){
+	public void defaultUserReturnsNewLoginFormViewModel() {
 		LoginFormViewModel returnedModel = homeController.defaultUser();
 		assertNotNull(returnedModel);
 	}
@@ -124,9 +120,9 @@ public class HomeControllerTest {
 		String returnedForm = homeController.displayLoginForm();
 		assertEquals(HOME_VIEW, returnedForm);
 	}
-	
+
 	@Test
-	public void logoutRedirectsWhenSuccessful(){
+	public void logoutRedirectsWhenSuccessful() {
 		String returnedForm = homeController.logout(sessionStatusMock, modelMapMock);
 		assertEquals(SIMPLE_REDIRECT, returnedForm);
 	}

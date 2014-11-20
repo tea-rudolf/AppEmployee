@@ -53,16 +53,16 @@ public class UserControllerTest {
 
 	@InjectMocks
 	private UserViewModel userViewModel;
-	
+
 	@InjectMocks
 	private Model model = new ExtendedModelMap();
-	
+
 	@InjectMocks
 	private ProjectViewModel projectViewModel;
-	
+
 	@InjectMocks
 	private TaskViewModel taskViewModel;
-	
+
 	@InjectMocks
 	private User user;
 
@@ -120,9 +120,9 @@ public class UserControllerTest {
 		userController.updatePassword(userViewModelMock, sessionMock);
 		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL, userViewModelMock);
 	}
-	
+
 	@Test
-	public void updatePasswordRedirectsToEditProfileErrorPageIfExceptionIsThrown() throws Exception{
+	public void updatePasswordRedirectsToEditProfileErrorPageIfExceptionIsThrown() throws Exception {
 		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		doThrow(new UserNotFoundException("")).when(userServiceMock).retrieveByEmail(VALID_EMAIL);
@@ -135,5 +135,5 @@ public class UserControllerTest {
 		String returnedForm = userController.getErrorUserNotFound(modelMapMock, sessionMock);
 		assertEquals(USER_NOT_FOUND, returnedForm);
 	}
-	
+
 }
