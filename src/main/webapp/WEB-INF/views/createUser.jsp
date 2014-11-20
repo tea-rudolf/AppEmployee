@@ -37,7 +37,6 @@
 			<div class="form-group">
 				<b>Role</b>
 				<td><form:select class="form-control" path="role">
-					<form:option value="NONE"> --SELECT--</form:option>
 					<form:options items="${user.availableRoles}"></form:options>
 				</form:select></td>
 			</div>

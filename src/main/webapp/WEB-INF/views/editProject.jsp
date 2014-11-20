@@ -37,7 +37,6 @@
 			<div class="form-group">
 				<b>Assign a user email (optional)</b>
 				<td><form:select class="form-control" path="userEmail">
-					<form:option value="NONE"> --SELECT--</form:option>
 					<form:options items="${project.availableUsers}"></form:options>
 				</form:select></td>
 			</div>
