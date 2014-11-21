@@ -99,13 +99,16 @@ public class DepartmentService {
 	public void createDepartement(DepartmentViewModel departmentViewModel) throws Exception {
 		Department department = new Department();
 		department.setName(departmentViewModel.getName());
-
-		if ((departmentViewModel.getUserEmailsSelected()) == null && (!departmentViewModel.getUserEmailsSelected().isEmpty())) {
+		
+		if(departmentViewModel.getUserEmailsSelected() != null){
 			List<String> userEmail = Arrays.asList(departmentViewModel.getUserEmailsSelected().split(","));
 			for (String email : userEmail) {
 				department.addEmployee(email);
 			}
 		}
+		
+
+
 		departmentRepository.store(department);
 	}
 

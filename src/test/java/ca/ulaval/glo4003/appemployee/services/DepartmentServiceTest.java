@@ -53,7 +53,7 @@ public class DepartmentServiceTest {
 	private DepartmentConverter departmentConverterMock;
 
 	@Mock
-	private UserConverter UserConverterMock;
+	private UserConverter userConverterMock;
 
 	@InjectMocks
 	private DepartmentService departmentService;
@@ -61,7 +61,7 @@ public class DepartmentServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		departmentService = new DepartmentService(departmentRepositoryMock, userRepositoryMock, departmentConverterMock, UserConverterMock);
+		departmentService = new DepartmentService(departmentRepositoryMock, userRepositoryMock, departmentConverterMock, userConverterMock);
 		when(userViewModelMock.getEmail()).thenReturn(EMAIL);
 		when(userViewModelMock.getPassword()).thenReturn(PASSWORD);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
