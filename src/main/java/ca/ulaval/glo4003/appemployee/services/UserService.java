@@ -22,6 +22,7 @@ import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -33,15 +34,17 @@ public class UserService {
 	private TimeEntryRepository timeEntryRepository;
 	private ExpenseRepository expenseRepository;
 	private TravelRepository travelRepository;
+	private UserConverter userConverter;
 
 	@Autowired
 	public UserService(UserRepository userRepository, TaskRepository taskRepository, ExpenseRepository expenseRepository,
-			TimeEntryRepository timeEntryRepository, TravelRepository travelRepository) {
+			TimeEntryRepository timeEntryRepository, TravelRepository travelRepository, UserConverter userConverter) {
 		this.userRepository = userRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
 		this.expenseRepository = expenseRepository;
 		this.travelRepository = travelRepository;
+		this.userConverter = userConverter;
 	}
 
 	public User retrieveByEmail(String email) throws UserNotFoundException {
@@ -70,6 +73,8 @@ public class UserService {
 		return timeEntryRepository.findByUid(id);
 	}
 
+
+	
 	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String currentUserId) {
 
 		List<Task> tasks = new ArrayList<Task>();
@@ -164,4 +169,10 @@ public class UserService {
 		}
 	}
 
+	public UserViewModel getUserViewModelForEdition(String email) {
+		User user = retrieveByEmail(email);
+		UserViewModel userViewModel = userConverter.convert(user);
+		return userViewModel;
+	}
+	
 }

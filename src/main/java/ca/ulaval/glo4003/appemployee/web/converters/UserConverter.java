@@ -13,10 +13,13 @@ public class UserConverter {
 
 	public List<UserViewModel> convert(List<User> users) {
 		List<UserViewModel> userViewModels = new ArrayList<UserViewModel>();
-		for (User user : users) {
-			UserViewModel userViewModel = convert(user);
-			userViewModels.add(userViewModel);
+		if (users != null) {
+			for (User user : users) {
+				UserViewModel userViewModel = convert(user);
+				userViewModels.add(userViewModel);
+			}
 		}
+
 		return userViewModels;
 	}
 

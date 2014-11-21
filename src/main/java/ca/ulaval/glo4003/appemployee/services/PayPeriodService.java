@@ -81,7 +81,6 @@ public class PayPeriodService {
 	}
 
 	public TimeViewModel retrieveViewModelForPreviousPayPeriod(String userEmail) {
-		System.out.println("Retrieving with email : " + userEmail);
 		return timeConverter.convert(retrievePreviousPayPeriod(), userEmail);
 	}
 

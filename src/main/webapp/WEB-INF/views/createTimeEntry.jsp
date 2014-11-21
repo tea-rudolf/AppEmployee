@@ -24,6 +24,8 @@
 						role="alert">${message.message}</div>
 			</c:if>
 		<form:form method="post" action="/time/add" modelAttribute="timeForm">
+			<form:hidden path="userEmail" />
+			<form:hidden path="email" />
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">
 					<tr>

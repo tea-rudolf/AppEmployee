@@ -12,7 +12,7 @@
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h2 class="sub-header">Edit a time entry</h2>
-				<h3>
+		<h3>
 			Pay period from
 			<c:out value="${timeForm.payPeriodStartDate}" />
 			to
@@ -27,6 +27,8 @@
 		<form:form role="form" method="POST"
 			action="/time/previousTime/${timeEntry.timeEntryUid}/edit" modelAttribute="timeEntry">
 			<div class="form-group">
+		        <form:hidden path="userEmail" />
+		        <form:hidden path="email" />
 				<form:hidden path="timeEntryUid" />
 			</div>
 	

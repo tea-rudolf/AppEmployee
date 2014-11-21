@@ -72,7 +72,7 @@ public class DepartmentControllerTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		departmentController = new DepartmentController(departmentServiceMock, userServiceMock, userConverterMock, departmentConverterMock);
+		departmentController = new DepartmentController(departmentServiceMock, userServiceMock);
 	}
 
 	@Test
@@ -120,14 +120,6 @@ public class DepartmentControllerTest {
 	}
 
 	@Test
-	public void createEmployeeAccountReturnsAccountCreationFormWhenRoleIsMissing() {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		when(userViewModelMock.getRole()).thenReturn("NONE");
-		String returnedForm = departmentController.createEmployeeAccount(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
-		assertEquals(CREATE_USER_FORM, returnedForm);
-	}
-
-	@Test
 	public void createEmployeeAccountRedirectsToEditionPageWhenRoleIsNotMissing() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
@@ -157,14 +149,6 @@ public class DepartmentControllerTest {
 		when(userServiceMock.retrieveByEmail(EMAIL)).thenReturn(userMock);
 		String returnedForm = departmentController.showUpdateEmployeeInfo(DEPARTMENT_NAME, EMAIL, modelMock, sessionMock);
 		assertEquals(EDIT_EMPLOYEE_FORM, returnedForm);
-	}
-
-	@Test
-	public void updateEmployeeInfoRedirectsToUserCreationPageIfRoleIsMissing() {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		when(userViewModelMock.getRole()).thenReturn("NONE");
-		String returnedForm = departmentController.updateEmployeeInfo(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
-		assertEquals(CREATE_USER_FORM, returnedForm);
 	}
 
 	@Test

@@ -22,6 +22,8 @@ import ca.ulaval.glo4003.appemployee.domain.repository.DepartmentRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
+import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class DepartmentServiceTest {
@@ -31,30 +33,35 @@ public class DepartmentServiceTest {
 	private static final String EMAIL = "test@company.com";
 	private static final String DEPARTMENT_NAME = "dummyDepartment";
 	private static final String SUPERVISOR_ID = "0001";
-	
+
 	@Mock
 	private UserRepository userRepositoryMock;
-	
+
 	@Mock
 	private DepartmentRepository departmentRepositoryMock;
-	
+
 	@Mock
 	private UserViewModel userViewModelMock;
-	
+
 	@Mock
 	private User userMock;
-	
+
 	@Mock
 	private Department departmentMock;
-	
+
+	@Mock
+	private DepartmentConverter departmentConverterMock;
+
+	@Mock
+	private UserConverter UserConverterMock;
+
 	@InjectMocks
 	private DepartmentService departmentService;
-
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		departmentService = new DepartmentService(departmentRepositoryMock, userRepositoryMock);
+		departmentService = new DepartmentService(departmentRepositoryMock, userRepositoryMock, departmentConverterMock, UserConverterMock);
 		when(userViewModelMock.getEmail()).thenReturn(EMAIL);
 		when(userViewModelMock.getPassword()).thenReturn(PASSWORD);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());

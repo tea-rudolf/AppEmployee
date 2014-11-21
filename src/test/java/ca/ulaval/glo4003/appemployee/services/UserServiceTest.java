@@ -26,6 +26,7 @@ import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -79,6 +80,9 @@ public class UserServiceTest {
 	@Mock
 	private User secondUserMock;
 	
+	@Mock
+	private UserConverter userConverterMock;
+	
 	@InjectMocks
 	private User user;
 	
@@ -87,6 +91,7 @@ public class UserServiceTest {
 	
 	@InjectMocks
 	private UserService userService;
+	
 
 	@Before
 	public void init() {
@@ -94,7 +99,7 @@ public class UserServiceTest {
 		userViewModel = new UserViewModel();
 		userViewModel.setPassword(PASSWORD);
 		user = new User(EMAIL, PASSWORD, null, WAGE);
-		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock);
+		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock, userConverterMock);
 	}
 
 	@Test

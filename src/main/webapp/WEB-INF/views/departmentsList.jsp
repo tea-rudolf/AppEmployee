@@ -11,6 +11,16 @@
 
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2 class="sub-header">Departments</h2>
+    <c:if test='${sessionScope.role eq "ENTERPRISE"}'>
+
+      <div style="text-align: left">
+        <a href="/departments/add"><button type="button"
+          class="btn btn-primary">
+          <span class="glyphicon glyphicon-plus"></span>&nbsp;Create new department
+          </button>
+        </a>
+      </div>
+    </c:if>
     <div class="table-responsive">
       <table id="project-list" class="table table-striped table-hover">
         <thead>

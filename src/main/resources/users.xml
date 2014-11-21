@@ -24,4 +24,22 @@
     <wage>0</wage>
     <role>ENTERPRISE</role>
   </users>
+  <users>
+    <email>shanna@company.com</email>
+    <password>shanna</password>
+    <wage>0</wage>
+    <role>EMPLOYEE</role>
+  </users>
+   <users>
+    <email>tea@company.com</email>
+    <password>tea</password>
+    <wage>0</wage>
+    <role>EMPLOYEE</role>
+  </users>
+   <users>
+    <email>gracy@company.com</email>
+    <password>gracy</password>
+    <wage>0</wage>
+    <role>EMPLOYEE</role>
+  </users>   
 </users>
