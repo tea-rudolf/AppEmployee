@@ -97,17 +97,16 @@ public class DepartmentService {
 	}
 
 	public void createDepartement(DepartmentViewModel departmentViewModel) throws Exception {
+		
 		Department department = new Department();
 		department.setName(departmentViewModel.getName());
-		
-		if(departmentViewModel.getUserEmailsSelected() != null){
+
+		if (departmentViewModel.getUserEmailsSelected() != null && (!departmentViewModel.getUserEmailsSelected().isEmpty())) {
 			List<String> userEmail = Arrays.asList(departmentViewModel.getUserEmailsSelected().split(","));
 			for (String email : userEmail) {
 				department.addEmployee(email);
 			}
 		}
-		
-
 
 		departmentRepository.store(department);
 	}
@@ -167,11 +166,11 @@ public class DepartmentService {
 	}
 
 	public void assignUserToDepartment(AssignationEmployeDepartmentViewModel model) throws Exception {
-		
+
 		Department department = departmentRepository.findByName(model.getDepartmentSelected());
 		department.addEmployee(model.getUserSelected());
 		departmentRepository.store(department);
-		
+
 	}
 
 }

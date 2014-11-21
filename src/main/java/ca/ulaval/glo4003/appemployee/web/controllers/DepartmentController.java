@@ -32,6 +32,7 @@ public class DepartmentController {
 	private static final String ASSIGN_EMPLOYE_FORM = "assignEmployeToDepartment";
 	private static final String EDIT_DEPARTMENT_REDIRECT = "redirect:/departments/{departmentName}/edit";
 	private static final String EDIT_EMPLOYEE_FORM = "editEmployee";
+	private static final String DEPARTMENTS_LIST_REDIRECT = "redirect:/departments/";
 
 	private DepartmentService departmentService;
 	private UserService userService;
@@ -50,7 +51,7 @@ public class DepartmentController {
 		}
 
 		model.addAttribute("departments", departmentService.retrieveDepartmentsList());
-		
+
 		return DEPARTMENT_LIST_FORM;
 	}
 
@@ -70,10 +71,10 @@ public class DepartmentController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveDepartment(Model model, DepartmentViewModel departmentViewModel, HttpSession session) throws Exception {
-		System.out.println("Je add");
+
 		departmentService.createDepartement(departmentViewModel);
-		System.out.println("Je retourne " + DEPARTMENT_LIST_FORM);
-		return DEPARTMENT_LIST_FORM;
+
+		return DEPARTMENTS_LIST_REDIRECT;
 
 	}
 
@@ -148,7 +149,7 @@ public class DepartmentController {
 			return EDIT_EMPLOYEE_FORM;
 		}
 	}
-	
+
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.GET)
 	public String selectEmployeToAssignToDepartment(Model model, HttpSession session) {
 
@@ -157,10 +158,10 @@ public class DepartmentController {
 		}
 
 		model.addAttribute("assignationModel", departmentService.getViewModelToAssignEmployeToDepartment());
-		
+
 		return ASSIGN_EMPLOYE_FORM;
 	}
-	
+
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.POST)
 	public String saveEmployeAssignedToADepartment(AssignationEmployeDepartmentViewModel model, HttpSession session) throws Exception {
 
@@ -169,8 +170,7 @@ public class DepartmentController {
 		}
 
 		departmentService.assignUserToDepartment(model);
-		
-		
+
 		return DEPARTMENT_LIST_FORM;
 	}
 
