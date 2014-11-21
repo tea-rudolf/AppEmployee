@@ -163,7 +163,7 @@ public class DepartmentController {
 	}
 
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.POST)
-	public String saveEmployeAssignedToADepartment(AssignationEmployeDepartmentViewModel model, HttpSession session) throws Exception {
+	public String saveEditedDepartment(AssignationEmployeDepartmentViewModel model, HttpSession session) throws Exception {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return SIMPLE_REDIRECT;
