@@ -118,19 +118,4 @@ public class UserControllerTest {
 		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL, userViewModelMock);
 	}
 
-	@Test
-	public void updatePasswordRedirectsToEditProfileErrorPageIfExceptionIsThrown() throws Exception {
-		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
-		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		doThrow(new UserNotFoundException("")).when(userServiceMock).retrieveByEmail(VALID_EMAIL);
-		String returnedString = userController.updatePassword(userViewModelMock, sessionMock);
-		assertEquals(EDIT_PROFILE_ERROR_REDIRECT, returnedString);
-	}
-
-	@Test
-	public void getErrorUserNotFoundReturnsUserNotFoundForm() {
-		String returnedForm = userController.getErrorUserNotFound(modelMapMock, sessionMock);
-		assertEquals(USER_NOT_FOUND, returnedForm);
-	}
-
 }

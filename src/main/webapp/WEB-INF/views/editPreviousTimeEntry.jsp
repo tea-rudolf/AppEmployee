@@ -28,7 +28,6 @@
 			action="/time/previousTime/${timeEntry.timeEntryUid}/edit" modelAttribute="timeEntry">
 			<div class="form-group">
 		        <form:hidden path="userEmail" />
-		        <form:hidden path="email" />
 				<form:hidden path="timeEntryUid" />
 			</div>
 	

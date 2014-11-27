@@ -101,15 +101,15 @@ public class TimeControllerTest {
 		assertEquals(TIME_SHEET_JSP, returnedForm);
 	}
 
-	@Test
-	public void getTimeAddsUserEmailAsAttribute() {
-		when(payPeriodServiceMock.retrieveViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
-		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-
-		timeControllerMock.getTime(modelMapMock, sessionMock);
-
-		verify(modelMapMock).addAttribute(EMAIL_KEY, VALID_EMAIL);
-	}
+//	@Test
+//	public void getTimeAddsUserEmailAsAttribute() {
+//		when(payPeriodServiceMock.retrieveViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
+//		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+//
+//		timeControllerMock.getTime(modelMapMock, sessionMock);
+//
+//		verify(modelMapMock).addAttribute(EMAIL_KEY, VALID_EMAIL);
+//	}
 
 	@Test
 	public void getTimeReturnRedirectsIfEmailAttributeIsNull() {

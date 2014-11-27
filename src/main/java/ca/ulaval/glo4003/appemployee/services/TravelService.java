@@ -54,9 +54,9 @@ public class TravelService {
 		store(newTravelEntry);
 	}
 	
-	public TravelViewModel retrieveTravelViewModelForCurrentPayPeriod() {
+	public TravelViewModel retrieveTravelViewModelForCurrentPayPeriod(String currentUserEmail) {
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		TravelViewModel travelViewModel = new TravelViewModel(currentPayPeriod.getStartDate().toString(), currentPayPeriod.getEndDate().toString());
+		TravelViewModel travelViewModel = new TravelViewModel(currentUserEmail, currentPayPeriod.getStartDate().toString(), currentPayPeriod.getEndDate().toString());
 		return travelViewModel;
 	}
 	
@@ -65,7 +65,8 @@ public class TravelService {
 		return travelConverter.convert(travels);
 	}
 	
-	public TravelViewModel retrieveTravelViewModelForExistingTravel(Travel travel) {
+	public TravelViewModel retrieveTravelViewModelForExistingTravel(String uid) {
+		Travel travel = findByuId(uid);
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		TravelViewModel travelViewModel = travelConverter.convert(travel);
 		travelViewModel.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());

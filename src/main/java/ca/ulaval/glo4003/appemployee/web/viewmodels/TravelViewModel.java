@@ -17,12 +17,13 @@ public class TravelViewModel {
 	private String vehicle;
 	private ArrayList<Vehicle> availableVehicles = new ArrayList<Vehicle>(Arrays.asList(Vehicle.values()));
 
-	public TravelViewModel(String startDate, String endDate) {
+	public TravelViewModel(String userEmail, String startDate, String endDate) {
+		this.userEmail = userEmail;
 		this.payPeriodStartDate = startDate;
 		this.payPeriodEndDate = endDate;
 	}
 	
-	public TravelViewModel(){
+	public TravelViewModel() {
 		
 	}
 

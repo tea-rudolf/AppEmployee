@@ -24,6 +24,7 @@
 						role="alert">${message.message}</div>
 			</c:if>
 		<form:form method="post" action="/travel/${travelForm.uId}/edit" modelAttribute="travelForm">
+		<form:hidden path="userEmail" />
 					<div class="form-group">
 				<form:hidden path="uId" />
 			</div>

@@ -35,7 +35,6 @@ public class TimeController {
 	static final String EDIT_TIME_ENTRY_JSP = "editTimeEntry";
 	static final String EDIT_PREVIOUS_TIME_ENTRY_JSP = "editPreviousTimeEntry";
 	static final String LOGIN_REDIRECT = "redirect:/";
-	static final String ERROR_REDIRECT = "redirect:/time/errorNoTaskSelected";
 	static final String TIME_REDIRECT = "redirect:/time/";
 	static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime/";
 
@@ -59,7 +58,6 @@ public class TimeController {
 				EMAIL_ATTRIBUTE).toString());
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("timeEntries", timeEntriesViewModels);
 
 		return TIME_SHEET_JSP;
@@ -125,7 +123,6 @@ public class TimeController {
 				EMAIL_ATTRIBUTE).toString());
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("timeEntries", timeEntriesViewModels);
 
 		return PREVIOUS_TIME_SHEET_JSP;
@@ -163,7 +160,6 @@ public class TimeController {
 		TimeViewModel modelToEdit = timeService.retrieveViewModelForDesiredTimeEntry(timeEntryUid);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
-		modelToEdit.setTimeEntryUid(timeEntryUid);
 		model.addAttribute("timeEntry", modelToEdit);
 
 		return EDIT_PREVIOUS_TIME_ENTRY_JSP;

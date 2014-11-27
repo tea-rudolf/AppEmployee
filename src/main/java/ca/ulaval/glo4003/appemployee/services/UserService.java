@@ -167,5 +167,14 @@ public class UserService {
 	public UserViewModel retrieveViewModelForCurrentUser(String email){
 		return userConverter.convert(retrieveByEmail(email));
 	}
+
+	public boolean isUserValid(String userEmail, String password) {
+		User user = userRepository.findByEmail(userEmail);
+		return user != null && user.validatePassword(password);
+	}
+
+	public String retrieveUserRole(String email) {
+		return userRepository.findByEmail(email).getRole().toString();
+	}
 	
 }

@@ -46,6 +46,7 @@ public class TimeConverter {
 
 	public TimeViewModel convert(TimeEntry timeEntry) {
 		TimeViewModel model = new TimeViewModel();
+		model.setTimeEntryUid(timeEntry.getUid());
 		model.setDateTimeEntry(timeEntry.getDate().toString());
 		model.setHoursTimeEntry(timeEntry.getBillableHours());
 		model.setTaskIdTimeEntry(timeEntry.getTaskUid());

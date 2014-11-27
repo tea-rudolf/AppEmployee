@@ -36,16 +36,10 @@ public class TravelController {
 	static final String SIMPLE_REDIRECT = "redirect:/";
 	static final String TRAVEL_REDIRECT = "redirect:/travel/";
 
-	private TimeService payPeriodService;
-	private UserService userService;
 	private TravelService travelService;
 
 	@Autowired
-	public TravelController(TimeService payPeriodService, TaskRepository taskRepository, UserService userService,
-			TravelService travelService) {
-
-		this.payPeriodService = payPeriodService;
-		this.userService = userService;
+	public TravelController(TaskRepository taskRepository, TravelService travelService) {
 		this.travelService = travelService;
 
 	}
@@ -57,11 +51,10 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod();
+		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		model.addAttribute(TRAVEL_ATTRIBUTE, form);
-		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("travelEntries", travelViewModels);
 
 		return TRAVEL_JSP;
@@ -74,7 +67,7 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod();
+		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute(TRAVEL_ATTRIBUTE, form);
 
 		return CREATE_TRAVEL_JSP;
@@ -83,29 +76,22 @@ public class TravelController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
 
-		if (travelForm.getVehicle().equals("NONE")) {
-			model.addAttribute("message", new MessageViewModel("No Vehicule selected", "No vehicule was selected!"));
-			return createTravelEntry(model, travelForm, session);
-		}
-
-		travelForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		travelService.createTravel(travelForm);
 
 		return TRAVEL_ENTRY_SUBMIT_JSP;
 
 	}
 
-	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.GET)
-	public String editTravelEntry(@PathVariable String uId, Model model, HttpSession session) throws Exception {
+	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
+	public String editTravelEntry(@PathVariable String uid, Model model, HttpSession session) throws Exception {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return SIMPLE_REDIRECT;
 		}
 
-		Travel travel = travelService.findByuId(uId);
-		TravelViewModel mod = travelService.retrieveTravelViewModelForExistingTravel(travel);
+		TravelViewModel travelViewModel = travelService.retrieveTravelViewModelForExistingTravel(uid);
 
-		model.addAttribute(TRAVEL_ATTRIBUTE, mod);
+		model.addAttribute(TRAVEL_ATTRIBUTE, travelViewModel);
 
 		return EDIT_TRAVEL_ENTRY_JSP;
 	}
@@ -113,11 +99,6 @@ public class TravelController {
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedTravelEntry(@PathVariable String uId, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
 
-		if (viewModel.getVehicle().equals(null) || viewModel.getVehicle().equals("NONE")) {
-			model.addAttribute("message", new MessageViewModel("No Vehicule selected", "No vehicule was selected!"));
-			return editTravelEntry(uId, model, session);
-		}
-		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		travelService.updateTravel(uId, viewModel);
 
 		return TRAVEL_REDIRECT;

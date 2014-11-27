@@ -14,13 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
+import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 @Controller
 @SessionAttributes({ "email", "role" })
 public class HomeController {
 
-	private UserRepository userRepository;
+	private UserService userService;
 	static final Integer SESSION_IDLE_TRESHOLD_IN_SECONDS = 462;
 	static final String EMAIL_ATTRIBUTE = "email";
 	static final String ROLE_ATTRIBUTE = "role";
@@ -29,8 +30,8 @@ public class HomeController {
 	static final String SIMPLE_REDIRECT = "redirect:/";
 
 	@Autowired
-	public HomeController(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public HomeController(UserService userService) {
+		this.userService = userService;
 	}
 
 	@ModelAttribute("loginForm")
@@ -46,10 +47,9 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView login(LoginFormViewModel form, ModelMap model, HttpSession session) {
 
-		User user = userRepository.findByEmail(form.getEmail());
-		if (user != null && user.validatePassword(form.getPassword())) {
+		if (userService.isUserValid(form.getEmail(), form.getPassword())) {
 			model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
-			model.addAttribute(ROLE_ATTRIBUTE, user.getRole());
+			model.addAttribute(ROLE_ATTRIBUTE, userService.retrieveUserRole(form.getEmail()));
 			session.setMaxInactiveInterval(SESSION_IDLE_TRESHOLD_IN_SECONDS);
 			return new ModelAndView(HOME_VIEW, model);
 		} else {
