@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
-import ca.ulaval.glo4003.appemployee.domain.travel.Vehicule;
+import ca.ulaval.glo4003.appemployee.domain.travel.Vehicle;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 @Component
@@ -32,10 +32,10 @@ public class TravelConverter {
 		travel.setUserEmail(travelViewModel.getUserEmail());
 		travel.setComment(travelViewModel.getComment());
 
-		if (travelViewModel.getVehicule().equals("PERSONNAL")) {
-			travel.setVehicule(Vehicule.PERSONNAL);
+		if (travelViewModel.getVehicle().equals("PERSONAL")) {
+			travel.setVehicle(Vehicle.PERSONAL);
 		} else {
-			travel.setVehicule(Vehicule.ENTERPRISE);
+			travel.setVehicle(Vehicle.ENTERPRISE);
 		}
 		return travel;
 	}
@@ -47,7 +47,7 @@ public class TravelConverter {
 		travelViewModel.setComment(travel.getComment());
 		travelViewModel.setDate(travel.getDate().toString());
 		travelViewModel.setUserEmail(travel.getUserEmail());
-		travelViewModel.setVehicule(travel.getVehicule().toString());
+		travelViewModel.setVehicle(travel.getVehicle().toString());
 
 		return travelViewModel;
 	}

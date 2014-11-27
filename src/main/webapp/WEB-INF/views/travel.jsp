@@ -39,7 +39,7 @@
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
 						<th>Date</th>
-						<th>Vehicule</th>
+						<th>Vehicle</th>
 						<th>Distance (km)</th>
 						<th>Comment</th>
 					</tr>
@@ -47,7 +47,7 @@
 						<tr
 							onClick="javascript:window.location.href = '/travel/${travelEntry.uId}/edit'">
 							<td>${travelEntry.date}</td>
-							<td>${travelEntry.vehicule}</td>
+							<td>${travelEntry.vehicle}</td>
 							<td>${travelEntry.distanceTravelled}</td>
 							<td>${travelEntry.comment}</td>
 						</tr>

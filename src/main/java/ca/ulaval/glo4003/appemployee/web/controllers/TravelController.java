@@ -83,7 +83,7 @@ public class TravelController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String saveTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
 
-		if (travelForm.getVehicule().equals("NONE")) {
+		if (travelForm.getVehicle().equals("NONE")) {
 			model.addAttribute("message", new MessageViewModel("No Vehicule selected", "No vehicule was selected!"));
 			return createTravelEntry(model, travelForm, session);
 		}
@@ -113,7 +113,7 @@ public class TravelController {
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String saveEditedTravelEntry(@PathVariable String uId, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
 
-		if (viewModel.getVehicule().equals(null) || viewModel.getVehicule().equals("NONE")) {
+		if (viewModel.getVehicle().equals(null) || viewModel.getVehicle().equals("NONE")) {
 			model.addAttribute("message", new MessageViewModel("No Vehicule selected", "No vehicule was selected!"));
 			return editTravelEntry(uId, model, session);
 		}

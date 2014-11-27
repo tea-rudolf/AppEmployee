@@ -11,7 +11,7 @@ public class Travel {
 	private LocalDate date;
 	private String userEmail;
 	private String comment;
-	private Vehicule vehicule;
+	private Vehicle vehicule;
 
 	public Travel() {
 		this.uid = UUID.randomUUID().toString();
@@ -57,11 +57,11 @@ public class Travel {
 		return comment;
 	}
 
-	public Vehicule getVehicule() {
+	public Vehicle getVehicle() {
 		return vehicule;
 	}
 
-	public void setVehicule(Vehicule vehicule) {
+	public void setVehicle(Vehicle vehicule) {
 		this.vehicule = vehicule;
 	}
 

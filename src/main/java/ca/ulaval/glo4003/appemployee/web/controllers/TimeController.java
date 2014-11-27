@@ -42,9 +42,9 @@ public class TimeController {
 	private TimeService timeService;
 
 	@Autowired
-	public TimeController(TimeService payPeriodService, TimeConverter payPeriodConverter, TaskRepository taskRepository, UserService userService,
+	public TimeController(TimeService timeService, TimeConverter timeConverter, TaskRepository taskRepository, UserService userService,
 			ProjectService projectService) {
-		this.timeService = payPeriodService;
+		this.timeService = timeService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -171,11 +171,6 @@ public class TimeController {
 
 	@RequestMapping(value = "/previousTime/{timeEntryUid}/edit", method = RequestMethod.POST)
 	public String savePreviousEditedTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
-
-		if (viewModel.getTaskIdTimeEntry().equals("NONE")) {
-			model.addAttribute("message", new MessageViewModel("No task selected", "No task was selected!"));
-			return editPreviousTimeEntry(timeEntryUid, model, session);
-		}
 
 		timeService.updateTimeEntry(viewModel);
 

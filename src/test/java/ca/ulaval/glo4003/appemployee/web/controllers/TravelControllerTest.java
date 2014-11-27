@@ -129,7 +129,7 @@ public class TravelControllerTest {
 
 	@Test
 	public void saveTravelEntryReturnsSaveFormIfSuccessful() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
+		when(travelViewModelMock.getVehicle()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		String returnedForm = travelController.saveTravelEntry(modelMock, travelViewModelMock, sessionMock);
 		assertEquals(TRAVEL_ENTRY_SUBMIT_JSP, returnedForm);
@@ -137,7 +137,7 @@ public class TravelControllerTest {
 
 	@Test
 	public void saveTravelEntryCallsStoreMethod() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
+		when(travelViewModelMock.getVehicle()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
 		travelController.saveTravelEntry(modelMock, travelViewModelMock, sessionMock);
@@ -146,7 +146,7 @@ public class TravelControllerTest {
 
 	@Test
 	public void saveTravelEntryReturnsCreateEntryFormIfMissingVehicle() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
+		when(travelViewModelMock.getVehicle()).thenReturn("NONE");
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
@@ -177,7 +177,7 @@ public class TravelControllerTest {
 
 	@Test
 	public void saveEditedTravelEntryReturnsValidRedirectLinkIfSuccessFul() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
+		when(travelViewModelMock.getVehicle()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		String returnedForm = travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
 		assertEquals(TRAVEL_REDIRECT, returnedForm);
@@ -185,7 +185,7 @@ public class TravelControllerTest {
 
 	@Test
 	public void saveEditedTravelEntryCallsUpdateMethod() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn(VEHICLE);
+		when(travelViewModelMock.getVehicle()).thenReturn(VEHICLE);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		travelController.saveEditedTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
 		verify(travelServiceMock, times(1)).updateTravel(TRAVEL_UID, travelViewModelMock);
@@ -193,7 +193,7 @@ public class TravelControllerTest {
 
 	@Test
 	public void saveEditedTravelEntryReturnsEditEntryFormIfMissingVehicle() throws Exception {
-		when(travelViewModelMock.getVehicule()).thenReturn("NONE");
+		when(travelViewModelMock.getVehicle()).thenReturn("NONE");
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(travelServiceMock.findByuId(TRAVEL_UID)).thenReturn(travelMock);

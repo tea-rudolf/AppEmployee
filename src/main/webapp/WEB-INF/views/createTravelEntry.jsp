@@ -28,7 +28,7 @@
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
 						<th>Date</th>
-						<th>Vehicule</th>
+						<th>Vehicle</th>
 						<th>Distance (km)</th>
 						<th>Comment</th>
 					</tr>
@@ -38,8 +38,8 @@
 								min="${travelForm.payPeriodStartDate}"
 								max="${travelForm.payPeriodEndDate}" path="date"
 								value="${date}" required="required" /></td>
-						<td><form:select class="form-control" path="vehicule">
-								<form:options items="${travelForm.availableVehicules}"></form:options>
+						<td><form:select class="form-control" path="vehicle">
+								<form:options items="${travelForm.availableVehicles}"></form:options>
 							</form:select></td>
 						<td><form:label path="distanceTravelled"></form:label> <form:input
 								class="form-control" type="number" min="1" 

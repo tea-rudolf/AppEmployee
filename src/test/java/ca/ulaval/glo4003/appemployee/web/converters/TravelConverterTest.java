@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
-import ca.ulaval.glo4003.appemployee.domain.travel.Vehicule;
+import ca.ulaval.glo4003.appemployee.domain.travel.Vehicle;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 public class TravelConverterTest {
@@ -26,7 +26,7 @@ public class TravelConverterTest {
 	private static final LocalDate FIRST_DATE = new LocalDate("2014-11-08");
 	private static final String SECOND_ID = "2";
 	private static final double SECOND_DISTANCE = 200;
-	private static final Vehicule TRAVEL_VEHICLE = Vehicule.ENTERPRISE;
+	private static final Vehicle TRAVEL_VEHICLE = Vehicle.ENTERPRISE;
 	private static final LocalDate SECOND_DATE = new LocalDate("2014-11-07");
 	private static final double EPSILON = 0.001;
 	private static final String COMMENT = "comment";
@@ -72,7 +72,7 @@ public class TravelConverterTest {
 		when(travelViewModelMock.getDate()).thenReturn(FIRST_DATE.toString());
 		when(travelViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
 		when(travelViewModelMock.getComment()).thenReturn(COMMENT);
-		when(travelViewModelMock.getVehicule()).thenReturn(Vehicule.ENTERPRISE.toString());
+		when(travelViewModelMock.getVehicle()).thenReturn(Vehicle.ENTERPRISE.toString());
 
 		travelMock = travelConverter.convert(travelViewModelMock);
 
@@ -80,7 +80,7 @@ public class TravelConverterTest {
 		assertEquals(travelViewModelMock.getDate(), travelMock.getDate().toString());
 		assertEquals(travelViewModelMock.getUserEmail(), travelMock.getUserEmail());
 		assertEquals(travelViewModelMock.getComment(), travelMock.getComment());
-		assertEquals(travelViewModelMock.getVehicule(), travelMock.getVehicule().toString());
+		assertEquals(travelViewModelMock.getVehicle(), travelMock.getVehicle().toString());
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class TravelConverterTest {
 		when(travelMock.getComment()).thenReturn(COMMENT);
 		when(travelMock.getDate()).thenReturn(FIRST_DATE);
 		when(travelMock.getUserEmail()).thenReturn(USER_EMAIL);
-		when(travelMock.getVehicule()).thenReturn(Vehicule.PERSONNAL);
+		when(travelMock.getVehicle()).thenReturn(Vehicle.PERSONAL);
 
 		travelViewModelMock = travelConverter.convert(travelMock);
 
@@ -101,12 +101,12 @@ public class TravelConverterTest {
 		assertEquals(travelMock.getUserEmail(), travelViewModelMock.getUserEmail());
 	}
 
-	private Travel createTravel(String id, double distance, LocalDate date, Vehicule vehicule) {
+	private Travel createTravel(String id, double distance, LocalDate date, Vehicle vehicule) {
 		Travel travel = mock(Travel.class);
 		given(travel.getDistanceTravelled()).willReturn(distance);
 		given(travel.getUid()).willReturn(id);
 		given(travel.getDate()).willReturn(date);
-		given(travel.getVehicule()).willReturn(vehicule);
+		given(travel.getVehicle()).willReturn(vehicule);
 		return travel;
 	}
 
