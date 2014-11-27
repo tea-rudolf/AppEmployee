@@ -15,7 +15,7 @@ import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Service
-public class PayPeriodService {
+public class TimeService {
 
 	private PayPeriodRepository payPeriodRepository;
 	private TimeEntryRepository timeEntryRepository;
@@ -23,7 +23,7 @@ public class PayPeriodService {
 	private UserService userService;
 
 	@Autowired
-	public PayPeriodService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter,
+	public TimeService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter,
 			UserService userService) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
@@ -36,12 +36,12 @@ public class TravelController {
 	static final String SIMPLE_REDIRECT = "redirect:/";
 	static final String TRAVEL_REDIRECT = "redirect:/travel/";
 
-	private PayPeriodService payPeriodService;
+	private TimeService payPeriodService;
 	private UserService userService;
 	private TravelService travelService;
 
 	@Autowired
-	public TravelController(PayPeriodService payPeriodService, TaskRepository taskRepository, UserService userService,
+	public TravelController(TimeService payPeriodService, TaskRepository taskRepository, UserService userService,
 			TravelService travelService) {
 
 		this.payPeriodService = payPeriodService;
@@ -57,9 +57,8 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		List<Travel> travels = userService.getTravelEntriesForUserForAPayPeriod(payPeriodService.retrieveCurrentPayPeriod(), session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod();
-		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(travels);
+		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		model.addAttribute(TRAVEL_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());

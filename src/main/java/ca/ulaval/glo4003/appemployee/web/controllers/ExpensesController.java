@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.ExpenseService;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
@@ -33,12 +33,12 @@ public class ExpensesController {
 	static final String CREATE_EXPENSE_JSP = "createExpense";
 
 	private ExpenseService expenseService;
-	private PayPeriodService payPeriodService;
+	private TimeService payPeriodService;
 	private ExpenseConverter expenseConverter;
 	private UserService userService;
 
 	@Autowired
-	public ExpensesController(ExpenseService expenseService, ExpenseConverter expenseConverter, PayPeriodService payPeriodService, UserService userService) {
+	public ExpensesController(ExpenseService expenseService, ExpenseConverter expenseConverter, TimeService payPeriodService, UserService userService) {
 		this.expenseService = expenseService;
 		this.expenseConverter = expenseConverter;
 		this.payPeriodService = payPeriodService;

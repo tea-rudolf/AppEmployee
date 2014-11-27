@@ -114,17 +114,6 @@ public class UserService {
 		return expenses;
 	}
 
-	public List<Travel> getTravelEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
-		ArrayList<Travel> travels = new ArrayList<Travel>();
-
-		for (Travel travel : travelRepository.findAllTravelsByUser(userEmail)) {
-			if (travel.getDate().isBefore(payPeriod.getEndDate().plusDays(1)) && travel.getDate().isAfter(payPeriod.getStartDate().minusDays(1))) {
-				travels.add(travel);
-			}
-		}
-		return travels;
-	}
-
 	public void updateTimeEntry(String projectNumber, TimeViewModel viewModel) {
 		TimeEntry entry = timeEntryRepository.findByUid(projectNumber);
 		entry.setBillableHours(viewModel.getHoursTimeEntry());

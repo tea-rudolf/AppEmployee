@@ -20,7 +20,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
@@ -44,7 +44,7 @@ public class TimeControllerTest {
 	private static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime/";
 
 	@Mock
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
 
 	@Mock
 	private TimeConverter timeConverterMock;

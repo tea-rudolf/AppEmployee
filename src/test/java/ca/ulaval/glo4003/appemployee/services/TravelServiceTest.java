@@ -36,7 +36,10 @@ public class TravelServiceTest {
 	private TravelViewModel travelViewModelMock;
 	
 	@Mock
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
+	
+	@Mock 
+	private UserService userServiceMock;
 	
 	@InjectMocks
 	private TravelService travelService;
@@ -44,7 +47,7 @@ public class TravelServiceTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelService = new TravelService(travelRepositoryMock, travelConverterMock, payPeriodServiceMock);
+		travelService = new TravelService(travelRepositoryMock, travelConverterMock, payPeriodServiceMock, userServiceMock);
 	}
 
 	@Test

@@ -22,7 +22,7 @@ import org.springframework.ui.ModelMap;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TravelConverter;
@@ -46,7 +46,7 @@ public class TravelControllerTest {
 	//TODO: fix the tests
 	
 	@Mock
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
 
 	@Mock
 	private TaskRepository taskRepositoryMock;
@@ -94,7 +94,7 @@ public class TravelControllerTest {
 	public void getTravelReturnsTravelFormIfSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
-		when(userServiceMock.getTravelEntriesForUserForAPayPeriod(payPeriodMock, VALID_EMAIL)).thenReturn(travels);
+		
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 

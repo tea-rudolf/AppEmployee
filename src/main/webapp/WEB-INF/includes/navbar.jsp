@@ -31,7 +31,7 @@
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
-				<li><a href="/employee">Overview</a></li>
+				<li><a href="/">Overview</a></li>
 				<li><a href="/time">Manage time</a></li>
 				<li><a href="/expenses">Manage expenses</a></li>
 				<li><a href="/projects">Manage projects & tasks</a></li>

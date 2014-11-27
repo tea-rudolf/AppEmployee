@@ -22,7 +22,7 @@ import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PayPeriodServiceTest {
+public class TimeServiceTest {
 
 	private static final LocalDate CURRENT_DATE = new LocalDate();
 	private static final String A_UID = "0001";
@@ -53,12 +53,12 @@ public class PayPeriodServiceTest {
 	private UserService userServiceMock;
 	
 	@InjectMocks
-	private PayPeriodService payPeriodService;
+	private TimeService payPeriodService;
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		payPeriodService = new PayPeriodService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverterMock, userServiceMock);
+		payPeriodService = new TimeService(payPeriodRepositoryMock, timeEntryRepositoryMock, timeConverterMock, userServiceMock);
 	}
 
 	@Test

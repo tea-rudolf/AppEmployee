@@ -20,7 +20,7 @@ import org.springframework.ui.ModelMap;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.ExpenseService;
-import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
@@ -42,7 +42,7 @@ public class ExpensesControllerTest {
 	private List<Expense> expenses = new ArrayList<Expense>();
 
 	@Mock
-	private PayPeriodService payPeriodServiceMock;
+	private TimeService payPeriodServiceMock;
 		
 	@Mock
 	private ModelMap modelMapMock;
