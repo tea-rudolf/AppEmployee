@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Controller
@@ -29,22 +28,20 @@ public class UserController {
 	static final String USER_NOT_FOUND = "userNotFoundError";
 
 	private UserService userService;
-	private UserConverter userConverter;
 
 	@Autowired
-	public UserController(UserService userService, UserConverter userConverter) {
+	public UserController(UserService userService) {
 		this.userService = userService;
-		this.userConverter = userConverter;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getUser(Model model, HttpSession session) {
+	public String displayUserProfile(Model model, HttpSession session) {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return REDIRECT;
 		}
 
-		model.addAttribute("user", userConverter.convert(userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString())));
+		model.addAttribute("user", userService.retrieveViewModelForCurrentUser(session.getAttribute(EMAIL_ATTRIBUTE).toString()));
 		return EDIT_PROFILE_JSP;
 	}
 

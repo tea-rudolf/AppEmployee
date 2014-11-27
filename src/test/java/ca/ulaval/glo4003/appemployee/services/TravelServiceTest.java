@@ -17,6 +17,8 @@ import ca.ulaval.glo4003.appemployee.web.converters.TravelConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 public class TravelServiceTest {
+	
+	//TODO: fix the tests
 
 	private static final String TRAVEL_UID = "0002";
 	private static final String NEW_UID = "0003";
@@ -33,13 +35,16 @@ public class TravelServiceTest {
 	@Mock
 	private TravelViewModel travelViewModelMock;
 	
+	@Mock
+	private PayPeriodService payPeriodServiceMock;
+	
 	@InjectMocks
 	private TravelService travelService;
 
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelService = new TravelService(travelRepositoryMock, travelConverterMock);
+		travelService = new TravelService(travelRepositoryMock, travelConverterMock, payPeriodServiceMock);
 	}
 
 	@Test

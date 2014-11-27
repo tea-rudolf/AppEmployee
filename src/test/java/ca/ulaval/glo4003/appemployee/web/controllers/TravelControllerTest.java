@@ -43,6 +43,8 @@ public class TravelControllerTest {
 	private static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
 	private static final String TRAVEL_REDIRECT = "redirect:/travel/";
 
+	//TODO: fix the tests
+	
 	@Mock
 	private PayPeriodService payPeriodServiceMock;
 
@@ -85,7 +87,7 @@ public class TravelControllerTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelController = new TravelController(payPeriodServiceMock, taskRepositoryMock, userServiceMock, travelConverterMock, travelServiceMock);
+		travelController = new TravelController(payPeriodServiceMock, taskRepositoryMock, userServiceMock, travelServiceMock);
 	}
 
 	@Test

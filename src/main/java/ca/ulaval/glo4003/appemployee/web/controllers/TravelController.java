@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.services.PayPeriodService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.converters.TravelConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
@@ -41,15 +39,13 @@ public class TravelController {
 	private PayPeriodService payPeriodService;
 	private UserService userService;
 	private TravelService travelService;
-	private TravelConverter travelConverter;
 
 	@Autowired
-	public TravelController(PayPeriodService payPeriodService, TaskRepository taskRepository, UserService userService, TravelConverter travelConverter,
+	public TravelController(PayPeriodService payPeriodService, TaskRepository taskRepository, UserService userService,
 			TravelService travelService) {
 
 		this.payPeriodService = payPeriodService;
 		this.userService = userService;
-		this.travelConverter = travelConverter;
 		this.travelService = travelService;
 
 	}
@@ -61,21 +57,15 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		List<Travel> travels = userService.getTravelEntriesForUserForAPayPeriod(currentPayPeriod, session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TravelViewModel form = new TravelViewModel();
-		form.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
-		form.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
+		List<Travel> travels = userService.getTravelEntriesForUserForAPayPeriod(payPeriodService.retrieveCurrentPayPeriod(), session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod();
+		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(travels);
 
 		model.addAttribute(TRAVEL_ATTRIBUTE, form);
 		model.addAttribute(EMAIL_ATTRIBUTE, session.getAttribute(EMAIL_ATTRIBUTE).toString());
-
-		Collection<TravelViewModel> travelViewModels = travelConverter.convert(travels);
-
 		model.addAttribute("travelEntries", travelViewModels);
 
 		return TRAVEL_JSP;
-
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -85,11 +75,7 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		TravelViewModel form = new TravelViewModel();
-		form.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
-		form.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
-
+		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod();
 		model.addAttribute(TRAVEL_ATTRIBUTE, form);
 
 		return CREATE_TRAVEL_JSP;
@@ -117,13 +103,8 @@ public class TravelController {
 			return SIMPLE_REDIRECT;
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-
 		Travel travel = travelService.findByuId(uId);
-		TravelViewModel mod = travelConverter.convert(travel);
-
-		mod.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
-		mod.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
+		TravelViewModel mod = travelService.retrieveTravelViewModelForExistingTravel(travel);
 
 		model.addAttribute(TRAVEL_ATTRIBUTE, mod);
 

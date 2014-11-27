@@ -1,8 +1,12 @@
 package ca.ulaval.glo4003.appemployee.services;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
@@ -14,11 +18,13 @@ public class TravelService {
 
 	private TravelRepository travelRepository;
 	private TravelConverter travelConverter;
+	private PayPeriodService payPeriodService;
 
 	@Autowired
-	public TravelService(TravelRepository travelRepository, TravelConverter travelConverter) {
+	public TravelService(TravelRepository travelRepository, TravelConverter travelConverter, PayPeriodService payPeriodService) {
 		this.travelRepository = travelRepository;
 		this.travelConverter = travelConverter;
+		this.payPeriodService = payPeriodService;
 	}
 
 	public Travel findByuId(String uId) {
@@ -43,6 +49,24 @@ public class TravelService {
 	public void createTravel(TravelViewModel travelForm) {
 		Travel newTravelEntry = travelConverter.convert(travelForm);
 		store(newTravelEntry);
+	}
+	
+	public TravelViewModel retrieveTravelViewModelForCurrentPayPeriod(){
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
+		TravelViewModel travelViewModel = new TravelViewModel(currentPayPeriod.getStartDate().toString(), currentPayPeriod.getEndDate().toString());
+		return travelViewModel;
+	}
+	
+	public Collection<TravelViewModel> retrieveTravelViewModelsForCurrentPayPeriod(List<Travel> travels){
+		return travelConverter.convert(travels);
+	}
+	
+	public TravelViewModel retrieveTravelViewModelForExistingTravel(Travel travel){
+		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
+		TravelViewModel travelViewModel = travelConverter.convert(travel);
+		travelViewModel.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
+		travelViewModel.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
+		return travelViewModel;
 	}
 
 }

@@ -17,6 +17,15 @@ public class TravelViewModel {
 	private String vehicule;
 	private ArrayList<Vehicule> availableVehicules = new ArrayList<Vehicule>(Arrays.asList(Vehicule.values()));
 
+	public TravelViewModel(String startDate, String endDate) {
+		this.payPeriodStartDate = startDate;
+		this.payPeriodEndDate = endDate;
+	}
+	
+	public TravelViewModel(){
+		
+	}
+
 	public double getDistanceTravelled() {
 		return distanceTravelled;
 	}

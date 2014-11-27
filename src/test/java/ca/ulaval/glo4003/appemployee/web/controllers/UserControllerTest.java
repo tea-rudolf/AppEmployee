@@ -17,7 +17,6 @@ import org.springframework.ui.ModelMap;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
@@ -39,8 +38,6 @@ public class UserControllerTest {
 	@Mock
 	private HttpSession sessionMock;
 
-	@Mock
-	private UserConverter userConverterMock;
 
 	@Mock
 	private UserService userServiceMock;
@@ -78,22 +75,22 @@ public class UserControllerTest {
 		userViewModel.setPassword(PASSWORD);
 		userViewModel.setWage(WAGE);
 		user = new User(EMAIL_KEY, PASSWORD, null, WAGE);
-		userController = new UserController(userServiceMock, userConverterMock);
+		userController = new UserController(userServiceMock);
 	}
 
 	@Test
 	public void getUserReturnsEditProfile() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(user);
-		when(userConverterMock.convert(user)).thenReturn(userViewModel);
-		String returnedForm = userController.getUser(model, sessionMock);
+		//when(userConverterMock.convert(user)).thenReturn(userViewModel);
+		String returnedForm = userController.displayUserProfile(model, sessionMock);
 
 		assertEquals(EDIT_PROFILE_JSP, returnedForm);
 	}
 
 	@Test
 	public void getUserReturnRedirectIfSessionAttributeIsNull() {
-		String returnedForm = userController.getUser(model, sessionMock);
+		String returnedForm = userController.displayUserProfile(model, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 

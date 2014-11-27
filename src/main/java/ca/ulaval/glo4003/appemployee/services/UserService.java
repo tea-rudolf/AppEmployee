@@ -175,4 +175,8 @@ public class UserService {
 		return userViewModel;
 	}
 	
+	public UserViewModel retrieveViewModelForCurrentUser(String email){
+		return userConverter.convert(retrieveByEmail(email));
+	}
+	
 }
