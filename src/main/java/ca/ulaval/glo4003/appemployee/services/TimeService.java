@@ -12,6 +12,7 @@ import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Service
@@ -23,8 +24,7 @@ public class TimeService {
 	private UserService userService;
 
 	@Autowired
-	public TimeService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter,
-			UserService userService) {
+	public TimeService(PayPeriodRepository payPeriodRepository, TimeEntryRepository timeEntryRepository, TimeConverter timeConverter, UserService userService) {
 		this.payPeriodRepository = payPeriodRepository;
 		this.timeEntryRepository = timeEntryRepository;
 		this.timeConverter = timeConverter;
@@ -66,17 +66,15 @@ public class TimeService {
 		timeEntryRepository.store(timeEntry);
 	}
 
-	public TimeViewModel retrieveViewModelForCurrentPayPeriod(String userEmail) {
-
+	public TimeViewModel retrieveTimeEntryViewModelForCurrentPayPeriod(String userEmail) {
 		return timeConverter.convert(retrieveCurrentPayPeriod(), userEmail);
 	}
 
 	public Collection<TimeViewModel> retrieveTimeEntriesViewModelsForCurrentPayPeriod(String userEmail) {
-
 		return timeConverter.convert(userService.getTimeEntriesForUserForAPayPeriod(retrieveCurrentPayPeriod(), userEmail));
 	}
 
-	public TimeViewModel retrieveViewModelForDesiredTimeEntry(String timeEntryUid) {
+	public TimeViewModel retrieveViewModelForTimeEntry(String timeEntryUid) {
 		return timeConverter.convert(userService.getTimeEntry(timeEntryUid));
 	}
 
@@ -86,5 +84,10 @@ public class TimeService {
 
 	public Collection<TimeViewModel> retrieveTimeEntriesViewModelsForPreviousPayPeriod(String userEmail) {
 		return timeConverter.convert(userService.getTimeEntriesForUserForAPayPeriod(retrievePreviousPayPeriod(), userEmail));
+	}
+
+	public PayPeriodViewModel retrievePayPeriodViewModel() {
+		PayPeriod payPeriod = retrieveCurrentPayPeriod();
+		return new PayPeriodViewModel(payPeriod.getStartDate().toString(), payPeriod.getEndDate().toString());
 	}
 }

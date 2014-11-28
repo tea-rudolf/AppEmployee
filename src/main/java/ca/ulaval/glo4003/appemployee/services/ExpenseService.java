@@ -52,17 +52,17 @@ public class ExpenseService {
 		expenseRepository.store(expense);
 	}
 
-	public ExpenseViewModel retrieveExpenseViewModelForCurrentPayPeriod() {
-		PayPeriod currentPayPeriod = timeService.retrieveCurrentPayPeriod();
-		return new ExpenseViewModel(currentPayPeriod.getStartDate().toString(), currentPayPeriod.getEndDate().toString());
+	public ExpenseViewModel retrieveExpenseViewModel(String expenseUid) throws Exception {
+		Expense expense = retrieveExpenseByUid(expenseUid);
+		return expenseConverter.convert(expense);
 	}
 
 	public Collection<ExpenseViewModel> retrieveExpenseViewModelsListForCurrentPayPeriod(String userEmail) {
-		List<Expense> expenses = retrieveExpensesForUserForCurrentPayPeriod(userEmail);
+		List<Expense> expenses = retrieveUserExpensesForCurrentPayPeriod(userEmail);
 		return expenseConverter.convert(expenses);
 	}
 
-	private List<Expense> retrieveExpensesForUserForCurrentPayPeriod(String userEmail) {
+	private List<Expense> retrieveUserExpensesForCurrentPayPeriod(String userEmail) {
 		PayPeriod currentPayPeriod = timeService.retrieveCurrentPayPeriod();
 		ArrayList<Expense> expenses = new ArrayList<Expense>();
 

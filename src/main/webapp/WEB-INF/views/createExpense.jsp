@@ -14,9 +14,9 @@
 		<h2 class="sub-header">New expense</h2>
 		<h3>
 			Pay period from 
-			<c:out value="${expenseForm.payPeriodStartDate}"/>
+			<c:out value="${payPeriod.payPeriodStartDate}"/>
 			to 
-			<c:out value="${expenseForm.payPeriodEndDate}"/>
+			<c:out value="${payPeriod.payPeriodEndDate}"/>
 		</h3>
 				<div></div>
 		<div></div>
@@ -30,7 +30,7 @@
 					</tr>
 						<tr>
 							<td><form:label path="date"></form:label>
-							<form:input class="form-control" type="date" min="${expenseForm.payPeriodStartDate}" max="${expenseForm.payPeriodEndDate}" path="date" value="${date}" required="required" /></td>
+							<form:input class="form-control" type="date" min="${payPeriod.payPeriodStartDate}" max="${payPeriod.payPeriodEndDate}" path="date" value="${date}" required="required" /></td>
 							<td><form:label path="amount"></form:label>
 							<form:input class="form-control" path="amount" type="number" step="any" min="1" value="${amount}" required="required" /></td>
 							<td><form:label path="comment"></form:label>

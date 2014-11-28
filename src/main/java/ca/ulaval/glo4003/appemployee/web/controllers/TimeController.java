@@ -53,7 +53,7 @@ public class TimeController {
 			return LOGIN_REDIRECT;
 		}
 
-		TimeViewModel form = timeService.retrieveViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		TimeViewModel form = timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
 
@@ -70,7 +70,7 @@ public class TimeController {
 			return LOGIN_REDIRECT;
 		}
 
-		TimeViewModel form = timeService.retrieveViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		TimeViewModel form = timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute(TIME_ATTRIBUTE, form);
 
 		return CREATE_TIME_JSP;
@@ -92,8 +92,8 @@ public class TimeController {
 			return LOGIN_REDIRECT;
 		}
 
-		TimeViewModel form = timeService.retrieveViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeViewModel modelToEdit = timeService.retrieveViewModelForDesiredTimeEntry(timeEntryUid);
+		TimeViewModel form = timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		TimeViewModel modelToEdit = timeService.retrieveViewModelForTimeEntry(timeEntryUid);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		modelToEdit.setTimeEntryUid(timeEntryUid);
@@ -157,7 +157,7 @@ public class TimeController {
 		}
 
 		TimeViewModel form = timeService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		TimeViewModel modelToEdit = timeService.retrieveViewModelForDesiredTimeEntry(timeEntryUid);
+		TimeViewModel modelToEdit = timeService.retrieveViewModelForTimeEntry(timeEntryUid);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntry", modelToEdit);

@@ -13,32 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.ExpenseService;
 import ca.ulaval.glo4003.appemployee.services.TimeService;
-import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 
 @Controller
 @RequestMapping(value = "/expenses")
 @SessionAttributes({ "email" })
 public class ExpensesController {
 
-	static final String EXPENSE_ATTRIBUTE = "expenseForm";
 	static final String EMAIL_ATTRIBUTE = "email";
-	static final String EXPENSES_JSP = "expenses";
-	static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
-	static final String EDIT_EXPENSE_JSP = "editExpense";
-	static final String CREATE_EXPENSE_JSP = "createExpense";
 
 	private ExpenseService expenseService;
 	private TimeService payPeriodService;
-	private ExpenseConverter expenseConverter;
 
 	@Autowired
-	public ExpensesController(ExpenseService expenseService, ExpenseConverter expenseConverter, TimeService payPeriodService) {
+	public ExpensesController(ExpenseService expenseService, TimeService payPeriodService) {
 		this.expenseService = expenseService;
-		this.expenseConverter = expenseConverter;
 		this.payPeriodService = payPeriodService;
 	}
 
@@ -54,7 +46,7 @@ public class ExpensesController {
 
 		model.addAttribute("expenses", expensesViewModels);
 
-		return EXPENSES_JSP;
+		return "expenses";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -64,11 +56,12 @@ public class ExpensesController {
 			return "redirect:/";
 		}
 
-		ExpenseViewModel expenseViewModel = expenseService.retrieveExpenseViewModelForCurrentPayPeriod();
+		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrievePayPeriodViewModel();
 
-		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
+		model.addAttribute("expenseForm", new ExpenseViewModel());
+		model.addAttribute("payPeriod", payPeriodViewModel);
 
-		return CREATE_EXPENSE_JSP;
+		return "createExpense";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -76,24 +69,23 @@ public class ExpensesController {
 		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		expenseService.createExpense(expenseForm);
 
-		return EXPENSES_SUBMIT_JSP;
+		return "expensesSubmitted";
 	}
 
-	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.GET)
-	public String editExpense(@PathVariable String uId, Model model, HttpSession session) throws Exception {
+	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
+	public String editExpense(@PathVariable String uid, Model model, HttpSession session) throws Exception {
 
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return "redirect:/";
 		}
 
-		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		ExpenseViewModel expenseViewModel = expenseConverter.convert(expenseService.retrieveExpenseByUid(uId));
-		expenseViewModel.setPayPeriodStartDate(currentPayPeriod.getStartDate().toString());
-		expenseViewModel.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
-		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
+		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrievePayPeriodViewModel();
+		ExpenseViewModel expenseViewModel = expenseService.retrieveExpenseViewModel(uid);
+
+		model.addAttribute("payPeriod", payPeriodViewModel);
 		model.addAttribute("expense", expenseViewModel);
 
-		return EDIT_EXPENSE_JSP;
+		return "editExpense";
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)

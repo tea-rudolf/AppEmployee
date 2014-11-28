@@ -74,7 +74,7 @@ public class ExpensesControllerTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		expensesControllerMock = new ExpensesController(expenseServiceMock, expenseConverterMock, payPeriodServiceMock);
+		expensesControllerMock = new ExpensesController(expenseServiceMock, payPeriodServiceMock);
 	}
 
 	@Test

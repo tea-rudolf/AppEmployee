@@ -56,11 +56,11 @@ public class TimeConverter {
 	}
 
 	public TimeViewModel convert(PayPeriod payPeriod, String userEmail) {
-		TimeViewModel payPeriodViewModel = new TimeViewModel();
-		payPeriodViewModel.setStartDate(payPeriod.getStartDate().toString());
-		payPeriodViewModel.setEndDate(payPeriod.getEndDate().toString());
-		payPeriodViewModel.setUserEmail(userEmail);
-		payPeriodViewModel.setAvailableTasks(projectService.getAllTasksByCurrentUserId(userEmail));
-		return payPeriodViewModel;
+		TimeViewModel timeViewModel = new TimeViewModel();
+		timeViewModel.setStartDate(payPeriod.getStartDate().toString());
+		timeViewModel.setEndDate(payPeriod.getEndDate().toString());
+		timeViewModel.setUserEmail(userEmail);
+		timeViewModel.setAvailableTasks(projectService.getAllTasksByCurrentUserId(userEmail));
+		return timeViewModel;
 	}
 }

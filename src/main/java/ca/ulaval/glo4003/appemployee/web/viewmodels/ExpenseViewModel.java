@@ -2,8 +2,6 @@ package ca.ulaval.glo4003.appemployee.web.viewmodels;
 
 public class ExpenseViewModel {
 
-	private String payPeriodStartDate;
-	private String payPeriodEndDate;
 	private double amount;
 	private String date;
 	private String userEmail;
@@ -11,12 +9,7 @@ public class ExpenseViewModel {
 	private String uid;
 
 	public ExpenseViewModel() {
-		
-	}
-	
-	public ExpenseViewModel(String startDate, String endDate) {
-		this.payPeriodStartDate = startDate;
-		this.payPeriodEndDate = endDate;
+
 	}
 
 	public ExpenseViewModel(String uid, double amount, String date, String userEmail, String comment) {
@@ -57,22 +50,6 @@ public class ExpenseViewModel {
 
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-
-	public String getPayPeriodStartDate() {
-		return payPeriodStartDate;
-	}
-
-	public void setPayPeriodStartDate(String payPeriodStartDate) {
-		this.payPeriodStartDate = payPeriodStartDate;
-	}
-
-	public String getPayPeriodEndDate() {
-		return payPeriodEndDate;
-	}
-
-	public void setPayPeriodEndDate(String payPeriodEndDate) {
-		this.payPeriodEndDate = payPeriodEndDate;
 	}
 
 	public String getUid() {
