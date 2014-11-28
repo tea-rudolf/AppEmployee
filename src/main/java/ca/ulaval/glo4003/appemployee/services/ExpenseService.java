@@ -44,7 +44,7 @@ public class ExpenseService {
 	}
 
 	public void updateExpense(ExpenseViewModel viewModel) throws Exception {
-		Expense expense = this.expenseRepository.findByUid(viewModel.getUid());
+		Expense expense = expenseRepository.findByUid(viewModel.getUid());
 		expense.setAmount(viewModel.getAmount());
 		expense.setComment(viewModel.getComment());
 		expense.setDate(new LocalDate(viewModel.getDate()));

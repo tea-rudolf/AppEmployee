@@ -38,7 +38,6 @@ public class TravelService {
 		} catch (Exception e) {
 			throw new RepositoryException(e.getMessage());
 		}
-
 	}
 
 	public void updateTravel(String travelUid, TravelViewModel viewModel) {

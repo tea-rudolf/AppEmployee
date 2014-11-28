@@ -49,12 +49,9 @@ public class ExpensesController {
 			return "redirect:/";
 		}
 
-		ExpenseViewModel expenseViewModel = expenseService.retrieveExpenseViewModelForCurrentPayPeriod();
 		Collection<ExpenseViewModel> expensesViewModels = expenseService.retrieveExpenseViewModelsListForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
 
-		// verifier pourquoi on a besoin d'un expenseVM quand on a deja la liste
-		model.addAttribute(EXPENSE_ATTRIBUTE, expenseViewModel);
 		model.addAttribute("expenses", expensesViewModels);
 
 		return EXPENSES_JSP;

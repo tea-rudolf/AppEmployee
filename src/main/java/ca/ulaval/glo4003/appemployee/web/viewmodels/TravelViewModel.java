@@ -23,8 +23,7 @@ public class TravelViewModel {
 		this.payPeriodEndDate = endDate;
 	}
 	
-	public TravelViewModel() {
-		
+	public TravelViewModel() {	
 	}
 
 	public double getDistanceTravelled() {

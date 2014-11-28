@@ -54,6 +54,7 @@ public class DepartmentService {
 	public void assignUserToDepartment(UserViewModel userViewModel, String supervisorID, String departmentName) throws Exception {
 
 		Department department = departmentRepository.findByName(departmentName);
+		
 		if (department == null) {
 			throw new DepartmentNotFoundException("Department does not exist");
 		}
