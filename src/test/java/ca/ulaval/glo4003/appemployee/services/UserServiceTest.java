@@ -1,17 +1,12 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -24,7 +19,6 @@ import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
@@ -40,62 +34,56 @@ public class UserServiceTest {
 	private static final String EMPLOYEE_ROLE = "EMPLOYEE";
 	private static final String EMAIL = "employee1@employee.com";
 	private static final String EMAIL2 = "employee2@employee.com";
-	private static final String DATE = "2014-11-13";
-	private static final String START_DATE = "2014-10-30";
 	private static final String PASSWORD = "password";
 	private static final double WAGE = 0;
 
 	@Mock
 	private TaskRepository taskRepositoryMock;
-	
+
 	@Mock
 	private UserRepository userRepositoryMock;
-	
+
 	@Mock
 	private ExpenseRepository expenseRepositoryMock;
-	
+
 	@Mock
 	private TimeEntryRepository timeEntryRepositoryMock;
-	
-	@Mock
-	private TravelRepository travelRepositoryMock;
-	
+
 	@Mock
 	private PayPeriod payPeriodMock;
-	
+
 	@Mock
 	private TimeEntry timeEntryMock;
-	
+
 	@Mock
 	private Task taskMock;
-	
+
 	@Mock
 	private User userMock;
-	
+
 	@Mock
 	private UserViewModel userViewModelMock;
-	
+
 	@Mock
 	private TimeViewModel timeViewModelMock;
-	
+
 	@Mock
 	private Expense expenseMock;
-	
+
 	@Mock
 	private User secondUserMock;
-	
+
 	@Mock
 	private UserConverter userConverterMock;
-	
+
 	@InjectMocks
 	private User user;
-	
+
 	@InjectMocks
 	private UserViewModel userViewModel;
-	
+
 	@InjectMocks
 	private UserService userService;
-	
 
 	@Before
 	public void init() {
@@ -103,7 +91,7 @@ public class UserServiceTest {
 		userViewModel = new UserViewModel();
 		userViewModel.setPassword(PASSWORD);
 		user = new User(EMAIL, PASSWORD, null, WAGE);
-		userService = new UserService(userRepositoryMock, taskRepositoryMock, expenseRepositoryMock, timeEntryRepositoryMock, travelRepositoryMock, userConverterMock);
+		userService = new UserService(userRepositoryMock, taskRepositoryMock, timeEntryRepositoryMock, userConverterMock);
 	}
 
 	@Test
@@ -132,21 +120,6 @@ public class UserServiceTest {
 		List<TimeEntry> sampleTimeEntryList = userService.getTimeEntriesForUserForAPayPeriod(payPeriodMock, EMAIL);
 
 		assertTrue(sampleTimeEntryList.contains(timeEntryMock));
-	}
-
-	@Test
-	public void getExpensesForUserForAPayPeriodReturnsListOfExpenses() {
-		List<Expense> sampleExpenseList = new ArrayList<Expense>();
-		sampleExpenseList.add(expenseMock);
-		when(expenseRepositoryMock.findAll()).thenReturn(sampleExpenseList);
-		when(expenseMock.getUserEmail()).thenReturn(EMAIL);
-		when(payPeriodMock.getEndDate()).thenReturn(new LocalDate(DATE));
-		when(expenseMock.getDate()).thenReturn(new LocalDate(DATE).minusDays(2));
-		when(payPeriodMock.getStartDate()).thenReturn(new LocalDate(START_DATE));
-
-		List<Expense> returnedExpenseList = userService.getExpensesForUserForAPayPeriod(payPeriodMock, EMAIL);
-
-		assertTrue(returnedExpenseList.contains(expenseMock));
 	}
 
 	@Test

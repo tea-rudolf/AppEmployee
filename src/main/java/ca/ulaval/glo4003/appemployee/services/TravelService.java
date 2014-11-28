@@ -20,14 +20,12 @@ public class TravelService {
 	private TravelRepository travelRepository;
 	private TravelConverter travelConverter;
 	private TimeService payPeriodService;
-	private UserService userService;
 
 	@Autowired
-	public TravelService(TravelRepository travelRepository, TravelConverter travelConverter, TimeService payPeriodService, UserService userService) {
+	public TravelService(TravelRepository travelRepository, TravelConverter travelConverter, TimeService payPeriodService) {
 		this.travelRepository = travelRepository;
 		this.travelConverter = travelConverter;
 		this.payPeriodService = payPeriodService;
-		this.userService = userService;
 	}
 
 	public Travel findByuId(String uId) {
@@ -53,18 +51,19 @@ public class TravelService {
 		Travel newTravelEntry = travelConverter.convert(travelForm);
 		store(newTravelEntry);
 	}
-	
+
 	public TravelViewModel retrieveTravelViewModelForCurrentPayPeriod(String currentUserEmail) {
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
-		TravelViewModel travelViewModel = new TravelViewModel(currentUserEmail, currentPayPeriod.getStartDate().toString(), currentPayPeriod.getEndDate().toString());
+		TravelViewModel travelViewModel = new TravelViewModel(currentUserEmail, currentPayPeriod.getStartDate().toString(), currentPayPeriod.getEndDate()
+				.toString());
 		return travelViewModel;
 	}
-	
-	public Collection<TravelViewModel> retrieveTravelViewModelsForCurrentPayPeriod(String currentUserEmail) {
-		List<Travel> travels = getTravelEntriesForUserForCurrentPayPeriod(currentUserEmail);
+
+	public Collection<TravelViewModel> retrieveTravelViewModelsForCurrentPayPeriod(String userEmail) {
+		List<Travel> travels = retrieveTravelEntriesForUserForCurrentPayPeriod(userEmail);
 		return travelConverter.convert(travels);
 	}
-	
+
 	public TravelViewModel retrieveTravelViewModelForExistingTravel(String uid) {
 		Travel travel = findByuId(uid);
 		PayPeriod currentPayPeriod = payPeriodService.retrieveCurrentPayPeriod();
@@ -73,8 +72,8 @@ public class TravelService {
 		travelViewModel.setPayPeriodEndDate(currentPayPeriod.getEndDate().toString());
 		return travelViewModel;
 	}
-	
-	public List<Travel> getTravelEntriesForUserForCurrentPayPeriod(String userEmail) {
+
+	private List<Travel> retrieveTravelEntriesForUserForCurrentPayPeriod(String userEmail) {
 		PayPeriod payPeriod = payPeriodService.retrieveCurrentPayPeriod();
 		ArrayList<Travel> travels = new ArrayList<Travel>();
 

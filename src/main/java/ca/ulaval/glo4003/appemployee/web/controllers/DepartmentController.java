@@ -128,7 +128,7 @@ public class DepartmentController {
 			return SIMPLE_REDIRECT;
 		}
 
-		model.addAttribute("user", userService.getUserViewModelForEdition(email));
+		model.addAttribute("user", userService.retrieveViewModelForCurrentUser(email));
 		model.addAttribute("departmentName", departmentName);
 
 		return EDIT_EMPLOYEE_FORM;

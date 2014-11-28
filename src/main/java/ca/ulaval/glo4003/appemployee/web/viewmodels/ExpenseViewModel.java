@@ -10,6 +10,19 @@ public class ExpenseViewModel {
 	private String comment;
 	private String uid;
 
+	public ExpenseViewModel(String startDate, String endDate) {
+		this.payPeriodStartDate = startDate;
+		this.payPeriodEndDate = endDate;
+	}
+
+	public ExpenseViewModel(String uid, double amount, String date, String userEmail, String comment) {
+		this.uid = uid;
+		this.amount = amount;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.comment = comment;
+	}
+
 	public double getAmount() {
 		return amount;
 	}

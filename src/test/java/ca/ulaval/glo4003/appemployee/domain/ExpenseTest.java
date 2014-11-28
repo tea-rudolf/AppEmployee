@@ -9,7 +9,6 @@ import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 
 public class ExpenseTest {
 
-	private static final String VALID_UID = "1234";
 	private static final double AMOUNT = 500.50;
 	private static final LocalDate DATE = new LocalDate();
 	private static final String USER_EMAIL = "test@company.com";
@@ -19,7 +18,7 @@ public class ExpenseTest {
 
 	@Test
 	public void canInstantiateExpense() {
-		expense = new Expense(VALID_UID, AMOUNT, DATE, USER_EMAIL, COMMENT);
+		expense = new Expense(AMOUNT, DATE, USER_EMAIL, COMMENT);
 		assertNotNull(expense);
 	}
 

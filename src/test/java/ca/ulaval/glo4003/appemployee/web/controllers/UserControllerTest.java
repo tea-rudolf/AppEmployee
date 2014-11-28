@@ -14,7 +14,6 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
-import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
@@ -29,15 +28,12 @@ public class UserControllerTest {
 	private static final double WAGE = 0;
 	private static final String EDIT_PROFILE_JSP = "editProfile";
 	private static final String EMPLOYEE_REDIRECT = "redirect:/employee";
-	private static final String USER_NOT_FOUND = "userNotFoundError";
-	private static final String EDIT_PROFILE_ERROR_REDIRECT = "redirect:/editProfile/userNotFoundError";
 
 	@Mock
 	private ModelMap modelMapMock;
 
 	@Mock
 	private HttpSession sessionMock;
-
 
 	@Mock
 	private UserService userServiceMock;
@@ -82,7 +78,7 @@ public class UserControllerTest {
 	public void getUserReturnsEditProfile() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(user);
-		//when(userConverterMock.convert(user)).thenReturn(userViewModel);
+		// when(userConverterMock.convert(user)).thenReturn(userViewModel);
 		String returnedForm = userController.displayUserProfile(model, sessionMock);
 
 		assertEquals(EDIT_PROFILE_JSP, returnedForm);

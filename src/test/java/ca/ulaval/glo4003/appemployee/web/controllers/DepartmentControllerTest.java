@@ -1,8 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doThrow;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,10 +70,10 @@ public class DepartmentControllerTest {
 
 	@Mock
 	private User userMock;
-	
+
 	@Mock
 	private DepartmentViewModel departmentViewModelMock;
-	
+
 	@Mock
 	private AssignationEmployeDepartmentViewModel assignationEmployeDepViewModelMock;
 
@@ -179,57 +178,57 @@ public class DepartmentControllerTest {
 		String returnedForm = departmentController.updateEmployeeInfo(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
 		assertEquals(EDIT_EMPLOYEE_FORM, returnedForm);
 	}
-	
+
 	@Test
-	public void createDepartmentReturnsCreateDepartmentForm(){
+	public void createDepartmentReturnsCreateDepartmentForm() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(departmentServiceMock.getViewModelForCreation()).thenReturn(departmentViewModelMock);
-		
+
 		String returnedForm = departmentController.createDepartment(modelMock, sessionMock);
-		
+
 		assertEquals(CREATE_DEPARTMENT_FORM, returnedForm);
 	}
-	
+
 	@Test
-	public void createDepartmentRedirectsToLoginIfMissingEmailAttribute(){
+	public void createDepartmentRedirectsToLoginIfMissingEmailAttribute() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
 		String returnedForm = departmentController.createDepartment(modelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
-	
+
 	@Test
-	public void saveDepartmentRedirectsToDepartmentsListIfSaveIsSuccessful() throws Exception{
+	public void saveDepartmentRedirectsToDepartmentsListIfSaveIsSuccessful() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		String returnedForm = departmentController.saveDepartment(modelMock, departmentViewModelMock, sessionMock);
 		assertEquals(DEPARTMENTS_LIST_REDIRECT, returnedForm);
 	}
-	
+
 	@Test
-	public void selectEmployeToAssignToDepartmentReturnsAssignEmployeeFormIfSuccessful(){
+	public void selectEmployeToAssignToDepartmentReturnsAssignEmployeeFormIfSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(departmentServiceMock.getViewModelToAssignEmployeToDepartment()).thenReturn(assignationEmployeDepViewModelMock);
-		
+
 		String returnedForm = departmentController.selectEmployeToAssignToDepartment(modelMock, sessionMock);
-		
+
 		assertEquals(ASSIGN_EMPLOYE_FORM, returnedForm);
 	}
-	
+
 	@Test
-	public void selectEmployeToAssignToDepartmentRedirectsToLoginPageIfMissingEmailAttribute(){
+	public void selectEmployeToAssignToDepartmentRedirectsToLoginPageIfMissingEmailAttribute() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
 		String returnedForm = departmentController.selectEmployeToAssignToDepartment(modelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);
 	}
-	
+
 	@Test
-	public void saveEditedDepartmentReturnsDepartmentsListFormIfSaveIsSuccessful() throws Exception{
+	public void saveEditedDepartmentReturnsDepartmentsListFormIfSaveIsSuccessful() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		String returnedForm = departmentController.saveEditedDepartment(assignationEmployeDepViewModelMock, sessionMock);
 		assertEquals(DEPARTMENT_LIST_FORM, returnedForm);
 	}
-	
+
 	@Test
-	public void saveEditedDepartmentRedirectsToLoginPageIfMissingEmailAttribute() throws Exception{
+	public void saveEditedDepartmentRedirectsToLoginPageIfMissingEmailAttribute() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
 		String returnedForm = departmentController.saveEditedDepartment(assignationEmployeDepViewModelMock, sessionMock);
 		assertEquals(REDIRECT_LINK, returnedForm);

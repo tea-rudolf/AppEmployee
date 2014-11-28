@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import java.util.Collection;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
-import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 @Controller
@@ -52,10 +52,10 @@ public class TimeController {
 		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
 			return LOGIN_REDIRECT;
 		}
-		
+
 		TimeViewModel form = timeService.retrieveViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForCurrentPayPeriod(session.getAttribute(
-				EMAIL_ATTRIBUTE).toString());
+		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
+				.toString());
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntries", timeEntriesViewModels);
@@ -119,8 +119,8 @@ public class TimeController {
 		}
 
 		TimeViewModel form = timeService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForPreviousPayPeriod(session.getAttribute(
-				EMAIL_ATTRIBUTE).toString());
+		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
+				.toString());
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntries", timeEntriesViewModels);

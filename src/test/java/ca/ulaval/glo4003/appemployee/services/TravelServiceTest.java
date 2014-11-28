@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,37 +15,34 @@ import ca.ulaval.glo4003.appemployee.web.converters.TravelConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 public class TravelServiceTest {
-	
-	//TODO: fix the tests
+
+	// TODO: fix the tests
 
 	private static final String TRAVEL_UID = "0002";
 	private static final String NEW_UID = "0003";
 
 	@Mock
 	private TravelRepository travelRepositoryMock;
-	
+
 	@Mock
 	private TravelConverter travelConverterMock;
-	
+
 	@Mock
 	private Travel travelMock;
-	
+
 	@Mock
 	private TravelViewModel travelViewModelMock;
-	
+
 	@Mock
 	private TimeService payPeriodServiceMock;
-	
-	@Mock 
-	private UserService userServiceMock;
-	
+
 	@InjectMocks
 	private TravelService travelService;
 
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelService = new TravelService(travelRepositoryMock, travelConverterMock, payPeriodServiceMock, userServiceMock);
+		travelService = new TravelService(travelRepositoryMock, travelConverterMock, payPeriodServiceMock);
 	}
 
 	@Test

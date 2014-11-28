@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,11 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
-import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
-import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
-import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 @Controller
@@ -41,7 +36,6 @@ public class TravelController {
 	@Autowired
 	public TravelController(TaskRepository taskRepository, TravelService travelService) {
 		this.travelService = travelService;
-
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -52,7 +46,8 @@ public class TravelController {
 		}
 
 		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
+				.toString());
 
 		model.addAttribute(TRAVEL_ATTRIBUTE, form);
 		model.addAttribute("travelEntries", travelViewModels);

@@ -9,16 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
-import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
@@ -32,18 +28,13 @@ public class UserService {
 	private UserRepository userRepository;
 	private TaskRepository taskRepository;
 	private TimeEntryRepository timeEntryRepository;
-	private ExpenseRepository expenseRepository;
-	private TravelRepository travelRepository;
 	private UserConverter userConverter;
 
 	@Autowired
-	public UserService(UserRepository userRepository, TaskRepository taskRepository, ExpenseRepository expenseRepository,
-			TimeEntryRepository timeEntryRepository, TravelRepository travelRepository, UserConverter userConverter) {
+	public UserService(UserRepository userRepository, TaskRepository taskRepository, TimeEntryRepository timeEntryRepository, UserConverter userConverter) {
 		this.userRepository = userRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
-		this.expenseRepository = expenseRepository;
-		this.travelRepository = travelRepository;
 		this.userConverter = userConverter;
 	}
 
@@ -73,8 +64,6 @@ public class UserService {
 		return timeEntryRepository.findByUid(id);
 	}
 
-
-	
 	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String currentUserId) {
 
 		List<Task> tasks = new ArrayList<Task>();
@@ -99,19 +88,6 @@ public class UserService {
 			}
 		}
 		return timeEntries;
-	}
-
-	public List<Expense> getExpensesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
-
-		ArrayList<Expense> expenses = new ArrayList<Expense>();
-		for (Expense expense : expenseRepository.findAll()) {
-			if (expense.getUserEmail().equals(userEmail) && expense.getDate().isBefore(payPeriod.getEndDate().plusDays(1))
-					&& expense.getDate().isAfter(payPeriod.getStartDate().minusDays(1))) {
-				expenses.add(expense);
-			}
-		}
-
-		return expenses;
 	}
 
 	public void updateTimeEntry(String projectNumber, TimeViewModel viewModel) {
@@ -158,13 +134,7 @@ public class UserService {
 		}
 	}
 
-	public UserViewModel getUserViewModelForEdition(String email) {
-		User user = retrieveByEmail(email);
-		UserViewModel userViewModel = userConverter.convert(user);
-		return userViewModel;
-	}
-	
-	public UserViewModel retrieveViewModelForCurrentUser(String email){
+	public UserViewModel retrieveViewModelForCurrentUser(String email) {
 		return userConverter.convert(retrieveByEmail(email));
 	}
 
@@ -176,5 +146,5 @@ public class UserService {
 	public String retrieveUserRole(String email) {
 		return userRepository.findByEmail(email).getRole().toString();
 	}
-	
+
 }

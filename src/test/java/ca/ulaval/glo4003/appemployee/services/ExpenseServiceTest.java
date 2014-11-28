@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.ExpenseNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
+import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 
 public class ExpenseServiceTest {
@@ -25,23 +26,26 @@ public class ExpenseServiceTest {
 
 	@Mock
 	private ExpenseRepository expenseRepositoryMock;
-	
+
 	@Mock
 	private Expense expenseMock;
-	
+
 	@Mock
 	private ExpenseViewModel expenseViewModelMock;
-	
+
+	@Mock
+	private TimeService timeServiceMock;
+
+	@Mock
+	private ExpenseConverter expenseConverterMock;
+
 	@InjectMocks
 	private ExpenseService expenseService;
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		expenseRepositoryMock = mock(ExpenseRepository.class);
-		expenseMock = mock(Expense.class);
-		expenseViewModelMock = mock(ExpenseViewModel.class);
-		expenseService = new ExpenseService(expenseRepositoryMock);
+		expenseService = new ExpenseService(expenseRepositoryMock, timeServiceMock, expenseConverterMock);
 	}
 
 	@Test

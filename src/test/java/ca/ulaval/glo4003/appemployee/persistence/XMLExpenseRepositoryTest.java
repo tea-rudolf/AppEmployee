@@ -40,11 +40,11 @@ public class XMLExpenseRepositoryTest {
 	}
 
 	@Test
-	public void findByuIdFindsExpenseById() throws Exception {
-		Expense dummyExpense = new Expense(VALID_UID, AMOUNT, DATE, USER_EMAIL, COMMENT);
+	public void findByUidFindsExpenseById() throws Exception {
+		Expense dummyExpense = new Expense(AMOUNT, DATE, USER_EMAIL, COMMENT);
 		repository.store(dummyExpense);
 
-		assertEquals(dummyExpense, repository.findByUid(VALID_UID));
+		assertEquals(dummyExpense, repository.findByUid(dummyExpense.getUid()));
 	}
 
 	@Test
