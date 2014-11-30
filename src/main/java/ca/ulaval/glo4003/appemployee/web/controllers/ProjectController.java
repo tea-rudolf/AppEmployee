@@ -34,13 +34,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class ProjectController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
-	static final String SIMPLE_REDIRECT = "redirect:/";
-	static final String PROJECT_LIST_FORM = "projectList";
-	static final String CREATE_PROJECT_FORM = "createProject";
-	static final String EDIT_PROJECT_REDIRECT = "redirect:/projects/%s/edit";
-	static final String EDIT_PROJECT_FORM = "editProject";
-	static final String PROJECT_LIST_REDIRECT = "redirect:/projects/";
-	static final String EDIT_TASK_REDIRECT = "editTask";
 
 	private ProjectService projectService;
 	private UserService userService;
@@ -61,23 +54,15 @@ public class ProjectController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getProjects(Model model, HttpSession session) {
 
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
-
 		model.addAttribute("projects", projectConverter.convert(projectService.getAllProjects()));
-		return PROJECT_LIST_FORM;
+		return "projectList";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) {
 
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
-
 		model.addAttribute("project", projectViewModel);
-		return CREATE_PROJECT_FORM;
+		return "createProject";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -86,7 +71,7 @@ public class ProjectController {
 		try {
 			Project newProject = projectConverter.convert(projectViewModel);
 			projectService.addProject(newProject);
-			return String.format(EDIT_PROJECT_REDIRECT, newProject.getUid());
+			return String.format("redirect:/projects/%s/edit", newProject.getUid());
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return createProject(model, projectViewModel, session);
@@ -96,10 +81,6 @@ public class ProjectController {
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
 	public String editProject(@PathVariable String projectNumber, Model model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
 
 		Project project = projectService.getProjectById(projectNumber);
 		List<Task> tasks = projectService.getAllTasksByProjectId(project.getUid());
@@ -117,8 +98,7 @@ public class ProjectController {
 		model.addAttribute("project", projectViewModel);
 		model.addAttribute("role", currentUser.getRole());
 
-		return EDIT_PROJECT_FORM;
-
+		return "editProject";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
@@ -132,7 +112,7 @@ public class ProjectController {
 
 			projectService.updateProject(projectNumber, viewModel);
 
-			return PROJECT_LIST_REDIRECT;
+			return "redirect:/projects/";
 
 		} catch (Exception e) {
 
@@ -144,10 +124,6 @@ public class ProjectController {
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
 	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
 
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
@@ -164,16 +140,11 @@ public class ProjectController {
 			return createTask(projectNumber, model, taskViewModel, session);
 		}
 
-		return String.format(EDIT_PROJECT_REDIRECT, projectNumber);
-
+		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
 	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
 
 		Task task = projectService.getTaskById(taskNumber);
 		List<User> employees = userService.retrieveUsersByEmail(task.getAuthorizedUsers());
@@ -189,8 +160,7 @@ public class ProjectController {
 		model.addAttribute("employees", employeesViewModel);
 		model.addAttribute("role", currentUser.getRole());
 
-		return EDIT_TASK_REDIRECT;
-
+		return "editTask";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
@@ -205,13 +175,12 @@ public class ProjectController {
 
 			projectService.updateTask(projectNumber, taskNumber, viewModel);
 
-			return String.format(EDIT_PROJECT_REDIRECT, projectNumber);
+			return String.format("redirect:/projects/%s/edit", projectNumber);
 
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return editTask(projectNumber, taskNumber, model, session);
 		}
-
 	}
 
 }

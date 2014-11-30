@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,6 @@ public class HomeController {
 
 	private UserService userService;
 	static final Integer SESSION_IDLE_TRESHOLD_IN_SECONDS = 462;
-	static final String EMAIL_ATTRIBUTE = "email";
-	static final String ROLE_ATTRIBUTE = "role";
-	static final String HOME_VIEW = "home";
-	static final String LOGIN_FORM_ATTRIBUTE = "loginForm";
-	static final String SIMPLE_REDIRECT = "redirect:/";
 
 	@Autowired
 	public HomeController(UserService userService) {
@@ -38,22 +34,23 @@ public class HomeController {
 	}
 
 	@RequestMapping("/")
-	public String displayLoginForm() {
-		return HOME_VIEW;
+	public String showLoginForm() {
+		return "home";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(LoginFormViewModel form, ModelMap model, HttpSession session) {
+	public ModelAndView login(LoginFormViewModel form, ModelMap model, HttpSession session, HttpServletRequest request) {
 
 		if (userService.isUserValid(form.getEmail(), form.getPassword())) {
-			model.addAttribute(EMAIL_ATTRIBUTE, form.getEmail());
-			model.addAttribute(ROLE_ATTRIBUTE, userService.retrieveUserRole(form.getEmail()));
+			model.addAttribute("email", form.getEmail());
+			model.addAttribute("role", userService.retrieveUserRole(form.getEmail()));
 			session.setMaxInactiveInterval(SESSION_IDLE_TRESHOLD_IN_SECONDS);
-			return new ModelAndView(HOME_VIEW, model);
+			request.getSession().setAttribute("LOGGEDIN_USER", form);
+			return new ModelAndView("home", model);
 		} else {
 			model.addAttribute("alert", "Invalid username and/or password.");
-			model.addAttribute(LOGIN_FORM_ATTRIBUTE, form);
-			return new ModelAndView(HOME_VIEW);
+			model.addAttribute("loginForm", form);
+			return new ModelAndView("home");
 		}
 	}
 
@@ -61,6 +58,6 @@ public class HomeController {
 	public String logout(SessionStatus sessionStatus, ModelMap model) {
 		sessionStatus.setComplete();
 		model.clear();
-		return SIMPLE_REDIRECT;
+		return "redirect:/";
 	}
 }

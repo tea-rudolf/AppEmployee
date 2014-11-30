@@ -20,8 +20,8 @@ import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
@@ -34,7 +34,6 @@ public class TimeControllerTest {
 	private static final String PREVIOUS_TIME_SHEET_JSP = "previousTime";
 	private static final String TIME_SHEET_JSP = "time";
 	private static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
-	private static final String REDIRECT_LINK = "redirect:/";
 	private static final String TIME_REDIRECT = "redirect:/time/";
 	private static final String TIME_ENTRY_UID = "0001";
 	private static final String CREATE_TIME_JSP = "createTimeEntry";
@@ -96,39 +95,27 @@ public class TimeControllerTest {
 		when(payPeriodServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		String returnedForm = timeControllerMock.getTime(modelMapMock, sessionMock);
+		String returnedForm = timeControllerMock.showTimeEntriesForm(modelMapMock, sessionMock);
 
 		assertEquals(TIME_SHEET_JSP, returnedForm);
 	}
 
-//	@Test
-//	public void getTimeAddsUserEmailAsAttribute() {
-//		when(payPeriodServiceMock.retrieveViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
-//		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-//
-//		timeControllerMock.getTime(modelMapMock, sessionMock);
-//
-//		verify(modelMapMock).addAttribute(EMAIL_KEY, VALID_EMAIL);
-//	}
-
-	@Test
-	public void getTimeReturnRedirectsIfEmailAttributeIsNull() {
-		String returnedForm = timeControllerMock.getTime(modelMapMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
-	}
-
-	@Test
-	public void createTimeEntryReturnsRedirectLinkIfMissingAttribute() {
-		String returnedForm = timeControllerMock.createTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
-	}
+	// @Test
+	// public void getTimeAddsUserEmailAsAttribute() {
+	// when(payPeriodServiceMock.retrieveViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
+	// when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+	//
+	// timeControllerMock.getTime(modelMapMock, sessionMock);
+	//
+	// verify(modelMapMock).addAttribute(EMAIL_KEY, VALID_EMAIL);
+	// }
 
 	@Test
 	public void createTimeEntryReturnsCreateTimeForm() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 
-		String returnedForm = timeControllerMock.createTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.showCreateTimeEntryForm(modelMock, payPeriodViewModelMock, sessionMock);
 
 		assertEquals(CREATE_TIME_JSP, returnedForm);
 	}
@@ -141,15 +128,9 @@ public class TimeControllerTest {
 		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_UID);
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 
-		String returnedForm = timeControllerMock.saveTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.createTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
 
 		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
-	}
-
-	@Test
-	public void editTimeEntryReturnsRedirectLinkIfMissingAttribute() {
-		String returnedForm = timeControllerMock.editTimeEntry(TIME_ENTRY_UID, modelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -158,7 +139,7 @@ public class TimeControllerTest {
 		when(payPeriodServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 		when(payPeriodServiceMock.retrieveViewModelForTimeEntry(TIME_ENTRY_UID)).thenReturn(payPeriodViewModelMock);
 
-		String returnedForm = timeControllerMock.editTimeEntry(TIME_ENTRY_UID, modelMock, sessionMock);
+		String returnedForm = timeControllerMock.showEditTimeEntryForm(TIME_ENTRY_UID, modelMock, sessionMock);
 
 		assertEquals(EDIT_TIME_ENTRY_JSP, returnedForm);
 	}
@@ -168,7 +149,7 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		String returnedForm = timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.editTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 
 		assertEquals(TIME_REDIRECT, returnedForm);
 	}
@@ -178,7 +159,7 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		timeControllerMock.saveEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
+		timeControllerMock.editTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 
 		verify(payPeriodServiceMock, times(1)).updateTimeEntry(payPeriodViewModelMock);
 	}
@@ -188,21 +169,9 @@ public class TimeControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveViewModelForPreviousPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 
-		String returnedForm = timeControllerMock.getPreviousTime(modelMapMock, sessionMock);
+		String returnedForm = timeControllerMock.showPreviousTimeForm(modelMapMock, sessionMock);
 
 		assertEquals(PREVIOUS_TIME_SHEET_JSP, returnedForm);
-	}
-
-	@Test
-	public void getPreviousTimeReturnRedirectsIfEmailAttributeIsNull() {
-		String returnedForm = timeControllerMock.getPreviousTime(modelMapMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
-	}
-
-	@Test
-	public void createPreviousTimeEntryReturnsRedirectLinkIfMissingAttribute() {
-		String returnedForm = timeControllerMock.createPreviousTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -210,7 +179,7 @@ public class TimeControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(payPeriodServiceMock.retrieveViewModelForPreviousPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 
-		String returnedForm = timeControllerMock.createPreviousTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.showCreatePreviousTimeEntryForm(modelMock, payPeriodViewModelMock, sessionMock);
 
 		assertEquals(CREATE_PREVIOUS_TIME_JSP, returnedForm);
 	}
@@ -223,7 +192,7 @@ public class TimeControllerTest {
 		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_UID);
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 
-		String returnedForm = timeControllerMock.savePreviousTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.createPreviousTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
 
 		assertEquals(TIME_SHEET_SUBMIT_JSP, returnedForm);
 	}
@@ -236,15 +205,9 @@ public class TimeControllerTest {
 		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_UID);
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 
-		timeControllerMock.savePreviousTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
+		timeControllerMock.createPreviousTimeEntry(modelMock, payPeriodViewModelMock, sessionMock);
 
 		verify(payPeriodServiceMock, times(1)).createTimeEntry(payPeriodViewModelMock, payPeriodMock);
-	}
-
-	@Test
-	public void editPreviousTimeEntryReturnsRedirectLinkIfMissingAttribute() {
-		String returnedForm = timeControllerMock.editPreviousTimeEntry(TIME_ENTRY_UID, modelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -253,7 +216,7 @@ public class TimeControllerTest {
 		when(payPeriodServiceMock.retrieveViewModelForPreviousPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 		when(payPeriodServiceMock.retrieveViewModelForTimeEntry(TIME_ENTRY_UID)).thenReturn(payPeriodViewModelMock);
 
-		String returnedForm = timeControllerMock.editPreviousTimeEntry(TIME_ENTRY_UID, modelMock, sessionMock);
+		String returnedForm = timeControllerMock.showEditPreviousTimeEntryForm(TIME_ENTRY_UID, modelMock, sessionMock);
 
 		assertEquals(EDIT_PREVIOUS_TIME_ENTRY_JSP, returnedForm);
 	}
@@ -263,7 +226,7 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		String returnedForm = timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.editPreviousTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 
 		assertEquals(PREVIOUS_TIME_REDIRECT, returnedForm);
 	}
@@ -273,7 +236,7 @@ public class TimeControllerTest {
 		when(payPeriodViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
+		timeControllerMock.editPreviousTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 
 		verify(payPeriodServiceMock, times(1)).updateTimeEntry(payPeriodViewModelMock);
 	}
@@ -285,8 +248,8 @@ public class TimeControllerTest {
 		when(payPeriodServiceMock.retrieveViewModelForPreviousPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 		when(payPeriodServiceMock.retrieveViewModelForTimeEntry(TIME_ENTRY_UID)).thenReturn(payPeriodViewModelMock);
 
-		String returnedForm = timeControllerMock.savePreviousEditedTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
+		String returnedForm = timeControllerMock.editPreviousTimeEntry(TIME_ENTRY_UID, modelMock, payPeriodViewModelMock, sessionMock);
 
-		//assertEquals(EDIT_PREVIOUS_TIME_ENTRY_JSP, returnedForm);
+		// assertEquals(EDIT_PREVIOUS_TIME_ENTRY_JSP, returnedForm);
 	}
 }

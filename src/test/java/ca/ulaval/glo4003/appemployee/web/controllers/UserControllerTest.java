@@ -23,11 +23,10 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class UserControllerTest {
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
-	private static final String REDIRECT_LINK = "redirect:/";
 	private static final String PASSWORD = "password";
 	private static final double WAGE = 0;
 	private static final String EDIT_PROFILE_JSP = "editProfile";
-	private static final String EMPLOYEE_REDIRECT = "redirect:/employee";
+	private static final String EMPLOYEE_JSP = "employee";
 
 	@Mock
 	private ModelMap modelMapMock;
@@ -79,15 +78,9 @@ public class UserControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userServiceMock.retrieveByEmail(sessionMock.getAttribute(EMAIL_KEY).toString())).thenReturn(user);
 		// when(userConverterMock.convert(user)).thenReturn(userViewModel);
-		String returnedForm = userController.displayUserProfile(model, sessionMock);
+		String returnedForm = userController.showUserProfileForm(model, sessionMock);
 
 		assertEquals(EDIT_PROFILE_JSP, returnedForm);
-	}
-
-	@Test
-	public void getUserReturnRedirectIfSessionAttributeIsNull() {
-		String returnedForm = userController.displayUserProfile(model, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -95,7 +88,7 @@ public class UserControllerTest {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
 		String returnedForm = userController.updatePassword(userViewModelMock, sessionMock);
-		assertEquals(EMPLOYEE_REDIRECT, returnedForm);
+		assertEquals(EMPLOYEE_JSP, returnedForm);
 	}
 
 	@Test
@@ -103,7 +96,7 @@ public class UserControllerTest {
 		when(userViewModelMock.getEmail()).thenReturn(VALID_EMAIL);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		String returnedForm = userController.updatePassword(userViewModelMock, sessionMock);
-		assertEquals(EMPLOYEE_REDIRECT, returnedForm);
+		assertEquals(EMPLOYEE_JSP, returnedForm);
 	}
 
 	@Test

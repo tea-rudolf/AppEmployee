@@ -35,12 +35,7 @@ public class ExpensesController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getExpenses(ModelMap model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
-		}
-
+	public String showExpensesList(ModelMap model, HttpSession session) {
 		Collection<ExpenseViewModel> expensesViewModels = expenseService.retrieveExpenseViewModelsListForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
 
@@ -50,12 +45,7 @@ public class ExpensesController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String createExpense(Model model, ExpenseViewModel expenseModel, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
-		}
-
+	public String showCreateExpenseForm(Model model, ExpenseViewModel expenseModel, HttpSession session) {
 		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrievePayPeriodViewModel();
 
 		model.addAttribute("expenseForm", new ExpenseViewModel());
@@ -65,7 +55,7 @@ public class ExpensesController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveExpense(Model model, ExpenseViewModel expenseForm, HttpSession session) throws Exception {
+	public String createExpense(Model model, ExpenseViewModel expenseForm, HttpSession session) throws Exception {
 		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		expenseService.createExpense(expenseForm);
 
@@ -73,12 +63,7 @@ public class ExpensesController {
 	}
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
-	public String editExpense(@PathVariable String uid, Model model, HttpSession session) throws Exception {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return "redirect:/";
-		}
-
+	public String showEditExpenseForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
 		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrievePayPeriodViewModel();
 		ExpenseViewModel expenseViewModel = expenseService.retrieveExpenseViewModel(uid);
 
@@ -89,7 +74,7 @@ public class ExpensesController {
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
-	public String saveEditedExpense(@PathVariable String uId, ExpenseViewModel viewModel, HttpSession session) throws Exception {
+	public String editExpense(@PathVariable String uId, ExpenseViewModel viewModel, HttpSession session) throws Exception {
 		expenseService.updateExpense(viewModel);
 
 		return "redirect:/expenses/";

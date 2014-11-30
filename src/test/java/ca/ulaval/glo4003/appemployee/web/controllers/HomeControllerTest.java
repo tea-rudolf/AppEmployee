@@ -119,7 +119,7 @@ public class HomeControllerTest {
 
 	@Test
 	public void getDisplayLoginFormReturnsHomeViewForm() {
-		String returnedForm = homeController.displayLoginForm();
+		String returnedForm = homeController.showLoginForm();
 		assertEquals(HOME_VIEW, returnedForm);
 	}
 

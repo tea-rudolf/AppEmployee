@@ -23,13 +23,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 public class TravelController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
-	static final String TRAVEL_ATTRIBUTE = "travelForm";
-	static final String TRAVEL_JSP = "travel";
-	static final String CREATE_TRAVEL_JSP = "createTravelEntry";
-	static final String TRAVEL_ENTRY_SUBMIT_JSP = "travelEntrySubmitted";
-	static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
-	static final String SIMPLE_REDIRECT = "redirect:/";
-	static final String TRAVEL_REDIRECT = "redirect:/travel/";
 
 	private TravelService travelService;
 
@@ -39,64 +32,47 @@ public class TravelController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getTravel(ModelMap model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
-
+	public String showTravelsList(ModelMap model, HttpSession session) {
 		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
 
-		model.addAttribute(TRAVEL_ATTRIBUTE, form);
+		model.addAttribute("travelForm", form);
 		model.addAttribute("travelEntries", travelViewModels);
 
-		return TRAVEL_JSP;
+		return "travel";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String createTravelEntry(Model model, TravelViewModel travelViewModel, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
-
+	public String showCreateTravelEntryForm(Model model, TravelViewModel travelViewModel, HttpSession session) {
 		TravelViewModel form = travelService.retrieveTravelViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-		model.addAttribute(TRAVEL_ATTRIBUTE, form);
 
-		return CREATE_TRAVEL_JSP;
+		model.addAttribute("travelForm", form);
+
+		return "createTravelEntry";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
-
+	public String createTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
 		travelService.createTravel(travelForm);
 
-		return TRAVEL_ENTRY_SUBMIT_JSP;
-
+		return "travelEntrySubmitted";
 	}
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
-	public String editTravelEntry(@PathVariable String uid, Model model, HttpSession session) throws Exception {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return SIMPLE_REDIRECT;
-		}
-
+	public String showEditTravelEntryForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
 		TravelViewModel travelViewModel = travelService.retrieveTravelViewModelForExistingTravel(uid);
 
-		model.addAttribute(TRAVEL_ATTRIBUTE, travelViewModel);
+		model.addAttribute("travelForm", travelViewModel);
 
-		return EDIT_TRAVEL_ENTRY_JSP;
+		return "editTravelEntry";
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
-	public String saveEditedTravelEntry(@PathVariable String uId, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
-
+	public String editTravelEntry(@PathVariable String uId, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
 		travelService.updateTravel(uId, viewModel);
 
-		return TRAVEL_REDIRECT;
+		return "redirect:/travel/";
 	}
 
 }

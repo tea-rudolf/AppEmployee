@@ -29,7 +29,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class DepartmentControllerTest {
 
-	private static final String REDIRECT_LINK = "redirect:/";
 	private static final String EMAIL_ATTRIBUTE = "email";
 	private static final String DEPARTMENT_NAME = "dummyDepartment";
 	private static final String EMAIL = "test@test.com";
@@ -87,24 +86,10 @@ public class DepartmentControllerTest {
 	}
 
 	@Test
-	public void showDepartmentsListRedirectsToLoginPageWhenSessionAttributeIsNull() {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
-		String form = departmentController.showDepartmentsList(modelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, form);
-	}
-
-	@Test
 	public void showDepartmentsListReturnsDepartmentsListFormWhenSessionAttributeNotNull() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		String form = departmentController.showDepartmentsList(modelMock, sessionMock);
 		assertEquals("departmentsList", form);
-	}
-
-	@Test
-	public void showEmployeesListRedirectsToLoginPageWhenSessionAttributeIsNull() throws Exception {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
-		String form = departmentController.showEmployeesList(DEPARTMENT_NAME, modelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, form);
 	}
 
 	@Test
@@ -117,16 +102,9 @@ public class DepartmentControllerTest {
 	}
 
 	@Test
-	public void showCreateEmployeeAccountPageRedirectsToLoginPageWhenSessionAttributeIsNull() throws Exception {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
-		String form = departmentController.showCreateEmployeeAccountPage(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, form);
-	}
-
-	@Test
 	public void showCreateEmployeeAccountPageReturnsUserCreationFormWhenSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		String returnedForm = departmentController.showCreateEmployeeAccountPage(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
+		String returnedForm = departmentController.showCreateEmployeeForm(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
 		assertEquals(CREATE_USER_FORM, returnedForm);
 	}
 
@@ -134,7 +112,7 @@ public class DepartmentControllerTest {
 	public void createEmployeeAccountRedirectsToEditionPageWhenRoleIsNotMissing() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
-		String returnedForm = departmentController.createEmployeeAccount(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
+		String returnedForm = departmentController.createEmployee(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
 		assertEquals(EDIT_DEPARTMENT_REDIRECT, returnedForm);
 	}
 
@@ -143,22 +121,15 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
 		doThrow(new Exception()).when(departmentServiceMock).createUser(EMAIL, DEPARTMENT_NAME, userViewModelMock);
-		String returnedForm = departmentController.createEmployeeAccount(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
+		String returnedForm = departmentController.createEmployee(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
 		assertEquals(CREATE_USER_FORM, returnedForm);
-	}
-
-	@Test
-	public void showUpdateEmployeeInfoRedirectsWhenSessionAttributeIsMissing() {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
-		String returnedForm = departmentController.showUpdateEmployeeInfo(DEPARTMENT_NAME, EMAIL, modelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
 	public void showUpdateEmployeeInfoReturnsEditEmployeeFormWhenSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userServiceMock.retrieveByEmail(EMAIL)).thenReturn(userMock);
-		String returnedForm = departmentController.showUpdateEmployeeInfo(DEPARTMENT_NAME, EMAIL, modelMock, sessionMock);
+		String returnedForm = departmentController.showEditEmployeeForm(DEPARTMENT_NAME, EMAIL, modelMock, sessionMock);
 		assertEquals(EDIT_EMPLOYEE_FORM, returnedForm);
 	}
 
@@ -166,7 +137,7 @@ public class DepartmentControllerTest {
 	public void updateEmployeeInfoReturnsEditedDepartmentFormIfSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
-		String returnedForm = departmentController.updateEmployeeInfo(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
+		String returnedForm = departmentController.editEmployee(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
 		assertEquals(EDIT_DEPARTMENT_REDIRECT, returnedForm);
 	}
 
@@ -175,7 +146,7 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
 		doThrow(new Exception()).when(userServiceMock).updateEmployeeInformation(userViewModelMock);
-		String returnedForm = departmentController.updateEmployeeInfo(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
+		String returnedForm = departmentController.editEmployee(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
 		assertEquals(EDIT_EMPLOYEE_FORM, returnedForm);
 	}
 
@@ -184,22 +155,15 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(departmentServiceMock.getViewModelForCreation()).thenReturn(departmentViewModelMock);
 
-		String returnedForm = departmentController.createDepartment(modelMock, sessionMock);
+		String returnedForm = departmentController.showCreateDepartmentForm(modelMock, sessionMock);
 
 		assertEquals(CREATE_DEPARTMENT_FORM, returnedForm);
 	}
 
 	@Test
-	public void createDepartmentRedirectsToLoginIfMissingEmailAttribute() {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
-		String returnedForm = departmentController.createDepartment(modelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
-	}
-
-	@Test
 	public void saveDepartmentRedirectsToDepartmentsListIfSaveIsSuccessful() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		String returnedForm = departmentController.saveDepartment(modelMock, departmentViewModelMock, sessionMock);
+		String returnedForm = departmentController.createDepartment(modelMock, departmentViewModelMock, sessionMock);
 		assertEquals(DEPARTMENTS_LIST_REDIRECT, returnedForm);
 	}
 
@@ -208,16 +172,9 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(departmentServiceMock.getViewModelToAssignEmployeToDepartment()).thenReturn(assignationEmployeDepViewModelMock);
 
-		String returnedForm = departmentController.selectEmployeToAssignToDepartment(modelMock, sessionMock);
+		String returnedForm = departmentController.showAssignEmployeeToDepartmentForm(modelMock, sessionMock);
 
 		assertEquals(ASSIGN_EMPLOYE_FORM, returnedForm);
-	}
-
-	@Test
-	public void selectEmployeToAssignToDepartmentRedirectsToLoginPageIfMissingEmailAttribute() {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
-		String returnedForm = departmentController.selectEmployeToAssignToDepartment(modelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -225,13 +182,6 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		String returnedForm = departmentController.saveEditedDepartment(assignationEmployeDepViewModelMock, sessionMock);
 		assertEquals(DEPARTMENT_LIST_FORM, returnedForm);
-	}
-
-	@Test
-	public void saveEditedDepartmentRedirectsToLoginPageIfMissingEmailAttribute() throws Exception {
-		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(null);
-		String returnedForm = departmentController.saveEditedDepartment(assignationEmployeDepViewModelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 }

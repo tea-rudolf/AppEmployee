@@ -1,11 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,67 +37,66 @@ public class ProjectControllerTest {
 	private static final String SAMPLE_TASKNUMBER = "2";
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
-	private static final String REDIRECT_LINK = "redirect:/";
 
 	@Mock
 	private HttpSession sessionMock;
-	
+
 	private Model model = new ExtendedModelMap();
-		
+
 	@Mock
 	private ProjectService projectServiceMock;
-	
+
 	@Mock
 	private ProjectConverter projectConverterMock;
-	
+
 	@Mock
 	private ProjectViewModel projectViewModelMock;
-	
+
 	@Mock
 	private ProjectViewModel projectViewModel;
-	
+
 	@Mock
 	private Project projectMock;
-	
+
 	@Mock
 	private Task taskMock;
-	
+
 	@Mock
 	private TaskConverter taskConverterMock;
-	
+
 	@Mock
 	private TaskViewModel taskViewModelMock;
-	
+
 	@Mock
 	private TaskViewModel taskViewModel;
-		
+
 	@Mock
 	private UserConverter userConverterMock;
-	
+
 	@Mock
 	private UserService userServiceMock;
-	
+
 	@Mock
 	private User currentUserMock;
-		
+
 	@InjectMocks
 	private ProjectController projectController;
-	
+
 	@InjectMocks
 	private List<UserViewModel> userViewModelCollection = new ArrayList<UserViewModel>();
-	
+
 	@InjectMocks
 	private List<Task> taskList = new ArrayList<Task>();
-	
+
 	@InjectMocks
 	private List<User> employeeList = new ArrayList<User>();
-	
+
 	@InjectMocks
 	private Collection<TaskViewModel> taskViewModelCollection = new ArrayList<TaskViewModel>();
-	
+
 	@InjectMocks
 	private List<Project> projectList = new ArrayList<Project>();
-	
+
 	@InjectMocks
 	private Collection<ProjectViewModel> projectViewModelCollection = new ArrayList<ProjectViewModel>();
 
@@ -126,22 +122,10 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	public void getProjectsReturnRedirectIfSessionAttributeIsNull() {
-		String returnedForm = projectController.getProjects(model, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
-	}
-
-	@Test
 	public void projectCreationUpdatesTheModelCorrectly() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		projectController.createProject(model, projectViewModelMock, sessionMock);
 		assertSame(model.asMap().get("project"), projectViewModelMock);
-	}
-
-	@Test
-	public void projectCreationReturnsRedirectIfSessionAttributeIsNull() {
-		String returnedForm = projectController.createProject(model, projectViewModelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -178,12 +162,6 @@ public class ProjectControllerTest {
 	}
 
 	@Test
-	public void projectModificationReturnsRedirectIfSessionAttributeIsNull() {
-		String returnedForm = projectController.editProject(SAMPLE_PROJECTNUMBER, model, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
-	}
-
-	@Test
 	public void editProjectCallsTheCorrectServiceMethods() throws Exception {
 		projectController.saveEditedProject(SAMPLE_PROJECTNUMBER, model, projectViewModel, sessionMock);
 		verify(projectServiceMock).updateProject(SAMPLE_PROJECTNUMBER, projectViewModel);
@@ -197,12 +175,6 @@ public class ProjectControllerTest {
 
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
-	}
-
-	@Test
-	public void taskCreationReturnsRedirectIfSessionAttributeIsNull() {
-		String returnedForm = projectController.createTask(SAMPLE_PROJECTNUMBER, model, taskViewModelMock, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test
@@ -227,12 +199,6 @@ public class ProjectControllerTest {
 
 		assertSame(model.asMap().get("task"), taskViewModelMock);
 		assertEquals(model.asMap().get("projectNumber"), SAMPLE_PROJECTNUMBER);
-	}
-
-	@Test
-	public void taskModificationReturnsRedirectIfSessionAttributeIsNull() {
-		String returnedForm = projectController.editTask(SAMPLE_PROJECTNUMBER, SAMPLE_TASKNUMBER, model, sessionMock);
-		assertEquals(REDIRECT_LINK, returnedForm);
 	}
 
 	@Test

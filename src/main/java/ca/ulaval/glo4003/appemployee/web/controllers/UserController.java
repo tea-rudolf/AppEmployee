@@ -19,11 +19,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 public class UserController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
-	static final String EDIT_PROFILE_JSP = "editProfile";
-	static final String REDIRECT = "redirect:/";
-	static final String EDIT_PROFILE_ERROR_REDIRECT = "redirect:/editProfile/userNotFoundError";
-	static final String EMPLOYEE_REDIRECT = "redirect:/employee";
-	static final String USER_NOT_FOUND = "userNotFoundError";
 
 	private UserService userService;
 
@@ -33,21 +28,17 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String displayUserProfile(Model model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return REDIRECT;
-		}
-
+	public String showUserProfileForm(Model model, HttpSession session) {
 		model.addAttribute("user", userService.retrieveViewModelForCurrentUser(session.getAttribute(EMAIL_ATTRIBUTE).toString()));
-		return EDIT_PROFILE_JSP;
+
+		return "editProfile";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String updatePassword(@ModelAttribute("user") UserViewModel viewModel, HttpSession session) throws Exception {
-
 		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE).toString(), viewModel);
-		return EMPLOYEE_REDIRECT;
+
+		return "employee";
 	}
 
 }

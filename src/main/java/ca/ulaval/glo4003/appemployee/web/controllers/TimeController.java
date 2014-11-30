@@ -27,16 +27,6 @@ public class TimeController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
 	static final String TIME_ATTRIBUTE = "timeForm";
-	static final String TIME_SHEET_JSP = "time";
-	static final String CREATE_TIME_JSP = "createTimeEntry";
-	static final String PREVIOUS_TIME_SHEET_JSP = "previousTime";
-	static final String CREATE_PREVIOUS_TIME_JSP = "createPreviousTimeEntry";
-	static final String TIME_SHEET_SUBMIT_JSP = "timeSheetSubmitted";
-	static final String EDIT_TIME_ENTRY_JSP = "editTimeEntry";
-	static final String EDIT_PREVIOUS_TIME_ENTRY_JSP = "editPreviousTimeEntry";
-	static final String LOGIN_REDIRECT = "redirect:/";
-	static final String TIME_REDIRECT = "redirect:/time/";
-	static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime/";
 
 	private TimeService timeService;
 
@@ -47,12 +37,7 @@ public class TimeController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getTime(ModelMap model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return LOGIN_REDIRECT;
-		}
-
+	public String showTimeEntriesForm(ModelMap model, HttpSession session) {
 		TimeViewModel form = timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
@@ -60,38 +45,28 @@ public class TimeController {
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntries", timeEntriesViewModels);
 
-		return TIME_SHEET_JSP;
+		return "time";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String createTimeEntry(Model model, TimeViewModel timeViewModel, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return LOGIN_REDIRECT;
-		}
-
+	public String showCreateTimeEntryForm(Model model, TimeViewModel timeViewModel, HttpSession session) {
 		TimeViewModel form = timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+
 		model.addAttribute(TIME_ATTRIBUTE, form);
 
-		return CREATE_TIME_JSP;
+		return "createTimeEntry";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
-
+	public String createTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		timeService.createTimeEntry(payPeriodForm, timeService.retrieveCurrentPayPeriod());
 
-		return TIME_SHEET_SUBMIT_JSP;
+		return "timeSheetSubmitted";
 	}
 
 	@RequestMapping(value = "/{timeEntryUid}/edit", method = RequestMethod.GET)
-	public String editTimeEntry(@PathVariable String timeEntryUid, Model model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return LOGIN_REDIRECT;
-		}
-
+	public String showEditTimeEntryForm(@PathVariable String timeEntryUid, Model model, HttpSession session) {
 		TimeViewModel form = timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel modelToEdit = timeService.retrieveViewModelForTimeEntry(timeEntryUid);
 
@@ -99,25 +74,19 @@ public class TimeController {
 		modelToEdit.setTimeEntryUid(timeEntryUid);
 		model.addAttribute("timeEntry", modelToEdit);
 
-		return EDIT_TIME_ENTRY_JSP;
+		return "editTimeEntry";
 	}
 
 	@RequestMapping(value = "/{timeEntryUid}/edit", method = RequestMethod.POST)
-	public String saveEditedTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
-
+	public String editTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		timeService.updateTimeEntry(viewModel);
 
-		return TIME_REDIRECT;
+		return "redirect:/time/";
 	}
 
 	@RequestMapping(value = "/previousTime", method = RequestMethod.GET)
-	public String getPreviousTime(ModelMap model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return LOGIN_REDIRECT;
-		}
-
+	public String showPreviousTimeForm(ModelMap model, HttpSession session) {
 		TimeViewModel form = timeService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
@@ -125,52 +94,41 @@ public class TimeController {
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntries", timeEntriesViewModels);
 
-		return PREVIOUS_TIME_SHEET_JSP;
+		return "previousTime";
 	}
 
 	@RequestMapping(value = "/previousTime/add", method = RequestMethod.GET)
-	public String createPreviousTimeEntry(Model model, TimeViewModel timeViewModel, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return LOGIN_REDIRECT;
-		}
-
+	public String showCreatePreviousTimeEntryForm(Model model, TimeViewModel timeViewModel, HttpSession session) {
 		TimeViewModel form = timeService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+
 		model.addAttribute(TIME_ATTRIBUTE, form);
 
-		return CREATE_PREVIOUS_TIME_JSP;
+		return "createPreviousTimeEntry";
 	}
 
 	@RequestMapping(value = "/previousTime/add", method = RequestMethod.POST)
-	public String savePreviousTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
-
+	public String createPreviousTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 		timeService.createTimeEntry(payPeriodForm, timeService.retrievePreviousPayPeriod());
 
-		return TIME_SHEET_SUBMIT_JSP;
+		return "timeSheetSubmitted";
 	}
 
 	@RequestMapping(value = "/previousTime/{timeEntryUid}/edit", method = RequestMethod.GET)
-	public String editPreviousTimeEntry(@PathVariable String timeEntryUid, Model model, HttpSession session) {
-
-		if (session.getAttribute(EMAIL_ATTRIBUTE) == null) {
-			return LOGIN_REDIRECT;
-		}
-
+	public String showEditPreviousTimeEntryForm(@PathVariable String timeEntryUid, Model model, HttpSession session) {
 		TimeViewModel form = timeService.retrieveViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		TimeViewModel modelToEdit = timeService.retrieveViewModelForTimeEntry(timeEntryUid);
 
 		model.addAttribute(TIME_ATTRIBUTE, form);
 		model.addAttribute("timeEntry", modelToEdit);
 
-		return EDIT_PREVIOUS_TIME_ENTRY_JSP;
+		return "editPreviousTimeEntry";
 	}
 
 	@RequestMapping(value = "/previousTime/{timeEntryUid}/edit", method = RequestMethod.POST)
-	public String savePreviousEditedTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
-
+	public String editPreviousTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
 		timeService.updateTimeEntry(viewModel);
 
-		return PREVIOUS_TIME_REDIRECT;
+		return "redirect:/time/previousTime/";
 	}
 
 }
