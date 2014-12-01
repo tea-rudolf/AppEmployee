@@ -18,7 +18,16 @@ public class TimeEntry {
 	}
 
 	public TimeEntry(String uid, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) {
-		this.setUid(uid);
+		this.uid = uid;
+		this.billableHours = billableHours;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.taskUid = taskUid;
+		this.comment = comment;
+	}
+	
+	public TimeEntry(double billableHours, LocalDate date, String userEmail, String taskUid, String comment) {
+		this();
 		this.billableHours = billableHours;
 		this.date = date;
 		this.userEmail = userEmail;

@@ -50,10 +50,6 @@ public class TimeViewModel {
 		this.payPeriodEndDate = endDate;
 	}
 
-	public List<Task> getAvailableTasks() {
-		return availableTasks;
-	}
-
 	public void setAvailableTasks(List<Task> tasks) {
 		this.availableTasks = tasks;
 	}

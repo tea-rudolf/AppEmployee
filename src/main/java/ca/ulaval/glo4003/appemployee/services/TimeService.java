@@ -50,7 +50,8 @@ public class TimeService {
 	}
 
 	public void createTimeEntry(TimeViewModel timeEntryViewModel, PayPeriod payPeriod) throws Exception {
-		TimeEntry newTimeEntry = timeConverter.convert(timeEntryViewModel);
+		TimeEntry newTimeEntry = new TimeEntry(timeEntryViewModel.getHoursTimeEntry(), new LocalDate(timeEntryViewModel.getDateTimeEntry()), 
+				timeEntryViewModel.getUserEmail(), timeEntryViewModel.getTaskIdTimeEntry(), timeEntryViewModel.getCommentTimeEntry());
 		payPeriod.addTimeEntry(newTimeEntry.getUid());
 		updatePayPeriod(payPeriod);
 		timeEntryRepository.store(newTimeEntry);

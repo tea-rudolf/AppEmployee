@@ -34,16 +34,6 @@ public class TimeConverter {
 		return viewModels;
 	}
 
-	public TimeEntry convert(TimeViewModel timeViewModel) {
-		TimeEntry timeEntry = new TimeEntry();
-		timeEntry.setBillableHours(timeViewModel.getHoursTimeEntry());
-		timeEntry.setDate(new LocalDate(timeViewModel.getDateTimeEntry()));
-		timeEntry.setTaskUid(timeViewModel.getTaskIdTimeEntry());
-		timeEntry.setUserEmail(timeViewModel.getUserEmail());
-		timeEntry.setComment(timeViewModel.getCommentTimeEntry());
-		return timeEntry;
-	}
-
 	public TimeViewModel convert(TimeEntry timeEntry) {
 		TimeViewModel model = new TimeViewModel();
 		model.setTimeEntryUid(timeEntry.getUid());
