@@ -69,7 +69,8 @@ public class ProjectController {
 	public String saveProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
 
 		try {
-			Project newProject = projectConverter.convert(projectViewModel);
+			Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(), 
+					projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
 			projectService.addProject(newProject);
 			return String.format("redirect:/projects/%s/edit", newProject.getUid());
 		} catch (ProjectExistsException e) {

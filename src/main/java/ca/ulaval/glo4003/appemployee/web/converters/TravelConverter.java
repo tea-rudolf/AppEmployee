@@ -25,21 +25,6 @@ public class TravelConverter {
 		return travelViewModels;
 	}
 
-	public Travel convert(TravelViewModel travelViewModel) {
-		Travel travel = new Travel();
-		travel.setDistanceTravelled(travelViewModel.getDistanceTravelled());
-		travel.setDate(new LocalDate(travelViewModel.getDate()));
-		travel.setUserEmail(travelViewModel.getUserEmail());
-		travel.setComment(travelViewModel.getComment());
-
-		if (travelViewModel.getVehicle().equals("PERSONAL")) {
-			travel.setVehicle(Vehicle.PERSONAL);
-		} else {
-			travel.setVehicle(Vehicle.ENTERPRISE);
-		}
-		return travel;
-	}
-
 	public TravelViewModel convert(Travel travel) {
 		TravelViewModel travelViewModel = new TravelViewModel();
 		travelViewModel.setuId(travel.getUid());

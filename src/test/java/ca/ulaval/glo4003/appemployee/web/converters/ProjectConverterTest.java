@@ -61,21 +61,6 @@ public class ProjectConverterTest {
 	}
 
 	@Test
-	public void convertProjectViewModelToProject() {
-		when(projectViewModelMock.getName()).thenReturn(FIRST_NAME);
-		when(projectViewModelMock.getTaskIds()).thenReturn(TASK_IDS);
-		when(projectViewModelMock.getUserIds()).thenReturn(USER_IDS);
-		when(projectViewModelMock.getExpenseIds()).thenReturn(EXPENSES_IDS);
-
-		projectMock = projectConverter.convert(projectViewModelMock);
-
-		assertEquals(projectViewModelMock.getName(), projectMock.getName());
-		assertEquals(projectViewModelMock.getTaskIds(), projectMock.getTaskUids());
-		assertEquals(projectViewModelMock.getUserIds(), projectMock.getEmployeeUids());
-		assertEquals(projectViewModelMock.getExpenseIds(), projectMock.getExpenseUids());
-	}
-
-	@Test
 	public void convertProjectlToProjectViewMode() {
 		when(projectMock.getUid()).thenReturn(FIRST_ID);
 		when(projectMock.getName()).thenReturn(FIRST_NAME);

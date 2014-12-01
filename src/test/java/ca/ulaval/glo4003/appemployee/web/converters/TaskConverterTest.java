@@ -62,18 +62,6 @@ public class TaskConverterTest {
 	}
 
 	@Test
-	public void convertTaskViewModelToTask() {
-		when(taskViewModelMock.getName()).thenReturn(FIRST_NAME);
-		when(taskViewModelMock.getAuthorizedUsers()).thenReturn(authorizedUsers);
-
-		taskMock = taskConverter.convert(taskViewModelMock);
-
-		assertNotNull(taskMock.getUid());
-		assertEquals(taskViewModelMock.getName(), taskMock.getName());
-		assertEquals(taskViewModelMock.getAuthorizedUsers(), taskMock.getAuthorizedUsers());
-	}
-
-	@Test
 	public void convertTaskToTaskViewModel() {
 		when(taskMock.getUid()).thenReturn(FIRST_ID);
 		when(taskMock.getName()).thenReturn(FIRST_NAME);

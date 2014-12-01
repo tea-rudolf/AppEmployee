@@ -12,6 +12,8 @@ public class Project {
 	private String uid;
 	private String name = "";
 	private List<String> taskUids = new ArrayList<String>();
+	private List<String> employeeUids = new ArrayList<String>();
+	private List<String> expenseUids = new ArrayList<String>();
 
 	public List<String> getTaskUids() {
 		return taskUids;
@@ -21,15 +23,16 @@ public class Project {
 		this.taskUids = taskUids;
 	}
 
-	private List<String> employeeUids = new ArrayList<String>();
-	private List<String> expenseUids = new ArrayList<String>();
-
 	public Project() {
 		this.uid = UUID.randomUUID().toString();
 	}
-
-	public Project(String uid) {
-		this.uid = uid;
+	
+	public Project(String name, List<String> taskIds, List<String> userIds, List<String> expenseIds) {
+		this();
+		this.name = name;
+		this.taskUids = taskIds;
+		this.expenseUids = expenseIds;
+		this.employeeUids = userIds;
 	}
 
 	public Project(String uid, String name) {

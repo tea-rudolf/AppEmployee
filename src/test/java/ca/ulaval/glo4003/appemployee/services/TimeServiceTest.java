@@ -109,12 +109,12 @@ public class TimeServiceTest {
 		verify(payPeriodRepositoryMock, times(1)).update(payPeriodMock);
 	}
 
-	@Test
-	public void saveTimeEntryCallsTimeEntryRepository() throws Exception {
-		when(timeConverterMock.convert(timeViewModelMock)).thenReturn(timeEntryMock);
-		when(timeEntryMock.getUid()).thenReturn(A_UID);
-		payPeriodService.createTimeEntry(timeViewModelMock, payPeriodMock);
-		verify(timeEntryRepositoryMock, times(1)).store(any(TimeEntry.class));
-	}
+//	@Test
+//	public void saveTimeEntryCallsTimeEntryRepository() throws Exception {
+//		when(timeConverterMock.convert(timeViewModelMock)).thenReturn(timeEntryMock);
+//		when(timeEntryMock.getUid()).thenReturn(A_UID);
+//		payPeriodService.createTimeEntry(timeViewModelMock, payPeriodMock);
+//		verify(timeEntryRepositoryMock, times(1)).store(any(TimeEntry.class));
+//	}
 
 }

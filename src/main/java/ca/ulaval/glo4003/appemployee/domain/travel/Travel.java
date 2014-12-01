@@ -11,10 +11,28 @@ public class Travel {
 	private LocalDate date;
 	private String userEmail;
 	private String comment;
-	private Vehicle vehicule;
-
+	private Vehicle vehicle;
+	
 	public Travel() {
 		this.uid = UUID.randomUUID().toString();
+	}
+
+	public Travel(String travelUid, double distance, String vehicle, LocalDate localDate, String user, String comment) {
+		this.uid = travelUid;
+		this.distanceTravelled = distance;
+		this.vehicle = convertToVehicle(vehicle);
+		this.date = localDate;
+		this.userEmail = user;
+		this.comment = comment;
+	}
+	
+	public Travel(double distance, String vehicle, LocalDate localDate, String user, String comment) {
+		this();
+		this.distanceTravelled = distance;
+		this.vehicle = convertToVehicle(vehicle);
+		this.date = localDate;
+		this.userEmail = user;
+		this.comment = comment;
 	}
 
 	public void setDistanceTravelled(double distanceTravelled) {
@@ -46,7 +64,7 @@ public class Travel {
 	}
 
 	public String getUserEmail() {
-		return userEmail;
+		return this.userEmail;
 	}
 
 	public void setComment(String comment) {
@@ -58,11 +76,20 @@ public class Travel {
 	}
 
 	public Vehicle getVehicle() {
-		return vehicule;
+		return vehicle;
 	}
 
 	public void setVehicle(Vehicle vehicule) {
-		this.vehicule = vehicule;
+		this.vehicle = vehicule;
 	}
 
+	private Vehicle convertToVehicle(String vehicle) {
+		Vehicle convertedVehicle;
+		if (vehicle.equals("PERSONAL")) {
+			convertedVehicle = Vehicle.PERSONAL;
+		} else {
+			convertedVehicle = Vehicle.ENTERPRISE;
+		}
+		return convertedVehicle;
+	}
 }

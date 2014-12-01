@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,14 +41,16 @@ public class TravelService {
 		}
 	}
 
-	public void updateTravel(String travelUid, TravelViewModel viewModel) {
-		Travel newTravel = travelConverter.convert(viewModel);
+	public void updateTravel(String travelUid, TravelViewModel travelViewModel) {
+		Travel newTravel = new Travel(travelUid, travelViewModel.getDistanceTravelled(), travelViewModel.getVehicle(), new LocalDate(travelViewModel.getDate()), 
+				travelViewModel.getUserEmail(), travelViewModel.getComment());
 		newTravel.setUid(travelUid);
 		store(newTravel);
 	}
 
-	public void createTravel(TravelViewModel travelForm) {
-		Travel newTravelEntry = travelConverter.convert(travelForm);
+	public void createTravel(TravelViewModel travelViewModel) {
+		Travel newTravelEntry = new Travel(travelViewModel.getDistanceTravelled(), travelViewModel.getVehicle(), new LocalDate(travelViewModel.getDate()), 
+				travelViewModel.getUserEmail(), travelViewModel.getComment());
 		store(newTravelEntry);
 	}
 

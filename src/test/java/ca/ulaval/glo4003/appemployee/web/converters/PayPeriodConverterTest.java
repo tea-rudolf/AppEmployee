@@ -49,23 +49,6 @@ public class PayPeriodConverterTest {
 	}
 
 	@Test
-	public void convertViewModelConvertsIntoPayPeriod() {
-		when(timeViewModelMock.getHoursTimeEntry()).thenReturn(HOURS);
-		when(timeViewModelMock.getDateTimeEntry()).thenReturn(START_DATE.toString());
-		when(timeViewModelMock.getTaskIdTimeEntry()).thenReturn(TASK_ID);
-		when(timeViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
-		when(timeViewModelMock.getCommentTimeEntry()).thenReturn(COMMENT);
-
-		timeEntryMock = payPeriodConverterMock.convert(timeViewModelMock);
-
-		assertEquals(timeViewModelMock.getHoursTimeEntry(), timeEntryMock.getBillableHours(), EPSILON);
-		assertEquals(timeViewModelMock.getDateTimeEntry(), timeEntryMock.getDate().toString());
-		assertEquals(timeViewModelMock.getTaskIdTimeEntry(), timeEntryMock.getTaskUid());
-		assertEquals(timeViewModelMock.getUserEmail(), timeEntryMock.getUserEmail());
-		assertEquals(timeViewModelMock.getCommentTimeEntry(), timeEntryMock.getComment());
-	}
-
-	@Test
 	public void convertPayPeriodConvertsIntoViewModel() {
 		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_ID);
 		when(timeEntryMock.getDate()).thenReturn(START_DATE);

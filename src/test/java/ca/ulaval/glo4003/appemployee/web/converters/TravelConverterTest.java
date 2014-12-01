@@ -65,24 +65,7 @@ public class TravelConverterTest {
 		assertEquals(SECOND_ID, viewModels[1].getuId());
 		assertEquals(SECOND_DATE.toString(), viewModels[1].getDate());
 	}
-
-	@Test
-	public void convertToTravelConvertsViewModelToTravel() {
-		when(travelViewModelMock.getDistanceTravelled()).thenReturn(FIRST_DISTANCE);
-		when(travelViewModelMock.getDate()).thenReturn(FIRST_DATE.toString());
-		when(travelViewModelMock.getUserEmail()).thenReturn(USER_EMAIL);
-		when(travelViewModelMock.getComment()).thenReturn(COMMENT);
-		when(travelViewModelMock.getVehicle()).thenReturn(Vehicle.ENTERPRISE.toString());
-
-		travelMock = travelConverter.convert(travelViewModelMock);
-
-		assertEquals(travelViewModelMock.getDistanceTravelled(), travelMock.getDistanceTravelled(), EPSILON);
-		assertEquals(travelViewModelMock.getDate(), travelMock.getDate().toString());
-		assertEquals(travelViewModelMock.getUserEmail(), travelMock.getUserEmail());
-		assertEquals(travelViewModelMock.getComment(), travelMock.getComment());
-		assertEquals(travelViewModelMock.getVehicle(), travelMock.getVehicle().toString());
-	}
-
+	
 	@Test
 	public void convertToViewModelConvertsTravelToViewModel() {
 		when(travelMock.getUid()).thenReturn(FIRST_ID);

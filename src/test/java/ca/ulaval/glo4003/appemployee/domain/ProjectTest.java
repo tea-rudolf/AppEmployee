@@ -32,12 +32,6 @@ public class ProjectTest {
 	}
 
 	@Test
-	public void canInstantiateProjectWithUid() {
-		Project dummyProject = new Project(PROJECT_UID);
-		assertNotNull(dummyProject);
-	}
-
-	@Test
 	public void addTaskIdAddsTaskCorrectlyToTheList() {
 		project.addTaskUid(TASK_ID);
 

@@ -120,14 +120,14 @@ public class TravelControllerTest {
 		assertEquals(TRAVEL_ENTRY_SUBMIT_JSP, returnedForm);
 	}
 
-	@Test
-	public void saveTravelEntryCallsStoreMethod() throws Exception {
-		when(travelViewModelMock.getVehicle()).thenReturn(VEHICLE);
-		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
-		travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
-		verify(travelServiceMock, times(1)).createTravel(travelViewModelMock);
-	}
+//	@Test
+//	public void saveTravelEntryCallsStoreMethod() throws Exception {
+//		when(travelViewModelMock.getVehicle()).thenReturn(VEHICLE);
+//		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+//		when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
+//		travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
+//		verify(travelServiceMock, times(1)).createTravel(travelViewModelMock);
+//	}
 
 	// @Test
 	// public void saveTravelEntryReturnsCreateEntryFormIfMissingVehicle()
