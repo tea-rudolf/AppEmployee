@@ -9,7 +9,7 @@ public class DepartmentViewModel {
 	private List<String> supervisorIds;
 	private List<String> employeeIds;
 	private List<String> availableUsers = new ArrayList<String>();
-	private String userEmailsSelected = new String();
+	private String selectedUserEmails = new String();
 	public String getName() {
 		return name;
 	}
@@ -43,11 +43,11 @@ public class DepartmentViewModel {
 	}
 
 	public String getUserEmailsSelected() {
-		return userEmailsSelected;
+		return selectedUserEmails;
 	}
 
 	public void setUserEmailsSelected(String userEmailsSelected) {
-		this.userEmailsSelected = userEmailsSelected;
+		this.selectedUserEmails = userEmailsSelected;
 	}
 
 }
