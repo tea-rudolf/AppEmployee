@@ -33,10 +33,10 @@
 									<th>Department</th>
 								</tr>
 								<tr>
-									<td><form:select class="form-control" path="userSelected">
+									<td><form:select class="form-control" path="selectedEmployee">
 											<form:options items="${assignationModel.usersWithNoDepartment}"></form:options>
 										</form:select></td>
-									<td><form:select class="form-control" path="departmentSelected">
+									<td><form:select class="form-control" path="selectedDepartment">
 											<form:options items="${assignationModel.departmentsList}"></form:options>
 										</form:select></td>
 								</tr>

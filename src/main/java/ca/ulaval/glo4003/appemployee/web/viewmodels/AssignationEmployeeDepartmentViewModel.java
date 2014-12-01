@@ -3,12 +3,12 @@ package ca.ulaval.glo4003.appemployee.web.viewmodels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignationEmployeDepartmentViewModel {
+public class AssignationEmployeeDepartmentViewModel {
 
 	private List<String> usersWithNoDepartment = new ArrayList<String>();
 	private List<String> departmentsList = new ArrayList<String>();
-	private String userSelected;
-	private String departmentSelected;
+	private String selectedEmployee;
+	private String selectedDepartment;
 
 	public List<String> getDepartmentsList() {
 		return departmentsList;
@@ -18,20 +18,20 @@ public class AssignationEmployeDepartmentViewModel {
 		this.departmentsList = departmentsList;
 	}
 
-	public String getDepartmentSelected() {
-		return departmentSelected;
+	public String getSelectedDepartment() {
+		return selectedDepartment;
 	}
 
-	public void setDepartmentSelected(String departmentSelected) {
-		this.departmentSelected = departmentSelected;
+	public void setDepartmentSelected(String selectedDepartment) {
+		this.selectedDepartment = selectedDepartment;
 	}
 
-	public String getUserSelected() {
-		return userSelected;
+	public String getSelectedEmployee() {
+		return selectedEmployee;
 	}
 
-	public void setUserSelected(String userSelected) {
-		this.userSelected = userSelected;
+	public void setSelectedEmployee(String selectedEmployee) {
+		this.selectedEmployee = selectedEmployee;
 	}
 
 	public List<String> getUsersWithNoDepartment() {

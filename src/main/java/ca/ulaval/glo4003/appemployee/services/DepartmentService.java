@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.department.Department;
+import ca.ulaval.glo4003.appemployee.domain.department.DepartmentProcessor;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.SupervisorAccessException;
@@ -18,7 +19,7 @@ import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.AssignationEmployeDepartmentViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.AssignationEmployeeDepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -27,23 +28,25 @@ public class DepartmentService {
 
 	private DepartmentRepository departmentRepository;
 	private UserRepository userRepository;
+	private DepartmentProcessor departmentProcessor;
 	private DepartmentConverter departmentConverter;
 	private UserConverter userConverter;
 
 	@Autowired
-	public DepartmentService(DepartmentRepository departmentRepository, UserRepository userRepository, DepartmentConverter departmentConverter,
-			UserConverter userConverter) {
+	public DepartmentService(DepartmentRepository departmentRepository, UserRepository userRepository, DepartmentProcessor departmentProcessor,
+			DepartmentConverter departmentConverter, UserConverter userConverter) {
 		this.departmentRepository = departmentRepository;
 		this.userRepository = userRepository;
+		this.departmentProcessor = departmentProcessor;
 		this.departmentConverter = departmentConverter;
 		this.userConverter = userConverter;
 	}
 
-	public void createUser(String supervisorID, String departmentName, UserViewModel userViewModel) throws Exception {
+	public void createEmployee(String supervisorID, String departmentName, UserViewModel userViewModel) throws Exception {
 		if (userRepository.findByEmail(userViewModel.getEmail()) != null) {
 			throw new EmployeeAlreadyExistsException("Employee you are trying to create already exists.");
 		}
-		if (!isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
+		if (!departmentProcessor.isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
 			throw new SupervisorAccessException("You do not have supervisor rights in this department.");
 		}
 
@@ -52,14 +55,13 @@ public class DepartmentService {
 	}
 
 	public void assignUserToDepartment(UserViewModel userViewModel, String supervisorID, String departmentName) throws Exception {
-
 		Department department = departmentRepository.findByName(departmentName);
-		
+
 		if (department == null) {
 			throw new DepartmentNotFoundException("Department does not exist");
 		}
 
-		if (!isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
+		if (!departmentProcessor.isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
 			throw new SupervisorAccessException("You do not have supervisor rights in this department.");
 		}
 
@@ -71,88 +73,33 @@ public class DepartmentService {
 		return departmentRepository.findAll();
 	}
 
-	public Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
-		Department department = departmentRepository.findByName(departmentName);
-
-		if (department == null) {
-			throw new DepartmentNotFoundException("Department not found with following name : " + departmentName);
-		}
-		return department;
-	}
-
-	public List<User> retrieveEmployeesList(String departmentName) throws DepartmentNotFoundException {
-		Department department = retrieveDepartmentByName(departmentName);
-		List<String> employeeIds = department.getEmployeeIds();
-		List<User> employees = userRepository.findByEmails(employeeIds);
-		return employees;
-	}
-
-	private boolean isSupervisorAssignedToDepartment(String supervisorID, String departmentName) {
-		boolean isAssigned = false;
-		Department department = departmentRepository.findByName(departmentName);
-
-		if (department != null && department.containsSupervisor(supervisorID)) {
-			isAssigned = true;
-		}
-		return isAssigned;
-	}
-
 	public void createDepartement(DepartmentViewModel departmentViewModel) throws Exception {
-		
-		Department department = new Department();
-		department.setName(departmentViewModel.getName());
-
-		if (departmentViewModel.getUserEmailsSelected() != null && (!departmentViewModel.getUserEmailsSelected().isEmpty())) {
-			List<String> userEmail = Arrays.asList(departmentViewModel.getUserEmailsSelected().split(","));
-			for (String email : userEmail) {
-				department.addEmployee(email);
-			}
+		if (departmentViewModel.getSelectedUserEmails() != null && (!departmentViewModel.getSelectedUserEmails().isEmpty())) {
+			List<String> userEmails = Arrays.asList(departmentViewModel.getSelectedUserEmails().split(","));
+			departmentProcessor.createDepartment(departmentViewModel.getName(), userEmails);
 		}
-
-		departmentRepository.store(department);
 	}
 
+	// a changer
 	public DepartmentViewModel getViewModelForCreation() {
 		DepartmentViewModel model = new DepartmentViewModel();
-		model.setAvailableUsers(getUserEmailsNotAssignedToAnyDepartment());
+		model.setAvailableUsers(retrieveUserEmailsNotAssignedToDepartment());
 		return model;
 	}
 
-	public List<String> getUserEmailsNotAssignedToAnyDepartment() {
-
-		// TO FIX : A REFACTOR
-		List<String> emails = new ArrayList<String>();
-
-		for (User user : userRepository.findAll()) {
-			if (user.getRole().equals(Role.EMPLOYEE)) {
-				emails.add(user.getEmail());
-			}
-
-		}
-
-		for (Department dep : departmentRepository.findAll()) {
-			for (String email : dep.getEmployeeIds()) {
-				emails.remove(email);
-			}
-		}
-
-		return emails;
+	public DepartmentViewModel retrieveDepartmentViewModel(String departmentName) {
+		Department department = departmentRepository.findByName(departmentName);
+		return departmentConverter.convert(department);
 	}
 
-	public DepartmentViewModel getViewModelForEdition(String departmentName) {
-		Department d = departmentRepository.findByName(departmentName);
-		DepartmentViewModel departmentViewModel = departmentConverter.convert(d);
-		return departmentViewModel;
+	public Collection<UserViewModel> retrieveEmployeesListViewModel(String departmentName) throws DepartmentNotFoundException {
+		List<User> employees = departmentProcessor.retrieveEmployeesList(departmentName);
+		return userConverter.convert(employees);
 	}
 
-	public Collection<UserViewModel> getEmployesViewModelsForEdition(String departmentName) throws DepartmentNotFoundException {
-		List<User> employees = retrieveEmployeesList(departmentName);
-		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
-		return employeesViewModel;
-	}
-
-	public AssignationEmployeDepartmentViewModel getViewModelToAssignEmployeToDepartment() {
-		AssignationEmployeDepartmentViewModel model = new AssignationEmployeDepartmentViewModel();
+	// a changer
+	public AssignationEmployeeDepartmentViewModel getViewModelToAssignEmployeToDepartment() {
+		AssignationEmployeeDepartmentViewModel model = new AssignationEmployeeDepartmentViewModel();
 
 		ArrayList<String> usersWithNoDepartment = new ArrayList<String>();
 
@@ -161,17 +108,19 @@ public class DepartmentService {
 		}
 
 		model.setDepartmentsList(usersWithNoDepartment);
-		model.setUsersWithNoDepartment(getUserEmailsNotAssignedToAnyDepartment());
+		model.setUsersWithNoDepartment(retrieveUserEmailsNotAssignedToDepartment());
 
 		return model;
 	}
 
-	public void assignUserToDepartment(AssignationEmployeDepartmentViewModel model) throws Exception {
-
-		Department department = departmentRepository.findByName(model.getDepartmentSelected());
-		department.addEmployee(model.getUserSelected());
+	public void assignUserToDepartment(AssignationEmployeeDepartmentViewModel model) throws Exception {
+		Department department = departmentRepository.findByName(model.getSelectedDepartment());
+		department.addEmployee(model.getSelectedEmployee());
 		departmentRepository.store(department);
+	}
 
+	private List<String> retrieveUserEmailsNotAssignedToDepartment() {
+		return departmentProcessor.retrieveEmployeesNotAssignedToDepartment();
 	}
 
 }

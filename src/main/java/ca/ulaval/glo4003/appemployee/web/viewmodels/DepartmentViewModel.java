@@ -10,6 +10,19 @@ public class DepartmentViewModel {
 	private List<String> employeeIds;
 	private List<String> availableUsers = new ArrayList<String>();
 	private String selectedUserEmails = new String();
+
+	public DepartmentViewModel() {
+
+	}
+
+	public DepartmentViewModel(String name, List<String> supervisorIds, List<String> employeeIds, List<String> availableUsers, String selectedUserEmails) {
+		this.name = name;
+		this.supervisorIds = supervisorIds;
+		this.employeeIds = employeeIds;
+		this.availableUsers = availableUsers;
+		this.selectedUserEmails = selectedUserEmails;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -42,11 +55,11 @@ public class DepartmentViewModel {
 		this.availableUsers = availableUsers;
 	}
 
-	public String getUserEmailsSelected() {
+	public String getSelectedUserEmails() {
 		return selectedUserEmails;
 	}
 
-	public void setUserEmailsSelected(String userEmailsSelected) {
+	public void setSelectedUserEmails(String userEmailsSelected) {
 		this.selectedUserEmails = userEmailsSelected;
 	}
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.AssignationEmployeDepartmentViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.AssignationEmployeeDepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
@@ -60,8 +60,8 @@ public class DepartmentController {
 
 	@RequestMapping(value = "/{departmentName}/edit", method = RequestMethod.GET)
 	public String showEmployeesList(@PathVariable String departmentName, Model model, HttpSession session) throws DepartmentNotFoundException {
-		model.addAttribute("department", departmentService.getViewModelForEdition(departmentName));
-		model.addAttribute("employees", departmentService.getEmployesViewModelsForEdition(departmentName));
+		model.addAttribute("department", departmentService.retrieveDepartmentViewModel(departmentName));
+		model.addAttribute("employees", departmentService.retrieveEmployeesListViewModel(departmentName));
 
 		return "editDepartment";
 	}
@@ -80,7 +80,7 @@ public class DepartmentController {
 
 		try {
 
-			departmentService.createUser(supervisorId, departmentName, userViewModel);
+			departmentService.createEmployee(supervisorId, departmentName, userViewModel);
 			departmentService.assignUserToDepartment(userViewModel, supervisorId, departmentName);
 
 			return "redirect:/departments/{departmentName}/edit";
@@ -121,7 +121,7 @@ public class DepartmentController {
 	}
 
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.POST)
-	public String saveEditedDepartment(AssignationEmployeDepartmentViewModel model, HttpSession session) throws Exception {
+	public String editDepartment(AssignationEmployeeDepartmentViewModel model, HttpSession session) throws Exception {
 		departmentService.assignUserToDepartment(model);
 
 		return "departmentsList";
