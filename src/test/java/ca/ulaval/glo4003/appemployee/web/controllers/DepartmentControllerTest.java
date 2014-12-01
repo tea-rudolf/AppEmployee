@@ -22,7 +22,7 @@ import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.AssignationEmployeeDepartmentViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.EmployeeAssignationViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
@@ -73,7 +73,7 @@ public class DepartmentControllerTest {
 	private DepartmentViewModel departmentViewModelMock;
 
 	@Mock
-	private AssignationEmployeeDepartmentViewModel assignationEmployeDepViewModelMock;
+	private EmployeeAssignationViewModel assignationEmployeDepViewModelMock;
 
 	@InjectMocks
 	private DepartmentController departmentController;
@@ -155,7 +155,7 @@ public class DepartmentControllerTest {
 	@Test
 	public void createDepartmentReturnsCreateDepartmentForm() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		when(departmentServiceMock.getViewModelForCreation()).thenReturn(departmentViewModelMock);
+		when(departmentServiceMock.retrieveAvailableEmployeesViewModel()).thenReturn(departmentViewModelMock);
 
 		String returnedForm = departmentController.showCreateDepartmentForm(modelMock, sessionMock);
 
@@ -172,7 +172,7 @@ public class DepartmentControllerTest {
 	@Test
 	public void selectEmployeToAssignToDepartmentReturnsAssignEmployeeFormIfSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		when(departmentServiceMock.getViewModelToAssignEmployeToDepartment()).thenReturn(assignationEmployeDepViewModelMock);
+		when(departmentServiceMock.retrieveEmployeeAssignationViewModel()).thenReturn(assignationEmployeDepViewModelMock);
 
 		String returnedForm = departmentController.showAssignEmployeeToDepartmentForm(modelMock, sessionMock);
 
@@ -182,7 +182,7 @@ public class DepartmentControllerTest {
 	@Test
 	public void saveEditedDepartmentReturnsDepartmentsListFormIfSaveIsSuccessful() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		String returnedForm = departmentController.editDepartment(assignationEmployeDepViewModelMock, sessionMock);
+		String returnedForm = departmentController.assignEmployeeToDepartment(assignationEmployeDepViewModelMock, sessionMock);
 		assertEquals(DEPARTMENT_LIST_FORM, returnedForm);
 	}
 

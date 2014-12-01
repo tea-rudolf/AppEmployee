@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.AssignationEmployeeDepartmentViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.EmployeeAssignationViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
@@ -43,7 +43,7 @@ public class DepartmentController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateDepartmentForm(Model model, HttpSession session) {
-		DepartmentViewModel departmentViewModel = departmentService.getViewModelForCreation();
+		DepartmentViewModel departmentViewModel = departmentService.retrieveAvailableEmployeesViewModel();
 
 		model.addAttribute("department", departmentViewModel);
 
@@ -115,13 +115,13 @@ public class DepartmentController {
 
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.GET)
 	public String showAssignEmployeeToDepartmentForm(Model model, HttpSession session) {
-		model.addAttribute("assignationModel", departmentService.getViewModelToAssignEmployeToDepartment());
+		model.addAttribute("assignationModel", departmentService.retrieveEmployeeAssignationViewModel());
 
 		return "assignEmployeToDepartment";
 	}
 
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.POST)
-	public String editDepartment(AssignationEmployeeDepartmentViewModel model, HttpSession session) throws Exception {
+	public String assignEmployeeToDepartment(EmployeeAssignationViewModel model, HttpSession session) throws Exception {
 		departmentService.assignUserToDepartment(model);
 
 		return "departmentsList";

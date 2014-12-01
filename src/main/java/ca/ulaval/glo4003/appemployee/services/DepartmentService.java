@@ -19,8 +19,8 @@ import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.AssignationEmployeeDepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.EmployeeAssignationViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Service
@@ -80,10 +80,10 @@ public class DepartmentService {
 		}
 	}
 
-	// a changer
-	public DepartmentViewModel getViewModelForCreation() {
-		DepartmentViewModel model = new DepartmentViewModel();
-		model.setAvailableUsers(retrieveUserEmailsNotAssignedToDepartment());
+	public DepartmentViewModel retrieveAvailableEmployeesViewModel() {
+		List<String> availableEmployees = retrieveUserEmailsNotAssignedToDepartment();
+		DepartmentViewModel model = new DepartmentViewModel(availableEmployees);
+
 		return model;
 	}
 
@@ -97,23 +97,16 @@ public class DepartmentService {
 		return userConverter.convert(employees);
 	}
 
-	// a changer
-	public AssignationEmployeeDepartmentViewModel getViewModelToAssignEmployeToDepartment() {
-		AssignationEmployeeDepartmentViewModel model = new AssignationEmployeeDepartmentViewModel();
-
-		ArrayList<String> usersWithNoDepartment = new ArrayList<String>();
-
-		for (Department dep : retrieveDepartmentsList()) {
-			usersWithNoDepartment.add(dep.getName());
-		}
-
-		model.setDepartmentsList(usersWithNoDepartment);
-		model.setUsersWithNoDepartment(retrieveUserEmailsNotAssignedToDepartment());
+	public EmployeeAssignationViewModel retrieveEmployeeAssignationViewModel() {
+		ArrayList<String> departmentNames = retrieveDepartmentNamesList();
+		List<String> unassignedEmployees = retrieveUserEmailsNotAssignedToDepartment();
+		EmployeeAssignationViewModel model = new EmployeeAssignationViewModel(departmentNames, unassignedEmployees);
 
 		return model;
 	}
 
-	public void assignUserToDepartment(AssignationEmployeeDepartmentViewModel model) throws Exception {
+	// duplication, enlever
+	public void assignUserToDepartment(EmployeeAssignationViewModel model) throws Exception {
 		Department department = departmentRepository.findByName(model.getSelectedDepartment());
 		department.addEmployee(model.getSelectedEmployee());
 		departmentRepository.store(department);
@@ -121,6 +114,15 @@ public class DepartmentService {
 
 	private List<String> retrieveUserEmailsNotAssignedToDepartment() {
 		return departmentProcessor.retrieveEmployeesNotAssignedToDepartment();
+	}
+
+	private ArrayList<String> retrieveDepartmentNamesList() {
+		ArrayList<String> departmentNames = new ArrayList<String>();
+
+		for (Department department : retrieveDepartmentsList()) {
+			departmentNames.add(department.getName());
+		}
+		return departmentNames;
 	}
 
 }

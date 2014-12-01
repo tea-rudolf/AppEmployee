@@ -15,12 +15,8 @@ public class DepartmentViewModel {
 
 	}
 
-	public DepartmentViewModel(String name, List<String> supervisorIds, List<String> employeeIds, List<String> availableUsers, String selectedUserEmails) {
-		this.name = name;
-		this.supervisorIds = supervisorIds;
-		this.employeeIds = employeeIds;
+	public DepartmentViewModel(List<String> availableUsers) {
 		this.availableUsers = availableUsers;
-		this.selectedUserEmails = selectedUserEmails;
 	}
 
 	public String getName() {

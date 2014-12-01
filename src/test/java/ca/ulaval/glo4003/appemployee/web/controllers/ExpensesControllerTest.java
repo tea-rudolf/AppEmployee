@@ -157,7 +157,7 @@ public class ExpensesControllerTest {
 	@Test
 	public void saveEditedExpenseCallsUpdateMethod() throws Exception {
 		expensesControllerMock.editExpense(EXPENSE_UID, expenseViewModelMock, sessionMock);
-		verify(expenseServiceMock, times(1)).updateExpense(expenseViewModelMock);
+		verify(expenseServiceMock, times(1)).editExpense(expenseViewModelMock);
 	}
 
 	@Test
