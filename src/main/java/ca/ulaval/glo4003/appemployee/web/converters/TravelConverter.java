@@ -3,11 +3,9 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
-import ca.ulaval.glo4003.appemployee.domain.travel.Vehicle;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 @Component
