@@ -49,6 +49,12 @@ public class Department {
 
 		employeeIds.add(employeeUid);
 	}
+	
+	public void removeEmployee(String employeeUid) {
+		if (employeeIds.contains(employeeUid)) {
+			employeeIds.remove(employeeUid);
+		}
+	}
 
 	public boolean containsSupervisor(String supervisorId) {
 		return supervisorIds.contains(supervisorId);

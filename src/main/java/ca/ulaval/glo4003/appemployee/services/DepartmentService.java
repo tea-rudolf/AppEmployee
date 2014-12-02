@@ -105,7 +105,7 @@ public class DepartmentService {
 		return model;
 	}
 
-	// duplication, enlever
+	// duplication, enlever, maby
 	public void assignUserToDepartment(EmployeeAssignationViewModel model) throws Exception {
 		
 		Department newDepartment = departmentRepository.findByName(model.getSelectedDepartment());
