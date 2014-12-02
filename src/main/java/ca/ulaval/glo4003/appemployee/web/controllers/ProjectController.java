@@ -68,13 +68,7 @@ public class ProjectController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
 		projectService.createProject(projectViewModel);
-		try {
-			return String.format("redirect:/projects");
-		} catch (ProjectExistsException e) {
-			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return showCreateProjectForm(model, projectViewModel, session);
-		}
-
+		return "redirect:/projects";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
