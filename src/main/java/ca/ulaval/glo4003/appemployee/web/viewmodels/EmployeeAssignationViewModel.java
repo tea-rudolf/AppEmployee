@@ -27,14 +27,6 @@ public class EmployeeAssignationViewModel {
 		this.departmentsList = departmentsList;
 	}
 
-	public String getSelectedDepartment() {
-		return selectedDepartment;
-	}
-
-	public void setDepartmentSelected(String selectedDepartment) {
-		this.selectedDepartment = selectedDepartment;
-	}
-
 	public String getSelectedEmployee() {
 		return selectedEmployee;
 	}
@@ -49,6 +41,14 @@ public class EmployeeAssignationViewModel {
 
 	public void setEmployeesWithNoDepartment(List<String> employeesWithNoDepartment) {
 		this.employeesWithNoDepartment = employeesWithNoDepartment;
+	}
+
+	public String getSelectedDepartment() {
+		return selectedDepartment;
+	}
+
+	public void setSelectedDepartment(String selectedDepartment) {
+		this.selectedDepartment = selectedDepartment;
 	}
 
 }
