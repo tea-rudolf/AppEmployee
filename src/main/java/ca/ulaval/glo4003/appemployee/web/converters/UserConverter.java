@@ -19,7 +19,6 @@ public class UserConverter {
 				userViewModels.add(userViewModel);
 			}
 		}
-
 		return userViewModels;
 	}
 

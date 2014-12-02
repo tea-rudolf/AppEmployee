@@ -8,31 +8,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
+import ca.ulaval.glo4003.appemployee.domain.project.ProjectProcessor;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
+import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
+import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Service
 public class ProjectService {
 
+	private ProjectConverter projectConverter;
+	private TaskConverter taskConverter;
+	private UserConverter userConverter;
 	private ProjectRepository projectRepository;
 	private TaskRepository taskRepository;
 	private UserRepository userRepository;
+	private ProjectProcessor projectProcessor;
 
 	@Autowired
-	public ProjectService(ProjectRepository projectRepository, TaskRepository taskRepository, UserRepository userRepository) {
+	public ProjectService(ProjectConverter projectConverter, TaskConverter taskConverter, UserConverter userConverter,  ProjectRepository projectRepository, 
+			TaskRepository taskRepository, UserRepository userRepository, ProjectProcessor projectProcessor) {
+		this.userConverter = userConverter;
+		this.projectConverter = projectConverter;
+		this.taskConverter = taskConverter;
 		this.projectRepository = projectRepository;
 		this.taskRepository = taskRepository;
 		this.userRepository = userRepository;
+		this.projectProcessor = projectProcessor;
 	}
 
-	public Collection<Project> getAllProjects() {
-		return projectRepository.findAll();
+	public Collection<ProjectViewModel> retrieveAllProjects() {
+		return projectConverter.convert(projectRepository.findAll());
 	}
 
 	public void addProject(Project project) {
@@ -178,5 +192,28 @@ public class ProjectService {
 				projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
 		addProject(newProject);
 		
+	}
+
+	public ProjectViewModel retrieveProjectViewModelForExistingProject(String projectNumber) {
+		ProjectViewModel projectViewModel = projectConverter.convert(getProjectById(projectNumber));
+		projectViewModel.setAvailableUsers(extractUserEmails(projectProcessor.evaluateAvailableEmployeesByProject(projectNumber)));
+		return projectViewModel;
+	}
+
+	public Collection<TaskViewModel> retrieveTasksByProject(String projectNumber) {
+		return taskConverter.convert(getAllTasksByProjectId(projectNumber));
+	}
+
+	public Collection<UserViewModel> retieveEmployeesByProject(String projectNumber) {
+		return userConverter.convert(getAllEmployeesByProjectId(projectNumber));
+	}
+	
+	private List<String> extractUserEmails(Collection<User> users) {
+		List<String> userEmails = new ArrayList<String>();
+		
+		for (User user: users) {
+			userEmails.add(user.getEmail());
+		}
+		return userEmails;
 	}
 }

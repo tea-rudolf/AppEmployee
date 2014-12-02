@@ -37,16 +37,15 @@ public class ProjectController {
 
 	private ProjectService projectService;
 	private UserService userService;
-	private ProjectConverter projectConverter;
+	
 	private TaskConverter taskConverter;
 	private UserConverter userConverter;
 
 	@Autowired
-	public ProjectController(ProjectService projectService, UserService userService, ProjectConverter projectConverter, TaskConverter taskConverter,
+	public ProjectController(ProjectService projectService, UserService userService, TaskConverter taskConverter,
 			UserConverter userConverter) {
 		this.projectService = projectService;
 		this.userService = userService;
-		this.projectConverter = projectConverter;
 		this.taskConverter = taskConverter;
 		this.userConverter = userConverter;
 	}
@@ -54,7 +53,7 @@ public class ProjectController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String getProjects(Model model, HttpSession session) {
 
-		model.addAttribute("projects", projectConverter.convert(projectService.getAllProjects()));
+		model.addAttribute("projects", projectService.retrieveAllProjects());
 		return "projectList";
 	}
 
@@ -74,20 +73,11 @@ public class ProjectController {
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
 	public String editProject(@PathVariable String projectNumber, Model model, HttpSession session) {
 
-		Project project = projectService.getProjectById(projectNumber);
-		List<Task> tasks = projectService.getAllTasksByProjectId(project.getUid());
-		List<User> employees = projectService.getAllEmployeesByProjectId(project.getUid());
 		User currentUser = userService.retrieveByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-
-		Collection<TaskViewModel> tasksViewModel = taskConverter.convert(tasks);
-		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
-		ProjectViewModel projectViewModel = projectConverter.convert(project);
-
-		projectViewModel.setAvailableUsers(userService.retrieveAllUserEmails());
-
-		model.addAttribute("tasks", tasksViewModel);
-		model.addAttribute("employees", employeesViewModel);
-		model.addAttribute("project", projectViewModel);
+	
+		model.addAttribute("tasks", projectService.retrieveTasksByProject(projectNumber));
+		model.addAttribute("employees", projectService.retieveEmployeesByProject(projectNumber));
+		model.addAttribute("project", projectService.retrieveProjectViewModelForExistingProject(projectNumber));
 		model.addAttribute("role", currentUser.getRole());
 
 		return "editProject";

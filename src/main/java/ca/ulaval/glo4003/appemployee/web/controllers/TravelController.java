@@ -42,7 +42,6 @@ public class TravelController {
 	public String showTravelsList(ModelMap model, HttpSession session) {
 		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
-
 		model.addAttribute("travelEntries", travelViewModels);
 		return "travel";
 	}
@@ -60,8 +59,7 @@ public class TravelController {
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
 	public String showEditTravelEntryForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
-		TravelViewModel travelViewModel = travelService.retrieveTravelViewModelForExistingTravel(uid);
-		model.addAttribute("travelForm", travelViewModel);
+		model.addAttribute("travelForm", travelService.retrieveTravelViewModelForExistingTravel(uid));
 		return "editTravelEntry";
 	}
 
