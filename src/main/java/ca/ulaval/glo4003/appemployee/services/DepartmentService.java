@@ -107,8 +107,13 @@ public class DepartmentService {
 
 	// duplication, enlever
 	public void assignUserToDepartment(EmployeeAssignationViewModel model) throws Exception {
-		Department department = departmentRepository.findByName(model.getSelectedDepartment());
-		department.addEmployee(model.getSelectedEmployee());
+		
+		Department newDepartment = departmentRepository.findByName(model.getSelectedDepartment());
+		newDepartment.addEmployee(model.getSelectedEmployee());
+
+		Department department = departmentRepository.findByName("Department of unassigned employes");
+		department.removeEmployee(model.getSelectedEmployee());
+		
 		departmentRepository.store(department);
 	}
 
