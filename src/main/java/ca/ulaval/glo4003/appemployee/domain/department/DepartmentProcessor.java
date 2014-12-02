@@ -13,6 +13,8 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 @Component
 public class DepartmentProcessor {
 
+	private static final String DEPARTMENT_OF_UNASSIGNED_EMPLOYEES = "Department of unassigned employees";
+
 	private UserRepository userRepository;
 	private DepartmentRepository departmentRepository;
 
@@ -20,15 +22,6 @@ public class DepartmentProcessor {
 	public DepartmentProcessor(UserRepository userRepository, DepartmentRepository departmentRepository) {
 		this.userRepository = userRepository;
 		this.departmentRepository = departmentRepository;
-	}
-
-	private Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
-		Department department = departmentRepository.findByName(departmentName);
-
-		if (department == null) {
-			throw new DepartmentNotFoundException("Department not found with following name : " + departmentName);
-		}
-		return department;
 	}
 
 	public List<User> retrieveEmployeesList(String departmentName) throws DepartmentNotFoundException {
@@ -59,8 +52,29 @@ public class DepartmentProcessor {
 	}
 
 	public List<String> retrieveEmployeesNotAssignedToDepartment() {
-		Department unassignedEmployeesDepartment = departmentRepository.findByName("Department of unassigned employes");
+		Department unassignedEmployeesDepartment = departmentRepository.findByName(DEPARTMENT_OF_UNASSIGNED_EMPLOYEES);
 		return unassignedEmployeesDepartment.getEmployeeIds();
+	}
+
+	public void assignEmployeeToDepartment(String employeeUid, String departmentName) throws Exception {
+		Department department = retrieveDepartmentByName(departmentName);
+		department.addEmployee(employeeUid);
+		departmentRepository.store(department);
+	}
+
+	public void unassignEmployeeToDepartment(String employeeUid, String departmentName) throws Exception {
+		Department department = retrieveDepartmentByName(departmentName);
+		department.removeEmployee(employeeUid);
+		departmentRepository.store(department);
+	}
+
+	private Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
+		Department department = departmentRepository.findByName(departmentName);
+
+		if (department == null) {
+			throw new DepartmentNotFoundException("Department not found with following name : " + departmentName);
+		}
+		return department;
 	}
 
 }
