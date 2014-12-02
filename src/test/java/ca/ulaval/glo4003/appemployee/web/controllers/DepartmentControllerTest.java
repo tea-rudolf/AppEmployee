@@ -21,8 +21,6 @@ import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
-import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
-import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.EmployeeAssignationViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
@@ -46,12 +44,6 @@ public class DepartmentControllerTest {
 
 	@Mock
 	private UserService userServiceMock;
-
-	@Mock
-	private UserConverter userConverterMock;
-
-	@Mock
-	private DepartmentConverter departmentConverterMock;
 
 	@Mock
 	private Model modelMock;
