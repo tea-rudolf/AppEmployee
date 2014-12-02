@@ -172,4 +172,11 @@ public class ProjectService {
 			saveTaskToProject(projectNumber, newTask.getUid());
 		}
 	}
+
+	public void createProject(ProjectViewModel projectViewModel) {
+		Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(), 
+				projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
+		addProject(newProject);
+		
+	}
 }

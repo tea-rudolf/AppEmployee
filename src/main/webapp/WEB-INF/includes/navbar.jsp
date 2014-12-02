@@ -43,7 +43,7 @@
 				</c:if>
 				<c:if
 					test='${sessionScope.role eq "ENTERPRISE"}'>
-					<li><a href="/departments/assignEmployes">Assign employes to departments</a></li>
+					<li><a href="/departments/assignEmployes">Assign employees to department</a></li>
 				</c:if>
 
 			</ul>

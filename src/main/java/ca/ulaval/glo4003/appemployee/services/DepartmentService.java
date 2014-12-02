@@ -26,6 +26,8 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 @Service
 public class DepartmentService {
 
+	private static final String DEPARTMENT_OF_UNASSIGNED_EMPLOYEES = "Department of unassigned employees";
+
 	private DepartmentRepository departmentRepository;
 	private UserRepository userRepository;
 	private DepartmentProcessor departmentProcessor;
@@ -105,16 +107,9 @@ public class DepartmentService {
 		return model;
 	}
 
-	// duplication, enlever, maby
 	public void assignUserToDepartment(EmployeeAssignationViewModel model) throws Exception {
-		
-		Department newDepartment = departmentRepository.findByName(model.getSelectedDepartment());
-		newDepartment.addEmployee(model.getSelectedEmployee());
-
-		Department department = departmentRepository.findByName("Department of unassigned employes");
-		department.removeEmployee(model.getSelectedEmployee());
-		
-		departmentRepository.store(department);
+		departmentProcessor.assignEmployeeToDepartment(model.getSelectedEmployee(), model.getSelectedDepartment());
+		departmentProcessor.unassignEmployeeToDepartment(model.getSelectedEmployee(), DEPARTMENT_OF_UNASSIGNED_EMPLOYEES);
 	}
 
 	private List<String> retrieveUserEmailsNotAssignedToDepartment() {
