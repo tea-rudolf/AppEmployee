@@ -15,7 +15,7 @@
 	<h2 class="sub-header">Assign a employee to a department</h2>
 
 			<c:choose>
-			      <c:when test="${fn:length(assignationModel.usersWithNoDepartment) eq 0}">
+			      <c:when test="${fn:length(assignationModel.employeesWithNoDepartment) eq 0}">
 			          <p> There's no available employee to assign.</p>
 			      </c:when>
 

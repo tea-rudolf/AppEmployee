@@ -6,4 +6,9 @@
     <employeeIds>emp@company.com</employeeIds>
     <employeeIds>john.doe@company.com</employeeIds>
   </departments>
+  <departments>
+    <name>Department of unassigned employes</name>
+    <employeeIds>jack@company.com</employeeIds>
+    <employeeIds>bob@company.com</employeeIds>
+  </departments>
 </departments>

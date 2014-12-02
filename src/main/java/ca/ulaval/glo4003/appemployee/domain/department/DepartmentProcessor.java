@@ -59,7 +59,7 @@ public class DepartmentProcessor {
 	}
 
 	public List<String> retrieveEmployeesNotAssignedToDepartment() {
-		Department unassignedEmployeesDepartment = departmentRepository.findByName("Unassigned department");
+		Department unassignedEmployeesDepartment = departmentRepository.findByName("Department of unassigned employes");
 		return unassignedEmployeesDepartment.getEmployeeIds();
 	}
 
