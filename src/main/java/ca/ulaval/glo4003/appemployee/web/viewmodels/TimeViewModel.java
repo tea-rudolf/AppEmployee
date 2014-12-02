@@ -50,10 +50,6 @@ public class TimeViewModel {
 		this.payPeriodEndDate = endDate;
 	}
 
-	public void setAvailableTasks(List<Task> tasks) {
-		this.availableTasks = tasks;
-	}
-
 	public double getHoursTimeEntry() {
 		return hoursTimeEntry;
 	}
@@ -94,7 +90,6 @@ public class TimeViewModel {
 		this.taskNameTimeEntry = taskNameTimeEntry;
 	}
 
-
 	public String getDateTimeEntry() {
 		return dateTimeEntry;
 	}
@@ -109,6 +104,14 @@ public class TimeViewModel {
 
 	public void setTimeEntryUid(String timeEntryUid) {
 		this.timeEntryUid = timeEntryUid;
+	}
+
+	public List<Task> getAvailableTasks() {
+		return availableTasks;
+	}
+
+	public void setAvailableTasks(List<Task> tasks) {
+		this.availableTasks = tasks;
 	}
 
 }
