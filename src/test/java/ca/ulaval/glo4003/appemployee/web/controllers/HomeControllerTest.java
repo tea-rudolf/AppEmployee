@@ -18,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
@@ -74,6 +75,9 @@ public class HomeControllerTest {
 	public void loginReturnsCorrectModelForm() {
 		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
+		when(userServiceMock.isUserValid(USER_EMAIL, USER_PASSWORD)).thenReturn(true);
+		when(userServiceMock.retrieveUserRole(USER_EMAIL)).thenReturn(Role.EMPLOYEE.toString());
+		when(servletRequestMock.getSession()).thenReturn(sessionMock);
 		
 		ModelAndView returnedModel = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
 	
@@ -84,7 +88,7 @@ public class HomeControllerTest {
 	 public void loginReturnsAlertIfWrongEmailOrPassword() {
 		 when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
 		 when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-		 when(userMock.validatePassword(USER_PASSWORD)).thenReturn(false);
+		 when(userServiceMock.isUserValid(USER_EMAIL, USER_PASSWORD)).thenReturn(false);
 		
 		 homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
 		
