@@ -30,11 +30,10 @@ public class ProjectProcessor {
 		Collection<User> availableUsers = new ArrayList<User>();
 		
 		for (User user : allUsers) {
-		if (!project.userIsAssignedToProject(user.getEmail()) || user.getRole().equals(Role.ENTERPRISE)) {
+		if (!project.userIsAssignedToProject(user.getEmail()) && !user.getRole().equals(Role.ENTERPRISE)) {
 			availableUsers.add(user);
 			}
 		}
 		return availableUsers;
 	}
-
 }
