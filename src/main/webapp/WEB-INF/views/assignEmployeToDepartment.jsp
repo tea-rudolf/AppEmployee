@@ -12,7 +12,7 @@
 <body>
 	<%@include file="../includes/navbar.jsp"%>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	<h2 class="sub-header">Assign a employee to a department</h2>
+	<h2 class="sub-header">Assign employee to department</h2>
 
 			<c:choose>
 			      <c:when test="${fn:length(assignationModel.employeesWithNoDepartment) eq 0}">
