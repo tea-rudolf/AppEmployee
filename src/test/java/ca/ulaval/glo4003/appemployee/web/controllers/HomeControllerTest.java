@@ -1,7 +1,12 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
@@ -11,8 +16,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 
-import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
@@ -21,8 +26,6 @@ public class HomeControllerTest {
 
 	private static final String USER_EMAIL = "employee@employee.com";
 	private static final String USER_PASSWORD = "employee";
-	private static final String EMAIL_ATTRIBUTE = "email";
-	private static final String ROLE_ATTRIBUTE = "role";
 	private static final String ALERT_ATTRIBUTE = "alert";
 	private static final String ALERT_MESSAGE = "Invalid username and/or password.";
 	private static final String HOME_VIEW = "home";
@@ -51,13 +54,13 @@ public class HomeControllerTest {
 
 	@Mock
 	private HttpSession sessionMock;
-
-	private Role role;
+	
+	@Mock
+	private HttpServletRequest servletRequestMock;
 
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		role = Role.EMPLOYEE;
 		homeController = new HomeController(userServiceMock);
 	}
 
@@ -67,58 +70,29 @@ public class HomeControllerTest {
 		assertNotNull(returnedModel);
 	}
 
-	// @Test
-	// public void loginReturnsCorrectModelForm() {
-	// when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-	// when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
-	// when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-	//
-	// ModelAndView sampleForm = homeController.login(loginFormViewModelMock,
-	// modelMapMock, sessionMock);
-	//
-	// assertEquals("home", sampleForm.getViewName());
-	// }
+	@Test
+	public void loginReturnsCorrectModelForm() {
+		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
+		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
+		
+		ModelAndView returnedModel = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
+	
+		assertEquals("home", returnedModel.getViewName());
+	 }
 
-	// @Test
-	// public void loginAddsEmailAttributeToForm() {
-	// when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-	// when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
-	// when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-	// when(userMock.validatePassword(USER_PASSWORD)).thenReturn(true);
-	//
-	// homeController.login(loginFormViewModelMock, modelMapMock, sessionMock);
-	//
-	// verify(modelMapMock, times(1)).addAttribute(EMAIL_ATTRIBUTE, USER_EMAIL);
-	// }
-
-	// @Test
-	// public void loginAddsRoleAttributeToForm() {
-	// when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-	// when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
-	// when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-	// when(userMock.validatePassword(USER_PASSWORD)).thenReturn(true);
-	// when(userMock.getRole()).thenReturn(role);
-	//
-	// homeController.login(loginFormViewModelMock, modelMapMock, sessionMock);
-	//
-	// verify(modelMapMock, times(1)).addAttribute(ROLE_ATTRIBUTE, role);
-	// }
-
-	// @Test
-	// public void loginReturnsAlertIfWrongEmailOrPassword() {
-	// when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-	// when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
-	// when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-	// when(userMock.validatePassword(USER_PASSWORD)).thenReturn(false);
-	//
-	// homeController.login(loginFormViewModelMock, modelMapMock, sessionMock);
-	//
-	// verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE,
-	// ALERT_MESSAGE);
-	// }
+	 @Test
+	 public void loginReturnsAlertIfWrongEmailOrPassword() {
+		 when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
+		 when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
+		 when(userMock.validatePassword(USER_PASSWORD)).thenReturn(false);
+		
+		 homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
+		
+		 verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE, ALERT_MESSAGE);
+	 }
 
 	@Test
-	public void getDisplayLoginFormReturnsHomeViewForm() {
+	public void showLoginFormReturnsHomeViewForm() {
 		String returnedForm = homeController.showLoginForm();
 		assertEquals(HOME_VIEW, returnedForm);
 	}
