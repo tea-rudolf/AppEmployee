@@ -2,8 +2,8 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +22,7 @@ public class TimeConverter {
 		this.projectService = projectService;
 	}
 
-	public Collection<TimeViewModel> convert(ArrayList<TimeEntry> timeEntries) {
+	public Collection<TimeViewModel> convert(List<TimeEntry> timeEntries) {
 		Collection<TimeViewModel> viewModels = new ArrayList<TimeViewModel>();
 
 		for (TimeEntry entry : timeEntries) {
@@ -30,7 +30,7 @@ public class TimeConverter {
 			viewModel.setTimeEntryUid(entry.getUid());
 			viewModels.add(viewModel);
 		}
-		
+
 		return viewModels;
 	}
 

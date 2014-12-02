@@ -34,12 +34,12 @@ public class TimeController {
 
 	@ModelAttribute(TIME_ATTRIBUTE)
 	public TimeViewModel currentPayPeriodDates(HttpSession session) {
-		 return timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());	
+		 return timeService.retrieveEmptyTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());	
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String showTimeEntriesForm(ModelMap model, HttpSession session) {
-		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
+		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
 
 		model.addAttribute("timeEntries", timeEntriesViewModels);
@@ -60,7 +60,7 @@ public class TimeController {
 
 	@RequestMapping(value = "/{timeEntryUid}/edit", method = RequestMethod.GET)
 	public String showEditTimeEntryForm(@PathVariable String timeEntryUid, Model model, HttpSession session) {
-		TimeViewModel modelToEdit = timeService.retrieveViewModelForTimeEntry(timeEntryUid);
+		TimeViewModel modelToEdit = timeService.retrieveTimeEntryViewModel(timeEntryUid);
 		modelToEdit.setTimeEntryUid(timeEntryUid);
 		model.addAttribute("timeEntry", modelToEdit);
 		return "editTimeEntry";
@@ -75,7 +75,7 @@ public class TimeController {
 
 	@RequestMapping(value = "/previousTime", method = RequestMethod.GET)
 	public String showPreviousTimeForm(ModelMap model, HttpSession session) {
-		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveTimeEntriesViewModelsForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
+		Collection<TimeViewModel> timeEntriesViewModels = timeService.retrieveAllTimeEntriesViewModelsForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
 
 		model.addAttribute("timeEntries", timeEntriesViewModels);
@@ -95,7 +95,7 @@ public class TimeController {
 
 	@RequestMapping(value = "/previousTime/{timeEntryUid}/edit", method = RequestMethod.GET)
 	public String showEditPreviousTimeEntryForm(@PathVariable String timeEntryUid, Model model, HttpSession session) {
-		TimeViewModel modelToEdit = timeService.retrieveViewModelForTimeEntry(timeEntryUid);
+		TimeViewModel modelToEdit = timeService.retrieveTimeEntryViewModel(timeEntryUid);
 		model.addAttribute("timeEntry", modelToEdit);
 		return "editPreviousTimeEntry";
 	}

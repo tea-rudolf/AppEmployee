@@ -46,7 +46,7 @@ public class ExpensesController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateExpenseForm(Model model, ExpenseViewModel expenseModel, HttpSession session) {
-		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrievePayPeriodViewModel();
+		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrieveCurrentPayPeriodViewModel();
 
 		model.addAttribute("expenseForm", new ExpenseViewModel());
 		model.addAttribute("payPeriod", payPeriodViewModel);
@@ -64,7 +64,7 @@ public class ExpensesController {
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
 	public String showEditExpenseForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
-		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrievePayPeriodViewModel();
+		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrieveCurrentPayPeriodViewModel();
 		ExpenseViewModel expenseViewModel = expenseService.retrieveExpenseViewModel(uid);
 
 		model.addAttribute("payPeriod", payPeriodViewModel);

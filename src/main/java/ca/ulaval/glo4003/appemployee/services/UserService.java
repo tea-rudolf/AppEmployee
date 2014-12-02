@@ -77,7 +77,7 @@ public class UserService {
 		return tasks;
 	}
 
-	public ArrayList<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
+	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
 
 		ArrayList<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
 
