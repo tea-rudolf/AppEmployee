@@ -25,7 +25,7 @@
 			<c:if test="${fn:length(department.availableUsers) gt 0}">
 			<p ><b>Select employes to add to this department : </b></p>
 			<p><i>Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</i></p>
-                 <form:select multiple="true" class="form-control" path="userEmailsSelected">
+                 <form:select multiple="true" class="form-control" path="selectedUserEmails">
 					<form:options items="${department.availableUsers}"></form:options>
 				</form:select>
 			</c:if>

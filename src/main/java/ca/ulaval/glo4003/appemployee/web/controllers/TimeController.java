@@ -55,7 +55,7 @@ public class TimeController {
 	public String createTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 		payPeriodForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		timeService.createTimeEntry(payPeriodForm, timeService.retrieveCurrentPayPeriod());
-		return "timeSheetSubmitted";
+		return "redirect:/time/";
 	}
 
 	@RequestMapping(value = "/{timeEntryUid}/edit", method = RequestMethod.GET)
@@ -70,7 +70,7 @@ public class TimeController {
 	public String editTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
 		viewModel.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		timeService.updateTimeEntry(viewModel);
-		return "redirect:/time/";
+		return "redirect:/time/" + timeEntryUid + "/edit";
 	}
 
 	@RequestMapping(value = "/previousTime", method = RequestMethod.GET)
@@ -90,7 +90,7 @@ public class TimeController {
 	@RequestMapping(value = "/previousTime/add", method = RequestMethod.POST)
 	public String createPreviousTimeEntry(Model model, TimeViewModel payPeriodForm, HttpSession session) throws Exception {
 		timeService.createTimeEntry(payPeriodForm, timeService.retrievePreviousPayPeriod());
-		return "timeSheetSubmitted";
+		return "redirect:/time/previousTime";
 	}
 
 	@RequestMapping(value = "/previousTime/{timeEntryUid}/edit", method = RequestMethod.GET)
@@ -103,7 +103,7 @@ public class TimeController {
 	@RequestMapping(value = "/previousTime/{timeEntryUid}/edit", method = RequestMethod.POST)
 	public String editPreviousTimeEntry(@PathVariable String timeEntryUid, Model model, TimeViewModel viewModel, HttpSession session) throws Exception {
 		timeService.updateTimeEntry(viewModel);
-		return "redirect:/time/previousTime/";
+		return "redirect:/time/previousTime/" + timeEntryUid + "/edit";
 	}
 
 }

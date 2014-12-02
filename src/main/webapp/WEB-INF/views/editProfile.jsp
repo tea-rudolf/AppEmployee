@@ -27,7 +27,7 @@
 
       <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary"></input> <input
-          type="button" onclick="javascript:window.location.href = '/employee/'"
+          type="button" onclick="javascript:window.location.href = '/'"
           value="Cancel" class="btn btn-default"></input>
       </div>
     </form:form>

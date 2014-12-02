@@ -124,7 +124,7 @@ public class DepartmentController {
 	public String assignEmployeeToDepartment(EmployeeAssignationViewModel model, HttpSession session) throws Exception {
 		departmentService.assignUserToDepartment(model);
 
-		return "departmentsList";
+		return "redirect:/departments";
 	}
 
 }
