@@ -19,7 +19,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
@@ -33,9 +32,6 @@ public class HomeControllerTest {
 	private static final String SIMPLE_REDIRECT = "redirect:/";
 
 	@Mock
-	private ExpensesController expensesControllerMock;
-
-	@Mock
 	private LoginFormViewModel loginFormViewModelMock;
 
 	@Mock
@@ -43,9 +39,6 @@ public class HomeControllerTest {
 
 	@Mock
 	private UserService userServiceMock;
-
-	@Mock
-	private User userMock;
 
 	@Mock
 	private SessionStatus sessionStatusMock;
