@@ -124,7 +124,7 @@ public class ProjectControllerTest {
 	@Test
 	public void projectCreationUpdatesTheModelCorrectly() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		projectController.createProject(model, projectViewModelMock, sessionMock);
+		projectController.showCreateProjectForm(model, projectViewModelMock, sessionMock);
 		assertSame(model.asMap().get("project"), projectViewModelMock);
 	}
 

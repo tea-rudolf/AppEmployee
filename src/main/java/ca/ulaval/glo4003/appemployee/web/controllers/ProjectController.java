@@ -59,23 +59,20 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) {
+	public String showCreateProjectForm(Model model, ProjectViewModel projectViewModel, HttpSession session) {
 
 		model.addAttribute("project", projectViewModel);
 		return "createProject";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String saveProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
-
+	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
+		projectService.createProject(projectViewModel);
 		try {
-			Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(), 
-					projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
-			projectService.addProject(newProject);
-			return String.format("redirect:/projects/%s/edit", newProject.getUid());
+			return String.format("redirect:/projects");
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return createProject(model, projectViewModel, session);
+			return showCreateProjectForm(model, projectViewModel, session);
 		}
 
 	}
