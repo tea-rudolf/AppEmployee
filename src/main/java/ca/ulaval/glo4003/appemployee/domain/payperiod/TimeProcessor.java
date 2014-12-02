@@ -2,12 +2,14 @@ package ca.ulaval.glo4003.appemployee.domain.payperiod;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
 import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 
+@Component
 public class TimeProcessor {
 
 	private PayPeriodRepository payPeriodRepository;
