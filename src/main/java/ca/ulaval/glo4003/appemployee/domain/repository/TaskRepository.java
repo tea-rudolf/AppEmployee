@@ -14,7 +14,7 @@ public interface TaskRepository {
 
 	void store(Task task) throws Exception;
 
-	Task findByUid(String taskUId);
+	Task findByUid(String taskUid);
 
 	List<Task> findAll();
 

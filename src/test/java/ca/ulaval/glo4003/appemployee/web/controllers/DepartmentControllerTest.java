@@ -151,7 +151,7 @@ public class DepartmentControllerTest {
 	@Test
 	public void showEditEmployeeFormReturnsEditEmployeeFormWhenSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		when(userServiceMock.retrieveByEmail(EMAIL)).thenReturn(userMock);
+		when(userServiceMock.retrieveUserByEmail(EMAIL)).thenReturn(userMock);
 		String returnedForm = departmentController.showEditEmployeeForm(
 				DEPARTMENT_NAME, EMAIL, modelMock, sessionMock);
 		assertEquals(EDIT_EMPLOYEE_FORM, returnedForm);
@@ -172,7 +172,7 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
 		doThrow(new Exception()).when(userServiceMock)
-				.updateEmployeeInformation(userViewModelMock);
+				.editUser(userViewModelMock);
 		String returnedForm = departmentController.editEmployee(
 				DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
 		assertEquals(EDIT_EMPLOYEE_FORM, returnedForm);

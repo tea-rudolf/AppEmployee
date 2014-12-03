@@ -29,24 +29,21 @@ public class DepartmentController {
 	private UserService userService;
 
 	@Autowired
-	public DepartmentController(DepartmentService departmentService,
-			UserService userService) {
+	public DepartmentController(DepartmentService departmentService, UserService userService) {
 		this.departmentService = departmentService;
 		this.userService = userService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showDepartmentsList(Model model, HttpSession session) {
-		model.addAttribute("departments",
-				departmentService.retrieveDepartmentsList());
+		model.addAttribute("departments", departmentService.retrieveDepartmentsList());
 
 		return "departmentsList";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateDepartmentForm(Model model, HttpSession session) {
-		DepartmentViewModel departmentViewModel = departmentService
-				.retrieveAvailableEmployeesViewModel();
+		DepartmentViewModel departmentViewModel = departmentService.retrieveAvailableEmployeesViewModel();
 
 		model.addAttribute("department", departmentViewModel);
 
@@ -54,9 +51,7 @@ public class DepartmentController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String createDepartment(Model model,
-			DepartmentViewModel departmentViewModel, HttpSession session)
-			throws Exception {
+	public String createDepartment(Model model, DepartmentViewModel departmentViewModel, HttpSession session) throws Exception {
 		departmentService.createDepartement(departmentViewModel);
 
 		return "redirect:/departments/";
@@ -64,20 +59,15 @@ public class DepartmentController {
 	}
 
 	@RequestMapping(value = "/{departmentName}/edit", method = RequestMethod.GET)
-	public String showEmployeesList(@PathVariable String departmentName,
-			Model model, HttpSession session)
-			throws DepartmentNotFoundException {
-		model.addAttribute("department",
-				departmentService.retrieveDepartmentViewModel(departmentName));
-		model.addAttribute("employees", departmentService
-				.retrieveEmployeesListViewModel(departmentName));
+	public String showEmployeesList(@PathVariable String departmentName, Model model, HttpSession session) throws DepartmentNotFoundException {
+		model.addAttribute("department", departmentService.retrieveDepartmentViewModel(departmentName));
+		model.addAttribute("employees", departmentService.retrieveEmployeesListViewModel(departmentName));
 
 		return "editDepartment";
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.GET)
-	public String showCreateEmployeeForm(@PathVariable String departmentName,
-			Model model, UserViewModel userViewModel, HttpSession session) {
+	public String showCreateEmployeeForm(@PathVariable String departmentName, Model model, UserViewModel userViewModel, HttpSession session) {
 		model.addAttribute("departmentName", departmentName);
 		model.addAttribute("user", userViewModel);
 
@@ -85,66 +75,53 @@ public class DepartmentController {
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.POST)
-	public String createEmployee(@PathVariable String departmentName,
-			Model model, UserViewModel userViewModel, HttpSession session) {
+	public String createEmployee(@PathVariable String departmentName, Model model, UserViewModel userViewModel, HttpSession session) {
 		String supervisorId = session.getAttribute(EMAIL_ATTRIBUTE).toString();
 
 		try {
 
-			departmentService.createEmployee(supervisorId, departmentName,
-					userViewModel);
-			departmentService.assignUserToDepartment(userViewModel,
-					supervisorId, departmentName);
+			departmentService.createEmployee(supervisorId, departmentName, userViewModel);
+			departmentService.assignUserToDepartment(userViewModel, supervisorId, departmentName);
 
 			return "redirect:/departments/{departmentName}/edit";
 		} catch (Exception e) {
-			model.addAttribute("message", new MessageViewModel(e.getClass()
-					.getSimpleName(), e.getMessage()));
-			return showCreateEmployeeForm(departmentName, model, userViewModel,
-					session);
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return showCreateEmployeeForm(departmentName, model, userViewModel, session);
 		}
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/{email}/edit", method = RequestMethod.GET)
-	public String showEditEmployeeForm(@PathVariable String departmentName,
-			@PathVariable String email, Model model, HttpSession session) {
-		model.addAttribute("user",
-				userService.retrieveViewModelForCurrentUser(email));
+	public String showEditEmployeeForm(@PathVariable String departmentName, @PathVariable String email, Model model, HttpSession session) {
+		model.addAttribute("user", userService.retrieveUserViewModel(email));
 		model.addAttribute("departmentName", departmentName);
 
 		return "editEmployee";
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/{email}/edit", method = RequestMethod.POST)
-	public String editEmployee(@PathVariable String departmentName,
-			UserViewModel userViewModel, Model model, HttpSession session) {
+	public String editEmployee(@PathVariable String departmentName, UserViewModel userViewModel, Model model, HttpSession session) {
 		try {
 
-			userService.updateEmployeeInformation(userViewModel);
+			userService.editUser(userViewModel);
 
 			model.addAttribute("departmentName", departmentName);
 
 			return "redirect:/departments/{departmentName}/edit";
 		} catch (Exception e) {
-			model.addAttribute("message", new MessageViewModel(e.getClass()
-					.getSimpleName(), e.getMessage()));
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return "editEmployee";
 		}
 	}
 
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.GET)
-	public String showAssignEmployeeToDepartmentForm(Model model,
-			HttpSession session) {
-		model.addAttribute("assignationModel",
-				departmentService.retrieveEmployeeAssignationViewModel());
+	public String showAssignEmployeeToDepartmentForm(Model model, HttpSession session) {
+		model.addAttribute("assignationModel", departmentService.retrieveEmployeeAssignationViewModel());
 
 		return "assignEmployeToDepartment";
 	}
 
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.POST)
-	public String assignEmployeeToDepartment(
-			EmployeeAssignationViewModel model, HttpSession session)
-			throws Exception {
+	public String assignEmployeeToDepartment(EmployeeAssignationViewModel model, HttpSession session) throws Exception {
 		departmentService.assignUserToDepartment(model);
 
 		return "redirect:/departments";

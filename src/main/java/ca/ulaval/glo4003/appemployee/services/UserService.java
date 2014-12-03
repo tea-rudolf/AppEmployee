@@ -1,156 +1,62 @@
 package ca.ulaval.glo4003.appemployee.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.time.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
-import ca.ulaval.glo4003.appemployee.persistence.RepositoryException;
+import ca.ulaval.glo4003.appemployee.domain.user.UserProcessor;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 @Service
 public class UserService {
 
-	private UserRepository userRepository;
-	private TaskRepository taskRepository;
-	private TimeEntryRepository timeEntryRepository;
+	private UserProcessor userProcessor;
 	private UserConverter userConverter;
 
 	@Autowired
-	public UserService(UserRepository userRepository,
-			TaskRepository taskRepository,
-			TimeEntryRepository timeEntryRepository, UserConverter userConverter) {
-		this.userRepository = userRepository;
-		this.taskRepository = taskRepository;
-		this.timeEntryRepository = timeEntryRepository;
+	public UserService(UserProcessor userProcessor, UserConverter userConverter) {
+		this.userProcessor = userProcessor;
 		this.userConverter = userConverter;
 	}
 
-	public User retrieveByEmail(String email) throws UserNotFoundException {
-		User user = userRepository.findByEmail(email);
-
-		if (user == null) {
-			throw new UserNotFoundException(
-					"User not found with following email : " + email);
-		}
-		return user;
+	public User retrieveUserByEmail(String email) throws UserNotFoundException {
+		return userProcessor.retrieveUserByEmail(email);
 	}
 
 	public List<User> retrieveUsersByEmail(List<String> emails) {
-		return userRepository.findByEmails(emails);
-	}
+		List<User> users = new ArrayList<User>();
 
-	public List<String> retrieveAllUserEmails() throws UserNotFoundException {
-		List<String> usersEmail = new ArrayList<String>();
-		Collection<User> users = userRepository.findAll();
-		for (User user : users) {
-			usersEmail.add(user.getEmail());
+		for (String email : emails) {
+			users.add(retrieveUserByEmail(email));
 		}
-		return usersEmail;
+		return users;
 	}
 
-	public TimeEntry getTimeEntry(String id) {
-		return timeEntryRepository.findByUid(id);
+	public List<String> evaluateAllUserEmails() throws UserNotFoundException {
+		return userProcessor.evaluateAllUserEmails();
 	}
 
-	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod,
-			String currentUserId) {
-
-		List<Task> tasks = new ArrayList<Task>();
-
-		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
-			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
-			if (entry != null && entry.getUserEmail().equals(currentUserId)) {
-				tasks.add(taskRepository.findByUid(entry.getUid()));
-			}
-		}
-		return tasks;
-	}
-
-	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(
-			PayPeriod payPeriod, String userEmail) {
-
-		ArrayList<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
-
-		for (String timeEntryId : payPeriod.getTimeEntryIds()) {
-			TimeEntry entry = timeEntryRepository.findByUid(timeEntryId);
-			if (entry != null && entry.getUserEmail().equals(userEmail)) {
-				timeEntries.add(entry);
-			}
-		}
-		return timeEntries;
-	}
-
-	public void updateTimeEntry(String projectNumber, TimeViewModel viewModel) {
-		TimeEntry entry = timeEntryRepository.findByUid(projectNumber);
-		entry.setBillableHours(viewModel.getHoursTimeEntry());
-		entry.setComment(viewModel.getCommentTimeEntry());
-		entry.setDate(new LocalDate(viewModel.getDateTimeEntry()));
-		entry.setTaskUid(viewModel.getTaskIdTimeEntry());
-
-		try {
-			timeEntryRepository.store(entry);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
-		}
-
-	}
-
-	public void updateEmployeeInformation(UserViewModel userViewModel)
-			throws Exception {
-
-		User employee = new User();
-		employee.setEmail(userViewModel.getEmail());
-		employee.setPassword(userViewModel.getPassword());
-		employee.setWage(userViewModel.getWage());
-
-		if (userViewModel.getRole().equals("EMPLOYEE")) {
-			employee.setRole(Role.EMPLOYEE);
-		} else if (userViewModel.getRole().equals("ENTERPRISE")) {
-			employee.setRole(Role.ENTERPRISE);
-		} else if (userViewModel.getRole().equals("SUPERVISOR")) {
-			employee.setRole(Role.SUPERVISOR);
-		}
-
-		userRepository.store(employee);
-	}
-
-	public void updatePassword(String email, UserViewModel viewModel) {
-		User user = userRepository.findByEmail(email);
-		user.setPassword(viewModel.getPassword());
-
-		try {
-			userRepository.store(user);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
-		}
-	}
-
-	public UserViewModel retrieveViewModelForCurrentUser(String email) {
-		return userConverter.convert(retrieveByEmail(email));
+	public void editUser(UserViewModel userViewModel) throws Exception {
+		userProcessor.updateUser(userViewModel.getEmail(), userViewModel.getPassword(), Role.valueOf(userViewModel.getRole()), userViewModel.getWage());
 	}
 
 	public boolean isUserValid(String userEmail, String password) {
-		User user = userRepository.findByEmail(userEmail);
-		return user != null && user.validatePassword(password);
+		return userProcessor.validateUserCredentials(userEmail, password);
 	}
 
-	public String retrieveUserRole(String email) {
-		return userRepository.findByEmail(email).getRole().toString();
+	public String retrieveUserRole(String userEmail) {
+		return userProcessor.retrieveUserRole(userEmail).toString();
+	}
+
+	public UserViewModel retrieveUserViewModel(String email) {
+		User user = userProcessor.retrieveUserByEmail(email);
+		return userConverter.convert(user);
 	}
 
 }

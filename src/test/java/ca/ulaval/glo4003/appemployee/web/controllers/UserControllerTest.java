@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -47,11 +45,9 @@ public class UserControllerTest {
 	@Test
 	public void showUserProfileFormReturnsEditProfileFormIfSessionAttributeIsNotNull() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(userServiceMock.retrieveViewModelForCurrentUser(VALID_EMAIL))
-				.thenReturn(userViewModelMock);
+		when(userServiceMock.retrieveUserViewModel(VALID_EMAIL)).thenReturn(userViewModelMock);
 
-		String returnedForm = userController.showUserProfileForm(modelMock,
-				sessionMock);
+		String returnedForm = userController.showUserProfileForm(modelMock, sessionMock);
 
 		assertEquals(EDIT_PROFILE_JSP, returnedForm);
 	}
@@ -59,17 +55,15 @@ public class UserControllerTest {
 	@Test
 	public void updatePasswordRedirectsToEmployeePage() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		String returnedForm = userController.updatePassword(userViewModelMock,
-				sessionMock);
+		String returnedForm = userController.updatePassword(userViewModelMock);
 		assertEquals(EMPLOYEE_JSP, returnedForm);
 	}
 
 	@Test
 	public void updatePasswordCallsTheCorrectServiceMethods() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		userController.updatePassword(userViewModelMock, sessionMock);
-		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL,
-				userViewModelMock);
+		userController.updatePassword(userViewModelMock);
+		verify(userServiceMock, times(1)).editUser(userViewModelMock);
 	}
 
 }
