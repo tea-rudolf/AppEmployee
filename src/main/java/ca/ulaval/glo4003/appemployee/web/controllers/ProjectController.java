@@ -39,8 +39,7 @@ public class ProjectController {
 	private UserConverter userConverter;
 
 	@Autowired
-	public ProjectController(ProjectService projectService,
-			UserService userService, TaskConverter taskConverter,
+	public ProjectController(ProjectService projectService, UserService userService, TaskConverter taskConverter,
 			UserConverter userConverter) {
 		this.projectService = projectService;
 		this.userService = userService;
@@ -56,48 +55,39 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String showCreateProjectForm(Model model,
-			ProjectViewModel projectViewModel, HttpSession session) {
+	public String showCreateProjectForm(Model model, ProjectViewModel projectViewModel, HttpSession session) {
 
 		model.addAttribute("project", projectViewModel);
 		return "createProject";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String createProject(Model model, ProjectViewModel projectViewModel,
-			HttpSession session) throws Exception {
+	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
 		projectService.createProject(projectViewModel);
 		return "redirect:/projects";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
-	public String editProject(@PathVariable String projectNumber, Model model,
-			HttpSession session) {
+	public String editProject(@PathVariable String projectNumber, Model model, HttpSession session) {
 
-		User currentUser = userService.retrieveByEmail(session.getAttribute(
-				EMAIL_ATTRIBUTE).toString());
+		User currentUser = userService.retrieveUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
-		model.addAttribute("tasks",
-				projectService.retrieveTasksByProject(projectNumber));
-		model.addAttribute("employees",
-				projectService.retieveEmployeesByProject(projectNumber));
-		model.addAttribute("project", projectService
-				.retrieveProjectViewModelForExistingProject(projectNumber));
+		model.addAttribute("tasks", projectService.retrieveTasksByProject(projectNumber));
+		model.addAttribute("employees", projectService.retieveEmployeesByProject(projectNumber));
+		model.addAttribute("project", projectService.retrieveProjectViewModelForExistingProject(projectNumber));
 		model.addAttribute("role", currentUser.getRole());
 
 		return "editProject";
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
-	public String saveEditedProject(@PathVariable String projectNumber,
-			Model model, ProjectViewModel viewModel, HttpSession session)
-			throws Exception {
+	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel,
+			HttpSession session) throws Exception {
 
 		try {
 
-			if (!viewModel.getUserEmail().equals("NONE")
-					&& !viewModel.getUserEmail().equals("")) {
-				userService.retrieveByEmail(viewModel.getUserEmail());
+			if (!viewModel.getUserEmail().equals("NONE") && !viewModel.getUserEmail().equals("")) {
+				userService.retrieveUserByEmail(viewModel.getUserEmail());
 			}
 
 			projectService.updateProject(projectNumber, viewModel);
@@ -106,16 +96,15 @@ public class ProjectController {
 
 		} catch (Exception e) {
 
-			model.addAttribute("message", new MessageViewModel(e.getClass()
-					.getSimpleName(), e.getMessage()));
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return editProject(projectNumber, model, session);
 		}
 
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
-	public String createTask(@PathVariable String projectNumber, Model model,
-			TaskViewModel taskViewModel, HttpSession session) {
+	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel,
+			HttpSession session) {
 
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
@@ -123,14 +112,13 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.POST)
-	public String saveTask(@PathVariable String projectNumber, Model model,
-			TaskViewModel taskViewModel, HttpSession session) throws Exception {
+	public String saveTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel,
+			HttpSession session) throws Exception {
 
 		try {
 			projectService.addNewTaskToProject(taskViewModel, projectNumber);
 		} catch (TaskAlreadyExistsException e) {
-			model.addAttribute("message", new MessageViewModel(e.getClass()
-					.getSimpleName(), e.getMessage()));
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return createTask(projectNumber, model, taskViewModel, session);
 		}
 
@@ -138,19 +126,16 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
-	public String editTask(@PathVariable String projectNumber,
-			@PathVariable String taskNumber, Model model, HttpSession session) {
+	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model,
+			HttpSession session) {
 
 		Task task = projectService.getTaskById(taskNumber);
-		List<User> employees = userService.retrieveUsersByEmail(task
-				.getAuthorizedUsers());
-		Collection<UserViewModel> employeesViewModel = userConverter
-				.convert(employees);
-		User currentUser = userService.retrieveByEmail(session.getAttribute(
-				EMAIL_ATTRIBUTE).toString());
+		List<User> employees = userService.retrieveUsersByEmail(task.getAuthorizedUsers());
+		Collection<UserViewModel> employeesViewModel = userConverter.convert(employees);
+		User currentUser = userService.retrieveUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 
 		TaskViewModel taskViewModel = taskConverter.convert(task);
-		taskViewModel.setAvailableUsers(userService.retrieveAllUserEmails());
+		taskViewModel.setAvailableUsers(userService.evaluateAllUserEmails());
 		model.addAttribute("project", taskViewModel);
 
 		model.addAttribute("task", taskViewModel);
@@ -162,15 +147,13 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
-	public String saveEditedTask(@PathVariable String projectNumber,
-			@PathVariable String taskNumber, Model model,
+	public String saveEditedTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model,
 			TaskViewModel viewModel, HttpSession session) throws Exception {
 
 		try {
 
-			if (!viewModel.getUserEmail().equals("NONE")
-					&& !viewModel.getUserEmail().isEmpty()) {
-				userService.retrieveByEmail(viewModel.getUserEmail());
+			if (!viewModel.getUserEmail().equals("NONE") && !viewModel.getUserEmail().isEmpty()) {
+				userService.retrieveUserByEmail(viewModel.getUserEmail());
 			}
 
 			projectService.updateTask(projectNumber, taskNumber, viewModel);
@@ -178,8 +161,7 @@ public class ProjectController {
 			return String.format("redirect:/projects/%s/edit", projectNumber);
 
 		} catch (Exception e) {
-			model.addAttribute("message", new MessageViewModel(e.getClass()
-					.getSimpleName(), e.getMessage()));
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return editTask(projectNumber, taskNumber, model, session);
 		}
 	}

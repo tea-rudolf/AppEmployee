@@ -31,8 +31,7 @@ public class ExpensesController {
 	private TimeService timeService;
 
 	@Autowired
-	public ExpensesController(ExpenseService expenseService,
-			TimeService payPeriodService) {
+	public ExpensesController(ExpenseService expenseService, TimeService payPeriodService) {
 		this.expenseService = expenseService;
 		this.timeService = payPeriodService;
 	}
@@ -45,40 +44,34 @@ public class ExpensesController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showExpensesList(ModelMap model, HttpSession session) {
 		Collection<ExpenseViewModel> expensesViewModels = expenseService
-				.retrieveExpenseViewModelsListForCurrentPayPeriod(session
-						.getAttribute(EMAIL_ATTRIBUTE).toString());
+				.retrieveExpenseViewModelsListForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("expenses", expensesViewModels);
 		return "expenses";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String showCreateExpenseForm(Model model,
-			ExpenseViewModel expenseModel, HttpSession session) {
-		model.addAttribute("expenseForm", expenseService
-				.retrieveUserExpenseViewModel(session.getAttribute(
-						EMAIL_ATTRIBUTE).toString()));
+	public String showCreateExpenseForm(Model model, ExpenseViewModel expenseModel, HttpSession session) {
+		model.addAttribute("expenseForm",
+				expenseService.retrieveUserExpenseViewModel(session.getAttribute(EMAIL_ATTRIBUTE).toString()));
 		return "createExpense";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String createExpense(Model model, ExpenseViewModel expenseForm,
-			HttpSession session) throws Exception {
+	public String createExpense(Model model, ExpenseViewModel expenseForm, HttpSession session) throws Exception {
 		expenseService.createExpense(expenseForm);
 		return "redirect:/expenses/";
 	}
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
-	public String showEditExpenseForm(@PathVariable String uid, Model model,
-			HttpSession session) throws Exception {
-		ExpenseViewModel expenseViewModel = expenseService
-				.retrieveExpenseViewModel(uid);
+	public String showEditExpenseForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
+		ExpenseViewModel expenseViewModel = expenseService.retrieveExpenseViewModel(uid);
 		model.addAttribute("expense", expenseViewModel);
 		return "editExpense";
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
-	public String editExpense(@PathVariable String uId,
-			ExpenseViewModel viewModel, HttpSession session) throws Exception {
+	public String editExpense(@PathVariable String uId, ExpenseViewModel viewModel, HttpSession session)
+			throws Exception {
 		expenseService.editExpense(viewModel);
 		return "redirect:/expenses/";
 	}
