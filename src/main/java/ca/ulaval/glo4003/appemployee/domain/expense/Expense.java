@@ -16,8 +16,7 @@ public class Expense {
 		this.uid = UUID.randomUUID().toString();
 	}
 
-	public Expense(double amount, LocalDate date, String userEmail,
-			String comment) {
+	public Expense(double amount, LocalDate date, String userEmail, String comment) {
 		this();
 		this.amount = amount;
 		this.date = date;
@@ -65,8 +64,7 @@ public class Expense {
 		this.date = date;
 	}
 
-	public void update(double amount, LocalDate date, String userEmail,
-			String comment) {
+	public void update(double amount, LocalDate date, String userEmail, String comment) {
 		this.amount = amount;
 		this.date = date;
 		this.userEmail = userEmail;
