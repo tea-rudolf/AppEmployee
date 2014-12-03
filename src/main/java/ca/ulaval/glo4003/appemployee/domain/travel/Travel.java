@@ -76,6 +76,7 @@ public class Travel {
 
 	public void update(double distance, String vehicle, LocalDate date, String userEmail, String comment) {
 		this.distanceTravelled = distance;
+		this.vehicle = Vehicle.valueOf(vehicle);
 		this.date = date;
 		this.userEmail = userEmail;
 		this.comment = comment;
