@@ -4,7 +4,7 @@
     <uid>0c015760-660d-11e4-9803-0800200c9a66</uid>
     <billableHours>7.5</billableHours>
     <date>2014-09-01</date>
-    <userId>emp@company.com</userId>
+    <userEmail>emp@company.com</userEmail>
     <taskUid>0001</taskUid>
     <comment>Comment</comment>
   </timeEntries>
@@ -12,7 +12,7 @@
     <uid>0c015761-660d-11e4-9803-0800200c9a66</uid>
     <billableHours>6</billableHours>
     <date>2014-09-02</date>
-    <userId>emp@company.com</userId>
+    <userEmail>emp@company.com</userEmail>
     <taskUid>0002</taskUid>
     <comment>Comment</comment>
   </timeEntries>
@@ -20,7 +20,7 @@
     <uid>0c015762-660d-11e4-9803-0800200c9a66</uid>
     <billableHours>5</billableHours>
     <date>2014-09-03</date>
-    <userId>emp@company.com</userId>
+    <userEmail>emp@company.com</userEmail>
     <taskUid>0003</taskUid>
     <comment>Comment</comment>
   </timeEntries>

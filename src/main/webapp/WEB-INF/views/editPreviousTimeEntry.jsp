@@ -14,9 +14,9 @@
 		<h2 class="sub-header">Edit a time entry</h2>
 		<h3>
 			Pay period from
-			<c:out value="${timeForm.payPeriodStartDate}" />
+			<c:out value="${previoustimeForm.payPeriodStartDate}" />
 			to
-			<c:out value="${timeForm.payPeriodEndDate}" />
+			<c:out value="${previoustimeForm.payPeriodEndDate}" />
 		</h3>
 					<c:if
 					test="${not empty message }">
@@ -42,11 +42,11 @@
 					<tr>
 						<td><form:label path="dateTimeEntry"></form:label> <form:input
 								class="form-control" type="date"
-								min="${timeForm.payPeriodStartDate}"
-								max="${timeForm.payPeriodEndDate}" path="dateTimeEntry"
+								min="${previoustimeForm.payPeriodStartDate}"
+								max="${previoustimeForm.payPeriodEndDate}" path="dateTimeEntry"
 								value="${dateTimeEntry}" required="required" /></td>
 						<td><form:select class="form-control" path="taskIdTimeEntry">
-								<form:options items="${timeForm.availableTasks}" itemValue="uid"
+								<form:options items="${previoustimeForm.availableTasks}" itemValue="uid"
 									itemLabel="name"></form:options>
 							</form:select></td>
 						<td><form:label path="hoursTimeEntry"></form:label> <form:input

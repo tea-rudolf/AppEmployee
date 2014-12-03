@@ -81,11 +81,11 @@ public class TimeControllerTest {
 	@Test
 	public void currentPayPeriodDatesReturnsEmptyTimeViewModel() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(timeServiceMock.retrieveEmptyTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
+		when(timeServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 		
 		TimeViewModel returnedViewModel = timeControllerMock.currentPayPeriodDates(sessionMock);
 		
-		assertEquals(timeServiceMock.retrieveEmptyTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL), returnedViewModel);
+		assertEquals(timeServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL), returnedViewModel);
 	}
 
 	@Test
@@ -131,7 +131,7 @@ public class TimeControllerTest {
 	@Test
 	public void showPreviousTimeFormReturnsPreviousTimeSheet() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(timeServiceMock.retrievePreviousPayPeriodViewModel(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
+		when(timeServiceMock.retrieveTimeEntryViewModelForPreviousPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
 
 		String returnedForm = timeControllerMock.showPreviousTimeForm(modelMapMock, sessionMock);
 

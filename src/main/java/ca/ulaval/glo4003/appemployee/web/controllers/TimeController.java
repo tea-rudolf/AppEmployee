@@ -24,7 +24,8 @@ public class TimeController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
 	static final String TIME_ATTRIBUTE = "timeForm";
-
+	static final String PREVIOUS_TIME_ATTRIBUTE = "previoustimeForm";
+	
 	private TimeService timeService;
 
 	@Autowired
@@ -34,7 +35,12 @@ public class TimeController {
 
 	@ModelAttribute(TIME_ATTRIBUTE)
 	public TimeViewModel currentPayPeriodDates(HttpSession session) {
-		 return timeService.retrieveEmptyTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());	
+		 return timeService.retrieveTimeEntryViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());	
+	}
+	
+	@ModelAttribute(PREVIOUS_TIME_ATTRIBUTE)
+	public TimeViewModel previousPayPeriodDates(HttpSession session) {
+		 return timeService.retrieveTimeEntryViewModelForPreviousPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());	
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
