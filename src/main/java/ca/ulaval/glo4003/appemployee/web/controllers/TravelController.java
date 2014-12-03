@@ -63,7 +63,7 @@ public class TravelController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String createTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
 		travelService.createTravel(travelForm);
-		return "travelEntrySubmitted";
+		return "redirect:/travel/";
 	}
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)

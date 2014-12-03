@@ -7,8 +7,6 @@ import ca.ulaval.glo4003.appemployee.domain.task.Task;
 
 public class TimeViewModel {
 
-	private String payPeriodStartDate;
-	private String payPeriodEndDate;
 	private List<Task> availableTasks = new ArrayList<Task>();
 	private double hoursTimeEntry;
 	private String dateTimeEntry;
@@ -17,38 +15,6 @@ public class TimeViewModel {
 	private String taskIdTimeEntry;
 	private String taskNameTimeEntry;
 	private String timeEntryUid;
-
-	public String getPayPeriodStartDate() {
-		return payPeriodStartDate;
-	}
-
-	public void setPayPeriodStartDate(String payPeriodStartDate) {
-		this.payPeriodStartDate = payPeriodStartDate;
-	}
-
-	public String getPayPeriodEndDate() {
-		return payPeriodEndDate;
-	}
-
-	public void setPayPeriodEndDate(String payPeriodEndDate) {
-		this.payPeriodEndDate = payPeriodEndDate;
-	}
-
-	public String getStartDate() {
-		return payPeriodStartDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.payPeriodStartDate = startDate;
-	}
-
-	public String getEndDate() {
-		return payPeriodEndDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.payPeriodEndDate = endDate;
-	}
 
 	public double getHoursTimeEntry() {
 		return hoursTimeEntry;
