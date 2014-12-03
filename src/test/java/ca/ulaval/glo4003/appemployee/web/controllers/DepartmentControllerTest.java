@@ -38,6 +38,7 @@ public class DepartmentControllerTest {
 	private static final String DEPARTMENTS_LIST_REDIRECT = "redirect:/departments/";
 	private static final String ASSIGN_EMPLOYE_FORM = "assignEmployeToDepartment";
 	private static final String DEPARTMENT_LIST_FORM = "departmentsList";
+	private static final String DEPARTMENT_LIST_REDIRECT = "redirect:/departments";
 
 	@Mock
 	private DepartmentService departmentServiceMock;
@@ -189,7 +190,7 @@ public class DepartmentControllerTest {
 			throws Exception {
 		String returnedForm = departmentController.assignEmployeeToDepartment(
 				assignationEmployeDepViewModelMock, sessionMock);
-		assertEquals(DEPARTMENT_LIST_FORM, returnedForm);
+		assertEquals(DEPARTMENT_LIST_REDIRECT, returnedForm);
 	}
 
 	@Test

@@ -67,7 +67,7 @@ public class TimeController {
 			HttpSession session) throws Exception {
 		timeService.createTimeEntry(timeform,
 				timeService.retrieveCurrentPayPeriod());
-		return "redirect:/time/";
+		return "redirect:/time";
 	}
 
 	@RequestMapping(value = "/{timeEntryUid}/edit", method = RequestMethod.GET)

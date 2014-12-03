@@ -46,17 +46,17 @@ public class TravelServiceTest {
 				payPeriodServiceMock, travelProcessorMock);
 	}
 
-	// @Test
-	// public void updateCallsCorrectDomainMethod() {
-	// when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
-	// travelService.updateTravel(NEW_UID, travelViewModelMock);
-	// verify(travelMock, times(1)).setUid(NEW_UID);
-	// }
-
-	// @Test
-	// public void createCallsCorrectRepositoryMethod() throws Exception {
-	// when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
-	// travelService.createTravel(travelViewModelMock);
-	// verify(travelRepositoryMock, times(1)).store(travelMock);
-	// }
+//	 @Test
+//	 public void updateCallsCorrectDomainMethod() {
+//	 when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
+//	 travelService.updateTravel(NEW_UID, travelViewModelMock);
+//	 verify(travelMock, times(1)).setUid(NEW_UID);
+//	 }
+//
+//	 @Test
+//	 public void createCallsCorrectRepositoryMethod() throws Exception {
+//	 when(travelConverterMock.convert(travelViewModelMock)).thenReturn(travelMock);
+//	 travelService.createTravel(travelViewModelMock);
+//	 verify(travelRepositoryMock, times(1)).store(travelMock);
+//	 }
 }

@@ -34,7 +34,6 @@ public class ExpensesControllerTest {
 	private static final String EXPENSES_JSP = "expenses";
 	private static final String CREATE_EXPENSE_JSP = "createExpense";
 	private static final String REDIRECT_EXPENSE_LINK = "redirect:/expenses/";
-	private static final String EXPENSES_SUBMIT_JSP = "expensesSubmitted";
 	private static final String EDIT_EXPENSE_JSP = "editExpense";
 
 	private Collection<ExpenseViewModel> expensesViewModels;
@@ -115,7 +114,7 @@ public class ExpensesControllerTest {
 		String returnedForm = expensesControllerMock.createExpense(modelMock,
 				expenseViewModelMock, sessionMock);
 
-		assertEquals(EXPENSES_SUBMIT_JSP, returnedForm);
+		assertEquals(REDIRECT_EXPENSE_LINK, returnedForm);
 	}
 
 	@Test
