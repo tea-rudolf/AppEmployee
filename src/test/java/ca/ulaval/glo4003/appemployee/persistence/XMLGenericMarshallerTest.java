@@ -27,7 +27,8 @@ public class XMLGenericMarshallerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		serializer = new XMLGenericMarshaller<ProjectXMLAssembler>(ProjectXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<ProjectXMLAssembler>(
+				ProjectXMLAssembler.class);
 		loader = mock(ResourcesLoader.class);
 	}
 
@@ -39,7 +40,8 @@ public class XMLGenericMarshallerTest {
 	@Test
 	public void canUnmarshall() throws Exception {
 		InputStream stream = mock(InputStream.class);
-		when(loader.loadResource(ProjectXMLAssembler.class, RESOURCE_NAME)).thenReturn(stream);
+		when(loader.loadResource(ProjectXMLAssembler.class, RESOURCE_NAME))
+				.thenReturn(stream);
 		serializer.setResourcesLoader(loader);
 
 		ProjectXMLAssembler dto = mock(ProjectXMLAssembler.class);
@@ -52,7 +54,8 @@ public class XMLGenericMarshallerTest {
 
 	@Test(expected = SerializationException.class)
 	public void cannotUnmarshalInvalidResource() throws Exception {
-		when(loader.loadResource(ProjectXMLAssembler.class, RESOURCE_NAME)).thenReturn(null);
+		when(loader.loadResource(ProjectXMLAssembler.class, RESOURCE_NAME))
+				.thenReturn(null);
 		serializer.setResourcesLoader(loader);
 
 		serializer.unmarshall(RESOURCE_NAME);

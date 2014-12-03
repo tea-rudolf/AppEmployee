@@ -22,11 +22,13 @@ public class XMLProjectRepository implements ProjectRepository {
 	private static String PROJECTS_FILEPATH = "/projects.xml";
 
 	public XMLProjectRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<ProjectXMLAssembler>(ProjectXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<ProjectXMLAssembler>(
+				ProjectXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLProjectRepository(XMLGenericMarshaller<ProjectXMLAssembler> serializer) {
+	public XMLProjectRepository(
+			XMLGenericMarshaller<ProjectXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -48,12 +50,14 @@ public class XMLProjectRepository implements ProjectRepository {
 
 	private void saveXML() throws Exception {
 		ProjectXMLAssembler projectXMLWrapper = new ProjectXMLAssembler();
-		projectXMLWrapper.setProjects(new ArrayList<Project>(projects.values()));
+		projectXMLWrapper
+				.setProjects(new ArrayList<Project>(projects.values()));
 		serializer.marshall(projectXMLWrapper, PROJECTS_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		List<Project> deserializedProjects = serializer.unmarshall(PROJECTS_FILEPATH).getProjects();
+		List<Project> deserializedProjects = serializer.unmarshall(
+				PROJECTS_FILEPATH).getProjects();
 		for (Project project : deserializedProjects) {
 			projects.put(project.getUid(), project);
 		}

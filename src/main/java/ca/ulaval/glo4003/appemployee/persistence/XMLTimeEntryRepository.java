@@ -21,11 +21,13 @@ public class XMLTimeEntryRepository implements TimeEntryRepository {
 	private static String TIMEENTRIES_FILEPATH = "/timeEntries.xml";
 
 	public XMLTimeEntryRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<TimeEntryXMLAssembler>(TimeEntryXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<TimeEntryXMLAssembler>(
+				TimeEntryXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLTimeEntryRepository(XMLGenericMarshaller<TimeEntryXMLAssembler> serializer) {
+	public XMLTimeEntryRepository(
+			XMLGenericMarshaller<TimeEntryXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -42,12 +44,14 @@ public class XMLTimeEntryRepository implements TimeEntryRepository {
 
 	private void saveXML() throws Exception {
 		TimeEntryXMLAssembler timeEntryAssembler = new TimeEntryXMLAssembler();
-		timeEntryAssembler.setTimeEntries(new ArrayList<TimeEntry>(timeEntries.values()));
+		timeEntryAssembler.setTimeEntries(new ArrayList<TimeEntry>(timeEntries
+				.values()));
 		serializer.marshall(timeEntryAssembler, TIMEENTRIES_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		List<TimeEntry> deserializedTimeEntries = serializer.unmarshall(TIMEENTRIES_FILEPATH).getTimeEntries();
+		List<TimeEntry> deserializedTimeEntries = serializer.unmarshall(
+				TIMEENTRIES_FILEPATH).getTimeEntries();
 		for (TimeEntry timeEntry : deserializedTimeEntries) {
 			timeEntries.put(timeEntry.getUid(), timeEntry);
 		}

@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -20,7 +19,7 @@ import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class UserConverterTest {
-	
+
 	private static final String USER_EMAIL = "employee@employee.com";
 	private static final String USER_PASSWORD = "employee";
 	private static final double USER_WAGE = 25.00;
@@ -30,31 +29,34 @@ public class UserConverterTest {
 	private static final double SECOND_WAGE = 20.00;
 	private static final Role SECOND_ROLE = Role.SUPERVISOR;
 	private static final double EPSILON = 0.001;
-	
+
 	@Mock
 	private User userMock;
-	
+
 	@Mock
 	private UserViewModel userViewModelMock;
-	
+
 	@InjectMocks
 	private UserConverter userConverter;
-	
+
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 		userConverter = new UserConverter();
 	}
-	
+
 	@Test
 	public void convertUsersListToViewModelsConvertsAllOfThem() {
-		User firstUser = createUser(USER_EMAIL, USER_PASSWORD, USER_WAGE, USER_ROLE);
-		User secondUser = createUser(SECOND_EMAIL, SECOND_PASSWORD, SECOND_WAGE, SECOND_ROLE);
+		User firstUser = createUser(USER_EMAIL, USER_PASSWORD, USER_WAGE,
+				USER_ROLE);
+		User secondUser = createUser(SECOND_EMAIL, SECOND_PASSWORD,
+				SECOND_WAGE, SECOND_ROLE);
 		List<User> users = new ArrayList<User>();
 		users.add(firstUser);
 		users.add(secondUser);
 
-		UserViewModel[] viewModels = userConverter.convert(users).toArray(new UserViewModel[1]);
+		UserViewModel[] viewModels = userConverter.convert(users).toArray(
+				new UserViewModel[1]);
 
 		assertEquals(USER_EMAIL, viewModels[0].getEmail());
 		assertEquals(USER_PASSWORD, viewModels[0].getPassword());
@@ -66,23 +68,24 @@ public class UserConverterTest {
 		assertEquals(SECOND_WAGE, viewModels[1].getWage(), EPSILON);
 		assertEquals(SECOND_ROLE.toString(), viewModels[1].getRole());
 	}
-	
+
 	@Test
 	public void convertUserToUserViewModel() {
 		when(userMock.getEmail()).thenReturn(USER_EMAIL);
 		when(userMock.getPassword()).thenReturn(USER_PASSWORD);
 		when(userMock.getWage()).thenReturn(USER_WAGE);
 		when(userMock.getRole()).thenReturn(USER_ROLE);
-		
+
 		userViewModelMock = userConverter.convert(userMock);
-		
+
 		assertEquals(userMock.getEmail(), userViewModelMock.getEmail());
 		assertEquals(userMock.getPassword(), userViewModelMock.getPassword());
 		assertEquals(userMock.getWage(), userViewModelMock.getWage(), EPSILON);
 		assertEquals(userMock.getRole().toString(), userViewModelMock.getRole());
 	}
-	
-	private User createUser(String email, String password, double wage, Role role) {
+
+	private User createUser(String email, String password, double wage,
+			Role role) {
 		User user = mock(User.class);
 		given(user.getEmail()).willReturn(email);
 		given(user.getPassword()).willReturn(password);

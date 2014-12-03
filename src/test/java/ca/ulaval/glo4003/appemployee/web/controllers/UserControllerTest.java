@@ -22,7 +22,7 @@ public class UserControllerTest {
 	private static final String VALID_EMAIL = "employee@employee.com";
 	private static final String EDIT_PROFILE_JSP = "editProfile";
 	private static final String EMPLOYEE_JSP = "employee";
-	
+
 	@Mock
 	private Model modelMock;
 
@@ -47,9 +47,11 @@ public class UserControllerTest {
 	@Test
 	public void showUserProfileFormReturnsEditProfileFormIfSessionAttributeIsNotNull() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(userServiceMock.retrieveViewModelForCurrentUser(VALID_EMAIL)).thenReturn(userViewModelMock);
-		
-		String returnedForm = userController.showUserProfileForm(modelMock, sessionMock);
+		when(userServiceMock.retrieveViewModelForCurrentUser(VALID_EMAIL))
+				.thenReturn(userViewModelMock);
+
+		String returnedForm = userController.showUserProfileForm(modelMock,
+				sessionMock);
 
 		assertEquals(EDIT_PROFILE_JSP, returnedForm);
 	}
@@ -57,7 +59,8 @@ public class UserControllerTest {
 	@Test
 	public void updatePasswordRedirectsToEmployeePage() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		String returnedForm = userController.updatePassword(userViewModelMock, sessionMock);
+		String returnedForm = userController.updatePassword(userViewModelMock,
+				sessionMock);
 		assertEquals(EMPLOYEE_JSP, returnedForm);
 	}
 
@@ -65,7 +68,8 @@ public class UserControllerTest {
 	public void updatePasswordCallsTheCorrectServiceMethods() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		userController.updatePassword(userViewModelMock, sessionMock);
-		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL, userViewModelMock);
+		verify(userServiceMock, times(1)).updatePassword(VALID_EMAIL,
+				userViewModelMock);
 	}
 
 }

@@ -21,7 +21,8 @@ public class XMLTaskRepository implements TaskRepository {
 	private static String TASKS_FILEPATH = "/tasks.xml";
 
 	public XMLTaskRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<TaskXMLAssembler>(TaskXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<TaskXMLAssembler>(
+				TaskXMLAssembler.class);
 		parseXML();
 	}
 
@@ -52,7 +53,8 @@ public class XMLTaskRepository implements TaskRepository {
 	}
 
 	private void parseXML() throws Exception {
-		List<Task> deserializedTasks = serializer.unmarshall(TASKS_FILEPATH).getTasks();
+		List<Task> deserializedTasks = serializer.unmarshall(TASKS_FILEPATH)
+				.getTasks();
 		for (Task task : deserializedTasks) {
 			tasks.put(task.getUid(), task);
 		}

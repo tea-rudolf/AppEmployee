@@ -21,7 +21,8 @@ public class ExpenseService {
 	private ExpenseConverter expenseConverter;
 
 	@Autowired
-	public ExpenseService(TimeService timeService, ExpenseProcessor expenseProcessor, ExpenseConverter expenseConverter) {
+	public ExpenseService(TimeService timeService,
+			ExpenseProcessor expenseProcessor, ExpenseConverter expenseConverter) {
 		this.timeService = timeService;
 		this.expenseProcessor = expenseProcessor;
 		this.expenseConverter = expenseConverter;
@@ -32,27 +33,34 @@ public class ExpenseService {
 	}
 
 	public void createExpense(ExpenseViewModel viewModel) throws Exception {
-		expenseProcessor.createExpense(viewModel.getAmount(), new LocalDate(viewModel.getDate()), viewModel.getUserEmail(), viewModel.getComment());
+		expenseProcessor.createExpense(viewModel.getAmount(), new LocalDate(
+				viewModel.getDate()), viewModel.getUserEmail(), viewModel
+				.getComment());
 	}
 
 	public void editExpense(ExpenseViewModel viewModel) throws Exception {
-		expenseProcessor.editExpense(viewModel.getUid(), viewModel.getAmount(), new LocalDate(viewModel.getDate()), viewModel.getUserEmail(),
+		expenseProcessor.editExpense(viewModel.getUid(), viewModel.getAmount(),
+				new LocalDate(viewModel.getDate()), viewModel.getUserEmail(),
 				viewModel.getComment());
 	}
 
-	public ExpenseViewModel retrieveExpenseViewModel(String expenseUid) throws Exception {
+	public ExpenseViewModel retrieveExpenseViewModel(String expenseUid)
+			throws Exception {
 		Expense expense = expenseProcessor.retrieveExpenseByUid(expenseUid);
 		return expenseConverter.convert(expense);
 	}
 
-	public Collection<ExpenseViewModel> retrieveExpenseViewModelsListForCurrentPayPeriod(String userEmail) {
+	public Collection<ExpenseViewModel> retrieveExpenseViewModelsListForCurrentPayPeriod(
+			String userEmail) {
 		List<Expense> expenses = retrieveUserExpensesForCurrentPayPeriod(userEmail);
 		return expenseConverter.convert(expenses);
 	}
 
-	private List<Expense> retrieveUserExpensesForCurrentPayPeriod(String userEmail) {
+	private List<Expense> retrieveUserExpensesForCurrentPayPeriod(
+			String userEmail) {
 		PayPeriod currentPayPeriod = timeService.retrieveCurrentPayPeriod();
-		return expenseProcessor.retrieveUserExpensesForCurrentPayPeriod(userEmail, currentPayPeriod);
+		return expenseProcessor.retrieveUserExpensesForCurrentPayPeriod(
+				userEmail, currentPayPeriod);
 	}
 
 	public Object retrieveUserExpenseViewModel(String email) {

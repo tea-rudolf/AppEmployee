@@ -40,7 +40,8 @@ public class XMLUserRepositoryTest {
 
 	@Test
 	public void findByEmailFindsUserByEmail() throws Exception {
-		User dummyUser = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE, VALID_WAGE);
+		User dummyUser = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE,
+				VALID_WAGE);
 		repository.store(dummyUser);
 
 		assertEquals(dummyUser, repository.findByEmail(VALID_EMAIL));
@@ -56,8 +57,10 @@ public class XMLUserRepositoryTest {
 	@Test
 	public void findByEmailsFindsUsersByTheirEmails() throws Exception {
 		List<String> emails = new ArrayList<String>();
-		User dummyUser = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE, VALID_WAGE);
-		User dummyUser2 = new User(VALID_EMAIL2, VALID_EMAIL2, Role.EMPLOYEE, VALID_WAGE);
+		User dummyUser = new User(VALID_EMAIL, VALID_PASSWORD, Role.EMPLOYEE,
+				VALID_WAGE);
+		User dummyUser2 = new User(VALID_EMAIL2, VALID_EMAIL2, Role.EMPLOYEE,
+				VALID_WAGE);
 		repository.store(dummyUser);
 		repository.store(dummyUser2);
 		emails.add(VALID_EMAIL);

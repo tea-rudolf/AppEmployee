@@ -31,7 +31,9 @@ public class UserService {
 	private UserConverter userConverter;
 
 	@Autowired
-	public UserService(UserRepository userRepository, TaskRepository taskRepository, TimeEntryRepository timeEntryRepository, UserConverter userConverter) {
+	public UserService(UserRepository userRepository,
+			TaskRepository taskRepository,
+			TimeEntryRepository timeEntryRepository, UserConverter userConverter) {
 		this.userRepository = userRepository;
 		this.taskRepository = taskRepository;
 		this.timeEntryRepository = timeEntryRepository;
@@ -42,7 +44,8 @@ public class UserService {
 		User user = userRepository.findByEmail(email);
 
 		if (user == null) {
-			throw new UserNotFoundException("User not found with following email : " + email);
+			throw new UserNotFoundException(
+					"User not found with following email : " + email);
 		}
 		return user;
 	}
@@ -64,7 +67,8 @@ public class UserService {
 		return timeEntryRepository.findByUid(id);
 	}
 
-	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod, String currentUserId) {
+	public List<Task> getTasksForUserForAPayPeriod(PayPeriod payPeriod,
+			String currentUserId) {
 
 		List<Task> tasks = new ArrayList<Task>();
 
@@ -77,7 +81,8 @@ public class UserService {
 		return tasks;
 	}
 
-	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(PayPeriod payPeriod, String userEmail) {
+	public List<TimeEntry> getTimeEntriesForUserForAPayPeriod(
+			PayPeriod payPeriod, String userEmail) {
 
 		ArrayList<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
 
@@ -105,7 +110,8 @@ public class UserService {
 
 	}
 
-	public void updateEmployeeInformation(UserViewModel userViewModel) throws Exception {
+	public void updateEmployeeInformation(UserViewModel userViewModel)
+			throws Exception {
 
 		User employee = new User();
 		employee.setEmail(userViewModel.getEmail());

@@ -44,7 +44,8 @@ public class Department {
 
 	public void addEmployee(String employeeUid) {
 		if (employeeIds.contains(employeeUid)) {
-			throw new EmployeeAlreadyExistsException("Employee already assigned to this department.");
+			throw new EmployeeAlreadyExistsException(
+					"Employee already assigned to this department.");
 		}
 
 		employeeIds.add(employeeUid);

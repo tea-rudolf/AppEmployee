@@ -28,7 +28,8 @@ public class TimeEntryTest {
 
 	@Test
 	public void canInstantiateTimeEntryWithParameters() {
-		timeEntry = new TimeEntry(UID, HOURS, DATE, USER_EMAIL, TASK_UID, COMMENT);
+		timeEntry = new TimeEntry(UID, HOURS, DATE, USER_EMAIL, TASK_UID,
+				COMMENT);
 		assertNotNull(timeEntry);
 	}
 

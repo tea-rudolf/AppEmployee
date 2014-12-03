@@ -11,7 +11,8 @@ public class UserViewModel {
 	private String password;
 	private double wage;
 	private String role;
-	private ArrayList<Role> availableRoles = new ArrayList<Role>(Arrays.asList(Role.values()));
+	private ArrayList<Role> availableRoles = new ArrayList<Role>(
+			Arrays.asList(Role.values()));
 
 	public String getEmail() {
 		return email;

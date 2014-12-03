@@ -22,7 +22,8 @@ public class ResourcesLoaderTest {
 
 	@Test
 	public void givenValidResourceLoadsResource() {
-		assertNotNull(loader.loadResource(ProjectXMLAssembler.class, VALID_DUMMY_RESOURCE));
+		assertNotNull(loader.loadResource(ProjectXMLAssembler.class,
+				VALID_DUMMY_RESOURCE));
 	}
 
 	@Test
@@ -32,7 +33,8 @@ public class ResourcesLoaderTest {
 
 	@Test
 	public void cantLoadUnexistingResource() {
-		assertNull(loader.loadResource(ProjectXMLAssembler.class, INVALID_DUMMY_RESOURCE));
+		assertNull(loader.loadResource(ProjectXMLAssembler.class,
+				INVALID_DUMMY_RESOURCE));
 	}
 
 	@Test(expected = FileNotFoundException.class)

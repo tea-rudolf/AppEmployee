@@ -22,7 +22,8 @@ public class XMLExpenseRepository implements ExpenseRepository {
 	private static String EXPENSES_FILEPATH = "/expenses.xml";
 
 	public XMLExpenseRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<ExpenseXMLAssembler>(ExpenseXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<ExpenseXMLAssembler>(
+				ExpenseXMLAssembler.class);
 		parseXML();
 	}
 
@@ -31,7 +32,8 @@ public class XMLExpenseRepository implements ExpenseRepository {
 		return expenses.get(uId);
 	}
 
-	public XMLExpenseRepository(XMLGenericMarshaller<ExpenseXMLAssembler> serializer) {
+	public XMLExpenseRepository(
+			XMLGenericMarshaller<ExpenseXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -65,7 +67,8 @@ public class XMLExpenseRepository implements ExpenseRepository {
 	}
 
 	private void parseXML() throws Exception {
-		List<Expense> deserializedExpenses = serializer.unmarshall(EXPENSES_FILEPATH).getExpenses();
+		List<Expense> deserializedExpenses = serializer.unmarshall(
+				EXPENSES_FILEPATH).getExpenses();
 		for (Expense expense : deserializedExpenses) {
 			expenses.put(expense.getUid(), expense);
 		}

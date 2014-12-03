@@ -23,13 +23,15 @@ public class TimeService {
 	private UserService userService;
 
 	@Autowired
-	public TimeService(TimeProcessor timeProcessor, TimeConverter timeConverter, UserService userService) {
+	public TimeService(TimeProcessor timeProcessor,
+			TimeConverter timeConverter, UserService userService) {
 		this.timeProcessor = timeProcessor;
 		this.timeConverter = timeConverter;
 		this.userService = userService;
 	}
 
-	public PayPeriod retrieveCurrentPayPeriod() throws PayPeriodNotFoundException {
+	public PayPeriod retrieveCurrentPayPeriod()
+			throws PayPeriodNotFoundException {
 		return timeProcessor.retrieveCurrentPayPeriod();
 	}
 
@@ -41,38 +43,55 @@ public class TimeService {
 		timeProcessor.editPayPeriod(payPeriod);
 	}
 
-	public void createTimeEntry(TimeViewModel timeEntryViewModel, PayPeriod payPeriod) throws Exception {
-		timeProcessor.createTimeEntry(payPeriod, timeEntryViewModel.getHoursTimeEntry(), new LocalDate(timeEntryViewModel.getDateTimeEntry()),
-				timeEntryViewModel.getUserEmail(), timeEntryViewModel.getTaskIdTimeEntry(), timeEntryViewModel.getCommentTimeEntry());
+	public void createTimeEntry(TimeViewModel timeEntryViewModel,
+			PayPeriod payPeriod) throws Exception {
+		timeProcessor.createTimeEntry(payPeriod, timeEntryViewModel
+				.getHoursTimeEntry(),
+				new LocalDate(timeEntryViewModel.getDateTimeEntry()),
+				timeEntryViewModel.getUserEmail(), timeEntryViewModel
+						.getTaskIdTimeEntry(), timeEntryViewModel
+						.getCommentTimeEntry());
 	}
 
-	public void updateTimeEntry(TimeViewModel timeEntryViewModel) throws Exception {
-		timeProcessor.editTimeEntry(timeEntryViewModel.getTimeEntryUid(), timeEntryViewModel.getHoursTimeEntry(),
-				new LocalDate(timeEntryViewModel.getDateTimeEntry()), timeEntryViewModel.getUserEmail(), timeEntryViewModel.getTaskIdTimeEntry(),
-				timeEntryViewModel.getCommentTimeEntry());
+	public void updateTimeEntry(TimeViewModel timeEntryViewModel)
+			throws Exception {
+		timeProcessor.editTimeEntry(timeEntryViewModel.getTimeEntryUid(),
+				timeEntryViewModel.getHoursTimeEntry(), new LocalDate(
+						timeEntryViewModel.getDateTimeEntry()),
+				timeEntryViewModel.getUserEmail(), timeEntryViewModel
+						.getTaskIdTimeEntry(), timeEntryViewModel
+						.getCommentTimeEntry());
 	}
 
 	public PayPeriodViewModel retrieveCurrentPayPeriodViewModel() {
 		PayPeriod payPeriod = retrieveCurrentPayPeriod();
-		return new PayPeriodViewModel(payPeriod.getStartDate().toString(), payPeriod.getEndDate().toString());
+		return new PayPeriodViewModel(payPeriod.getStartDate().toString(),
+				payPeriod.getEndDate().toString());
 	}
 
 	public PayPeriodViewModel retrievePreviousPayPeriodViewModel() {
 		PayPeriod payPeriod = retrievePreviousPayPeriod();
-		return new PayPeriodViewModel(payPeriod.getStartDate().toString(), payPeriod.getEndDate().toString());
+		return new PayPeriodViewModel(payPeriod.getStartDate().toString(),
+				payPeriod.getEndDate().toString());
 	}
-	
+
 	public TimeViewModel retrieveTimeEntryViewModelForUser(String userEmail) {
 		return timeConverter.convert(userEmail);
 	}
 
-	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(String userEmail) {
-		List<TimeEntry> timeEntries = userService.getTimeEntriesForUserForAPayPeriod(retrieveCurrentPayPeriod(), userEmail);
+	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(
+			String userEmail) {
+		List<TimeEntry> timeEntries = userService
+				.getTimeEntriesForUserForAPayPeriod(retrieveCurrentPayPeriod(),
+						userEmail);
 		return timeConverter.convert(timeEntries);
 	}
 
-	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForPreviousPayPeriod(String userEmail) {
-		return timeConverter.convert(userService.getTimeEntriesForUserForAPayPeriod(retrievePreviousPayPeriod(), userEmail));
+	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForPreviousPayPeriod(
+			String userEmail) {
+		return timeConverter.convert(userService
+				.getTimeEntriesForUserForAPayPeriod(
+						retrievePreviousPayPeriod(), userEmail));
 	}
 
 	public TimeViewModel retrieveTimeEntryViewModel(String timeEntryUid) {

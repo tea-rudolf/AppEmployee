@@ -21,7 +21,7 @@ import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
 public class TimeConverterTest {
-	
+
 	private static final LocalDate START_DATE = new LocalDate(2014, 9, 22);
 	private static final LocalDate END_DATE = new LocalDate(2014, 10, 03);
 	private static final double HOURS = 7.00;
@@ -36,16 +36,16 @@ public class TimeConverterTest {
 
 	@Mock
 	private PayPeriod payPeriodMock;
-	
+
 	@Mock
 	private TimeViewModel timeViewModelMock;
-	
+
 	@Mock
 	private TimeEntry timeEntryMock;
-	
+
 	@Mock
 	private ProjectService projectServiceMock;
-	
+
 	@InjectMocks
 	private TimeConverter payPeriodConverterMock;
 
@@ -54,16 +54,19 @@ public class TimeConverterTest {
 		MockitoAnnotations.initMocks(this);
 		payPeriodConverterMock = new TimeConverter(projectServiceMock);
 	}
-	
+
 	@Test
 	public void convertTimeEntriesListToViewModelsConvertsAllOfThem() {
-		TimeEntry firstTimeEntry = createTimeEntry(TIME_ENTRY_ID, HOURS, START_DATE);
-		TimeEntry secondTimeEntry = createTimeEntry(SECOND_ID, OTHER_HOURS, END_DATE);
+		TimeEntry firstTimeEntry = createTimeEntry(TIME_ENTRY_ID, HOURS,
+				START_DATE);
+		TimeEntry secondTimeEntry = createTimeEntry(SECOND_ID, OTHER_HOURS,
+				END_DATE);
 		List<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
 		timeEntries.add(firstTimeEntry);
 		timeEntries.add(secondTimeEntry);
 
-		TimeViewModel[] viewModels = payPeriodConverterMock.convert(timeEntries).toArray(new TimeViewModel[1]);
+		TimeViewModel[] viewModels = payPeriodConverterMock
+				.convert(timeEntries).toArray(new TimeViewModel[1]);
 
 		assertEquals(TIME_ENTRY_ID, viewModels[0].getTimeEntryUid());
 		assertEquals(HOURS, viewModels[0].getHoursTimeEntry(), EPSILON);
@@ -71,7 +74,6 @@ public class TimeConverterTest {
 		assertEquals(SECOND_ID, viewModels[1].getTimeEntryUid());
 		assertEquals(OTHER_HOURS, viewModels[1].getHoursTimeEntry(), EPSILON);
 	}
-
 
 	@Test
 	public void convertPayPeriodConvertsIntoViewModel() {
@@ -84,23 +86,30 @@ public class TimeConverterTest {
 
 		timeViewModelMock = payPeriodConverterMock.convert(timeEntryMock);
 
-		assertEquals(timeEntryMock.getDate().toString(), timeViewModelMock.getDateTimeEntry());
-		assertEquals(timeEntryMock.getBillableHours(), timeViewModelMock.getHoursTimeEntry(), EPSILON);
-		assertEquals(projectServiceMock.getTaskName(TASK_ID), timeViewModelMock.getTaskNameTimeEntry());
-		assertEquals(timeEntryMock.getComment(), timeViewModelMock.getCommentTimeEntry());
+		assertEquals(timeEntryMock.getDate().toString(),
+				timeViewModelMock.getDateTimeEntry());
+		assertEquals(timeEntryMock.getBillableHours(),
+				timeViewModelMock.getHoursTimeEntry(), EPSILON);
+		assertEquals(projectServiceMock.getTaskName(TASK_ID),
+				timeViewModelMock.getTaskNameTimeEntry());
+		assertEquals(timeEntryMock.getComment(),
+				timeViewModelMock.getCommentTimeEntry());
 	}
 
-//	@Test
-//	public void convertPayPeriodConvertsIntoIntoViewModel() {
-//		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
-//		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-//
-//		timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock, USER_EMAIL);
-//
-//		assertEquals(payPeriodMock.getStartDate().toString(), timeViewModelMock.getStartDate());
-//		assertEquals(payPeriodMock.getEndDate().toString(), timeViewModelMock.getEndDate());
-//	}
-	
+	// @Test
+	// public void convertPayPeriodConvertsIntoIntoViewModel() {
+	// when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
+	// when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
+	//
+	// timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock,
+	// USER_EMAIL);
+	//
+	// assertEquals(payPeriodMock.getStartDate().toString(),
+	// timeViewModelMock.getStartDate());
+	// assertEquals(payPeriodMock.getEndDate().toString(),
+	// timeViewModelMock.getEndDate());
+	// }
+
 	private TimeEntry createTimeEntry(String id, double hours, LocalDate date) {
 		TimeEntry timeEntry = mock(TimeEntry.class);
 		given(timeEntry.getUid()).willReturn(id);

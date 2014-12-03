@@ -26,8 +26,9 @@ public class Project {
 	public Project() {
 		this.uid = UUID.randomUUID().toString();
 	}
-	
-	public Project(String name, List<String> taskIds, List<String> userIds, List<String> expenseIds) {
+
+	public Project(String name, List<String> taskIds, List<String> userIds,
+			List<String> expenseIds) {
 		this();
 		this.name = name;
 		this.taskUids = taskIds;
@@ -74,7 +75,8 @@ public class Project {
 
 	public void addTaskUid(String taskUid) {
 		if (taskUids.contains(taskUid)) {
-			throw new TaskAlreadyExistsException("Task already assigned to this project.");
+			throw new TaskAlreadyExistsException(
+					"Task already assigned to this project.");
 		}
 
 		taskUids.add(taskUid);
@@ -86,7 +88,8 @@ public class Project {
 
 	public void addEmployeeToProject(String userId) {
 		if (employeeUids.contains(userId)) {
-			throw new EmployeeAlreadyExistsException("Employee already assigned to this project.");
+			throw new EmployeeAlreadyExistsException(
+					"Employee already assigned to this project.");
 		}
 
 		employeeUids.add(userId);

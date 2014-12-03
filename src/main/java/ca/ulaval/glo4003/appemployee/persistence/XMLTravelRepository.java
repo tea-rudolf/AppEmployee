@@ -22,11 +22,13 @@ public class XMLTravelRepository implements TravelRepository {
 	private static String TRAVELS_FILEPATH = "/travels.xml";
 
 	public XMLTravelRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<TravelXMLAssembler>(TravelXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<TravelXMLAssembler>(
+				TravelXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLTravelRepository(XMLGenericMarshaller<TravelXMLAssembler> serializer) {
+	public XMLTravelRepository(
+			XMLGenericMarshaller<TravelXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -65,7 +67,8 @@ public class XMLTravelRepository implements TravelRepository {
 	}
 
 	private void parseXML() throws Exception {
-		List<Travel> deserializedTravels = serializer.unmarshall(TRAVELS_FILEPATH).getTravels();
+		List<Travel> deserializedTravels = serializer.unmarshall(
+				TRAVELS_FILEPATH).getTravels();
 		for (Travel travel : deserializedTravels) {
 			travels.put(travel.getUid(), travel);
 		}

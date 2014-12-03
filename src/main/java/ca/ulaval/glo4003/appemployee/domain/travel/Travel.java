@@ -17,7 +17,8 @@ public class Travel {
 		this.uid = UUID.randomUUID().toString();
 	}
 
-	public Travel(double distance, String vehicle, LocalDate localDate, String user, String comment) {
+	public Travel(double distance, String vehicle, LocalDate localDate,
+			String user, String comment) {
 		this();
 		this.distanceTravelled = distance;
 		this.vehicle = Vehicle.valueOf(vehicle);
@@ -74,7 +75,8 @@ public class Travel {
 		this.vehicle = vehicule;
 	}
 
-	public void update(double distance, String vehicle, LocalDate date, String userEmail, String comment) {
+	public void update(double distance, String vehicle, LocalDate date,
+			String userEmail, String comment) {
 		this.distanceTravelled = distance;
 		this.vehicle = Vehicle.valueOf(vehicle);
 		this.date = date;

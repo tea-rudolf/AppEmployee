@@ -49,7 +49,8 @@ public class XMLTravelRepositoryTest {
 		when(travelMock.getUid()).thenReturn(TRAVEL_UID);
 		when(travelMock.getUserEmail()).thenReturn(USER);
 		travelRepository.store(travelMock);
-		List<Travel> sampleTravelList = travelRepository.findAllTravelsByUser(USER);
+		List<Travel> sampleTravelList = travelRepository
+				.findAllTravelsByUser(USER);
 		assertEquals(TRAVELS_LIST_SIZE, sampleTravelList.size());
 	}
 

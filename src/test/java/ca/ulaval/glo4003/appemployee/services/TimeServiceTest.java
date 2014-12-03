@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -59,7 +59,8 @@ public class TimeServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		payPeriodService = new TimeService(timeProcessorMock, timeConverterMock, userServiceMock);
+		payPeriodService = new TimeService(timeProcessorMock,
+				timeConverterMock, userServiceMock);
 	}
 
 	@Test

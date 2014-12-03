@@ -42,7 +42,8 @@ public class TravelServiceTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelService = new TravelService(travelConverterMock, payPeriodServiceMock, travelProcessorMock);
+		travelService = new TravelService(travelConverterMock,
+				payPeriodServiceMock, travelProcessorMock);
 	}
 
 	// @Test

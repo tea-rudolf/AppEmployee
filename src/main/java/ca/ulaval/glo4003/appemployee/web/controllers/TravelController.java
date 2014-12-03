@@ -44,36 +44,43 @@ public class TravelController {
 
 	@ModelAttribute(TRAVEL_ATTRIBUTE)
 	public TravelViewModel retrieveUserTravelViewModel(HttpSession session) {
-		return travelService.retrieveUserTravelViewModel(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		return travelService.retrieveUserTravelViewModel(session.getAttribute(
+				EMAIL_ATTRIBUTE).toString());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showTravelsList(ModelMap model, HttpSession session) {
-		Collection<TravelViewModel> travelViewModels = travelService.retrieveUserTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
-				.toString());
+		Collection<TravelViewModel> travelViewModels = travelService
+				.retrieveUserTravelViewModelsForCurrentPayPeriod(session
+						.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("travelEntries", travelViewModels);
 		return "travel";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String showCreateTravelEntryForm(Model model, TravelViewModel travelViewModel, HttpSession session) {
+	public String showCreateTravelEntryForm(Model model,
+			TravelViewModel travelViewModel, HttpSession session) {
 		return "createTravelEntry";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String createTravelEntry(Model model, TravelViewModel travelForm, HttpSession session) throws Exception {
+	public String createTravelEntry(Model model, TravelViewModel travelForm,
+			HttpSession session) throws Exception {
 		travelService.createTravel(travelForm);
 		return "redirect:/travel/";
 	}
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
-	public String showEditTravelEntryForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
-		model.addAttribute("travelForm", travelService.retrieveTravelViewModel(uid));
+	public String showEditTravelEntryForm(@PathVariable String uid,
+			Model model, HttpSession session) throws Exception {
+		model.addAttribute("travelForm",
+				travelService.retrieveTravelViewModel(uid));
 		return "editTravelEntry";
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
-	public String editTravelEntry(@PathVariable String uId, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
+	public String editTravelEntry(@PathVariable String uId, Model model,
+			TravelViewModel viewModel, HttpSession session) throws Exception {
 		travelService.editTravel(uId, viewModel);
 		return "redirect:/travel/";
 	}

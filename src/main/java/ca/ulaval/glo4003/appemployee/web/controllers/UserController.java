@@ -29,14 +29,19 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showUserProfileForm(Model model, HttpSession session) {
-		model.addAttribute("user", userService.retrieveViewModelForCurrentUser(session.getAttribute(EMAIL_ATTRIBUTE).toString()));
+		model.addAttribute("user", userService
+				.retrieveViewModelForCurrentUser(session.getAttribute(
+						EMAIL_ATTRIBUTE).toString()));
 
 		return "editProfile";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String updatePassword(@ModelAttribute("user") UserViewModel viewModel, HttpSession session) throws Exception {
-		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE).toString(), viewModel);
+	public String updatePassword(
+			@ModelAttribute("user") UserViewModel viewModel, HttpSession session)
+			throws Exception {
+		userService.updatePassword(session.getAttribute(EMAIL_ATTRIBUTE)
+				.toString(), viewModel);
 
 		return "employee";
 	}

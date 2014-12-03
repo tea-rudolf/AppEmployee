@@ -22,7 +22,8 @@ public class XMLUserRepository implements UserRepository {
 	private static String USERS_FILEPATH = "/users.xml";
 
 	public XMLUserRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<UserXMLAssembler>(UserXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<UserXMLAssembler>(
+				UserXMLAssembler.class);
 		parseXML();
 	}
 
@@ -64,7 +65,8 @@ public class XMLUserRepository implements UserRepository {
 	}
 
 	private void parseXML() throws Exception {
-		List<User> deserializedUsers = serializer.unmarshall(USERS_FILEPATH).getUsers();
+		List<User> deserializedUsers = serializer.unmarshall(USERS_FILEPATH)
+				.getUsers();
 		for (User user : deserializedUsers) {
 			users.put(user.getEmail(), user);
 		}

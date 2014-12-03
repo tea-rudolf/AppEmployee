@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.time.TimeEntry;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
@@ -41,16 +40,19 @@ public class TimeConverter {
 		model.setDateTimeEntry(timeEntry.getDate().toString());
 		model.setHoursTimeEntry(timeEntry.getBillableHours());
 		model.setTaskIdTimeEntry(timeEntry.getTaskUid());
-		model.setTaskNameTimeEntry(projectService.getTaskName(timeEntry.getTaskUid()));
+		model.setTaskNameTimeEntry(projectService.getTaskName(timeEntry
+				.getTaskUid()));
 		model.setCommentTimeEntry(timeEntry.getComment());
-		model.setAvailableTasks(projectService.getAllTasksByCurrentUserId(timeEntry.getUserEmail()));
+		model.setAvailableTasks(projectService
+				.getAllTasksByCurrentUserId(timeEntry.getUserEmail()));
 		return model;
 	}
 
 	public TimeViewModel convert(String userEmail) {
 		TimeViewModel timeViewModel = new TimeViewModel();
 		timeViewModel.setUserEmail(userEmail);
-		timeViewModel.setAvailableTasks(projectService.getAllTasksByCurrentUserId(userEmail));
+		timeViewModel.setAvailableTasks(projectService
+				.getAllTasksByCurrentUserId(userEmail));
 		return timeViewModel;
 	}
 }

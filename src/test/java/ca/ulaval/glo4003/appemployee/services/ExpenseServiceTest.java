@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +46,8 @@ public class ExpenseServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		expenseService = new ExpenseService(timeServiceMock, expenseProcessorMock, expenseConverterMock);
+		expenseService = new ExpenseService(timeServiceMock,
+				expenseProcessorMock, expenseConverterMock);
 	}
 
 	@Test

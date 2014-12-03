@@ -32,7 +32,8 @@ public class XMLDepartmentRepositoryTest {
 	}
 
 	@Test
-	public void findByNameFindsDepartmentWhenDepartmentExists() throws Exception {
+	public void findByNameFindsDepartmentWhenDepartmentExists()
+			throws Exception {
 		Department dummyDepartment = new Department(DUMMY_NAME);
 		repository.store(dummyDepartment);
 		assertEquals(dummyDepartment, repository.findByName(DUMMY_NAME));

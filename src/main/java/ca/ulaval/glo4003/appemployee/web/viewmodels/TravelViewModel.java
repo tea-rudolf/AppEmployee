@@ -13,7 +13,8 @@ public class TravelViewModel {
 	private String comment = "";
 	private String uId = "";
 	private String vehicle = "";
-	private ArrayList<Vehicle> availableVehicles = new ArrayList<Vehicle>(Arrays.asList(Vehicle.values()));
+	private ArrayList<Vehicle> availableVehicles = new ArrayList<Vehicle>(
+			Arrays.asList(Vehicle.values()));
 
 	public TravelViewModel(String userEmail) {
 		this.userEmail = userEmail;
@@ -22,7 +23,8 @@ public class TravelViewModel {
 	public TravelViewModel() {
 	}
 
-	public TravelViewModel(String uid, double distance, String comment, String date, String userEmail, String vehicle) {
+	public TravelViewModel(String uid, double distance, String comment,
+			String date, String userEmail, String vehicle) {
 		this.uId = uid;
 		this.distanceTravelled = distance;
 		this.comment = comment;

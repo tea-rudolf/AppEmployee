@@ -1,7 +1,7 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -22,7 +22,7 @@ public class XMLPayPeriodRepositoryTest {
 
 	@Mock
 	private PayPeriod payPeriodMock;
-	
+
 	@InjectMocks
 	private XMLPayPeriodRepository xmlPayPeriodRepository;
 
@@ -38,9 +38,11 @@ public class XMLPayPeriodRepositoryTest {
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 		xmlPayPeriodRepository.store(payPeriodMock);
 
-		PayPeriod samplePayPeriod = xmlPayPeriodRepository.findByDate(ACTUAL_DATE);
+		PayPeriod samplePayPeriod = xmlPayPeriodRepository
+				.findByDate(ACTUAL_DATE);
 
-		assertEquals(samplePayPeriod.getStartDate(), payPeriodMock.getStartDate());
+		assertEquals(samplePayPeriod.getStartDate(),
+				payPeriodMock.getStartDate());
 	}
 
 	@Test
@@ -50,11 +52,13 @@ public class XMLPayPeriodRepositoryTest {
 
 		xmlPayPeriodRepository.store(payPeriodMock);
 
-		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE).getStartDate(), payPeriodMock.getStartDate());
+		assertEquals(xmlPayPeriodRepository.findByDate(ACTUAL_DATE)
+				.getStartDate(), payPeriodMock.getStartDate());
 	}
 
 	@Test(expected = PayPeriodAlreadyExistsException.class)
-	public void storeAlreadyExistingPayPeriodThrowsPayPeriodAlreadyExistsException() throws Exception {
+	public void storeAlreadyExistingPayPeriodThrowsPayPeriodAlreadyExistsException()
+			throws Exception {
 		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
 		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
 		xmlPayPeriodRepository.store(payPeriodMock);
@@ -62,7 +66,8 @@ public class XMLPayPeriodRepositoryTest {
 	}
 
 	@Test(expected = PayPeriodNotFoundException.class)
-	public void updatePayPeriodThrowsPayPeriodNotFoundExceptionIfPayPeriodNotFound() throws Exception {
+	public void updatePayPeriodThrowsPayPeriodNotFoundExceptionIfPayPeriodNotFound()
+			throws Exception {
 		xmlPayPeriodRepository.update(payPeriodMock);
 	}
 

@@ -27,18 +27,19 @@ public class TaskConverterTest {
 
 	@Mock
 	private TaskViewModel taskViewModelMock;
-	
+
 	@Mock
 	private Task taskMock;
-	
+
 	@InjectMocks
 	private TaskConverter taskConverter;
-	
+
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 		taskConverter = new TaskConverter();
-		authorizedUsers = new ArrayList<String>(Arrays.asList("FIRST_ID", "SECOND_ID"));
+		authorizedUsers = new ArrayList<String>(Arrays.asList("FIRST_ID",
+				"SECOND_ID"));
 	}
 
 	@Test
@@ -49,7 +50,8 @@ public class TaskConverterTest {
 		tasks.add(firstTask);
 		tasks.add(secondTask);
 
-		TaskViewModel[] viewModels = taskConverter.convert(tasks).toArray(new TaskViewModel[1]);
+		TaskViewModel[] viewModels = taskConverter.convert(tasks).toArray(
+				new TaskViewModel[1]);
 
 		assertEquals(FIRST_NAME, viewModels[0].getName());
 		assertEquals(FIRST_ID, viewModels[0].getuId());
@@ -70,7 +72,8 @@ public class TaskConverterTest {
 
 		assertEquals(taskMock.getUid(), taskViewModelMock.getuId());
 		assertEquals(taskMock.getName(), taskViewModelMock.getName());
-		assertEquals(taskMock.getAuthorizedUsers(), taskViewModelMock.getAuthorizedUsers());
+		assertEquals(taskMock.getAuthorizedUsers(),
+				taskViewModelMock.getAuthorizedUsers());
 	}
 
 	private Task createTask(String number, String name) {

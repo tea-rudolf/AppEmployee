@@ -7,7 +7,7 @@ import org.junit.Test;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 
 public class TravelTest {
-	
+
 	private Travel travel;
 
 	@Test
@@ -15,5 +15,5 @@ public class TravelTest {
 		travel = new Travel();
 		assertNotNull(travel);
 	}
-	
+
 }

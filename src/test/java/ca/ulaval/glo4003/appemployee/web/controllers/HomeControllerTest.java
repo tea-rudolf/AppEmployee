@@ -48,7 +48,7 @@ public class HomeControllerTest {
 
 	@Mock
 	private HttpSession sessionMock;
-	
+
 	@Mock
 	private HttpServletRequest servletRequestMock;
 
@@ -68,25 +68,32 @@ public class HomeControllerTest {
 	public void loginReturnsCorrectModelForm() {
 		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-		when(userServiceMock.isUserValid(USER_EMAIL, USER_PASSWORD)).thenReturn(true);
-		when(userServiceMock.retrieveUserRole(USER_EMAIL)).thenReturn(Role.EMPLOYEE.toString());
+		when(userServiceMock.isUserValid(USER_EMAIL, USER_PASSWORD))
+				.thenReturn(true);
+		when(userServiceMock.retrieveUserRole(USER_EMAIL)).thenReturn(
+				Role.EMPLOYEE.toString());
 		when(servletRequestMock.getSession()).thenReturn(sessionMock);
-		
-		ModelAndView returnedModel = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
-	
-		assertEquals("home", returnedModel.getViewName());
-	 }
 
-	 @Test
-	 public void loginReturnsAlertIfWrongEmailOrPassword() {
-		 when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-		 when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-		 when(userServiceMock.isUserValid(USER_EMAIL, USER_PASSWORD)).thenReturn(false);
-		
-		 homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
-		
-		 verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE, ALERT_MESSAGE);
-	 }
+		ModelAndView returnedModel = homeController.login(
+				loginFormViewModelMock, modelMapMock, sessionMock,
+				servletRequestMock);
+
+		assertEquals("home", returnedModel.getViewName());
+	}
+
+	@Test
+	public void loginReturnsAlertIfWrongEmailOrPassword() {
+		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
+		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
+		when(userServiceMock.isUserValid(USER_EMAIL, USER_PASSWORD))
+				.thenReturn(false);
+
+		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock,
+				servletRequestMock);
+
+		verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE,
+				ALERT_MESSAGE);
+	}
 
 	@Test
 	public void showLoginFormReturnsHomeViewForm() {
@@ -96,7 +103,8 @@ public class HomeControllerTest {
 
 	@Test
 	public void logoutRedirectsWhenSuccessful() {
-		String returnedForm = homeController.logout(sessionStatusMock, modelMapMock);
+		String returnedForm = homeController.logout(sessionStatusMock,
+				modelMapMock);
 		assertEquals(SIMPLE_REDIRECT, returnedForm);
 	}
 }

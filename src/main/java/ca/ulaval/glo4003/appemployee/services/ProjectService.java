@@ -34,8 +34,10 @@ public class ProjectService {
 	private ProjectProcessor projectProcessor;
 
 	@Autowired
-	public ProjectService(ProjectConverter projectConverter, TaskConverter taskConverter, UserConverter userConverter,  ProjectRepository projectRepository, 
-			TaskRepository taskRepository, UserRepository userRepository, ProjectProcessor projectProcessor) {
+	public ProjectService(ProjectConverter projectConverter,
+			TaskConverter taskConverter, UserConverter userConverter,
+			ProjectRepository projectRepository, TaskRepository taskRepository,
+			UserRepository userRepository, ProjectProcessor projectProcessor) {
 		this.userConverter = userConverter;
 		this.projectConverter = projectConverter;
 		this.taskConverter = taskConverter;
@@ -62,7 +64,8 @@ public class ProjectService {
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
 
-		if (!viewModel.getUserEmail().isEmpty() && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+		if (!viewModel.getUserEmail().isEmpty()
+				&& userRepository.findByEmail(viewModel.getUserEmail()) != null) {
 			project.addEmployeeToProject(viewModel.getUserEmail());
 			addEmployeToTasksOfProject(projectId, viewModel.getUserEmail());
 		}
@@ -101,12 +104,14 @@ public class ProjectService {
 		}
 	}
 
-	public void updateTask(String projectId, String taskId, TaskViewModel viewModel) {
+	public void updateTask(String projectId, String taskId,
+			TaskViewModel viewModel) {
 		Task task = taskRepository.findByUid(taskId);
 		task.setName(viewModel.getName());
-		
-		if (!viewModel.getUserEmail().isEmpty() && userRepository.findByEmail(viewModel.getUserEmail()) != null) {
-			assignUserToTask(viewModel.getUserEmail(), projectId, taskId); 
+
+		if (!viewModel.getUserEmail().isEmpty()
+				&& userRepository.findByEmail(viewModel.getUserEmail()) != null) {
+			assignUserToTask(viewModel.getUserEmail(), projectId, taskId);
 		}
 
 		try {
@@ -153,18 +158,21 @@ public class ProjectService {
 
 		for (Project project : projects) {
 			if (project.userIsAssignedToProject(currentUserId)) {
-				List<Task> projectTasks = getAllTasksByProjectId(project.getUid());
+				List<Task> projectTasks = getAllTasksByProjectId(project
+						.getUid());
 				tasks.addAll(projectTasks);
 			}
 		}
 		return tasks;
 	}
 
-	public void assignUserToTask(String currentUserId, String projectId, String taskUId) {
+	public void assignUserToTask(String currentUserId, String projectId,
+			String taskUId) {
 		Project project = projectRepository.findById(projectId);
 		Task task = taskRepository.findByUid(taskUId);
 
-		if (task != null && project != null && project.userIsAssignedToProject(currentUserId)) {
+		if (task != null && project != null
+				&& project.userIsAssignedToProject(currentUserId)) {
 			task.assignUserToTask(currentUserId);
 		} else {
 			project.addEmployeeToProject(currentUserId);
@@ -177,26 +185,32 @@ public class ProjectService {
 		return task.getName();
 	}
 
-	public void addNewTaskToProject(TaskViewModel taskViewModel, String projectNumber) {
+	public void addNewTaskToProject(TaskViewModel taskViewModel,
+			String projectNumber) {
 		Project project = projectRepository.findById(projectNumber);
 
 		if (project != null) {
-			Task newTask = new Task(taskViewModel.getName(), project.getEmployeeUids());
+			Task newTask = new Task(taskViewModel.getName(),
+					project.getEmployeeUids());
 			saveTask(newTask);
 			saveTaskToProject(projectNumber, newTask.getUid());
 		}
 	}
 
 	public void createProject(ProjectViewModel projectViewModel) {
-		Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(), 
-				projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
+		Project newProject = new Project(projectViewModel.getName(),
+				projectViewModel.getTaskIds(), projectViewModel.getUserIds(),
+				projectViewModel.getExpenseIds());
 		addProject(newProject);
-		
+
 	}
 
-	public ProjectViewModel retrieveProjectViewModelForExistingProject(String projectNumber) {
-		ProjectViewModel projectViewModel = projectConverter.convert(getProjectById(projectNumber));
-		projectViewModel.setAvailableUsers(extractUserEmails(projectProcessor.evaluateAvailableEmployeesByProject(projectNumber)));
+	public ProjectViewModel retrieveProjectViewModelForExistingProject(
+			String projectNumber) {
+		ProjectViewModel projectViewModel = projectConverter
+				.convert(getProjectById(projectNumber));
+		projectViewModel.setAvailableUsers(extractUserEmails(projectProcessor
+				.evaluateAvailableEmployeesByProject(projectNumber)));
 		return projectViewModel;
 	}
 
@@ -204,14 +218,15 @@ public class ProjectService {
 		return taskConverter.convert(getAllTasksByProjectId(projectNumber));
 	}
 
-	public Collection<UserViewModel> retieveEmployeesByProject(String projectNumber) {
+	public Collection<UserViewModel> retieveEmployeesByProject(
+			String projectNumber) {
 		return userConverter.convert(getAllEmployeesByProjectId(projectNumber));
 	}
-	
+
 	private List<String> extractUserEmails(Collection<User> users) {
 		List<String> userEmails = new ArrayList<String>();
-		
-		for (User user: users) {
+
+		for (User user : users) {
 			userEmails.add(user.getEmail());
 		}
 		return userEmails;

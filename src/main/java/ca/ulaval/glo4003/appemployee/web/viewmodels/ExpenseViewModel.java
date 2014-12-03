@@ -12,16 +12,17 @@ public class ExpenseViewModel {
 
 	}
 
-	public ExpenseViewModel(String uid, double amount, String date, String userEmail, String comment) {
+	public ExpenseViewModel(String uid, double amount, String date,
+			String userEmail, String comment) {
 		this.uid = uid;
 		this.amount = amount;
 		this.date = date;
 		this.userEmail = userEmail;
 		this.comment = comment;
 	}
-	
+
 	public ExpenseViewModel(String email) {
-		this.userEmail=email;
+		this.userEmail = email;
 	}
 
 	public double getAmount() {

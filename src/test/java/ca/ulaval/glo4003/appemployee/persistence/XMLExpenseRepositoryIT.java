@@ -19,13 +19,15 @@ public class XMLExpenseRepositoryIT {
 
 	@Before
 	public void setup() throws Exception {
-		marshaller = new XMLGenericMarshaller<ExpenseXMLAssembler>(ExpenseXMLAssembler.class);
+		marshaller = new XMLGenericMarshaller<ExpenseXMLAssembler>(
+				ExpenseXMLAssembler.class);
 		marshaller.setResourcesLoader(new ResourcesLoader());
 		repository = new XMLExpenseRepository(marshaller);
 	}
 
 	@Test
-	public void givenExistingUserReturnsAllExpensesForThisUser() throws Exception {
+	public void givenExistingUserReturnsAllExpensesForThisUser()
+			throws Exception {
 		repository.store(createExpense());
 		repository.store(createExpense());
 		repository.store(createExpense());

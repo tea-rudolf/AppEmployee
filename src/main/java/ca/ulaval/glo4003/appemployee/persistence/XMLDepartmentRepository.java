@@ -21,11 +21,13 @@ public class XMLDepartmentRepository implements DepartmentRepository {
 	private static String DEPARTMENTS_FILEPATH = "/departments.xml";
 
 	public XMLDepartmentRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<DepartmentXMLAssembler>(DepartmentXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<DepartmentXMLAssembler>(
+				DepartmentXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLDepartmentRepository(XMLGenericMarshaller<DepartmentXMLAssembler> serializer) {
+	public XMLDepartmentRepository(
+			XMLGenericMarshaller<DepartmentXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
@@ -47,12 +49,14 @@ public class XMLDepartmentRepository implements DepartmentRepository {
 
 	private void saveXML() throws Exception {
 		DepartmentXMLAssembler departmentAssembler = new DepartmentXMLAssembler();
-		departmentAssembler.setDepartments(new ArrayList<Department>(departments.values()));
+		departmentAssembler.setDepartments(new ArrayList<Department>(
+				departments.values()));
 		serializer.marshall(departmentAssembler, DEPARTMENTS_FILEPATH);
 	}
 
 	private void parseXML() throws Exception {
-		List<Department> deserializedDepartments = serializer.unmarshall(DEPARTMENTS_FILEPATH).getDepartments();
+		List<Department> deserializedDepartments = serializer.unmarshall(
+				DEPARTMENTS_FILEPATH).getDepartments();
 		for (Department department : deserializedDepartments) {
 			departments.put(department.getName(), department);
 		}

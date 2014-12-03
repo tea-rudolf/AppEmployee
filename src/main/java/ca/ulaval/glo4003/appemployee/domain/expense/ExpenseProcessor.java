@@ -21,18 +21,21 @@ public class ExpenseProcessor {
 		this.expenseRepository = expenseRepository;
 	}
 
-	public void createExpense(double amount, LocalDate date, String userEmail, String comment) throws Exception {
+	public void createExpense(double amount, LocalDate date, String userEmail,
+			String comment) throws Exception {
 		Expense expense = new Expense(amount, date, userEmail, comment);
 		expenseRepository.store(expense);
 	}
 
-	public void editExpense(String uid, double amount, LocalDate date, String userEmail, String comment) throws Exception {
+	public void editExpense(String uid, double amount, LocalDate date,
+			String userEmail, String comment) throws Exception {
 		Expense expense = expenseRepository.findByUid(uid);
 		expense.update(amount, date, userEmail, comment);
 		expenseRepository.store(expense);
 	}
 
-	public Expense retrieveExpenseByUid(String uid) throws ExpenseNotFoundException {
+	public Expense retrieveExpenseByUid(String uid)
+			throws ExpenseNotFoundException {
 		Expense expense = expenseRepository.findByUid(uid);
 
 		if (expense == null) {
@@ -41,12 +44,16 @@ public class ExpenseProcessor {
 		return expense;
 	}
 
-	public List<Expense> retrieveUserExpensesForCurrentPayPeriod(String userEmail, PayPeriod currentPayPeriod) {
+	public List<Expense> retrieveUserExpensesForCurrentPayPeriod(
+			String userEmail, PayPeriod currentPayPeriod) {
 		ArrayList<Expense> expenses = new ArrayList<Expense>();
 
 		for (Expense expense : expenseRepository.findAll()) {
-			if (expense.getUserEmail().equals(userEmail) && expense.getDate().isBefore(currentPayPeriod.getEndDate().plusDays(1))
-					&& expense.getDate().isAfter(currentPayPeriod.getStartDate().minusDays(1))) {
+			if (expense.getUserEmail().equals(userEmail)
+					&& expense.getDate().isBefore(
+							currentPayPeriod.getEndDate().plusDays(1))
+					&& expense.getDate().isAfter(
+							currentPayPeriod.getStartDate().minusDays(1))) {
 				expenses.add(expense);
 			}
 		}

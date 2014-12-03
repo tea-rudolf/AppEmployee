@@ -1,8 +1,12 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +95,8 @@ public class UserServiceTest {
 		userViewModel = new UserViewModel();
 		userViewModel.setPassword(PASSWORD);
 		user = new User(EMAIL, PASSWORD, null, WAGE);
-		userService = new UserService(userRepositoryMock, taskRepositoryMock, timeEntryRepositoryMock, userConverterMock);
+		userService = new UserService(userRepositoryMock, taskRepositoryMock,
+				timeEntryRepositoryMock, userConverterMock);
 	}
 
 	@Test
@@ -99,12 +104,14 @@ public class UserServiceTest {
 		List<String> sampleIdList = new ArrayList<String>();
 		sampleIdList.add(TIME_ENTRY_ID);
 		when(payPeriodMock.getTimeEntryIds()).thenReturn(sampleIdList);
-		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
+		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(
+				timeEntryMock);
 		when(timeEntryMock.getUserEmail()).thenReturn(EMAIL);
 		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_ID);
 		when(taskRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(taskMock);
 
-		List<Task> simpleTaskList = userService.getTasksForUserForAPayPeriod(payPeriodMock, EMAIL);
+		List<Task> simpleTaskList = userService.getTasksForUserForAPayPeriod(
+				payPeriodMock, EMAIL);
 
 		assertTrue(simpleTaskList.contains(taskMock));
 	}
@@ -114,10 +121,12 @@ public class UserServiceTest {
 		List<String> sampleIdList = new ArrayList<String>();
 		sampleIdList.add(TIME_ENTRY_ID);
 		when(payPeriodMock.getTimeEntryIds()).thenReturn(sampleIdList);
-		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
+		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(
+				timeEntryMock);
 		when(timeEntryMock.getUserEmail()).thenReturn(EMAIL);
 
-		List<TimeEntry> sampleTimeEntryList = userService.getTimeEntriesForUserForAPayPeriod(payPeriodMock, EMAIL);
+		List<TimeEntry> sampleTimeEntryList = userService
+				.getTimeEntriesForUserForAPayPeriod(payPeriodMock, EMAIL);
 
 		assertTrue(sampleTimeEntryList.contains(timeEntryMock));
 	}
@@ -125,7 +134,8 @@ public class UserServiceTest {
 	@Test
 	public void getTimeEntryFindsCorrectTimeEntry() {
 		when(timeEntryMock.getUid()).thenReturn(TIME_ENTRY_ID);
-		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
+		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(
+				timeEntryMock);
 		TimeEntry returnedTimeEntry = userService.getTimeEntry(TIME_ENTRY_ID);
 		assertEquals(timeEntryMock.getUid(), returnedTimeEntry.getUid());
 	}
@@ -204,9 +214,11 @@ public class UserServiceTest {
 	}
 
 	@Test(expected = RepositoryException.class)
-	public void updatePasswordThrowsExceptionWhenUserIsNotUpdated() throws Exception {
+	public void updatePasswordThrowsExceptionWhenUserIsNotUpdated()
+			throws Exception {
 		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
-		doThrow(new RepositoryException()).when(userRepositoryMock).store(userMock);
+		doThrow(new RepositoryException()).when(userRepositoryMock).store(
+				userMock);
 		userService.updatePassword(EMAIL, userViewModelMock);
 	}
 
@@ -218,9 +230,12 @@ public class UserServiceTest {
 	}
 
 	@Test(expected = RepositoryException.class)
-	public void updateTimeEntryThrowsRepositoryExceptionIfCannotStore() throws Exception {
-		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
-		doThrow(new RepositoryException()).when(timeEntryRepositoryMock).store(timeEntryMock);
+	public void updateTimeEntryThrowsRepositoryExceptionIfCannotStore()
+			throws Exception {
+		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(
+				timeEntryMock);
+		doThrow(new RepositoryException()).when(timeEntryRepositoryMock).store(
+				timeEntryMock);
 		userService.updateTimeEntry(TIME_ENTRY_ID, timeViewModelMock);
 	}
 

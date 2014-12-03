@@ -32,18 +32,22 @@ public class XMLGenericMarshaller<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T unmarshall(String resourceName) throws JAXBException, SerializationException {
+	public T unmarshall(String resourceName) throws JAXBException,
+			SerializationException {
 		InputStream stream = resourcesLoader.loadResource(type, resourceName);
 
 		if (stream != null) {
 			return (T) unmarshaller.unmarshal(stream);
 		} else {
-			throw new SerializationException("Invalid resource name : " + resourceName);
+			throw new SerializationException("Invalid resource name : "
+					+ resourceName);
 		}
 	}
 
-	public void marshall(T element, String resourceName) throws JAXBException, URISyntaxException, FileNotFoundException {
-		OutputStream stream = resourcesLoader.loadResourceForWriting(resourceName);
+	public void marshall(T element, String resourceName) throws JAXBException,
+			URISyntaxException, FileNotFoundException {
+		OutputStream stream = resourcesLoader
+				.loadResourceForWriting(resourceName);
 		marshaller.marshal(element, stream);
 	}
 

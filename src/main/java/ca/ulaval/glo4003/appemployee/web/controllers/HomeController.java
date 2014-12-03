@@ -39,11 +39,13 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(LoginFormViewModel form, ModelMap model, HttpSession session, HttpServletRequest request) {
+	public ModelAndView login(LoginFormViewModel form, ModelMap model,
+			HttpSession session, HttpServletRequest request) {
 
 		if (userService.isUserValid(form.getEmail(), form.getPassword())) {
 			model.addAttribute("email", form.getEmail());
-			model.addAttribute("role", userService.retrieveUserRole(form.getEmail()));
+			model.addAttribute("role",
+					userService.retrieveUserRole(form.getEmail()));
 			session.setMaxInactiveInterval(SESSION_IDLE_TRESHOLD_IN_SECONDS);
 			request.getSession().setAttribute("LOGGEDIN_USER", form);
 			return new ModelAndView("home", model);

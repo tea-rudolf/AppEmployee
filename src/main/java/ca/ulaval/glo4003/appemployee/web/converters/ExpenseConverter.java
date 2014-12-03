@@ -24,9 +24,11 @@ public class ExpenseConverter {
 	}
 
 	public ExpenseViewModel convert(Expense expense) {
-		ExpenseViewModel expenseViewModel = new ExpenseViewModel(expense.getUid(), expense.getAmount(), expense.getDate().toString(), expense.getUserEmail(),
+		ExpenseViewModel expenseViewModel = new ExpenseViewModel(
+				expense.getUid(), expense.getAmount(), expense.getDate()
+						.toString(), expense.getUserEmail(),
 				expense.getComment());
-		
+
 		return expenseViewModel;
 	}
 

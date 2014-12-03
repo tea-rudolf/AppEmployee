@@ -23,8 +23,10 @@ public class TravelConverter {
 	}
 
 	public TravelViewModel convert(Travel travel) {
-		TravelViewModel travelViewModel = new TravelViewModel(travel.getUid(), travel.getDistanceTravelled(), travel.getComment(), travel.getDate().toString(),
-				travel.getUserEmail(), travel.getVehicle().toString());
+		TravelViewModel travelViewModel = new TravelViewModel(travel.getUid(),
+				travel.getDistanceTravelled(), travel.getComment(), travel
+						.getDate().toString(), travel.getUserEmail(), travel
+						.getVehicle().toString());
 		return travelViewModel;
 	}
 

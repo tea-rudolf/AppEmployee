@@ -34,10 +34,10 @@ public class TravelConverterTest {
 
 	@Mock
 	private TravelViewModel travelViewModelMock;
-	
+
 	@Mock
 	private Travel travelMock;
-	
+
 	@InjectMocks
 	private TravelConverter travelConverter;
 
@@ -49,23 +49,28 @@ public class TravelConverterTest {
 
 	@Test
 	public void convertTravelListsToViewModelsConvertAllOfThem() {
-		Travel firstTravel = createTravel(FIRST_ID, FIRST_DISTANCE, FIRST_DATE, TRAVEL_VEHICLE);
-		Travel secondTravel = createTravel(SECOND_ID, SECOND_DISTANCE, SECOND_DATE, TRAVEL_VEHICLE);
+		Travel firstTravel = createTravel(FIRST_ID, FIRST_DISTANCE, FIRST_DATE,
+				TRAVEL_VEHICLE);
+		Travel secondTravel = createTravel(SECOND_ID, SECOND_DISTANCE,
+				SECOND_DATE, TRAVEL_VEHICLE);
 		List<Travel> travels = new ArrayList<Travel>();
 		travels.add(firstTravel);
 		travels.add(secondTravel);
 
-		TravelViewModel[] viewModels = travelConverter.convert(travels).toArray(new TravelViewModel[1]);
+		TravelViewModel[] viewModels = travelConverter.convert(travels)
+				.toArray(new TravelViewModel[1]);
 
-		assertEquals(FIRST_DISTANCE, viewModels[0].getDistanceTravelled(), EPSILON);
+		assertEquals(FIRST_DISTANCE, viewModels[0].getDistanceTravelled(),
+				EPSILON);
 		assertEquals(FIRST_ID, viewModels[0].getuId());
 		assertEquals(FIRST_DATE.toString(), viewModels[0].getDate());
 
-		assertEquals(SECOND_DISTANCE, viewModels[1].getDistanceTravelled(), EPSILON);
+		assertEquals(SECOND_DISTANCE, viewModels[1].getDistanceTravelled(),
+				EPSILON);
 		assertEquals(SECOND_ID, viewModels[1].getuId());
 		assertEquals(SECOND_DATE.toString(), viewModels[1].getDate());
 	}
-	
+
 	@Test
 	public void convertToViewModelConvertsTravelToViewModel() {
 		when(travelMock.getUid()).thenReturn(FIRST_ID);
@@ -78,13 +83,17 @@ public class TravelConverterTest {
 		travelViewModelMock = travelConverter.convert(travelMock);
 
 		assertEquals(travelMock.getUid(), travelViewModelMock.getuId());
-		assertEquals(travelMock.getDistanceTravelled(), travelViewModelMock.getDistanceTravelled(), EPSILON);
+		assertEquals(travelMock.getDistanceTravelled(),
+				travelViewModelMock.getDistanceTravelled(), EPSILON);
 		assertEquals(travelMock.getComment(), travelViewModelMock.getComment());
-		assertEquals(travelMock.getDate().toString(), travelViewModelMock.getDate());
-		assertEquals(travelMock.getUserEmail(), travelViewModelMock.getUserEmail());
+		assertEquals(travelMock.getDate().toString(),
+				travelViewModelMock.getDate());
+		assertEquals(travelMock.getUserEmail(),
+				travelViewModelMock.getUserEmail());
 	}
 
-	private Travel createTravel(String id, double distance, LocalDate date, Vehicle vehicule) {
+	private Travel createTravel(String id, double distance, LocalDate date,
+			Vehicle vehicule) {
 		Travel travel = mock(Travel.class);
 		given(travel.getDistanceTravelled()).willReturn(distance);
 		given(travel.getUid()).willReturn(id);

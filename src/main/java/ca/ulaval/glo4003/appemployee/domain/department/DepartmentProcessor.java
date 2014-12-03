@@ -19,12 +19,14 @@ public class DepartmentProcessor {
 	private DepartmentRepository departmentRepository;
 
 	@Autowired
-	public DepartmentProcessor(UserRepository userRepository, DepartmentRepository departmentRepository) {
+	public DepartmentProcessor(UserRepository userRepository,
+			DepartmentRepository departmentRepository) {
 		this.userRepository = userRepository;
 		this.departmentRepository = departmentRepository;
 	}
 
-	public List<User> retrieveEmployeesList(String departmentName) throws DepartmentNotFoundException {
+	public List<User> retrieveEmployeesList(String departmentName)
+			throws DepartmentNotFoundException {
 		Department department = retrieveDepartmentByName(departmentName);
 		List<String> employeeIds = department.getEmployeeIds();
 		List<User> employees = userRepository.findByEmails(employeeIds);
@@ -32,7 +34,8 @@ public class DepartmentProcessor {
 		return employees;
 	}
 
-	public boolean isSupervisorAssignedToDepartment(String supervisorID, String departmentName) {
+	public boolean isSupervisorAssignedToDepartment(String supervisorID,
+			String departmentName) {
 		boolean isAssigned = false;
 		Department department = departmentRepository.findByName(departmentName);
 
@@ -42,7 +45,8 @@ public class DepartmentProcessor {
 		return isAssigned;
 	}
 
-	public void createDepartment(String departmentName, List<String> userEmails) throws Exception {
+	public void createDepartment(String departmentName, List<String> userEmails)
+			throws Exception {
 		Department department = new Department(departmentName);
 
 		for (String email : userEmails) {
@@ -52,27 +56,33 @@ public class DepartmentProcessor {
 	}
 
 	public List<String> retrieveEmployeesNotAssignedToDepartment() {
-		Department unassignedEmployeesDepartment = departmentRepository.findByName(DEPARTMENT_OF_UNASSIGNED_EMPLOYEES);
+		Department unassignedEmployeesDepartment = departmentRepository
+				.findByName(DEPARTMENT_OF_UNASSIGNED_EMPLOYEES);
 		return unassignedEmployeesDepartment.getEmployeeIds();
 	}
 
-	public void assignEmployeeToDepartment(String employeeUid, String departmentName) throws Exception {
+	public void assignEmployeeToDepartment(String employeeUid,
+			String departmentName) throws Exception {
 		Department department = retrieveDepartmentByName(departmentName);
 		department.addEmployee(employeeUid);
 		departmentRepository.store(department);
 	}
 
-	public void unassignEmployeeToDepartment(String employeeUid, String departmentName) throws Exception {
+	public void unassignEmployeeToDepartment(String employeeUid,
+			String departmentName) throws Exception {
 		Department department = retrieveDepartmentByName(departmentName);
 		department.removeEmployee(employeeUid);
 		departmentRepository.store(department);
 	}
 
-	private Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
+	private Department retrieveDepartmentByName(String departmentName)
+			throws DepartmentNotFoundException {
 		Department department = departmentRepository.findByName(departmentName);
 
 		if (department == null) {
-			throw new DepartmentNotFoundException("Department not found with following name : " + departmentName);
+			throw new DepartmentNotFoundException(
+					"Department not found with following name : "
+							+ departmentName);
 		}
 		return department;
 	}

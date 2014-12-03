@@ -1,7 +1,9 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,14 +64,16 @@ public class TravelControllerTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelController = new TravelController(travelServiceMock, timeServiceMock);
+		travelController = new TravelController(travelServiceMock,
+				timeServiceMock);
 	}
 
 	@Test
 	public void retrieveUserTravelViewModelCallsTravelService() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		travelController.retrieveUserTravelViewModel(sessionMock);
-		verify(travelServiceMock, times(1)).retrieveUserTravelViewModel(VALID_EMAIL);
+		verify(travelServiceMock, times(1)).retrieveUserTravelViewModel(
+				VALID_EMAIL);
 	}
 
 	@Test
@@ -81,47 +85,60 @@ public class TravelControllerTest {
 	@Test
 	public void showTravelsListReturnsTravelFormIfSessionAttributeIsNotNull() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(travelServiceMock.retrieveUserTravelViewModelsForCurrentPayPeriod(VALID_EMAIL)).thenReturn(travelViewModels);
+		when(
+				travelServiceMock
+						.retrieveUserTravelViewModelsForCurrentPayPeriod(VALID_EMAIL))
+				.thenReturn(travelViewModels);
 
-		String returnedForm = travelController.showTravelsList(modelMapMock, sessionMock);
+		String returnedForm = travelController.showTravelsList(modelMapMock,
+				sessionMock);
 
 		assertEquals(TRAVEL_JSP, returnedForm);
 	}
 
 	@Test
 	public void showCreateTravelEntryFormReturnsCreationForm() {
-		String returnedForm = travelController.showCreateTravelEntryForm(modelMock, travelViewModelMock, sessionMock);
+		String returnedForm = travelController.showCreateTravelEntryForm(
+				modelMock, travelViewModelMock, sessionMock);
 		assertEquals(CREATE_TRAVEL_JSP, returnedForm);
 	}
 
 	@Test
 	public void createTravelEntryReturnsSaveFormIfSuccessful() throws Exception {
-		String returnedForm = travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
+		String returnedForm = travelController.createTravelEntry(modelMock,
+				travelViewModelMock, sessionMock);
 		assertEquals(TRAVEL_ENTRY_SUBMIT_JSP, returnedForm);
 	}
 
 	@Test
 	public void createTravelEntryCallsCorrectServiceMethod() throws Exception {
-		travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
+		travelController.createTravelEntry(modelMock, travelViewModelMock,
+				sessionMock);
 		verify(travelServiceMock, times(1)).createTravel(travelViewModelMock);
 	}
 
 	@Test
 	public void editTravelEntryReturnsEditFormIfSuccessful() throws Exception {
-		when(travelServiceMock.retrieveTravelViewModel(TRAVEL_UID)).thenReturn(travelViewModelMock);
-		String returnedForm = travelController.showEditTravelEntryForm(TRAVEL_UID, modelMock, sessionMock);
+		when(travelServiceMock.retrieveTravelViewModel(TRAVEL_UID)).thenReturn(
+				travelViewModelMock);
+		String returnedForm = travelController.showEditTravelEntryForm(
+				TRAVEL_UID, modelMock, sessionMock);
 		assertEquals(EDIT_TRAVEL_ENTRY_JSP, returnedForm);
 	}
 
 	@Test
-	public void editTravelEntryReturnsValidRedirectLinkIfSuccessFul() throws Exception {
-		String returnedForm = travelController.editTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
+	public void editTravelEntryReturnsValidRedirectLinkIfSuccessFul()
+			throws Exception {
+		String returnedForm = travelController.editTravelEntry(TRAVEL_UID,
+				modelMock, travelViewModelMock, sessionMock);
 		assertEquals(TRAVEL_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void editTravelEntryCallsServiceUpdateMethod() throws Exception {
-		travelController.editTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
-		verify(travelServiceMock, times(1)).editTravel(TRAVEL_UID, travelViewModelMock);
+		travelController.editTravelEntry(TRAVEL_UID, modelMock,
+				travelViewModelMock, sessionMock);
+		verify(travelServiceMock, times(1)).editTravel(TRAVEL_UID,
+				travelViewModelMock);
 	}
 }
