@@ -87,7 +87,7 @@ public class DepartmentService {
 		}
 	}
 
-	public DepartmentViewModel retrieveAvailableEmployeesViewModel() {
+	public DepartmentViewModel retrieveAvailableEmployeesViewModel() throws DepartmentNotFoundException {
 		List<String> availableEmployees = retrieveUserEmailsNotAssignedToDepartment();
 		DepartmentViewModel model = new DepartmentViewModel(availableEmployees);
 
@@ -101,11 +101,11 @@ public class DepartmentService {
 
 	public Collection<UserViewModel> retrieveEmployeesListViewModel(String departmentName)
 			throws DepartmentNotFoundException {
-		List<User> employees = departmentProcessor.retrieveEmployeesList(departmentName);
+		List<User> employees = departmentProcessor.evaluateEmployeesList(departmentName);
 		return userConverter.convert(employees);
 	}
 
-	public EmployeeAssignationViewModel retrieveEmployeeAssignationViewModel() {
+	public EmployeeAssignationViewModel retrieveEmployeeAssignationViewModel() throws DepartmentNotFoundException {
 		ArrayList<String> departmentNames = retrieveDepartmentNamesList();
 		List<String> unassignedEmployees = retrieveUserEmailsNotAssignedToDepartment();
 		EmployeeAssignationViewModel model = new EmployeeAssignationViewModel(departmentNames, unassignedEmployees);
@@ -119,8 +119,8 @@ public class DepartmentService {
 				DEPARTMENT_OF_UNASSIGNED_EMPLOYEES);
 	}
 
-	private List<String> retrieveUserEmailsNotAssignedToDepartment() {
-		return departmentProcessor.retrieveEmployeesNotAssignedToDepartment();
+	private List<String> retrieveUserEmailsNotAssignedToDepartment() throws DepartmentNotFoundException {
+		return departmentProcessor.evaluateEmployeesNotAssignedToDepartment();
 	}
 
 	private ArrayList<String> retrieveDepartmentNamesList() {
