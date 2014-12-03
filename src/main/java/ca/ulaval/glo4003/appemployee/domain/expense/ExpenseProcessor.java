@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.ExpenseNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
+import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 
 @Component
 public class ExpenseProcessor {
@@ -28,14 +28,11 @@ public class ExpenseProcessor {
 
 	public void editExpense(String uid, double amount, LocalDate date, String userEmail, String comment) throws Exception {
 		Expense expense = expenseRepository.findByUid(uid);
-		expense.setAmount(amount);
-		expense.setComment(comment);
-		expense.setDate(date);
-		expense.setUserEmail(userEmail);
+		expense.update(amount, date, userEmail, comment);
 		expenseRepository.store(expense);
 	}
 
-	public Expense retrieveExpenseByUid(String uid) throws Exception {
+	public Expense retrieveExpenseByUid(String uid) throws ExpenseNotFoundException {
 		Expense expense = expenseRepository.findByUid(uid);
 
 		if (expense == null) {

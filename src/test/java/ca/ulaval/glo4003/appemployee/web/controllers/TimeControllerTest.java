@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.Collection;
 
@@ -19,7 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
 
@@ -40,7 +38,7 @@ public class TimeControllerTest {
 	private static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime/";
 
 	private Collection<TimeViewModel> timeEntriesViewModels;
-	
+
 	@Mock
 	private TimeService timeServiceMock;
 
@@ -82,9 +80,9 @@ public class TimeControllerTest {
 	public void currentPayPeriodDatesReturnsEmptyTimeViewModel() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(timeServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
-		
+
 		TimeViewModel returnedViewModel = timeControllerMock.currentPayPeriodDates(sessionMock);
-		
+
 		assertEquals(timeServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL), returnedViewModel);
 	}
 
@@ -93,7 +91,7 @@ public class TimeControllerTest {
 		String returnedForm = timeControllerMock.showCreateTimeEntryForm(modelMock, payPeriodViewModelMock, sessionMock);
 		assertEquals(CREATE_TIME_JSP, returnedForm);
 	}
-	
+
 	@Test
 	public void createTimeEntryReturnsCreateTimeForm() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain.timeentry;
+package ca.ulaval.glo4003.appemployee.domain.time;
 
 import java.util.UUID;
 
@@ -25,7 +25,7 @@ public class TimeEntry {
 		this.taskUid = taskUid;
 		this.comment = comment;
 	}
-	
+
 	public TimeEntry(double billableHours, LocalDate date, String userEmail, String taskUid, String comment) {
 		this();
 		this.billableHours = billableHours;
@@ -85,6 +85,14 @@ public class TimeEntry {
 
 	public void setUid(String uid) {
 		this.uid = uid;
+	}
+
+	public void update(double billableHours, LocalDate date, String userEmail, String taskUid, String comment) {
+		this.billableHours = billableHours;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.taskUid = taskUid;
+		this.comment = comment;
 	}
 
 }

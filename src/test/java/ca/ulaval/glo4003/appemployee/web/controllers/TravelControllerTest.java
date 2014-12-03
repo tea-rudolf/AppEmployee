@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,8 +17,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
-import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
@@ -38,7 +36,7 @@ public class TravelControllerTest {
 	private Collection<TravelViewModel> travelViewModels;
 
 	@Mock
-	private TaskRepository taskRepositoryMock;
+	private TimeService timeServiceMock;
 
 	@Mock
 	private TravelService travelServiceMock;
@@ -64,23 +62,29 @@ public class TravelControllerTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelController = new TravelController(taskRepositoryMock, travelServiceMock);
+		travelController = new TravelController(travelServiceMock, timeServiceMock);
 	}
-	
+
 	@Test
-	public void travelsForCurrentPayPeriodReturnCurrentRavelViewModel() {
+	public void retrieveUserTravelViewModelCallsTravelService() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		TravelViewModel  returnedViewModel = travelController.travelsForCurrentPayPeriod(sessionMock);
-		assertEquals(travelServiceMock.retrieveTravelViewModelForCurrentPayPeriod(VALID_EMAIL), returnedViewModel);
+		travelController.retrieveUserTravelViewModel(sessionMock);
+		verify(travelServiceMock, times(1)).retrieveUserTravelViewModel(VALID_EMAIL);
+	}
+
+	@Test
+	public void retrieveCurrentPayPeriodViewModelCallsTravelService() {
+		travelController.retrieveCurrentPayPeriodViewModel();
+		verify(timeServiceMock, times(1)).retrieveCurrentPayPeriodViewModel();
 	}
 
 	@Test
 	public void showTravelsListReturnsTravelFormIfSessionAttributeIsNotNull() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(travelServiceMock.retrieveTravelViewModelsForCurrentPayPeriod(VALID_EMAIL)).thenReturn(travelViewModels);
-		
+		when(travelServiceMock.retrieveUserTravelViewModelsForCurrentPayPeriod(VALID_EMAIL)).thenReturn(travelViewModels);
+
 		String returnedForm = travelController.showTravelsList(modelMapMock, sessionMock);
-		
+
 		assertEquals(TRAVEL_JSP, returnedForm);
 	}
 
@@ -95,7 +99,7 @@ public class TravelControllerTest {
 		String returnedForm = travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
 		assertEquals(TRAVEL_ENTRY_SUBMIT_JSP, returnedForm);
 	}
-	
+
 	@Test
 	public void createTravelEntryCallsCorrectServiceMethod() throws Exception {
 		travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
@@ -104,7 +108,7 @@ public class TravelControllerTest {
 
 	@Test
 	public void editTravelEntryReturnsEditFormIfSuccessful() throws Exception {
-		when(travelServiceMock.retrieveTravelViewModelForExistingTravel(TRAVEL_UID)).thenReturn(travelViewModelMock);
+		when(travelServiceMock.retrieveTravelViewModel(TRAVEL_UID)).thenReturn(travelViewModelMock);
 		String returnedForm = travelController.showEditTravelEntryForm(TRAVEL_UID, modelMock, sessionMock);
 		assertEquals(EDIT_TRAVEL_ENTRY_JSP, returnedForm);
 	}
@@ -118,6 +122,6 @@ public class TravelControllerTest {
 	@Test
 	public void editTravelEntryCallsServiceUpdateMethod() throws Exception {
 		travelController.editTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
-		verify(travelServiceMock, times(1)).updateTravel(TRAVEL_UID, travelViewModelMock);
+		verify(travelServiceMock, times(1)).editTravel(TRAVEL_UID, travelViewModelMock);
 	}
 }

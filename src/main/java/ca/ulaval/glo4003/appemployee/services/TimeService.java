@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.TimeProcessor;
-import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
+import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.time.TimeEntry;
+import ca.ulaval.glo4003.appemployee.domain.time.TimeProcessor;
 import ca.ulaval.glo4003.appemployee.web.converters.TimeConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;

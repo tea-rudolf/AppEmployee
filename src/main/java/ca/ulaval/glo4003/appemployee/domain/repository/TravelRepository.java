@@ -17,7 +17,7 @@ public interface TravelRepository {
 
 	List<Travel> findAllTravelsByUser(String userId);
 
-	Travel findByUid(String uId);
+	Travel findByUid(String uid);
 
 	Collection<Travel> findAll();
 

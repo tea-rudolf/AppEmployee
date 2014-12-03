@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain.payperiod;
+package ca.ulaval.glo4003.appemployee.domain.time;
 
 import java.util.ArrayList;
 import java.util.List;

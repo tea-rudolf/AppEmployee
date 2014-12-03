@@ -17,21 +17,14 @@ public class TravelConverter {
 
 		for (Travel travel : travels) {
 			TravelViewModel travelViewModel = convert(travel);
-			travelViewModel.setuId(travel.getUid());
 			travelViewModels.add(travelViewModel);
 		}
 		return travelViewModels;
 	}
 
 	public TravelViewModel convert(Travel travel) {
-		TravelViewModel travelViewModel = new TravelViewModel();
-		travelViewModel.setuId(travel.getUid());
-		travelViewModel.setDistanceTravelled(travel.getDistanceTravelled());
-		travelViewModel.setComment(travel.getComment());
-		travelViewModel.setDate(travel.getDate().toString());
-		travelViewModel.setUserEmail(travel.getUserEmail());
-		travelViewModel.setVehicle(travel.getVehicle().toString());
-
+		TravelViewModel travelViewModel = new TravelViewModel(travel.getUid(), travel.getDistanceTravelled(), travel.getComment(), travel.getDate().toString(),
+				travel.getUserEmail(), travel.getVehicle().toString());
 		return travelViewModel;
 	}
 

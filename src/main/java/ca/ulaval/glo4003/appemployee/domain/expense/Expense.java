@@ -63,4 +63,11 @@ public class Expense {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
+	public void update(double amount, LocalDate date, String userEmail, String comment) {
+		this.amount = amount;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.comment = comment;
+	}
 }

@@ -1,13 +1,13 @@
-package ca.ulaval.glo4003.appemployee.domain.payperiod;
+package ca.ulaval.glo4003.appemployee.domain.time;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TimeEntryNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TimeEntryRepository;
-import ca.ulaval.glo4003.appemployee.domain.timeentry.TimeEntry;
 
 @Component
 public class TimeProcessor {
@@ -48,17 +48,22 @@ public class TimeProcessor {
 	}
 
 	public void editTimeEntry(String timeEntryUid, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) throws Exception {
-		TimeEntry timeEntry = timeEntryRepository.findByUid(timeEntryUid);
+		TimeEntry timeEntry = retrieveTimeEntryByUid(timeEntryUid);
 		updateTimeEntry(billableHours, date, userEmail, taskUid, comment, timeEntry);
 	}
 
 	private void updateTimeEntry(double billableHours, LocalDate date, String userEmail, String taskUid, String comment, TimeEntry timeEntry) throws Exception {
-		timeEntry.setBillableHours(billableHours);
-		timeEntry.setDate(new LocalDate(date));
-		timeEntry.setTaskUid(taskUid);
-		timeEntry.setUserEmail(userEmail);
-		timeEntry.setComment(comment);
+		timeEntry.update(billableHours, date, userEmail, taskUid, comment);
 		timeEntryRepository.store(timeEntry);
+	}
+
+	private TimeEntry retrieveTimeEntryByUid(String timeEntryUid) throws TimeEntryNotFoundException {
+		TimeEntry timeEntry = timeEntryRepository.findByUid(timeEntryUid);
+
+		if (timeEntry == null) {
+			throw new TimeEntryNotFoundException("TimeEntry does not exist in repository");
+		}
+		return timeEntry;
 	}
 
 }

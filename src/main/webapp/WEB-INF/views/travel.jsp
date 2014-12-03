@@ -14,9 +14,9 @@
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h2>
 			Pay period from
-			<c:out value="${travelForm.payPeriodStartDate}" />
+			<c:out value="${payPeriodForm.payPeriodStartDate}" />
 			to
-			<c:out value="${travelForm.payPeriodEndDate}" />
+			<c:out value="${payPeriodForm.payPeriodEndDate}" />
 		</h2>
 		<div></div>
 

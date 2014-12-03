@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.repository.PayPeriodRepository;
+import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 
 @Repository
 @Singleton
@@ -44,7 +44,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	public void update(PayPeriod payPeriod) throws Exception {
 		int index = payPeriods.indexOf(payPeriod);
 		if (index == -1) {
-			throw new PayPeriodNotFoundException();
+			throw new PayPeriodNotFoundException("PayPeriod does not exist in repository");
 		}
 		payPeriods.set(index, payPeriod);
 		saveXML();

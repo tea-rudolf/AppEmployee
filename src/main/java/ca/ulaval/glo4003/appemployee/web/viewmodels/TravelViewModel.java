@@ -7,23 +7,28 @@ import ca.ulaval.glo4003.appemployee.domain.travel.Vehicle;
 
 public class TravelViewModel {
 
-	private String payPeriodStartDate;
-	private String payPeriodEndDate;
 	private double distanceTravelled;
-	private String date;
-	private String userEmail;
-	private String comment;
-	private String uId;
-	private String vehicle;
+	private String date = "";
+	private String userEmail = "";
+	private String comment = "";
+	private String uId = "";
+	private String vehicle = "";
 	private ArrayList<Vehicle> availableVehicles = new ArrayList<Vehicle>(Arrays.asList(Vehicle.values()));
 
-	public TravelViewModel(String userEmail, String startDate, String endDate) {
+	public TravelViewModel(String userEmail) {
 		this.userEmail = userEmail;
-		this.payPeriodStartDate = startDate;
-		this.payPeriodEndDate = endDate;
 	}
-	
-	public TravelViewModel() {	
+
+	public TravelViewModel() {
+	}
+
+	public TravelViewModel(String uid, double distance, String comment, String date, String userEmail, String vehicle) {
+		this.uId = uid;
+		this.distanceTravelled = distance;
+		this.comment = comment;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.vehicle = vehicle;
 	}
 
 	public double getDistanceTravelled() {
@@ -64,22 +69,6 @@ public class TravelViewModel {
 
 	public void setuId(String uId) {
 		this.uId = uId;
-	}
-
-	public String getPayPeriodStartDate() {
-		return payPeriodStartDate;
-	}
-
-	public void setPayPeriodStartDate(String payPeriodStartDate) {
-		this.payPeriodStartDate = payPeriodStartDate;
-	}
-
-	public String getPayPeriodEndDate() {
-		return payPeriodEndDate;
-	}
-
-	public void setPayPeriodEndDate(String payPeriodEndDate) {
-		this.payPeriodEndDate = payPeriodEndDate;
 	}
 
 	public String getVehicle() {

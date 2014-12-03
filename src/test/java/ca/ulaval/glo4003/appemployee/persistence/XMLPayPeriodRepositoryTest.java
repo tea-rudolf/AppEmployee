@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.PayPeriodNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 
 public class XMLPayPeriodRepositoryTest {
 

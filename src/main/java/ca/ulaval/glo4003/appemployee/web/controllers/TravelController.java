@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
+import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 @Controller
@@ -24,23 +25,31 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 public class TravelController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
+	static final String PAYPERIOD_ATTRIBUTE = "payPeriodForm";
 	static final String TRAVEL_ATTRIBUTE = "travelForm";
 
 	private TravelService travelService;
+	private TimeService timeService;
 
 	@Autowired
-	public TravelController(TaskRepository taskRepository, TravelService travelService) {
+	public TravelController(TravelService travelService, TimeService timeService) {
 		this.travelService = travelService;
+		this.timeService = timeService;
 	}
-	
+
+	@ModelAttribute(PAYPERIOD_ATTRIBUTE)
+	public PayPeriodViewModel retrieveCurrentPayPeriodViewModel() {
+		return timeService.retrieveCurrentPayPeriodViewModel();
+	}
+
 	@ModelAttribute(TRAVEL_ATTRIBUTE)
-	public TravelViewModel travelsForCurrentPayPeriod(HttpSession session) {
-		 return travelService.retrieveTravelViewModelForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());	
+	public TravelViewModel retrieveUserTravelViewModel(HttpSession session) {
+		return travelService.retrieveUserTravelViewModel(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showTravelsList(ModelMap model, HttpSession session) {
-		Collection<TravelViewModel> travelViewModels = travelService.retrieveTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
+		Collection<TravelViewModel> travelViewModels = travelService.retrieveUserTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
 		model.addAttribute("travelEntries", travelViewModels);
 		return "travel";
@@ -59,13 +68,13 @@ public class TravelController {
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
 	public String showEditTravelEntryForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
-		model.addAttribute("travelForm", travelService.retrieveTravelViewModelForExistingTravel(uid));
+		model.addAttribute("travelForm", travelService.retrieveTravelViewModel(uid));
 		return "editTravelEntry";
 	}
 
 	@RequestMapping(value = "/{uId}/edit", method = RequestMethod.POST)
 	public String editTravelEntry(@PathVariable String uId, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
-		travelService.updateTravel(uId, viewModel);
+		travelService.editTravel(uId, viewModel);
 		return "redirect:/travel/";
 	}
 

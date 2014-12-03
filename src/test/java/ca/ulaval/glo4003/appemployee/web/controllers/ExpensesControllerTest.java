@@ -17,8 +17,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
+import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
+import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.ExpenseService;
 import ca.ulaval.glo4003.appemployee.services.TimeService;
+import ca.ulaval.glo4003.appemployee.services.UserService;
+import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 
@@ -51,25 +55,37 @@ public class ExpensesControllerTest {
 	private HttpSession sessionMock;
 
 	@Mock
+	private PayPeriod payPeriodMock;
+
+	@Mock
+	private ExpenseConverter expenseConverterMock;
+
+	@Mock
 	private ExpenseService expenseServiceMock;
+
+	@Mock
+	private UserService userServiceMock;
+
+	@Mock
+	private Expense expenseMock;
 	
 	@Mock
 	private PayPeriodViewModel payPeriodViewModelMock;
 
 	@InjectMocks
-	private ExpensesController expensesController;
+	private ExpensesController expensesControllerMock;
 
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		expensesController = new ExpensesController(expenseServiceMock, payPeriodServiceMock);
+		expensesControllerMock = new ExpensesController(expenseServiceMock, payPeriodServiceMock);
 	}
 
 	@Test
 	public void showExpensesListReturnsExpensesFormIfViewModelIsValid() {
 		when(expenseServiceMock.retrieveExpenseViewModelsListForCurrentPayPeriod(VALID_EMAIL)).thenReturn(expensesViewModels);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		String returnedForm = expensesController.showExpensesList(modelMapMock, sessionMock);
+		String returnedForm = expensesControllerMock.showExpensesList(modelMapMock, sessionMock);
 
 		assertEquals(EXPENSES_JSP, returnedForm);
 	}
@@ -79,7 +95,7 @@ public class ExpensesControllerTest {
 		when(payPeriodServiceMock.retrieveCurrentPayPeriodViewModel()).thenReturn(payPeriodViewModelMock);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		String returnedForm = expensesController.showCreateExpenseForm(modelMock, expenseViewModelMock, sessionMock);
+		String returnedForm = expensesControllerMock.showCreateExpenseForm(modelMock, expenseViewModelMock, sessionMock);
 
 		assertEquals(CREATE_EXPENSE_JSP, returnedForm);
 	}
@@ -88,7 +104,7 @@ public class ExpensesControllerTest {
 	public void createExpenseReturnsSubmittedExpensesForIfSuccessfulSubmit() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		String returnedForm = expensesController.createExpense(modelMock, expenseViewModelMock, sessionMock);
+		String returnedForm = expensesControllerMock.createExpense(modelMock, expenseViewModelMock, sessionMock);
 
 		assertEquals(EXPENSES_SUBMIT_JSP, returnedForm);
 	}
@@ -96,7 +112,7 @@ public class ExpensesControllerTest {
 	@Test
 	public void createExpenseCallsCorrectServiceMethod() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		expensesController.createExpense(modelMock, expenseViewModelMock, sessionMock);
+		expensesControllerMock.createExpense(modelMock, expenseViewModelMock, sessionMock);
 		verify(expenseServiceMock, times(1)).createExpense(expenseViewModelMock);
 	}
 
@@ -106,20 +122,20 @@ public class ExpensesControllerTest {
 		when(expenseServiceMock.retrieveExpenseViewModel(EXPENSE_UID)).thenReturn(expenseViewModelMock);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
-		String returnedForm = expensesController.showEditExpenseForm(EXPENSE_UID, modelMock, sessionMock);
+		String returnedForm = expensesControllerMock.showEditExpenseForm(EXPENSE_UID, modelMock, sessionMock);
 
 		assertEquals(EDIT_EXPENSE_JSP, returnedForm);
 	}
 
 	@Test
 	public void editExpenseCallsCorrectServiceMethod() throws Exception {
-		expensesController.editExpense(EXPENSE_UID, expenseViewModelMock, sessionMock);
+		expensesControllerMock.editExpense(EXPENSE_UID, expenseViewModelMock, sessionMock);
 		verify(expenseServiceMock, times(1)).editExpense(expenseViewModelMock);
 	}
 
 	@Test
 	public void editExpenseReturnsRedirectExpenseLink() throws Exception {
-		String returnedForm = expensesController.editExpense(EXPENSE_UID, expenseViewModelMock, sessionMock);
+		String returnedForm = expensesControllerMock.editExpense(EXPENSE_UID, expenseViewModelMock, sessionMock);
 		assertEquals(REDIRECT_EXPENSE_LINK, returnedForm);
 	}
 }

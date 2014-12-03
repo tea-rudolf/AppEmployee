@@ -14,9 +14,9 @@
 		<h2 class="sub-header">Edit a time entry</h2>
 				<h3>
 			Pay period from
-			<c:out value="${travelForm.payPeriodStartDate}" />
+			<c:out value="${payPeriodForm.payPeriodStartDate}" />
 			to
-			<c:out value="${travelForm.payPeriodEndDate}" />
+			<c:out value="${payPeriodForm.payPeriodEndDate}" />
 		</h3>
 							<c:if
 					test="${not empty message }">
@@ -39,8 +39,8 @@
 					<tr>
 						<td><form:label path="date"></form:label> <form:input
 								class="form-control" type="date"
-								min="${travelForm.payPeriodStartDate}"
-								max="${travelForm.payPeriodEndDate}" path="date"
+								min="${payPeriodForm.payPeriodStartDate}"
+								max="${payPeriodForm.payPeriodEndDate}" path="date"
 								value="${date}" required="required" /></td>
 						<td><form:select class="form-control" path="vehicle">
 								<form:options items="${travelForm.availableVehicles}"></form:options>

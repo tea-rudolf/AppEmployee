@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import ca.ulaval.glo4003.appemployee.domain.payperiod.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 
 @XmlRootElement(name = "payPeriods")
 public class PayPeriodXMLAssembler {

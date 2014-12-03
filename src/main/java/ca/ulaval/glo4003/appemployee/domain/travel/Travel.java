@@ -12,24 +12,15 @@ public class Travel {
 	private String userEmail;
 	private String comment;
 	private Vehicle vehicle;
-	
+
 	public Travel() {
 		this.uid = UUID.randomUUID().toString();
 	}
 
-	public Travel(String travelUid, double distance, String vehicle, LocalDate localDate, String user, String comment) {
-		this.uid = travelUid;
-		this.distanceTravelled = distance;
-		this.vehicle = convertToVehicle(vehicle);
-		this.date = localDate;
-		this.userEmail = user;
-		this.comment = comment;
-	}
-	
 	public Travel(double distance, String vehicle, LocalDate localDate, String user, String comment) {
 		this();
 		this.distanceTravelled = distance;
-		this.vehicle = convertToVehicle(vehicle);
+		this.vehicle = Vehicle.valueOf(vehicle);
 		this.date = localDate;
 		this.userEmail = user;
 		this.comment = comment;
@@ -83,13 +74,11 @@ public class Travel {
 		this.vehicle = vehicule;
 	}
 
-	private Vehicle convertToVehicle(String vehicle) {
-		Vehicle convertedVehicle;
-		if (vehicle.equals("PERSONAL")) {
-			convertedVehicle = Vehicle.PERSONAL;
-		} else {
-			convertedVehicle = Vehicle.ENTERPRISE;
-		}
-		return convertedVehicle;
+	public void update(double distance, String vehicle, LocalDate date, String userEmail, String comment) {
+		this.distanceTravelled = distance;
+		this.date = date;
+		this.userEmail = userEmail;
+		this.comment = comment;
 	}
+
 }
