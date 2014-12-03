@@ -40,14 +40,15 @@ public class TimeService {
 	}
 
 	public void createTimeEntry(TimeViewModel timeEntryViewModel, PayPeriod payPeriod) throws Exception {
-		timeProcessor.createTimeEntry(payPeriod, timeEntryViewModel.getHoursTimeEntry(), new LocalDate(timeEntryViewModel.getDateTimeEntry()),
-				timeEntryViewModel.getUserEmail(), timeEntryViewModel.getTaskIdTimeEntry(), timeEntryViewModel.getCommentTimeEntry());
+		timeProcessor.createTimeEntry(payPeriod, timeEntryViewModel.getHoursTimeEntry(), new LocalDate(
+				timeEntryViewModel.getDateTimeEntry()), timeEntryViewModel.getUserEmail(), timeEntryViewModel
+				.getTaskIdTimeEntry(), timeEntryViewModel.getCommentTimeEntry());
 	}
 
 	public void updateTimeEntry(TimeViewModel timeEntryViewModel) throws Exception {
 		timeProcessor.editTimeEntry(timeEntryViewModel.getTimeEntryUid(), timeEntryViewModel.getHoursTimeEntry(),
-				new LocalDate(timeEntryViewModel.getDateTimeEntry()), timeEntryViewModel.getUserEmail(), timeEntryViewModel.getTaskIdTimeEntry(),
-				timeEntryViewModel.getCommentTimeEntry());
+				new LocalDate(timeEntryViewModel.getDateTimeEntry()), timeEntryViewModel.getUserEmail(),
+				timeEntryViewModel.getTaskIdTimeEntry(), timeEntryViewModel.getCommentTimeEntry());
 	}
 
 	public PayPeriodViewModel retrieveCurrentPayPeriodViewModel() {
@@ -64,13 +65,17 @@ public class TimeService {
 		return timeConverter.convert(userEmail);
 	}
 
-	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(String userEmail) throws TimeEntryNotFoundException {
-		List<TimeEntry> timeEntries = timeProcessor.evaluateUserTimeEntriesForPayPeriod(retrieveCurrentPayPeriod(), userEmail);
+	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(String userEmail)
+			throws TimeEntryNotFoundException {
+		List<TimeEntry> timeEntries = timeProcessor.evaluateUserTimeEntriesForPayPeriod(retrieveCurrentPayPeriod(),
+				userEmail);
 		return timeConverter.convert(timeEntries);
 	}
 
-	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForPreviousPayPeriod(String userEmail) throws TimeEntryNotFoundException {
-		return timeConverter.convert(timeProcessor.evaluateUserTimeEntriesForPayPeriod(retrievePreviousPayPeriod(), userEmail));
+	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForPreviousPayPeriod(String userEmail)
+			throws TimeEntryNotFoundException {
+		return timeConverter.convert(timeProcessor.evaluateUserTimeEntriesForPayPeriod(retrievePreviousPayPeriod(),
+				userEmail));
 	}
 
 	public TimeViewModel retrieveTimeEntryViewModel(String timeEntryUid) throws TimeEntryNotFoundException {

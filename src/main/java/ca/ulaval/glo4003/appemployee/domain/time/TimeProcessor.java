@@ -49,19 +49,22 @@ public class TimeProcessor {
 		payPeriodRepository.update(payPeriod);
 	}
 
-	public void createTimeEntry(PayPeriod payPeriod, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) throws Exception {
+	public void createTimeEntry(PayPeriod payPeriod, double billableHours, LocalDate date, String userEmail,
+			String taskUid, String comment) throws Exception {
 		TimeEntry timeEntry = new TimeEntry(billableHours, date, userEmail, taskUid, comment);
 		payPeriod.addTimeEntry(timeEntry.getUid());
 		editPayPeriod(payPeriod);
 		timeEntryRepository.store(timeEntry);
 	}
 
-	public void editTimeEntry(String timeEntryUid, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) throws Exception {
+	public void editTimeEntry(String timeEntryUid, double billableHours, LocalDate date, String userEmail,
+			String taskUid, String comment) throws Exception {
 		TimeEntry timeEntry = retrieveTimeEntryByUid(timeEntryUid);
 		updateTimeEntry(billableHours, date, userEmail, taskUid, comment, timeEntry);
 	}
 
-	private void updateTimeEntry(double billableHours, LocalDate date, String userEmail, String taskUid, String comment, TimeEntry timeEntry) throws Exception {
+	private void updateTimeEntry(double billableHours, LocalDate date, String userEmail, String taskUid,
+			String comment, TimeEntry timeEntry) throws Exception {
 		timeEntry.update(billableHours, date, userEmail, taskUid, comment);
 		timeEntryRepository.store(timeEntry);
 	}
@@ -75,7 +78,8 @@ public class TimeProcessor {
 		return timeEntry;
 	}
 
-	public List<TimeEntry> evaluateUserTimeEntriesForPayPeriod(PayPeriod payPeriod, String userEmail) throws TimeEntryNotFoundException {
+	public List<TimeEntry> evaluateUserTimeEntriesForPayPeriod(PayPeriod payPeriod, String userEmail)
+			throws TimeEntryNotFoundException {
 		ArrayList<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
 
 		for (String timeEntryUid : payPeriod.getTimeEntryIds()) {

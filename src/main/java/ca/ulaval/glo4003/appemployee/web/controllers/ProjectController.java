@@ -39,7 +39,8 @@ public class ProjectController {
 	private UserConverter userConverter;
 
 	@Autowired
-	public ProjectController(ProjectService projectService, UserService userService, TaskConverter taskConverter, UserConverter userConverter) {
+	public ProjectController(ProjectService projectService, UserService userService, TaskConverter taskConverter,
+			UserConverter userConverter) {
 		this.projectService = projectService;
 		this.userService = userService;
 		this.taskConverter = taskConverter;
@@ -80,7 +81,8 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
-	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel, HttpSession session) throws Exception {
+	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel,
+			HttpSession session) throws Exception {
 
 		try {
 
@@ -101,7 +103,8 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
-	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
+	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel,
+			HttpSession session) {
 
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
@@ -109,7 +112,8 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.POST)
-	public String saveTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
+	public String saveTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel,
+			HttpSession session) throws Exception {
 
 		try {
 			projectService.addNewTaskToProject(taskViewModel, projectNumber);
@@ -122,7 +126,8 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.GET)
-	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, HttpSession session) {
+	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model,
+			HttpSession session) {
 
 		Task task = projectService.getTaskById(taskNumber);
 		List<User> employees = userService.retrieveUsersByEmail(task.getAuthorizedUsers());
@@ -142,8 +147,8 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
-	public String saveEditedTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, TaskViewModel viewModel, HttpSession session)
-			throws Exception {
+	public String saveEditedTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model,
+			TaskViewModel viewModel, HttpSession session) throws Exception {
 
 		try {
 

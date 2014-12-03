@@ -43,7 +43,8 @@ public class UserService {
 	}
 
 	public void editUser(UserViewModel userViewModel) throws Exception {
-		userProcessor.updateUser(userViewModel.getEmail(), userViewModel.getPassword(), Role.valueOf(userViewModel.getRole()), userViewModel.getWage());
+		userProcessor.updateUser(userViewModel.getEmail(), userViewModel.getPassword(),
+				Role.valueOf(userViewModel.getRole()), userViewModel.getWage());
 	}
 
 	public boolean isUserValid(String userEmail, String password) {
