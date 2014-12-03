@@ -52,17 +52,18 @@ public class TimeService {
 				timeEntryViewModel.getCommentTimeEntry());
 	}
 
-	public TimeViewModel retrieveTimeEntryViewModelForCurrentPayPeriod(String userEmail) {
-		return timeConverter.convert(retrieveCurrentPayPeriod(), userEmail);
-	}
-
 	public PayPeriodViewModel retrieveCurrentPayPeriodViewModel() {
 		PayPeriod payPeriod = retrieveCurrentPayPeriod();
 		return new PayPeriodViewModel(payPeriod.getStartDate().toString(), payPeriod.getEndDate().toString());
 	}
 
-	public TimeViewModel retrieveTimeEntryViewModelForPreviousPayPeriod(String userEmail) {
-		return timeConverter.convert(retrievePreviousPayPeriod(), userEmail);
+	public PayPeriodViewModel retrievePreviousPayPeriodViewModel() {
+		PayPeriod payPeriod = retrievePreviousPayPeriod();
+		return new PayPeriodViewModel(payPeriod.getStartDate().toString(), payPeriod.getEndDate().toString());
+	}
+	
+	public TimeViewModel retrieveTimeEntryViewModelForUser(String userEmail) {
+		return timeConverter.convert(userEmail);
 	}
 
 	public Collection<TimeViewModel> retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(String userEmail) {

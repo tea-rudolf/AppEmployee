@@ -14,9 +14,9 @@
 		<h2 class="sub-header">Edit a time entry</h2>
 				<h3>
 			Pay period from
-			<c:out value="${timeForm.payPeriodStartDate}" />
+			<c:out value="${payPeriod.payPeriodStartDate}" />
 			to
-			<c:out value="${timeForm.payPeriodEndDate}" />
+			<c:out value="${payPeriod.payPeriodEndDate}" />
 		</h3>
 					<c:if
 					test="${not empty message }">
@@ -25,11 +25,11 @@
 			</c:if>
 		<div></div>
 		<form:form role="form" method="POST"
-			action="/time/${timeEntry.timeEntryUid}/edit" modelAttribute="timeEntry">
+			action="/time/${timeForm.timeEntryUid}/edit" modelAttribute="timeForm">
 			<div class="form-group">
 				<form:hidden path="timeEntryUid" />
 			</div>
-
+				${taskIdTimeEntry}
 				<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
@@ -41,8 +41,8 @@
 					<tr>
 						<td><form:label path="dateTimeEntry"></form:label> <form:input
 								class="form-control" type="date"
-								min="${timeForm.payPeriodStartDate}"
-								max="${timeForm.payPeriodEndDate}" path="dateTimeEntry"
+								min="${payPeriod.payPeriodStartDate}"
+								max="${payPeriod.payPeriodEndDate}" path="dateTimeEntry"
 								value="${dateTimeEntry}" required="required" /></td>
 						<td><form:select class="form-control" path="taskIdTimeEntry">
 								<form:options items="${timeForm.availableTasks}" itemValue="uid"

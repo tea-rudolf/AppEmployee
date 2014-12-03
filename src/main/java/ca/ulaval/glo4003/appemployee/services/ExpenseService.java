@@ -55,4 +55,8 @@ public class ExpenseService {
 		return expenseProcessor.retrieveUserExpensesForCurrentPayPeriod(userEmail, currentPayPeriod);
 	}
 
+	public Object retrieveUserExpenseViewModel(String email) {
+		return new ExpenseViewModel(email);
+	}
+
 }

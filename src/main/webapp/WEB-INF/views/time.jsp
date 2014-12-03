@@ -14,9 +14,9 @@
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h2>
 			Pay period from
-			<c:out value="${timeForm.payPeriodStartDate}" />
+			<c:out value="${payPeriod.payPeriodStartDate}" />
 			to
-			<c:out value="${timeForm.payPeriodEndDate}" />
+			<c:out value="${payPeriod.payPeriodEndDate}" />
 		</h2>
 		<div></div>
 

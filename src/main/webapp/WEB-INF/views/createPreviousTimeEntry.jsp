@@ -15,9 +15,9 @@
 		<h2 class="sub-header">New time entry</h2>
 				<h3>
 			Pay period from
-			<c:out value="${previoustimeForm.payPeriodStartDate}" />
+			<c:out value="${previousPayPeriod.payPeriodStartDate}" />
 			to
-			<c:out value="${previoustimeForm.payPeriodEndDate}" />
+			<c:out value="${previousPayPeriod.payPeriodEndDate}" />
 		</h3>
 					<c:if
 					test="${not empty message }">
@@ -27,12 +27,12 @@
 
 			
 			<c:choose>
-			      <c:when test="${fn:length(previoustimeForm.availableTasks) eq 0}">
+			      <c:when test="${fn:length(timeForm.availableTasks) eq 0}">
 			          <p> No tasks assigned to you.</p>
 			      </c:when>
 
 			      <c:otherwise>
-						<form:form method="post" action="/time/previousTime/add" modelAttribute="previoustimeForm">
+						<form:form method="post" action="/time/previousTime/add" modelAttribute="timeForm">
 						<form:hidden path="userEmail" />
 						<div class="table-responsive">
 							<table class="table table-striped table-hover table-condensed">
@@ -45,11 +45,11 @@
 								<tr>
 									<td><form:label path="dateTimeEntry"></form:label> <form:input
 											class="form-control" type="date"
-											min="${previoustimeForm.payPeriodStartDate}"
-											max="${previoustimeForm.payPeriodEndDate}" path="dateTimeEntry"
+											min="${previousPayPeriod.payPeriodStartDate}"
+											max="${previousPayPeriod.payPeriodEndDate}" path="dateTimeEntry"
 											value="${dateTimeEntry}" required="required" /></td>
 									<td><form:select class="form-control" path="taskIdTimeEntry">
-											<form:options items="${previoustimeForm.availableTasks}" itemValue="uid"
+											<form:options items="${timeForm.availableTasks}" itemValue="uid"
 												itemLabel="name"></form:options>
 										</form:select></td>
 									<td><form:label path="hoursTimeEntry"></form:label> <form:input

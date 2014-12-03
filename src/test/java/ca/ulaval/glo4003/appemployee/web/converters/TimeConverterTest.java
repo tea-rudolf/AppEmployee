@@ -90,16 +90,16 @@ public class TimeConverterTest {
 		assertEquals(timeEntryMock.getComment(), timeViewModelMock.getCommentTimeEntry());
 	}
 
-	@Test
-	public void convertPayPeriodConvertsIntoIntoViewModel() {
-		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
-		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-
-		timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock, USER_EMAIL);
-
-		assertEquals(payPeriodMock.getStartDate().toString(), timeViewModelMock.getStartDate());
-		assertEquals(payPeriodMock.getEndDate().toString(), timeViewModelMock.getEndDate());
-	}
+//	@Test
+//	public void convertPayPeriodConvertsIntoIntoViewModel() {
+//		when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
+//		when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
+//
+//		timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock, USER_EMAIL);
+//
+//		assertEquals(payPeriodMock.getStartDate().toString(), timeViewModelMock.getStartDate());
+//		assertEquals(payPeriodMock.getEndDate().toString(), timeViewModelMock.getEndDate());
+//	}
 	
 	private TimeEntry createTimeEntry(String id, double hours, LocalDate date) {
 		TimeEntry timeEntry = mock(TimeEntry.class);

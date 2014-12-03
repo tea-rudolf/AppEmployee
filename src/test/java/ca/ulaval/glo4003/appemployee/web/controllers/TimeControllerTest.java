@@ -76,15 +76,6 @@ public class TimeControllerTest {
 		assertEquals(TIME_SHEET_JSP, returnedForm);
 	}
 
-	@Test
-	public void currentPayPeriodDatesReturnsEmptyTimeViewModel() {
-		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(timeServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
-
-		TimeViewModel returnedViewModel = timeControllerMock.currentPayPeriodDates(sessionMock);
-
-		assertEquals(timeServiceMock.retrieveTimeEntryViewModelForCurrentPayPeriod(VALID_EMAIL), returnedViewModel);
-	}
 
 	@Test
 	public void showCreateTimeEntryFormReturnsCreateTimeForm() {
@@ -126,15 +117,15 @@ public class TimeControllerTest {
 		verify(timeServiceMock, times(1)).updateTimeEntry(payPeriodViewModelMock);
 	}
 
-	@Test
-	public void showPreviousTimeFormReturnsPreviousTimeSheet() {
-		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
-		when(timeServiceMock.retrieveTimeEntryViewModelForPreviousPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
-
-		String returnedForm = timeControllerMock.showPreviousTimeForm(modelMapMock, sessionMock);
-
-		assertEquals(PREVIOUS_TIME_SHEET_JSP, returnedForm);
-	}
+//	@Test
+//	public void showPreviousTimeFormReturnsPreviousTimeSheet() {
+//		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
+//		when(timeServiceMock.retrieveTimeEntryViewModelForPreviousPayPeriod(VALID_EMAIL)).thenReturn(payPeriodViewModelMock);
+//
+//		String returnedForm = timeControllerMock.showPreviousTimeForm(modelMapMock, sessionMock);
+//
+//		assertEquals(PREVIOUS_TIME_SHEET_JSP, returnedForm);
+//	}
 
 	@Test
 	public void showCreatePreviousTimeEntryFormReturnsValidFormIsSuccessful() {

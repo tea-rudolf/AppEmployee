@@ -42,13 +42,12 @@ public class TimeConverter {
 		model.setTaskIdTimeEntry(timeEntry.getTaskUid());
 		model.setTaskNameTimeEntry(projectService.getTaskName(timeEntry.getTaskUid()));
 		model.setCommentTimeEntry(timeEntry.getComment());
+		model.setAvailableTasks(projectService.getAllTasksByCurrentUserId(timeEntry.getUserEmail()));
 		return model;
 	}
 
-	public TimeViewModel convert(PayPeriod payPeriod, String userEmail) {
+	public TimeViewModel convert(String userEmail) {
 		TimeViewModel timeViewModel = new TimeViewModel();
-		timeViewModel.setStartDate(payPeriod.getStartDate().toString());
-		timeViewModel.setEndDate(payPeriod.getEndDate().toString());
 		timeViewModel.setUserEmail(userEmail);
 		timeViewModel.setAvailableTasks(projectService.getAllTasksByCurrentUserId(userEmail));
 		return timeViewModel;

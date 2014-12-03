@@ -19,6 +19,10 @@ public class ExpenseViewModel {
 		this.userEmail = userEmail;
 		this.comment = comment;
 	}
+	
+	public ExpenseViewModel(String email) {
+		this.userEmail=email;
+	}
 
 	public double getAmount() {
 		return amount;

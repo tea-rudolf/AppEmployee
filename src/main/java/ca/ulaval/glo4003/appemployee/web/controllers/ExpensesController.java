@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,52 +25,46 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
 public class ExpensesController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
+	static final String PAYPERIOD_ATTRIBUTE = "payPeriod";
 
 	private ExpenseService expenseService;
-	private TimeService payPeriodService;
+	private TimeService timeService;
 
 	@Autowired
 	public ExpensesController(ExpenseService expenseService, TimeService payPeriodService) {
 		this.expenseService = expenseService;
-		this.payPeriodService = payPeriodService;
+		this.timeService = payPeriodService;
+	}
+	
+	@ModelAttribute(PAYPERIOD_ATTRIBUTE)
+	public PayPeriodViewModel currentPayPeriodDates(HttpSession session) {
+		 return timeService.retrieveCurrentPayPeriodViewModel();
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showExpensesList(ModelMap model, HttpSession session) {
 		Collection<ExpenseViewModel> expensesViewModels = expenseService.retrieveExpenseViewModelsListForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE)
 				.toString());
-
 		model.addAttribute("expenses", expensesViewModels);
-
 		return "expenses";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateExpenseForm(Model model, ExpenseViewModel expenseModel, HttpSession session) {
-		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrieveCurrentPayPeriodViewModel();
-
-		model.addAttribute("expenseForm", new ExpenseViewModel());
-		model.addAttribute("payPeriod", payPeriodViewModel);
-
+		model.addAttribute("expenseForm", expenseService.retrieveUserExpenseViewModel(session.getAttribute(EMAIL_ATTRIBUTE).toString()));
 		return "createExpense";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String createExpense(Model model, ExpenseViewModel expenseForm, HttpSession session) throws Exception {
-		expenseForm.setUserEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		expenseService.createExpense(expenseForm);
-
-		return "expensesSubmitted";
+		return "redirect:/expenses/";
 	}
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.GET)
 	public String showEditExpenseForm(@PathVariable String uid, Model model, HttpSession session) throws Exception {
-		PayPeriodViewModel payPeriodViewModel = payPeriodService.retrieveCurrentPayPeriodViewModel();
 		ExpenseViewModel expenseViewModel = expenseService.retrieveExpenseViewModel(uid);
-
-		model.addAttribute("payPeriod", payPeriodViewModel);
 		model.addAttribute("expense", expenseViewModel);
-
 		return "editExpense";
 	}
 
