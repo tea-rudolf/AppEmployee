@@ -28,8 +28,8 @@
 			action="/time/${timeForm.timeEntryUid}/edit" modelAttribute="timeForm">
 			<div class="form-group">
 				<form:hidden path="timeEntryUid" />
+				<form:hidden path="userEmail" />
 			</div>
-				${taskIdTimeEntry}
 				<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
