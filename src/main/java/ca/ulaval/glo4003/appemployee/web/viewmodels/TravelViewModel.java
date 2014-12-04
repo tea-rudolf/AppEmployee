@@ -22,8 +22,7 @@ public class TravelViewModel {
 	public TravelViewModel() {
 	}
 
-	public TravelViewModel(String uid, double distance, String comment,
-			String date, String userEmail, String vehicle) {
+	public TravelViewModel(String uid, double distance, String comment, String date, String userEmail, String vehicle) {
 		this.uId = uid;
 		this.distanceTravelled = distance;
 		this.comment = comment;
