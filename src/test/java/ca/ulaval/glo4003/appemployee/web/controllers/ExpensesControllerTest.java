@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -79,6 +79,12 @@ public class ExpensesControllerTest {
 		MockitoAnnotations.initMocks(this);
 		expensesControllerMock = new ExpensesController(expenseServiceMock,
 				payPeriodServiceMock);
+	}
+	
+	@Test
+	public void currentPayPeriodDatesCallsCorrectServiceMethod() {
+		payPeriodViewModelMock = expensesControllerMock.currentPayPeriodDates(sessionMock);
+		verify(payPeriodServiceMock, times(1)).retrieveCurrentPayPeriodViewModel();
 	}
 
 	@Test

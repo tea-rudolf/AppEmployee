@@ -2,8 +2,7 @@ package ca.ulaval.glo4003.appemployee.web.converters;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,19 +95,11 @@ public class TimeConverterTest {
 				timeViewModelMock.getCommentTimeEntry());
 	}
 
-	// @Test
-	// public void convertPayPeriodConvertsIntoIntoViewModel() {
-	// when(payPeriodMock.getStartDate()).thenReturn(START_DATE);
-	// when(payPeriodMock.getEndDate()).thenReturn(END_DATE);
-	//
-	// timeViewModelMock = payPeriodConverterMock.convert(payPeriodMock,
-	// USER_EMAIL);
-	//
-	// assertEquals(payPeriodMock.getStartDate().toString(),
-	// timeViewModelMock.getStartDate());
-	// assertEquals(payPeriodMock.getEndDate().toString(),
-	// timeViewModelMock.getEndDate());
-	// }
+	 @Test
+	 public void convertCallsCorrectServiceMethod() {
+	 timeViewModelMock = payPeriodConverterMock.convert(USER_EMAIL);
+	 verify(projectServiceMock, times(1)).getAllTasksByCurrentUserId(USER_EMAIL);
+	 }
 
 	private TimeEntry createTimeEntry(String id, double hours, LocalDate date) {
 		TimeEntry timeEntry = mock(TimeEntry.class);
