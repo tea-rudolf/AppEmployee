@@ -126,7 +126,7 @@ public class TimeProcessorTest {
 	}
 
 	@Test
-	public void editTimeEntryUpdateObjectInRepository() throws Exception {
+	public void editTimeEntryUpdateTravelInRepository() throws Exception {
 		when(timeEntryRepositoryMock.findByUid(TIME_ENTRY_ID)).thenReturn(timeEntryMock);
 
 		timeProcessor.editTimeEntry(TIME_ENTRY_ID, BILLABLE_HOURS, CURRENT_DATE, EMAIL, TASK_ID, COMMENT);
