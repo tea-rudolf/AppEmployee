@@ -80,8 +80,7 @@ public class DepartmentService {
 	}
 
 	public void createDepartement(DepartmentViewModel departmentViewModel) throws Exception {
-		if (departmentViewModel.getSelectedUserEmails() != null
-				&& (!departmentViewModel.getSelectedUserEmails().isEmpty())) {
+		if (departmentViewModel.getSelectedUserEmails() != null && (!departmentViewModel.getSelectedUserEmails().isEmpty())) {
 			List<String> userEmails = Arrays.asList(departmentViewModel.getSelectedUserEmails().split(","));
 			departmentProcessor.createDepartment(departmentViewModel.getName(), userEmails);
 		}

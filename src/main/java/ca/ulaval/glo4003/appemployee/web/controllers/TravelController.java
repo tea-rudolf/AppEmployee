@@ -25,8 +25,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 public class TravelController {
 
 	static final String EMAIL_ATTRIBUTE = "email";
-	static final String PAYPERIOD_ATTRIBUTE = "payPeriodForm";
-	static final String TRAVEL_ATTRIBUTE = "travelForm";
 
 	private TravelService travelService;
 	private TimeService timeService;
@@ -37,20 +35,19 @@ public class TravelController {
 		this.timeService = timeService;
 	}
 
-	@ModelAttribute(PAYPERIOD_ATTRIBUTE)
+	@ModelAttribute("payPeriodForm")
 	public PayPeriodViewModel retrieveCurrentPayPeriodViewModel() {
 		return timeService.retrieveCurrentPayPeriodViewModel();
 	}
 
-	@ModelAttribute(TRAVEL_ATTRIBUTE)
+	@ModelAttribute("travelForm")
 	public TravelViewModel retrieveUserTravelViewModel(HttpSession session) {
-		return travelService.retrieveUserTravelViewModel(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		return travelService.retrieveUserTravelViewModel(session.getAttribute("email").toString());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showTravelsList(ModelMap model, HttpSession session) {
-		Collection<TravelViewModel> travelViewModels = travelService
-				.retrieveUserTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		Collection<TravelViewModel> travelViewModels = travelService.retrieveUserTravelViewModelsForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("travelEntries", travelViewModels);
 		return "travel";
 	}

@@ -34,14 +34,12 @@ public class ProjectController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String getProjects(Model model, HttpSession session) {
-
 		model.addAttribute("projects", projectService.retrieveAllProjects());
 		return "projectList";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateProjectForm(Model model, ProjectViewModel projectViewModel, HttpSession session) {
-
 		model.addAttribute("project", projectViewModel);
 		return "createProject";
 	}
@@ -54,9 +52,7 @@ public class ProjectController {
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.GET)
 	public String editProject(@PathVariable String projectNumber, Model model, HttpSession session) {
-
 		User currentUser = userService.retrieveUserByEmail(session.getAttribute(EMAIL_ATTRIBUTE).toString());
-
 		model.addAttribute("tasks", projectService.retrieveTasksByProject(projectNumber));
 		model.addAttribute("employees", projectService.retieveEmployeesByProject(projectNumber));
 		model.addAttribute("project", projectService.retrieveProjectViewModelForExistingProject(projectNumber));
@@ -66,14 +62,14 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
-	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel,
-			HttpSession session) throws Exception {
+	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel, HttpSession session) throws Exception {
+		
 		try {
 			projectService.updateProject(projectNumber, viewModel);
-			return "redirect:/projects/";
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return editProject(projectNumber, model, session);
 		}
+		
+		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
 }
