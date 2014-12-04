@@ -13,7 +13,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-
 		if (!request.getRequestURI().equals("/")
 				&& !request.getRequestURI().equals("/login")) {
 			LoginFormViewModel userData = (LoginFormViewModel) request
