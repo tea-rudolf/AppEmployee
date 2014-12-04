@@ -22,7 +22,7 @@ import org.springframework.ui.ModelMap;
 import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.PayPeriodViewModel;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeEntryViewModel;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TimeControllerTest {
@@ -39,7 +39,7 @@ public class TimeControllerTest {
 	private static final String CREATE_PREVIOUS_TIME_JSP = "createPreviousTimeEntry";
 	private static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime";
 
-	private Collection<TimeViewModel> timeEntriesViewModels;
+	private Collection<TimeEntryViewModel> timeEntriesViewModels;
 
 	@Mock
 	private TimeService timeServiceMock;
@@ -51,7 +51,7 @@ public class TimeControllerTest {
 	private PayPeriodViewModel payPeriodViewModelMock;
 
 	@Mock
-	private TimeViewModel timeViewModelMock;
+	private TimeEntryViewModel timeViewModelMock;
 
 	@Mock
 	private HttpSession sessionMock;
@@ -120,7 +120,7 @@ public class TimeControllerTest {
 
 	@Test
 	public void editTimeEntryReturnsCorrectRedirectLink() throws Exception {
-		when(timeViewModelMock.getTaskIdTimeEntry()).thenReturn(TIME_ENTRY_UID);
+		when(timeViewModelMock.getTaskId()).thenReturn(TIME_ENTRY_UID);
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 
 		String returnedForm = timeControllerMock.editTimeEntry(TIME_ENTRY_UID, modelMock, timeViewModelMock, sessionMock);

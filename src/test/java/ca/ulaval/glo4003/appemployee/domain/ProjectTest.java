@@ -44,24 +44,24 @@ public class ProjectTest {
 		project.addTaskUid(TASK_ID);
 	}
 
-	@Test
-	public void whenUserIsAddedToProjectUserShouldBeInUsersList() {
-		project.addEmployeeToProject(USER_UID);
-
-		assertTrue(project.getEmployeeUids().contains(USER_UID));
-	}
-
-	@Test(expected = EmployeeAlreadyExistsException.class)
-	public void addEmployeeThrowsEmployeeAlreadyExistsExceptionWhenAddingAnExistingId() {
-		project.addEmployeeToProject(USER_UID);
-		project.addEmployeeToProject(USER_UID);
-	}
-
-	@Test
-	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
-		project.addEmployeeToProject(USER_UID);
-
-		assertTrue(project.userIsAssignedToProject(USER_UID));
-
-	}
+//	@Test
+//	public void whenUserIsAddedToProjectUserShouldBeInUsersList() {
+//		project.addEmployeeToProject(USER_UID);
+//
+//		assertTrue(project.getEmployeeUids().contains(USER_UID));
+//	}
+//
+//	@Test(expected = EmployeeAlreadyExistsException.class)
+//	public void addEmployeeThrowsEmployeeAlreadyExistsExceptionWhenAddingAnExistingId() {
+//		project.addEmployeeToProject(USER_UID);
+//		project.addEmployeeToProject(USER_UID);
+//	}
+//
+//	@Test
+//	public void whenUserIsAlreadyAssignedToProjectReturnsTrue() {
+//		project.addEmployeeToProject(USER_UID);
+//
+//		assertTrue(project.userIsAssignedToProject(USER_UID));
+//
+//	}
 }

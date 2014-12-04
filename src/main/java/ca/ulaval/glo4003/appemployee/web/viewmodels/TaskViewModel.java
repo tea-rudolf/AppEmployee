@@ -7,7 +7,8 @@ public class TaskViewModel {
 	private String uId;
 	private String name;
 	private List<String> authorizedUsers = new ArrayList<String>();
-	private String userEmail = "";
+	private String selectedUserEmail = "";
+	private String currentUserEmail = "";
 	private List<String> availableUsers = new ArrayList<String>();
 
 	public String getuId() {
@@ -34,12 +35,12 @@ public class TaskViewModel {
 		this.name = name;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public String getSelectedUserEmail() {
+		return selectedUserEmail;
 	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	
+	public void setSelectedUserEmail(String selectedUserEmail) {
+		this.selectedUserEmail = selectedUserEmail;
 	}
 
 	public List<String> getAvailableUsers() {
@@ -48,6 +49,14 @@ public class TaskViewModel {
 
 	public void setAvailableUsers(List<String> availableUsers) {
 		this.availableUsers = availableUsers;
+	}
+
+	public String getCurrentUserEmail() {
+		return currentUserEmail;
+	}
+
+	public void setCurrentUserEmail(String currentUserEmail) {
+		this.currentUserEmail = currentUserEmail;
 	}
 
 }

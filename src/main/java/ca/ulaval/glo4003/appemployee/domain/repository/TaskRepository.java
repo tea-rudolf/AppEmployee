@@ -18,4 +18,6 @@ public interface TaskRepository {
 
 	List<Task> findAll();
 
+	List<Task> findByUids(List<String> taskIds);
+
 }

@@ -8,25 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskNotFoundException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.TimeEntryNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
-import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
-import ca.ulaval.glo4003.appemployee.domain.time.TimeEntry;
-import ca.ulaval.glo4003.appemployee.domain.time.TimeProcessor;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @Component
 public class TaskProcessor {
 
-	private TimeProcessor timeProcessor;
 	private TaskRepository taskRepository;
 	private UserRepository userRepository;
 
 	@Autowired
-	public TaskProcessor(TimeProcessor timeProcessor, TaskRepository taskRepository, UserRepository userRepository) {
-		this.timeProcessor = timeProcessor;
+	public TaskProcessor(TaskRepository taskRepository, UserRepository userRepository) {
 		this.taskRepository = taskRepository;
 		this.userRepository = userRepository;
 	}
@@ -39,21 +33,7 @@ public class TaskProcessor {
 		}
 		return task;
 	}
-
-	// est caller ou?
-	public List<Task> evaluateUserTasksForAPayPeriod(PayPeriod payPeriod, String userEmail) throws TimeEntryNotFoundException, TaskNotFoundException {
-
-		List<Task> tasks = new ArrayList<Task>();
-
-		for (String timeEntryUid : payPeriod.getTimeEntryIds()) {
-			TimeEntry entry = timeProcessor.retrieveTimeEntryByUid(timeEntryUid);
-			if (entry.getUserEmail().equals(userEmail)) {
-				tasks.add(retrieveTaskByUid(entry.getTaskUid()));
-			}
-		}
-		return tasks;
-	}
-
+	
 	public List<User> retrieveAllEmployeesByTaskId(String taskNumber) {
 		List<String> userEmails = taskRepository.findByUid(taskNumber).getAuthorizedUsers();
 		return userRepository.findByEmails(userEmails);
@@ -65,11 +45,26 @@ public class TaskProcessor {
 		List<String> availableUserEmails = new ArrayList<String>();
 
 		for (User user : allUsers) {
-			if (!task.userIsAssignedToTask(user.getEmail()) && !user.getRole().equals(Role.ENTERPRISE)) {
+			if (!task.userIsAlreadyAssignedToTask(user.getEmail()) && !user.getRole().equals(Role.ENTERPRISE)) {
 				availableUserEmails.add(user.getEmail());
 			}
 		}
 		return availableUserEmails;
+	}
+	
+	public void addEmployeeToEachTaskOfProject(List<String> taskIds, String newUserEmail) {
+		List<Task> tasks = taskRepository.findByUids(taskIds);
+		for (Task task : tasks) {
+			if (!task.userIsAlreadyAssignedToTask(newUserEmail)) {
+				task.assignUserToTask(newUserEmail);
+			}
+		}
+	}
+
+	public void editTask(String taskId, String taskName, String newUserEmail) throws Exception {
+		Task task = taskRepository.findByUid(taskId);
+		task.update(taskName, newUserEmail);
+		taskRepository.store(task);	
 	}
 
 }

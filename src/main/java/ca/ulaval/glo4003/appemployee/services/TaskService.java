@@ -1,11 +1,16 @@
 package ca.ulaval.glo4003.appemployee.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskProcessor;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
@@ -34,8 +39,26 @@ public class TaskService {
 		return taskViewModel;
 	}
 
-	public Collection<UserViewModel> retrieveEmployeesByTask(String taskNumber) {		
+	public List<UserViewModel> retrieveEmployeesByTask(String taskNumber) {
 		return userConverter.convert(taskProcessor.retrieveAllEmployeesByTaskId(taskNumber));
 	}
+	
+	public void editTask(String projectId, String taskId, TaskViewModel taskViewModel) throws Exception {
+		taskProcessor.editTask(taskId, taskViewModel.getName(), taskViewModel.getSelectedUserEmail());
+	}
 
+	public String retrieveTaskName(String taskUid) {
+		return taskRepository.findByUid(taskUid).getName();
+	}
+
+	public List<Task> retrieveAllTasksByUserId(String userEmail) {
+		List<Task> tasks = taskRepository.findAll();
+		List<Task> assignedToCurrentUserTasks = new ArrayList<Task>();
+		for (Task task: tasks) {
+			if (task.userIsAlreadyAssignedToTask(userEmail)) {
+				assignedToCurrentUserTasks.add(task);
+			}
+		}
+		return assignedToCurrentUserTasks;
+	}
 }

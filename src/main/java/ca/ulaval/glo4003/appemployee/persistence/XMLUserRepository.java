@@ -47,8 +47,10 @@ public class XMLUserRepository implements UserRepository {
 		List<User> users = new ArrayList<User>();
 
 		for (String email : emails) {
-			User user = findByEmail(email);
-			users.add(user);
+			if (!email.isEmpty()) {
+				User user = findByEmail(email);
+				users.add(user);
+			}
 		}
 		return users;
 	}

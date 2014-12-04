@@ -6,22 +6,23 @@ import java.util.List;
 import org.joda.time.LocalDate;
 
 public class ProjectViewModel {
-	private String uId;
+	private String uid;
 	private String name;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private List<String> taskIds = new ArrayList<String>();
 	private List<String> userIds = new ArrayList<String>();
 	private List<String> expenseIds = new ArrayList<String>();
-	private String userEmail = "";
+	private String currentUserEmail = "";
+	private String selectedUserEmail = "";
 	private List<String> availableUsers = new ArrayList<String>();
 
 	public String getuId() {
-		return uId;
+		return uid;
 	}
 
-	public void setuId(String uId) {
-		this.uId = uId;
+	public void setuId(String uid) {
+		this.uid = uid;
 	}
 
 	public String getName() {
@@ -72,12 +73,12 @@ public class ProjectViewModel {
 		this.expenseIds = expenseIds;
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public String getSelectedUserEmail() {
+		return selectedUserEmail;
 	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	
+	public void setSelectedUserEmail(String selectedUserEmail) {
+		this.selectedUserEmail = selectedUserEmail;
 	}
 
 	public List<String> getAvailableUsers() {
@@ -86,6 +87,14 @@ public class ProjectViewModel {
 
 	public void setAvailableUsers(List<String> list) {
 		this.availableUsers = list;
+	}
+
+	public String getCurrentUserEmail() {
+		return currentUserEmail;
+	}
+
+	public void setCurrentUserEmail(String currentUserEmail) {
+		this.currentUserEmail = currentUserEmail;
 	}
 
 }

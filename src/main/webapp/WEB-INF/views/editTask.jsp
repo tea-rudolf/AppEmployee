@@ -28,15 +28,15 @@
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />			
 			<c:if test="${role eq 'EMPLOYEE'}">
-				<form:hidden path="userEmail" />
+				<form:hidden path="currentUserEmail" />
 			</c:if>
 			<c:if test="${role eq 'ENTERPRISE'}">
-				<form:hidden path="userEmail" />
+				<form:hidden path="currentUserEmail" />
 			</c:if>
 			<c:if test="${role eq 'SUPERVISOR'}">
 				<div class="form-group">
-					<b>Assign a user email (optional)</b>
-					<td><form:select class="form-control" path="userEmail">
+					<b>Assign a user (optional)</b>
+					<td><form:select class="form-control" path="selectedUserEmail">
 						<form:option value=""> --SELECT--</form:option>
 						<form:options items="${task.availableUsers}"></form:options>
 					</form:select></td>

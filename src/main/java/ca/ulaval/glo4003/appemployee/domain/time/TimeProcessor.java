@@ -49,16 +49,14 @@ public class TimeProcessor {
 		payPeriodRepository.update(payPeriod);
 	}
 
-	public void createTimeEntry(PayPeriod payPeriod, double billableHours, LocalDate date, String userEmail,
-			String taskUid, String comment) throws Exception {
+	public void createTimeEntry(PayPeriod payPeriod, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) throws Exception {
 		TimeEntry timeEntry = new TimeEntry(billableHours, date, userEmail, taskUid, comment);
 		payPeriod.addTimeEntry(timeEntry.getUid());
 		editPayPeriod(payPeriod);
 		timeEntryRepository.store(timeEntry);
 	}
 
-	public void editTimeEntry(String timeEntryUid, double billableHours, LocalDate date, String userEmail,
-			String taskUid, String comment) throws Exception {
+	public void editTimeEntry(String timeEntryUid, double billableHours, LocalDate date, String userEmail, String taskUid, String comment) throws Exception {
 		TimeEntry timeEntry = retrieveTimeEntryByUid(timeEntryUid);
 		updateTimeEntry(billableHours, date, userEmail, taskUid, comment, timeEntry);
 	}

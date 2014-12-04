@@ -54,11 +54,11 @@
 										</form:select></td>
 									<td><form:label path="hoursTimeEntry"></form:label> <form:input
 											class="form-control" type="number" min="1" max="24"
-											path="hoursTimeEntry" value="${hoursTimeEntry}"
+											path="hoursTimeEntry" value="${hours}"
 											required="required" /></td>
 									<td><form:label path="commentTimeEntry"></form:label> <form:input
 											class="form-control" path="commentTimeEntry"
-											value="${commentTimeEntry}" /></td>
+											value="${comment}" /></td>
 								</tr>
 							</table>
 						</div>

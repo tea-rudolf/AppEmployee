@@ -44,22 +44,22 @@
 									<th>Comment</th>
 								</tr>
 								<tr>
-									<td><form:label path="dateTimeEntry"></form:label> <form:input
+									<td><form:label path="date"></form:label> <form:input
 											class="form-control" type="date"
 											min="${payPeriod.payPeriodStartDate}"
-											max="${payPeriod.payPeriodEndDate}" path="dateTimeEntry"
-											value="${dateTimeEntry}" required="required" /></td>
-									<td><form:select class="form-control" path="taskIdTimeEntry">
+											max="${payPeriod.payPeriodEndDate}" path="date"
+											value="${date}" required="required" /></td>
+									<td><form:select class="form-control" path="taskId">
 											<form:options items="${timeForm.availableTasks}" itemValue="uid"
 												itemLabel="name"></form:options>
 										</form:select></td>
-									<td><form:label path="hoursTimeEntry"></form:label> <form:input
+									<td><form:label path="hours"></form:label> <form:input
 											class="form-control" type="number" min="1" max="24"
-											path="hoursTimeEntry" value="${hoursTimeEntry}"
+											path="hours" value="${hours}"
 											required="required" /></td>
-									<td><form:label path="commentTimeEntry"></form:label> <form:input
-											class="form-control" path="commentTimeEntry"
-											value="${commentTimeEntry}" /></td>
+									<td><form:label path="comment"></form:label> <form:input
+											class="form-control" path="comment"
+											value="${comment}" /></td>
 								</tr>
 							</table>
 						</div>

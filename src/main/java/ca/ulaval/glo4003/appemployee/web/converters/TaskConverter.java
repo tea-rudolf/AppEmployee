@@ -24,10 +24,10 @@ public class TaskConverter {
 	}
 
 	public TaskViewModel convert(Task task) {
-		TaskViewModel viewModel = new TaskViewModel();
-		viewModel.setuId(task.getUid());
-		viewModel.setName(task.getName());
-		viewModel.setAuthorizedUsers(task.getAuthorizedUsers());
-		return viewModel;
+		TaskViewModel taskViewModel = new TaskViewModel();
+		taskViewModel.setuId(task.getUid());
+		taskViewModel.setName(task.getName());
+		taskViewModel.setAuthorizedUsers(task.getAuthorizedUsers());
+		return taskViewModel;
 	}
 }

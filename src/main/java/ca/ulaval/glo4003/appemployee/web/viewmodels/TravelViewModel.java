@@ -13,8 +13,7 @@ public class TravelViewModel {
 	private String comment = "";
 	private String uId = "";
 	private String vehicle = "";
-	private ArrayList<Vehicle> availableVehicles = new ArrayList<Vehicle>(
-			Arrays.asList(Vehicle.values()));
+	private ArrayList<Vehicle> availableVehicles = new ArrayList<Vehicle>(Arrays.asList(Vehicle.values()));
 
 	public TravelViewModel(String userEmail) {
 		this.userEmail = userEmail;

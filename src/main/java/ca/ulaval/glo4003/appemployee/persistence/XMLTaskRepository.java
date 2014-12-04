@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
+import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @Repository
 @Singleton
@@ -44,6 +45,17 @@ public class XMLTaskRepository implements TaskRepository {
 	@Override
 	public List<Task> findAll() {
 		return new ArrayList<Task>(tasks.values());
+	}
+	
+	@Override
+	public List<Task> findByUids(List<String> taskIds) {
+		List<Task> tasks = new ArrayList<Task>();
+
+		for (String taskId : taskIds) {
+			Task task = findByUid(taskId);
+			tasks.add(task);
+		}
+		return tasks;
 	}
 
 	private void saveXML() throws Exception {

@@ -75,10 +75,8 @@ public class Project {
 
 	public void addTaskUid(String taskUid) {
 		if (taskUids.contains(taskUid)) {
-			throw new TaskAlreadyExistsException(
-					"Task already assigned to this project.");
+			throw new TaskAlreadyExistsException("Task already assigned to this project.");
 		}
-
 		taskUids.add(taskUid);
 	}
 
@@ -86,13 +84,16 @@ public class Project {
 		return employeeUids.contains(userId);
 	}
 
-	public void addEmployeeToProject(String userId) {
+	private void addEmployeeToProject(String userId) {
 		if (employeeUids.contains(userId)) {
-			throw new EmployeeAlreadyExistsException(
-					"Employee already assigned to this project.");
+			throw new EmployeeAlreadyExistsException("Employee already assigned to this project.");
 		}
-
 		employeeUids.add(userId);
+	}
+
+	public void update(String projectName, String newUserEmail) {
+		this.name = projectName;
+		addEmployeeToProject(newUserEmail);
 	}
 
 }

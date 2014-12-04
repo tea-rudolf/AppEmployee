@@ -43,8 +43,7 @@ public class Task {
 
 	public void assignUserToTask(String userId) {
 		if (authorizedUsers.contains(userId)) {
-			throw new EmployeeAlreadyExistsException(
-					"Employee already assigned to this task.");
+			throw new EmployeeAlreadyExistsException("Employee already assigned to this task.");
 		}
 
 		authorizedUsers.add(userId);
@@ -58,8 +57,13 @@ public class Task {
 		this.authorizedUsers = authorizedUsers;
 	}
 
-	public boolean userIsAssignedToTask(String userId) {
+	public boolean userIsAlreadyAssignedToTask(String userId) {
 		return authorizedUsers.contains(userId);
+	}
+
+	public void update(String taskName, String newUserEmail) {
+		this.name = taskName;
+		assignUserToTask(newUserEmail);
 	}
 
 }

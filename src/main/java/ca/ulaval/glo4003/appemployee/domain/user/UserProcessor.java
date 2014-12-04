@@ -51,13 +51,5 @@ public class UserProcessor {
 	public Role retrieveUserRole(String userEmail) {
 		return retrieveUserByEmail(userEmail).getRole();
 	}
-	
-	public List<String> extractUserEmails(Collection<User> users) {
-		List<String> userEmails = new ArrayList<String>();
 
-		for (User user : users) {
-			userEmails.add(user.getEmail());
-		}
-		return userEmails;
-	}
 }

@@ -8,51 +8,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.time.TimeEntry;
-import ca.ulaval.glo4003.appemployee.services.ProjectService;
-import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeViewModel;
+import ca.ulaval.glo4003.appemployee.services.TaskService;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeEntryViewModel;
 
 @Component
 public class TimeConverter {
 
-	private ProjectService projectService;
+	private TaskService taskService;;
 
 	@Autowired
-	public TimeConverter(ProjectService projectService) {
-		this.projectService = projectService;
+	public TimeConverter(TaskService taskService) {
+		this.taskService = taskService;
 	}
 
-	public Collection<TimeViewModel> convert(List<TimeEntry> timeEntries) {
-		Collection<TimeViewModel> viewModels = new ArrayList<TimeViewModel>();
+	public Collection<TimeEntryViewModel> convert(List<TimeEntry> timeEntries) {
+		Collection<TimeEntryViewModel> viewModels = new ArrayList<TimeEntryViewModel>();
 
 		for (TimeEntry entry : timeEntries) {
-			TimeViewModel viewModel = convert(entry);
-			viewModel.setTimeEntryUid(entry.getUid());
+			TimeEntryViewModel viewModel = convert(entry);
+			viewModel.setUid(entry.getUid());
 			viewModels.add(viewModel);
 		}
 
 		return viewModels;
 	}
 
-	public TimeViewModel convert(TimeEntry timeEntry) {
-		TimeViewModel model = new TimeViewModel();
-		model.setTimeEntryUid(timeEntry.getUid());
+	public TimeEntryViewModel convert(TimeEntry timeEntry) {
+		TimeEntryViewModel model = new TimeEntryViewModel();
+		model.setUid(timeEntry.getUid());
 		model.setUserEmail(timeEntry.getUserEmail());
-		model.setDateTimeEntry(timeEntry.getDate().toString());
-		model.setHoursTimeEntry(timeEntry.getBillableHours());
-		model.setTaskIdTimeEntry(timeEntry.getTaskUid());
-		model.setTaskNameTimeEntry(projectService.getTaskName(timeEntry
-				.getTaskUid()));
-		model.setCommentTimeEntry(timeEntry.getComment());
-		model.setAvailableTasks(projectService
-				.getAllTasksByCurrentUserId(timeEntry.getUserEmail()));
+		model.setDate(timeEntry.getDate().toString());
+		model.setHours(timeEntry.getBillableHours());
+		model.setTaskId(timeEntry.getTaskUid());
+		model.setTaskName(taskService.retrieveTaskName(timeEntry.getTaskUid()));
+		model.setComment(timeEntry.getComment());
+		model.setAvailableTasks(taskService.retrieveAllTasksByUserId(timeEntry.getUserEmail()));
 		return model;
 	}
 
-	public TimeViewModel convert(String userEmail) {
-		TimeViewModel timeViewModel = new TimeViewModel();
+	public TimeEntryViewModel convert(String userEmail) {
+		TimeEntryViewModel timeViewModel = new TimeEntryViewModel();
 		timeViewModel.setUserEmail(userEmail);
-		timeViewModel.setAvailableTasks(projectService
-				.getAllTasksByCurrentUserId(userEmail));
+		timeViewModel.setAvailableTasks(taskService.retrieveAllTasksByUserId(userEmail));
 		return timeViewModel;
 	}
 }
