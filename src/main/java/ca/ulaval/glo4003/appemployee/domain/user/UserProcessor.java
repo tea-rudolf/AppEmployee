@@ -29,7 +29,7 @@ public class UserProcessor {
 		return user;
 	}
 
-	public List<String> evaluateAllUserEmails() throws UserNotFoundException {
+	public List<String> retrieveAllUserEmails() throws UserNotFoundException {
 		List<String> usersEmails = new ArrayList<String>();
 		Collection<User> users = userRepository.findAll();
 		for (User user : users) {
@@ -51,5 +51,13 @@ public class UserProcessor {
 	public Role retrieveUserRole(String userEmail) {
 		return retrieveUserByEmail(userEmail).getRole();
 	}
+	
+	public List<String> extractUserEmails(Collection<User> users) {
+		List<String> userEmails = new ArrayList<String>();
 
+		for (User user : users) {
+			userEmails.add(user.getEmail());
+		}
+		return userEmails;
+	}
 }

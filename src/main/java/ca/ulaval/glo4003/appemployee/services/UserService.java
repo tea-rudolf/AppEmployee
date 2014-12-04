@@ -39,7 +39,7 @@ public class UserService {
 	}
 
 	public List<String> evaluateAllUserEmails() throws UserNotFoundException {
-		return userProcessor.evaluateAllUserEmails();
+		return userProcessor.retrieveAllUserEmails();
 	}
 
 	public void editUser(UserViewModel userViewModel) throws Exception {

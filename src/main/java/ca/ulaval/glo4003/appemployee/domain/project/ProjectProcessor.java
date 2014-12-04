@@ -2,6 +2,7 @@ package ca.ulaval.glo4003.appemployee.domain.project;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,22 +19,19 @@ public class ProjectProcessor {
 	private UserRepository userRepository;
 
 	@Autowired
-	public ProjectProcessor(ProjectRepository projectRepository,
-			UserRepository userRepository) {
+	public ProjectProcessor(ProjectRepository projectRepository, UserRepository userRepository) {
 		this.projectRepository = projectRepository;
 		this.userRepository = userRepository;
 	}
 
-	public Collection<User> evaluateAvailableEmployeesByProject(
-			String projectUid) {
+	public List<String> evaluateAvailableEmployeeEmailsByProject(String projectUid) {
 		Project project = projectRepository.findById(projectUid);
 		Collection<User> allUsers = userRepository.findAll();
-		Collection<User> availableUsers = new ArrayList<User>();
+		List<String> availableUsers = new ArrayList<String>();
 
 		for (User user : allUsers) {
-			if (!project.userIsAssignedToProject(user.getEmail())
-					&& !user.getRole().equals(Role.ENTERPRISE)) {
-				availableUsers.add(user);
+			if (!project.userIsAssignedToProject(user.getEmail()) && !user.getRole().equals(Role.ENTERPRISE)) {
+				availableUsers.add(user.getEmail());
 			}
 		}
 		return availableUsers;

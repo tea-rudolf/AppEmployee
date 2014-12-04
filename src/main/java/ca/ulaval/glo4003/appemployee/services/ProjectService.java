@@ -188,6 +188,7 @@ public class ProjectService {
 		}
 	}
 
+	// ok
 	public void createProject(ProjectViewModel projectViewModel) {
 		Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(),
 				projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
@@ -195,27 +196,20 @@ public class ProjectService {
 
 	}
 
+	// ok
 	public ProjectViewModel retrieveProjectViewModelForExistingProject(String projectNumber) {
 		ProjectViewModel projectViewModel = projectConverter.convert(getProjectById(projectNumber));
-		projectViewModel.setAvailableUsers(extractUserEmails(projectProcessor
-				.evaluateAvailableEmployeesByProject(projectNumber)));
+		projectViewModel.setAvailableUsers(projectProcessor.evaluateAvailableEmployeeEmailsByProject(projectNumber));
 		return projectViewModel;
 	}
 
+	// ok
 	public Collection<TaskViewModel> retrieveTasksByProject(String projectNumber) {
 		return taskConverter.convert(getAllTasksByProjectId(projectNumber));
 	}
 
+	// ok
 	public Collection<UserViewModel> retieveEmployeesByProject(String projectNumber) {
 		return userConverter.convert(getAllEmployeesByProjectId(projectNumber));
-	}
-
-	private List<String> extractUserEmails(Collection<User> users) {
-		List<String> userEmails = new ArrayList<String>();
-
-		for (User user : users) {
-			userEmails.add(user.getEmail());
-		}
-		return userEmails;
 	}
 }
