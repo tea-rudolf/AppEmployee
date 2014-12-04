@@ -63,12 +63,6 @@ public class TimeProcessor {
 		updateTimeEntry(billableHours, date, userEmail, taskUid, comment, timeEntry);
 	}
 
-	private void updateTimeEntry(double billableHours, LocalDate date, String userEmail, String taskUid,
-			String comment, TimeEntry timeEntry) throws Exception {
-		timeEntry.update(billableHours, date, userEmail, taskUid, comment);
-		timeEntryRepository.store(timeEntry);
-	}
-
 	public TimeEntry retrieveTimeEntryByUid(String timeEntryUid) throws TimeEntryNotFoundException {
 		TimeEntry timeEntry = timeEntryRepository.findByUid(timeEntryUid);
 
@@ -89,6 +83,12 @@ public class TimeProcessor {
 			}
 		}
 		return timeEntries;
+	}
+
+	private void updateTimeEntry(double billableHours, LocalDate date, String userEmail, String taskUid,
+			String comment, TimeEntry timeEntry) throws Exception {
+		timeEntry.update(billableHours, date, userEmail, taskUid, comment);
+		timeEntryRepository.store(timeEntry);
 	}
 
 }

@@ -22,21 +22,18 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	private static String PAYPERIODS_FILEPATH = "/payPeriods.xml";
 
 	public XMLPayPeriodRepository() throws Exception {
-		serializer = new XMLGenericMarshaller<PayPeriodXMLAssembler>(
-				PayPeriodXMLAssembler.class);
+		serializer = new XMLGenericMarshaller<PayPeriodXMLAssembler>(PayPeriodXMLAssembler.class);
 		parseXML();
 	}
 
-	public XMLPayPeriodRepository(
-			XMLGenericMarshaller<PayPeriodXMLAssembler> serializer) {
+	public XMLPayPeriodRepository(XMLGenericMarshaller<PayPeriodXMLAssembler> serializer) {
 		this.serializer = serializer;
 	}
 
 	@Override
 	public void store(PayPeriod payPeriod) throws Exception {
 		if (payPeriods.contains(payPeriod)) {
-			throw new PayPeriodAlreadyExistsException(
-					"PayPeriod already exists in repository.");
+			throw new PayPeriodAlreadyExistsException("PayPeriod already exists in repository.");
 		}
 
 		payPeriods.add(payPeriod);
@@ -47,8 +44,7 @@ public class XMLPayPeriodRepository implements PayPeriodRepository {
 	public void update(PayPeriod payPeriod) throws Exception {
 		int index = payPeriods.indexOf(payPeriod);
 		if (index == -1) {
-			throw new PayPeriodNotFoundException(
-					"PayPeriod does not exist in repository");
+			throw new PayPeriodNotFoundException("PayPeriod does not exist in repository");
 		}
 		payPeriods.set(index, payPeriod);
 		saveXML();
