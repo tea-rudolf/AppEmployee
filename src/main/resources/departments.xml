@@ -8,7 +8,7 @@
   </departments>
   <departments>
     <name>Department of unassigned employees</name>
-    <supervisorIds></supervisorIds>
+    <supervisorIds>sup@company.com</supervisorIds>
     <employeeIds>jack@company.com</employeeIds>
     <employeeIds>bob@company.com</employeeIds>
   </departments>
