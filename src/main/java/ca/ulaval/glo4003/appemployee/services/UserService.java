@@ -38,10 +38,6 @@ public class UserService {
 		return users;
 	}
 
-	public List<String> evaluateAllUserEmails() throws UserNotFoundException {
-		return userProcessor.retrieveAllUserEmails();
-	}
-
 	public void editUser(UserViewModel userViewModel) throws Exception {
 		userProcessor.updateUser(userViewModel.getEmail(), userViewModel.getPassword(),
 				Role.valueOf(userViewModel.getRole()), userViewModel.getWage());

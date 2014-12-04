@@ -1,9 +1,5 @@
 package ca.ulaval.glo4003.appemployee.domain.user;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,15 +25,6 @@ public class UserProcessor {
 		return user;
 	}
 
-	public List<String> retrieveAllUserEmails() throws UserNotFoundException {
-		List<String> usersEmails = new ArrayList<String>();
-		Collection<User> users = userRepository.findAll();
-		for (User user : users) {
-			usersEmails.add(user.getEmail());
-		}
-		return usersEmails;
-	}
-
 	public void updateUser(String email, String password, Role role, double wage) throws Exception {
 		User user = new User(email, password, role, wage);
 		userRepository.store(user);
@@ -51,13 +38,5 @@ public class UserProcessor {
 	public Role retrieveUserRole(String userEmail) {
 		return retrieveUserByEmail(userEmail).getRole();
 	}
-	
-	public List<String> extractUserEmails(Collection<User> users) {
-		List<String> userEmails = new ArrayList<String>();
 
-		for (User user : users) {
-			userEmails.add(user.getEmail());
-		}
-		return userEmails;
-	}
 }
