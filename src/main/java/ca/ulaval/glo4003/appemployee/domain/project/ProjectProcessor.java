@@ -36,4 +36,9 @@ public class ProjectProcessor {
 		}
 		return availableUsers;
 	}
+
+	public void addProject(Project project) throws Exception {
+		projectRepository.store(project);
+		
+	}
 }

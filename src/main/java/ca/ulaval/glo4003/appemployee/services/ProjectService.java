@@ -50,16 +50,12 @@ public class ProjectService {
 		return projectConverter.convert(projectRepository.findAll());
 	}
 
-	public void addProject(Project project) {
-		try {
-			projectRepository.store(project);
-		} catch (Exception e) {
-			throw new RepositoryException(e.getMessage());
-		}
+	public void addProject(Project project) throws Exception {
+		projectProcessor.addProject(project);
 	}
 
-	public void updateProject(String projectId, ProjectViewModel viewModel) {
-
+	public void editProject(String projectId, ProjectViewModel viewModel) {
+		//projectProcessor.editProject(projectId);
 		Project project = projectRepository.findById(projectId);
 		project.setName(viewModel.getName());
 

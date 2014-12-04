@@ -33,7 +33,7 @@ public class ProjectController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String getProjects(Model model, HttpSession session) {
+	public String showProjects(Model model, HttpSession session) {
 		model.addAttribute("projects", projectService.retrieveAllProjects());
 		return "projectList";
 	}
@@ -65,7 +65,7 @@ public class ProjectController {
 	public String saveEditedProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel, HttpSession session) throws Exception {
 		
 		try {
-			projectService.updateProject(projectNumber, viewModel);
+			projectService.editProject(projectNumber, viewModel);
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 		}
