@@ -37,6 +37,7 @@
 				<div class="form-group">
 					<b>Assign a user email (optional)</b>
 					<td><form:select class="form-control" path="userEmail">
+						<form:option value=""> --SELECT--</form:option>
 						<form:options items="${task.availableUsers}"></form:options>
 					</form:select></td>
 				</div>

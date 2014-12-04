@@ -1,8 +1,6 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.department;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +10,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import ca.ulaval.glo4003.appemployee.domain.department.Department;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DepartmentTest {
 	private static final String DEPARTMENT_NAME = "DummyDept";
 	private static final String USER_UID = "1234";
-	private static final List<String> supervisorIds = new ArrayList<String>();
+	private List<String> supervisorIds = new ArrayList<String>();
 
 	private Department department;
 
@@ -62,5 +59,12 @@ public class DepartmentTest {
 	@Test
 	public void containsSupervisorReturnsFalseIfSupervisorExists() {
 		assertFalse(department.containsSupervisor(USER_UID));
+	}
+
+	@Test
+	public void removeEmployeeRemovesEmployeeWhenEmployeeExists() {
+		department.addEmployee(USER_UID);
+		department.removeEmployee(USER_UID);
+		assertFalse(department.getEmployeeIds().contains(USER_UID));
 	}
 }

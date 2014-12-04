@@ -29,13 +29,13 @@ public class TravelService {
 	}
 
 	public void editTravel(String travelUid, TravelViewModel travelViewModel) throws Exception {
-		travelProcessor.editTravel(travelUid, travelViewModel.getDistanceTravelled(), travelViewModel.getVehicle(),
-				new LocalDate(travelViewModel.getDate()), travelViewModel.getUserEmail(), travelViewModel.getComment());
+		travelProcessor.editTravel(travelUid, travelViewModel.getDistanceTravelled(), travelViewModel.getVehicle(), new LocalDate(travelViewModel.getDate()),
+				travelViewModel.getUserEmail(), travelViewModel.getComment());
 	}
 
 	public void createTravel(TravelViewModel travelViewModel) throws Exception {
-		travelProcessor.createTravel(travelViewModel.getDistanceTravelled(), travelViewModel.getVehicle(),
-				new LocalDate(travelViewModel.getDate()), travelViewModel.getUserEmail(), travelViewModel.getComment());
+		travelProcessor.createTravel(travelViewModel.getDistanceTravelled(), travelViewModel.getVehicle(), new LocalDate(travelViewModel.getDate()),
+				travelViewModel.getUserEmail(), travelViewModel.getComment());
 	}
 
 	public TravelViewModel retrieveUserTravelViewModel(String userEmail) {
