@@ -8,20 +8,21 @@ import org.junit.Test;
 
 public class ExpenseTest {
 
-	private static final double AMOUNT = 500.50;
-	private static final LocalDate DATE = new LocalDate();
-	private static final String USER_EMAIL = "test@company.com";
-	private static final String COMMENT = "nothing to say";
-	private static final double AMOUNT2 = 300.50;
-	private static final LocalDate DATE2 = new LocalDate("2014-12-03");
-	private static final String USER_EMAIL2 = "test2@company.com";
-	private static final String COMMENT2 = "dummy Comment";
+	private static final double FIRST_AMOUNT = 500.50;
+	private static final LocalDate FIRST_DATE = new LocalDate();
+	private static final String FIRST_USER_EMAIL = "test@company.com";
+	private static final String FIRST_COMMENT = "nothing to say";
+
+	private static final double SECOND_AMOUNT = 300.50;
+	private static final LocalDate SECOND_DATE = new LocalDate("2014-12-03");
+	private static final String SECOND_USER_EMAIL = "test2@company.com";
+	private static final String SECOND_COMMENT = "dummy Comment";
 
 	private Expense expense;
 
 	@Before
 	public void setUp() {
-		expense = new Expense(AMOUNT, DATE, USER_EMAIL, COMMENT);
+		expense = new Expense(FIRST_AMOUNT, FIRST_DATE, FIRST_USER_EMAIL, FIRST_COMMENT);
 	}
 
 	@Test
@@ -31,26 +32,26 @@ public class ExpenseTest {
 
 	@Test
 	public void updateChangesAmountExpense() {
-		expense.update(AMOUNT2, DATE2, USER_EMAIL2, COMMENT2);
-		assertEquals((int) AMOUNT2, (int) expense.getAmount());
+		expense.update(SECOND_AMOUNT, SECOND_DATE, SECOND_USER_EMAIL, SECOND_COMMENT);
+		assertEquals((int) SECOND_AMOUNT, (int) expense.getAmount());
 	}
 
 	@Test
 	public void updateChangesDateExpense() {
-		expense.update(AMOUNT2, DATE2, USER_EMAIL2, COMMENT2);
-		assertEquals(DATE2, expense.getDate());
+		expense.update(SECOND_AMOUNT, SECOND_DATE, SECOND_USER_EMAIL, SECOND_COMMENT);
+		assertEquals(SECOND_DATE, expense.getDate());
 	}
 
 	@Test
 	public void updateChangesUserEmailExpense() {
-		expense.update(AMOUNT2, DATE2, USER_EMAIL2, COMMENT2);
-		assertEquals(USER_EMAIL2, expense.getUserEmail());
+		expense.update(SECOND_AMOUNT, SECOND_DATE, SECOND_USER_EMAIL, SECOND_COMMENT);
+		assertEquals(SECOND_USER_EMAIL, expense.getUserEmail());
 	}
 
 	@Test
 	public void updateChangesCommentExpense() {
-		expense.update(AMOUNT2, DATE2, USER_EMAIL2, COMMENT2);
-		assertEquals(COMMENT2, expense.getComment());
+		expense.update(SECOND_AMOUNT, SECOND_DATE, SECOND_USER_EMAIL, SECOND_COMMENT);
+		assertEquals(SECOND_COMMENT, expense.getComment());
 	}
 
 }
