@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
@@ -48,7 +51,16 @@ public class ProjectController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
-		projectService.createProject(projectViewModel);
+		
+		
+		try {
+			projectService.createProject(projectViewModel);
+		} catch (ProjectExistsException e) {
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return showCreateProjectForm(model, projectViewModel, session);
+		}
+		
+		
 		return "redirect:/projects";
 	}
 
@@ -87,8 +99,9 @@ public class ProjectController {
 	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
 		try {
 			projectService.addNewTaskToProject(projectNumber, taskViewModel);
-		} catch (TaskAlreadyExistsException e) {
+		} catch (TaskExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return showCreateTaskForm(projectNumber, model, taskViewModel, session);
 		}
 
 		return String.format("redirect:/projects/%s/edit", projectNumber);

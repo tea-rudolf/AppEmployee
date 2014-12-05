@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
@@ -77,6 +79,12 @@ public class ProjectProcessor {
 	
 	public void addTaskToProject(String projectNumber, String taskName, double multiplicativeFactor) throws Exception {
 		Project project = projectRepository.findById(projectNumber);
+		System.out.println(taskName);
+		System.out.println(taskRepository.findByName(taskName));
+		if (taskRepository.findByName(taskName) != null){
+			throw new TaskExistsException(String.format("The task %s already exists!", taskName));
+		}
+		
 		Task newTask = new Task(taskName, project.getEmployeeUids(), multiplicativeFactor);
 		
 		project.addTaskUid(newTask.getUid());

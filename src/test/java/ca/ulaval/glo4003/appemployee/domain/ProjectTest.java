@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,7 +38,7 @@ public class ProjectTest {
 		assertTrue(project.getTaskUids().contains(TASK_ID));
 	}
 
-	@Test(expected = TaskAlreadyExistsException.class)
+	@Test(expected = TaskAlreadyAssignedToProjectException.class)
 	public void addTaskIdThrowsTaskAlreadyExistsExceptionWhenAddingAnExistingId() {
 		project.addTaskUid(TASK_ID);
 		project.addTaskUid(TASK_ID);

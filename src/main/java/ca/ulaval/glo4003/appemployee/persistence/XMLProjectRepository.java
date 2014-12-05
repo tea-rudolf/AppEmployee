@@ -36,6 +36,17 @@ public class XMLProjectRepository implements ProjectRepository {
 	public Project findById(String projectId) {
 		return projects.get(projectId);
 	}
+	
+	@Override
+	public Project findByName(String name) {
+		Collection<Project> projects = findAll();
+		for(Project project : projects){
+			if  (project.getName().equals(name)){
+				return project;
+			}	
+		}
+		return null;
+	}
 
 	@Override
 	public Collection<Project> findAll() {

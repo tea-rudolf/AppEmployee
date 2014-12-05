@@ -20,4 +20,6 @@ public interface TaskRepository {
 
 	List<Task> findByUids(List<String> taskIds);
 
+	Task findByName(String taskName);
+
 }

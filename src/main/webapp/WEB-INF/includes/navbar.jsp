@@ -34,10 +34,10 @@
 				<li><a href="/">Overview</a></li>
 				<li><a href="/time">Manage time</a></li>
 				<li><a href="/expenses">Manage expenses</a></li>
-				<li><a href="/projects">Manage projects & tasks</a></li>
 				<li><a href="/travel">Manage travel</a></li>
 				<c:if
 					test='${sessionScope.role eq "SUPERVISOR" or sessionScope.role eq "ENTERPRISE"}'>
+					<li><a href="/projects">Manage projects & tasks</a></li>
 					<li><a href="/departments">Manage departments</a></li>
 
 				</c:if>

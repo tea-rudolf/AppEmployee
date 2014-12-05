@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
@@ -56,7 +57,14 @@ public class DepartmentController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String createDepartment(Model model, DepartmentViewModel departmentViewModel, HttpSession session)
 			throws Exception {
-		departmentService.createDepartement(departmentViewModel);
+		
+		try {
+			departmentService.createDepartement(departmentViewModel);
+		} catch (DepartmentExistsException e) {
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			return showCreateDepartmentForm(model, session);
+		}
+		
 		return "redirect:/departments/";
 	}
 

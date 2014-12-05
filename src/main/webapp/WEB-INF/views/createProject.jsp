@@ -17,7 +17,7 @@
 			<div class="form-group">
 				<form:hidden path="uId" />
 				<c:if
-					test="${not empty message && message.name == 'ProjectExistsException'}">
+					test="${not empty message }">
 					<div class="alert alert-danger" style="margin-top: 10px;"
 						role="alert">${message.message}</div>
 				</c:if>

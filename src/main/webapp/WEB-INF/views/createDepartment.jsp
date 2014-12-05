@@ -20,7 +20,11 @@
 				<form:input class="form-control" path="name" value="${name}"
 					required="required" />
 			</div>
-
+			<c:if
+					test="${not empty message }">
+					<div class="alert alert-danger" style="margin-top: 10px;"
+						role="alert">${message.message}</div>
+			</c:if>
 			<div class="form-group">
 			<c:if test="${fn:length(department.availableUsers) gt 0}">
 			<p ><b>Select employes to add to this department : </b></p>

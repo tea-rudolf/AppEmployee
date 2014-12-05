@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
 
 public class Project {
 
@@ -75,7 +75,7 @@ public class Project {
 
 	public void addTaskUid(String taskUid) {
 		if (taskUids.contains(taskUid)) {
-			throw new TaskAlreadyExistsException("Task already assigned to this project.");
+			throw new TaskAlreadyAssignedToProjectException("Task already assigned to this project.");
 		}
 		taskUids.add(taskUid);
 	}

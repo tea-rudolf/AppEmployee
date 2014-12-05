@@ -5,6 +5,8 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectProcessor;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
@@ -43,6 +45,11 @@ public class ProjectService {
 	}
 
 	public void createProject(ProjectViewModel projectViewModel) throws Exception {
+		
+		if (projectRepository.findByName(projectViewModel.getName()) != null){
+			throw new ProjectExistsException(String.format("The project %s already exists!", projectViewModel.getName()));
+		}
+		
 		Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(), projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
 		projectRepository.store(newProject);
 
