@@ -24,7 +24,7 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 public class ProjectControllerTest {
-	private static final String SAMPLE_PROJECTNUMBER = "1";
+	private static final String SAMPLE_PROJECT_NUMBER = "1";
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
 	private static final String PROJECTS_LIST_FORM = "projectList";
@@ -99,32 +99,32 @@ public class ProjectControllerTest {
 	public void showEditProjectFormReturnsEditProjectFormIfValidSessionAttribute() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		when(userServiceMock.retrieveUserByEmail(VALID_EMAIL)).thenReturn(currentUserMock);
-		String returnedForm = projectController.showEditProjectForm(SAMPLE_PROJECTNUMBER, modelMock, sessionMock);
+		String returnedForm = projectController.showEditProjectForm(SAMPLE_PROJECT_NUMBER, modelMock, sessionMock);
 		assertEquals(returnedForm, EDIT_PROJECT_FORM);
 	}
 	
 	@Test
 	public void editProjectReturnsEditProjectRedirectionPageIfServiceMethodIsCalledCorrectly() throws Exception {
-		String returnedForm = projectController.editProject(SAMPLE_PROJECTNUMBER, modelMock, projectViewModelMock, sessionMock);
+		String returnedForm = projectController.editProject(SAMPLE_PROJECT_NUMBER, modelMock, projectViewModelMock, sessionMock);
 		assertEquals(returnedForm, EDITED_PROJECT_REDIRECT);
 	}
 	
 	@Test
 	public void showCreateTaskFormReturnstaskFormWehnSuccessful() {
-		String returnedForm = projectController.showCreateTaskForm(SAMPLE_PROJECTNUMBER, modelMock, taskViewModelMock, sessionMock);
+		String returnedForm = projectController.showCreateTaskForm(SAMPLE_PROJECT_NUMBER, modelMock, taskViewModelMock, sessionMock);
 		assertEquals(returnedForm, CREATE_TASK_FORM);
 	}
 	
 	@Test
 	public void createTaskRedirectsToEditProjectPageIfServiceMethodIsCorrectlyCalled() throws Exception {
-		String returnedForm = projectController.createTask(SAMPLE_PROJECTNUMBER, modelMock, taskViewModelMock, sessionMock);
+		String returnedForm = projectController.createTask(SAMPLE_PROJECT_NUMBER, modelMock, taskViewModelMock, sessionMock);
 		assertEquals(returnedForm, EDITED_PROJECT_REDIRECT);
 	}
 	
 	@Test
 	public void createTaskReturnsCreateTaskFormIfServiceMethodFails() throws Exception {
-		doThrow(new TaskExistsException("")).when(projectServiceMock).addNewTaskToProject(SAMPLE_PROJECTNUMBER, taskViewModelMock);
-		String returnedForm = projectController.createTask(SAMPLE_PROJECTNUMBER, modelMock, taskViewModelMock, sessionMock);
+		doThrow(new TaskExistsException("")).when(projectServiceMock).addNewTaskToProject(SAMPLE_PROJECT_NUMBER, taskViewModelMock);
+		String returnedForm = projectController.createTask(SAMPLE_PROJECT_NUMBER, modelMock, taskViewModelMock, sessionMock);
 		assertEquals(returnedForm, CREATE_TASK_FORM);
 	}
 

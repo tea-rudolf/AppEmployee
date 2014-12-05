@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import ca.ulaval.glo4003.appemployee.domain.department.Department;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.user.Role;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
@@ -94,13 +95,20 @@ public class DepartmentControllerTest {
 	@Test
 	public void createDepartmentRedirectsToDepartmentsListWhenSuccessful() throws Exception {
 		String returnedForm = departmentController.createDepartment(modelMock, departmentViewModelMock, sessionMock);
-		assertEquals(DEPARTMENTS_LIST_REDIRECT, returnedForm);
+		assertEquals(returnedForm, DEPARTMENTS_LIST_REDIRECT);
 	}
 
 	@Test
 	public void createDepartmentCallsCorrectServiceMethodIfSuccessful() throws Exception {
 		departmentController.createDepartment(modelMock, departmentViewModelMock, sessionMock);
 		verify(departmentServiceMock, times(1)).createDepartement(departmentViewModelMock);
+	}
+	
+	@Test
+	public void createDepartmentReturnsShowCreateDepartmentFormWhenExceptionIsThrown() throws Exception {
+		doThrow(new DepartmentAlreadyExistsException("")).when(departmentServiceMock).createDepartement(departmentViewModelMock);
+		String returnedForm = departmentController.createDepartment(modelMock, departmentViewModelMock, sessionMock);
+		assertEquals(returnedForm, CREATE_DEPARTMENT_FORM);
 	}
 
 	@Test
