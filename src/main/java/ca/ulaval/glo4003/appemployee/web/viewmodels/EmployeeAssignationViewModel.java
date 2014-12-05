@@ -14,8 +14,7 @@ public class EmployeeAssignationViewModel {
 
 	}
 
-	public EmployeeAssignationViewModel(ArrayList<String> departmentsList,
-			List<String> employeesWithNoDepartment) {
+	public EmployeeAssignationViewModel(ArrayList<String> departmentsList, List<String> employeesWithNoDepartment) {
 		this.departmentsList = departmentsList;
 		this.employeesWithNoDepartment = employeesWithNoDepartment;
 	}
@@ -40,8 +39,7 @@ public class EmployeeAssignationViewModel {
 		return employeesWithNoDepartment;
 	}
 
-	public void setEmployeesWithNoDepartment(
-			List<String> employeesWithNoDepartment) {
+	public void setEmployeesWithNoDepartment(List<String> employeesWithNoDepartment) {
 		this.employeesWithNoDepartment = employeesWithNoDepartment;
 	}
 

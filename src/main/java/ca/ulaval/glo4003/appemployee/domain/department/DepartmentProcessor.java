@@ -46,17 +46,15 @@ public class DepartmentProcessor {
 	}
 
 	public void createDepartment(String departmentName, List<String> userEmails) throws Exception {
-		
-		if (departmentRepository.findByName(departmentName) != null){
+
+		if (departmentRepository.findByName(departmentName) != null) {
 			throw new DepartmentExistsException(String.format("The department %s already exists!", departmentName));
 		}
-		
+
 		Department department = new Department(departmentName);
 
-		if (userEmails != null) {
-			for (String email : userEmails) {
-				department.addEmployee(email);
-			}
+		for (String email : userEmails) {
+			department.addEmployee(email);
 		}
 		departmentRepository.store(department);
 	}

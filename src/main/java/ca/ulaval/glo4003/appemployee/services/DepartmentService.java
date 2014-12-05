@@ -42,7 +42,6 @@ public class DepartmentService {
 
 	public void createEmployee(String supervisorID, String departmentName, UserViewModel userViewModel)
 			throws Exception {
-
 		if (!departmentProcessor.isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
 			throw new SupervisorAccessException("You do not have supervisor rights in this department.");
 		}
@@ -53,7 +52,6 @@ public class DepartmentService {
 
 	public void assignUserToDepartment(UserViewModel userViewModel, String supervisorID, String departmentName)
 			throws Exception {
-
 		if (!departmentProcessor.isSupervisorAssignedToDepartment(supervisorID, departmentName)) {
 			throw new SupervisorAccessException("You do not have supervisor rights in this department.");
 		}
@@ -62,12 +60,13 @@ public class DepartmentService {
 	}
 
 	public void createDepartement(DepartmentViewModel departmentViewModel) throws Exception {
-		List<String> userEmails = null;
+		List<String> userEmails = new ArrayList<String>();
 
 		if (departmentViewModel.getSelectedUserEmails() != null
-				&& (!departmentViewModel.getSelectedUserEmails().isEmpty())) {
+				&& !departmentViewModel.getSelectedUserEmails().isEmpty()) {
 			userEmails = Arrays.asList(departmentViewModel.getSelectedUserEmails().split(","));
 		}
+
 		departmentProcessor.createDepartment(departmentViewModel.getName(), userEmails);
 	}
 
@@ -83,8 +82,7 @@ public class DepartmentService {
 
 	public DepartmentViewModel retrieveAvailableEmployeesViewModel() throws DepartmentNotFoundException {
 		List<String> availableEmployees = retrieveUserEmailsNotAssignedToDepartment();
-		DepartmentViewModel model = new DepartmentViewModel(availableEmployees);
-		return model;
+		return new DepartmentViewModel(availableEmployees);
 	}
 
 	public DepartmentViewModel retrieveDepartmentViewModel(String departmentName) throws DepartmentNotFoundException {
@@ -101,9 +99,7 @@ public class DepartmentService {
 	public EmployeeAssignationViewModel retrieveEmployeeAssignationViewModel() throws DepartmentNotFoundException {
 		ArrayList<String> departmentNames = retrieveDepartmentNamesList();
 		List<String> unassignedEmployees = retrieveUserEmailsNotAssignedToDepartment();
-		EmployeeAssignationViewModel model = new EmployeeAssignationViewModel(departmentNames, unassignedEmployees);
-
-		return model;
+		return new EmployeeAssignationViewModel(departmentNames, unassignedEmployees);
 	}
 
 	private List<String> retrieveUserEmailsNotAssignedToDepartment() throws DepartmentNotFoundException {
