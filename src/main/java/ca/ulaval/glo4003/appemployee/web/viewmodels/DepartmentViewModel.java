@@ -9,7 +9,7 @@ public class DepartmentViewModel {
 	private List<String> supervisorIds;
 	private List<String> employeeIds;
 	private List<String> availableUsers = new ArrayList<String>();
-	private String selectedUserEmails = new String();
+	private String selectedUserEmails = "";
 
 	public DepartmentViewModel() {
 

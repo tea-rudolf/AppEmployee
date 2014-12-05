@@ -17,6 +17,11 @@
       <div class="form-group">
         <form:hidden path="name" />
       </div>
+
+
+        <c:if
+          test='${sessionScope.role eq "SUPERVISOR"}'>
+
       <div style="text-align: right">
         <a href="/departments/${department.name}/employees/createEmployee"><button
             type="button" class="btn btn-primary">
@@ -24,6 +29,9 @@
             employee
           </button></a>
       </div>
+
+        </c:if>
+
       <h3 class="sub-header" style="margin-top: 0px; padding-top: 0px">Employees</h3>
 
       <table id="employee-list" class="table table-striped table-hover">

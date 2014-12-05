@@ -25,7 +25,8 @@ public class ProjectProcessor {
 	private TaskProcessor taskProcessor;
 
 	@Autowired
-	public ProjectProcessor(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository, TaskProcessor taskProcessor) {
+	public ProjectProcessor(ProjectRepository projectRepository, UserRepository userRepository,
+			TaskRepository taskRepository, TaskProcessor taskProcessor) {
 		this.projectRepository = projectRepository;
 		this.userRepository = userRepository;
 		this.taskRepository = taskRepository;
@@ -51,7 +52,7 @@ public class ProjectProcessor {
 		taskProcessor.addEmployeeToEachTaskOfProject(project.getTaskUids(), selectedUserEmail);
 		projectRepository.store(project);
 	}
-	
+
 	public List<User> retrieveAllEmployeesByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
 		List<User> employees = new ArrayList<User>();
@@ -64,49 +65,49 @@ public class ProjectProcessor {
 		}
 		return employees;
 	}
-	
-	public boolean checkIfProjectWithSameNameExists(String projectName){
+
+	public boolean checkIfProjectWithSameNameExists(String projectName) {
 		Collection<Project> projects = projectRepository.findAll();
-		for(Project project : projects){
-			if  (project.getName().equals(projectName)){
+		for (Project project : projects) {
+			if (project.getName().equals(projectName)) {
 				return true;
-			}	
+			}
 		}
 		return false;
 	}
-	
+
 	public List<Task> retrieveAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
 		List<Task> tasks = new ArrayList<Task>();
-		
+
 		for (String taskId : project.getTaskUids()) {
 			Task task = taskRepository.findByUid(taskId);
 			tasks.add(task);
 		}
 		return tasks;
 	}
-	
+
 	public void addTaskToProject(String projectNumber, String taskName, double multiplicativeFactor) throws Exception {
 		Project project = projectRepository.findById(projectNumber);
 
-		if (checkIfTaskAlreadyExistsInProject(project, taskName)){
+		if (checkIfTaskAlreadyExistsInProject(project, taskName)) {
 			throw new TaskExistsException(String.format("The task %s already exists!", taskName));
 		}
-		
+
 		Task newTask = new Task(taskName, project.getEmployeeUids(), multiplicativeFactor);
-		
+
 		project.addTaskUid(newTask.getUid());
-		
-		taskRepository.store(newTask);	
+
+		taskRepository.store(newTask);
 		projectRepository.store(project);
 	}
-	
-	public boolean checkIfTaskAlreadyExistsInProject(Project project, String taskName ){
+
+	public boolean checkIfTaskAlreadyExistsInProject(Project project, String taskName) {
 		List<Task> tasks = taskRepository.findByUids(project.getTaskUids());
-		for(Task task : tasks){
-			if  (task.getName().equals(taskName)){
+		for (Task task : tasks) {
+			if (task.getName().equals(taskName)) {
 				return true;
-			}	
+			}
 		}
 		return false;
 	}

@@ -1,13 +1,10 @@
 package ca.ulaval.glo4003.appemployee.domain.department;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Before;
@@ -17,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.DepartmentRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
@@ -100,11 +98,21 @@ public class DepartmentProcessorTest {
 		assertEquals(true, isSupervisorAssign);
 	}
 
+	@Test(expected = DepartmentAlreadyExistsException.class)
+	public void createDepartmentsThrowsExceptionWhenDepartmentAlreadyExists() throws Exception {
+		List<String> userEmails = new ArrayList<String>();
+		userEmails.add(EMAIL);
+		when(departmentRepositoryMock.findByName(DEPARTMENT_NAME)).thenReturn(departmentMock);
+
+		departmentProcessor.createDepartment(DEPARTMENT_NAME, userEmails);
+	}
+
 	@Test
 	public void createDepartmentStoresObjectInRepository() throws Exception {
 		ArgumentCaptor<Department> departmentArgumentCaptor = ArgumentCaptor.forClass(Department.class);
 		List<String> userEmails = new ArrayList<String>();
 		userEmails.add(EMAIL);
+		when(departmentRepositoryMock.findByName(DEPARTMENT_NAME)).thenReturn(null);
 
 		departmentProcessor.createDepartment(DEPARTMENT_NAME, userEmails);
 
@@ -152,5 +160,16 @@ public class DepartmentProcessorTest {
 		when(departmentRepositoryMock.findByName(DEPARTMENT_NAME)).thenReturn(departmentMock);
 		departmentProcessor.unassignEmployeeToDepartment(EMAIL, DEPARTMENT_NAME);
 		verify(departmentMock, times(1)).removeEmployee(EMAIL);
+	}
+
+	@Test
+	public void retrieveAllDepartmentsReturns() {
+		Collection<Department> departments = new ArrayList<Department>();
+		departments.add(departmentMock);
+		when(departmentRepositoryMock.findAll()).thenReturn(departments);
+
+		Collection<Department> actualDepartments = departmentProcessor.retrieveAllDepartments();
+
+		assertEquals(departments, actualDepartments);
 	}
 }
