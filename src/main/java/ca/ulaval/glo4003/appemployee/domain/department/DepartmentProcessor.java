@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.DepartmentRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
@@ -48,7 +48,7 @@ public class DepartmentProcessor {
 	public void createDepartment(String departmentName, List<String> userEmails) throws Exception {
 
 		if (departmentRepository.findByName(departmentName) != null) {
-			throw new DepartmentExistsException(String.format("The department %s already exists!", departmentName));
+			throw new DepartmentAlreadyExistsException(String.format("The department %s already exists!", departmentName));
 		}
 
 		Department department = new Department(departmentName);
