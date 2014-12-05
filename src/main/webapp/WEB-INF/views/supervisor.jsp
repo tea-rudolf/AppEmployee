@@ -15,6 +15,12 @@
 
 		<div class="row placeholders">
 			<div class="col-xs-6 col-sm-3 placeholder">
+				<a href="projects"><img
+					src="../../resources/img/Operations/manageProjects.png"
+					class="img-responsive" alt="Mountain View"
+					style="width: 200px; height: 200px"></a>
+			</div>
+			<div class="col-xs-6 col-sm-3 placeholder">
 				<a href="time"><img
 					src="../../resources/img/Operations/manageTime.png"
 					class="img-responsive" alt="Mountain View"

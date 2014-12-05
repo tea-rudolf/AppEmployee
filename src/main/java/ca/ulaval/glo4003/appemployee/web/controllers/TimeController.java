@@ -79,7 +79,7 @@ public class TimeController {
 	public String editTimeEntry(@PathVariable String timeEntryUid, Model model, TimeEntryViewModel viewModel,
 			HttpSession session) throws Exception {
 		timeService.updateTimeEntry(viewModel);
-		return "redirect:/time";
+		return "redirect:/time/" + timeEntryUid + "/edit";
 	}
 
 	@RequestMapping(value = "/previousTime", method = RequestMethod.GET)
@@ -115,7 +115,7 @@ public class TimeController {
 	public String editPreviousTimeEntry(@PathVariable String timeEntryUid, Model model, TimeEntryViewModel viewModel,
 			HttpSession session) throws Exception {
 		timeService.updateTimeEntry(viewModel);
-		return "redirect:/time/previousTime";
+		return "redirect:/time/previousTime/" + timeEntryUid + "/edit";
 	}
 
 }

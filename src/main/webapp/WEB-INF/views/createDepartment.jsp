@@ -40,7 +40,7 @@
 			<div class="form-group">
 				<input type="submit" value="Create Department" class="btn btn-primary"></input>
 				<input type="button"
-					onclick="javascript:window.location.href = '/projects/'"
+					onclick="javascript:window.location.href = '/departments/'"
 					value="Cancel" class="btn btn-default"></input>
 			</div>
 		</form:form>

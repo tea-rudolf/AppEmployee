@@ -46,9 +46,12 @@ public class DepartmentProcessor {
 	public void createDepartment(String departmentName, List<String> userEmails) throws Exception {
 		Department department = new Department(departmentName);
 
-		for (String email : userEmails) {
-			department.addEmployee(email);
+		if (userEmails!=null){
+			for (String email : userEmails) {
+				department.addEmployee(email);
+			}			
 		}
+
 		departmentRepository.store(department);
 	}
 

@@ -80,10 +80,13 @@ public class DepartmentService {
 	}
 
 	public void createDepartement(DepartmentViewModel departmentViewModel) throws Exception {
+		List<String> userEmails = null;
 		if (departmentViewModel.getSelectedUserEmails() != null && (!departmentViewModel.getSelectedUserEmails().isEmpty())) {
-			List<String> userEmails = Arrays.asList(departmentViewModel.getSelectedUserEmails().split(","));
-			departmentProcessor.createDepartment(departmentViewModel.getName(), userEmails);
+			userEmails = Arrays.asList(departmentViewModel.getSelectedUserEmails().split(","));		
+		}else{
+			userEmails = null;
 		}
+		departmentProcessor.createDepartment(departmentViewModel.getName(), userEmails);
 	}
 
 	public DepartmentViewModel retrieveAvailableEmployeesViewModel() throws DepartmentNotFoundException {
