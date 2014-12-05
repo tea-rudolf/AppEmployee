@@ -1,6 +1,5 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,13 +49,6 @@ public class TaskService {
 	}
 
 	public List<Task> retrieveAllTasksByUserId(String userEmail) {
-		List<Task> tasks = taskRepository.findAll();
-		List<Task> assignedToCurrentUserTasks = new ArrayList<Task>();
-		for (Task task: tasks) {
-			if (task.userIsAlreadyAssignedToTask(userEmail)) {
-				assignedToCurrentUserTasks.add(task);
-			}
-		}
-		return assignedToCurrentUserTasks;
+		return taskProcessor.retrieveAllTasksAssignedToUserId(userEmail);
 	}
 }

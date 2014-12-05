@@ -72,4 +72,15 @@ public class TaskProcessor {
 		taskRepository.store(task);	
 	}
 
+	public List<Task> retrieveAllTasksAssignedToUserId(String userEmail) {
+		List<Task> tasks = taskRepository.findAll();
+		List<Task> assignedToCurrentUserTasks = new ArrayList<Task>();
+		for (Task task: tasks) {
+			if (task.userIsAlreadyAssignedToTask(userEmail)) {
+				assignedToCurrentUserTasks.add(task);
+			}
+		}
+		return assignedToCurrentUserTasks;
+	}
+
 }
