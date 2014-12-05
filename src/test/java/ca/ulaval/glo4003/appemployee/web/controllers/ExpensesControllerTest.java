@@ -30,11 +30,12 @@ public class ExpensesControllerTest {
 
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
-	private static final String EXPENSE_UID = "id";
+	private static final String EXPENSE_UID = "uid";
 	private static final String EXPENSES_JSP = "expenses";
 	private static final String CREATE_EXPENSE_JSP = "createExpense";
 	private static final String REDIRECT_EXPENSE_LINK = "redirect:/expenses/";
 	private static final String EDIT_EXPENSE_JSP = "editExpense";
+	private static final String REDIRECT_EDIT_EXPENSE_LINK = "redirect:/expenses/uid/edit";
 
 	private Collection<ExpenseViewModel> expensesViewModels;
 
@@ -157,6 +158,6 @@ public class ExpensesControllerTest {
 	public void editExpenseReturnsRedirectExpenseLink() throws Exception {
 		String returnedForm = expensesControllerMock.editExpense(EXPENSE_UID,
 				expenseViewModelMock, sessionMock);
-		assertEquals(REDIRECT_EXPENSE_LINK, returnedForm);
+		assertEquals(REDIRECT_EDIT_EXPENSE_LINK, returnedForm);
 	}
 }

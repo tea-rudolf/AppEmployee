@@ -33,6 +33,7 @@ public class TravelControllerTest {
 	private static final String CREATE_TRAVEL_JSP = "createTravelEntry";
 	private static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
 	private static final String TRAVEL_REDIRECT = "redirect:/travel/";
+	private static final String EDIT_TRAVEL_REDIRECT = "redirect:/travel/uid/edit";
 
 	private Collection<TravelViewModel> travelViewModels;
 
@@ -130,7 +131,7 @@ public class TravelControllerTest {
 			throws Exception {
 		String returnedForm = travelController.editTravelEntry(TRAVEL_UID,
 				modelMock, travelViewModelMock, sessionMock);
-		assertEquals(TRAVEL_REDIRECT, returnedForm);
+		assertEquals(EDIT_TRAVEL_REDIRECT, returnedForm);
 	}
 
 	@Test

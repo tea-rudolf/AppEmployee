@@ -38,6 +38,8 @@ public class TimeControllerTest {
 	private static final String EDIT_PREVIOUS_TIME_ENTRY_JSP = "editPreviousTimeEntry";
 	private static final String CREATE_PREVIOUS_TIME_JSP = "createPreviousTimeEntry";
 	private static final String PREVIOUS_TIME_REDIRECT = "redirect:/time/previousTime";
+	private static final String EDIT_TIME_REDIRECT = "redirect:/time/0001/edit";
+	private static final String PREVIOUS_EDIT_TIME_REDIRECT = "redirect:/time/previousTime/0001/edit";
 
 	private Collection<TimeEntryViewModel> timeEntriesViewModels;
 
@@ -125,7 +127,7 @@ public class TimeControllerTest {
 
 		String returnedForm = timeControllerMock.editTimeEntry(TIME_ENTRY_UID, modelMock, timeViewModelMock, sessionMock);
 
-		assertEquals(TIME_REDIRECT, returnedForm);
+		assertEquals(EDIT_TIME_REDIRECT, returnedForm);
 	}
 
 	@Test
@@ -177,7 +179,7 @@ public class TimeControllerTest {
 	@Test
 	public void editPreviousTimeEntryReturnsValidFormIfSuccessful() throws Exception {
 		String returnedForm = timeControllerMock.editPreviousTimeEntry(TIME_ENTRY_UID, modelMock, timeViewModelMock, sessionMock);
-		assertEquals(PREVIOUS_TIME_REDIRECT, returnedForm);
+		assertEquals(PREVIOUS_EDIT_TIME_REDIRECT, returnedForm);
 	}
 
 	@Test
