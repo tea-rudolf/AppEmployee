@@ -14,7 +14,7 @@
 			<jsp:include page="employee.jsp" />
 		</c:when>
 		<c:when test="${role eq 'SUPERVISOR'}">
-			<jsp:include page="employee.jsp" />
+			<jsp:include page="supervisor.jsp" />
 		</c:when>
 		<c:when test="${role eq 'ENTERPRISE'}">
 			<jsp:include page="enterprise.jsp" />
