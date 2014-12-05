@@ -65,7 +65,7 @@ public class DepartmentController {
 			throws DepartmentNotFoundException {
 		model.addAttribute("department", departmentService.retrieveDepartmentViewModel(departmentName));
 		model.addAttribute("employees", departmentService.retrieveEmployeesListViewModel(departmentName));
-		return "redirect:/departments/" + departmentName;
+		return "editDepartment";
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.GET)
