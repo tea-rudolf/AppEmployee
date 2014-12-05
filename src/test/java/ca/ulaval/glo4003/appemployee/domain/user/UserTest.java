@@ -1,16 +1,11 @@
 package ca.ulaval.glo4003.appemployee.domain.user;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import ca.ulaval.glo4003.appemployee.domain.user.Role;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserTest {
