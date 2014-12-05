@@ -16,6 +16,18 @@ public class ProjectViewModel {
 	private String currentUserEmail = "";
 	private String selectedUserEmail = "";
 	private List<String> availableUsers = new ArrayList<String>();
+	
+	public ProjectViewModel() {
+		
+	}
+
+	public ProjectViewModel(String uid, String name, List<String> taskIds, List<String> userIds, List<String> expenseIds) {
+		this.uid = uid;
+		this.name = name;
+		this.taskIds = taskIds;
+		this.userIds = userIds;
+		this.expenseIds = expenseIds;
+	}
 
 	public String getuId() {
 		return uid;

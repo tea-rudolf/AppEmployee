@@ -23,8 +23,6 @@ public class TaskConverter {
 	}
 
 	public TaskViewModel convert(Task task) {
-		TaskViewModel taskViewModel = new TaskViewModel(task.getUid(), task.getName(), task.getAuthorizedUsers(),
-				task.getMultiplicativeFactor());
-		return taskViewModel;
+		return new TaskViewModel(task.getUid(), task.getName(), task.getAuthorizedUsers(), task.getMultiplicativeFactor());
 	}
 }

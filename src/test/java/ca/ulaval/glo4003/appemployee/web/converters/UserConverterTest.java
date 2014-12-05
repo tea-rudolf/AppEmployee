@@ -47,16 +47,13 @@ public class UserConverterTest {
 
 	@Test
 	public void convertUsersListToViewModelsConvertsAllOfThem() {
-		User firstUser = createUser(USER_EMAIL, USER_PASSWORD, USER_WAGE,
-				USER_ROLE);
-		User secondUser = createUser(SECOND_EMAIL, SECOND_PASSWORD,
-				SECOND_WAGE, SECOND_ROLE);
+		User firstUser = createUser(USER_EMAIL, USER_PASSWORD, USER_WAGE, USER_ROLE);
+		User secondUser = createUser(SECOND_EMAIL, SECOND_PASSWORD, SECOND_WAGE, SECOND_ROLE);
 		List<User> users = new ArrayList<User>();
 		users.add(firstUser);
 		users.add(secondUser);
 
-		UserViewModel[] viewModels = userConverter.convert(users).toArray(
-				new UserViewModel[1]);
+		UserViewModel[] viewModels = userConverter.convert(users).toArray(new UserViewModel[1]);
 
 		assertEquals(USER_EMAIL, viewModels[0].getEmail());
 		assertEquals(USER_PASSWORD, viewModels[0].getPassword());
@@ -84,8 +81,7 @@ public class UserConverterTest {
 		assertEquals(userMock.getRole().toString(), userViewModelMock.getRole());
 	}
 
-	private User createUser(String email, String password, double wage,
-			Role role) {
+	private User createUser(String email, String password, double wage, Role role) {
 		User user = mock(User.class);
 		given(user.getEmail()).willReturn(email);
 		given(user.getPassword()).willReturn(password);

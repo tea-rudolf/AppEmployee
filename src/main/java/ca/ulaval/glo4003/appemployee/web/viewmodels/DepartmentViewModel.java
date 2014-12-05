@@ -19,6 +19,12 @@ public class DepartmentViewModel {
 		this.availableUsers = availableUsers;
 	}
 
+	public DepartmentViewModel(String name, List<String> employeeIds, List<String> supervisorIds) {
+		this.name = name;
+		this.employeeIds = employeeIds;
+		this.supervisorIds = supervisorIds;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -57,16 +57,14 @@ public class TimeConverterTest {
 
 	@Test
 	public void convertTimeEntriesListToViewModelsConvertsAllOfThem() {
-		TimeEntry firstTimeEntry = createTimeEntry(TIME_ENTRY_ID, HOURS,
-				START_DATE);
-		TimeEntry secondTimeEntry = createTimeEntry(SECOND_ID, OTHER_HOURS,
-				END_DATE);
+		TimeEntry firstTimeEntry = createTimeEntry(TIME_ENTRY_ID, HOURS, START_DATE);
+		TimeEntry secondTimeEntry = createTimeEntry(SECOND_ID, OTHER_HOURS, END_DATE);
 		List<TimeEntry> timeEntries = new ArrayList<TimeEntry>();
 		timeEntries.add(firstTimeEntry);
 		timeEntries.add(secondTimeEntry);
 
-		TimeEntryViewModel[] viewModels = payPeriodConverterMock
-				.convert(timeEntries).toArray(new TimeEntryViewModel[1]);
+		TimeEntryViewModel[] viewModels = payPeriodConverterMock.convert(timeEntries)
+				.toArray(new TimeEntryViewModel[1]);
 
 		assertEquals(TIME_ENTRY_ID, viewModels[0].getUid());
 		assertEquals(HOURS, viewModels[0].getHours(), EPSILON);
@@ -81,26 +79,24 @@ public class TimeConverterTest {
 		when(timeEntryMock.getDate()).thenReturn(START_DATE);
 		when(timeEntryMock.getBillableHours()).thenReturn(HOURS);
 		when(timeEntryMock.getTaskUid()).thenReturn(TASK_ID);
-		//when(projectServiceMock.getTaskName(TASK_ID)).thenReturn(TASK_NAME);
+		// when(projectServiceMock.getTaskName(TASK_ID)).thenReturn(TASK_NAME);
 		when(timeEntryMock.getComment()).thenReturn(COMMENT);
 
 		timeViewModelMock = payPeriodConverterMock.convert(timeEntryMock);
 
-		assertEquals(timeEntryMock.getDate().toString(),
-				timeViewModelMock.getDate());
-		assertEquals(timeEntryMock.getBillableHours(),
-				timeViewModelMock.getHours(), EPSILON);
-//		assertEquals(projectServiceMock.getTaskName(TASK_ID),
-//				timeViewModelMock.getTaskName());
-		assertEquals(timeEntryMock.getComment(),
-				timeViewModelMock.getComment());
+		assertEquals(timeEntryMock.getDate().toString(), timeViewModelMock.getDate());
+		assertEquals(timeEntryMock.getBillableHours(), timeViewModelMock.getHours(), EPSILON);
+		// assertEquals(projectServiceMock.getTaskName(TASK_ID),
+		// timeViewModelMock.getTaskName());
+		assertEquals(timeEntryMock.getComment(), timeViewModelMock.getComment());
 	}
 
-//	 @Test
-//	 public void convertCallsCorrectServiceMethod() {
-//	 timeViewModelMock = payPeriodConverterMock.convert(USER_EMAIL);
-//	 verify(projectServiceMock, times(1)).retrieveAllTasksByUserId(USER_EMAIL);
-//	 }
+	// @Test
+	// public void convertCallsCorrectServiceMethod() {
+	// timeViewModelMock = payPeriodConverterMock.convert(USER_EMAIL);
+	// verify(projectServiceMock,
+	// times(1)).retrieveAllTasksByUserId(USER_EMAIL);
+	// }
 
 	private TimeEntry createTimeEntry(String id, double hours, LocalDate date) {
 		TimeEntry timeEntry = mock(TimeEntry.class);

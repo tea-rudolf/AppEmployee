@@ -51,8 +51,7 @@ public class ProjectConverterTest {
 		projects.add(firstProject);
 		projects.add(secondProject);
 
-		ProjectViewModel[] viewModels = projectConverter.convert(projects)
-				.toArray(new ProjectViewModel[1]);
+		ProjectViewModel[] viewModels = projectConverter.convert(projects).toArray(new ProjectViewModel[1]);
 
 		assertEquals(FIRST_NAME, viewModels[0].getName());
 		assertEquals(FIRST_ID, viewModels[0].getuId());
@@ -73,12 +72,9 @@ public class ProjectConverterTest {
 
 		assertEquals(projectMock.getUid(), projectViewModelMock.getuId());
 		assertEquals(projectMock.getName(), projectViewModelMock.getName());
-		assertEquals(projectMock.getTaskUids(),
-				projectViewModelMock.getTaskIds());
-		assertEquals(projectMock.getEmployeeUids(),
-				projectViewModelMock.getUserIds());
-		assertEquals(projectMock.getExpenseUids(),
-				projectViewModelMock.getExpenseIds());
+		assertEquals(projectMock.getTaskUids(), projectViewModelMock.getTaskIds());
+		assertEquals(projectMock.getEmployeeUids(), projectViewModelMock.getUserIds());
+		assertEquals(projectMock.getExpenseUids(), projectViewModelMock.getExpenseIds());
 	}
 
 	private Project createProject(String number, String name) {

@@ -45,12 +45,9 @@ public class DepartmentConverterTest {
 
 		departmentViewModelMock = departmentConverter.convert(departmentMock);
 
-		assertEquals(departmentMock.getName(),
-				departmentViewModelMock.getName());
-		assertEquals(departmentMock.getEmployeeIds(),
-				departmentViewModelMock.getEmployeeIds());
-		assertEquals(departmentMock.getSupervisorIds(),
-				departmentViewModelMock.getSupervisorIds());
+		assertEquals(departmentMock.getName(), departmentViewModelMock.getName());
+		assertEquals(departmentMock.getEmployeeIds(), departmentViewModelMock.getEmployeeIds());
+		assertEquals(departmentMock.getSupervisorIds(), departmentViewModelMock.getSupervisorIds());
 	}
 
 }

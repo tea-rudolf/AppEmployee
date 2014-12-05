@@ -34,16 +34,9 @@ public class TimeConverter {
 	}
 
 	public TimeEntryViewModel convert(TimeEntry timeEntry) {
-		TimeEntryViewModel model = new TimeEntryViewModel();
-		model.setUid(timeEntry.getUid());
-		model.setUserEmail(timeEntry.getUserEmail());
-		model.setDate(timeEntry.getDate().toString());
-		model.setHours(timeEntry.getBillableHours());
-		model.setTaskId(timeEntry.getTaskUid());
-		model.setTaskName(taskService.retrieveTaskName(timeEntry.getTaskUid()));
-		model.setComment(timeEntry.getComment());
-		model.setAvailableTasks(taskService.retrieveAllTasksByUserId(timeEntry.getUserEmail()));
-		return model;
+		return new TimeEntryViewModel(timeEntry.getUid(), timeEntry.getUserEmail(), timeEntry.getDate().toString(), timeEntry.getBillableHours(), timeEntry.getTaskUid(), 
+				taskService.retrieveTaskName(timeEntry.getTaskUid()), timeEntry.getComment(), taskService.retrieveAllTasksByUserId(timeEntry.getUserEmail()));
+
 	}
 
 	public TimeEntryViewModel convert(String userEmail) {

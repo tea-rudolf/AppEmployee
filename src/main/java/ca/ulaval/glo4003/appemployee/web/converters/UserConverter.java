@@ -23,12 +23,7 @@ public class UserConverter {
 	}
 
 	public UserViewModel convert(User user) {
-		UserViewModel userViewModel = new UserViewModel();
-		userViewModel.setEmail(user.getEmail());
-		userViewModel.setPassword(user.getPassword());
-		userViewModel.setWage(user.getWage());
-		userViewModel.setRole(user.getRole().toString());
-		return userViewModel;
+		return new UserViewModel(user.getEmail(), user.getPassword(), user.getWage(), user.getRole().toString());
 	}
 
 }

@@ -16,6 +16,23 @@ public class TimeEntryViewModel {
 	private String taskName;
 	private String uid;
 	
+	public TimeEntryViewModel(String uid, String userEmail, String date, double billableHours, String taskUid, String taskName, 
+			String comment, List<Task> availableTasks) {
+			this.uid = uid;
+			this.userEmail = userEmail;
+			this.date = date;
+			this.hours = billableHours;
+			this.taskId = taskUid;
+			this.taskName = taskName;
+			this.comment = comment;
+			this.availableTasks = availableTasks;
+		
+	}
+	
+	public TimeEntryViewModel() {
+		
+	}
+
 	public List<Task> getAvailableTasks() {
 		return availableTasks;
 	}

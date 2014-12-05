@@ -22,14 +22,6 @@ public class ProjectConverter {
 	}
 
 	public ProjectViewModel convert(Project project) {
-
-		ProjectViewModel viewModel = new ProjectViewModel();
-		viewModel.setuId(project.getUid());
-		viewModel.setName(project.getName());
-		viewModel.setTaskIds(project.getTaskUids());
-		viewModel.setUserIds(project.getEmployeeUids());
-		viewModel.setExpenseIds(project.getExpenseUids());
-
-		return viewModel;
+		return new ProjectViewModel(project.getUid(), project.getName(), project.getTaskUids(), project.getEmployeeUids(), project.getExpenseUids());
 	}
 }
