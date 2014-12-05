@@ -17,7 +17,6 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 @Controller
-//@RequestMapping(value = "projects/{projectNumber}/tasks")
 @SessionAttributes({ "email" })
 public class TaskController {
 
@@ -39,15 +38,14 @@ public class TaskController {
 		model.addAttribute("projectNumber", projectNumber);
 		model.addAttribute("employees", taskService.retrieveEmployeesByTask(taskNumber));
 		model.addAttribute("role", currentUser.getRole());
-		
 		return "editTask";
 	}
 
 	@RequestMapping(value = "projects/{projectNumber}/tasks/{taskNumber}/edit", method = RequestMethod.POST)
-	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, TaskViewModel viewModel, HttpSession session) 
+	public String editTask(@PathVariable String projectNumber, @PathVariable String taskNumber, Model model, TaskViewModel taskViewModel, HttpSession session) 
 			throws Exception {
 		try {
-			taskService.editTask(projectNumber, taskNumber, viewModel);
+			taskService.editTask(projectNumber, taskNumber, taskViewModel);
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 		}

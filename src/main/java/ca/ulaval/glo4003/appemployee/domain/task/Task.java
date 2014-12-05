@@ -9,6 +9,7 @@ import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsExce
 public class Task {
 	private String uid;
 	private String name;
+	private double multiplicativeFactor = 1.0;
 	private List<String> authorizedUsers = new ArrayList<String>();
 
 	public Task() {
@@ -19,10 +20,11 @@ public class Task {
 		this.uid = uid;
 	}
 
-	public Task(String name, List<String> authorizedUsers) {
+	public Task(String name, List<String> authorizedUsers, double multiplicativeFactor) {
 		this();
 		this.name = name;
 		this.authorizedUsers = authorizedUsers;
+		this.multiplicativeFactor = multiplicativeFactor;
 	}
 
 	public String getName() {
@@ -61,9 +63,22 @@ public class Task {
 		return authorizedUsers.contains(userId);
 	}
 
-	public void update(String taskName, String newUserEmail) {
-		this.name = taskName;
+	public void update(String taskName, String newUserEmail, double multiplicativeFactor) {
+		update(taskName, multiplicativeFactor);
 		assignUserToTask(newUserEmail);
+	}
+
+	public double getMultiplicativeFactor() {
+		return multiplicativeFactor;
+	}
+
+	public void setMultiplicativeFactor(double multiplicativeFactor) {
+		this.multiplicativeFactor = multiplicativeFactor;
+	}
+
+	public void update(String taskName, double multiplicativeFactor) {
+		this.name = taskName;
+		this.multiplicativeFactor = multiplicativeFactor;
 	}
 
 }

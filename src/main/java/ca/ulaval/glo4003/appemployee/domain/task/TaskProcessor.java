@@ -61,9 +61,14 @@ public class TaskProcessor {
 		}
 	}
 
-	public void editTask(String taskId, String taskName, String newUserEmail) throws Exception {
+	public void editTask(String taskId, String taskName, String newUserEmail, double multiplicativeFactor) throws Exception {
 		Task task = taskRepository.findByUid(taskId);
-		task.update(taskName, newUserEmail);
+		if (!newUserEmail.isEmpty()) {
+			task.update(taskName, newUserEmail, multiplicativeFactor);
+		} else {
+			task.update(taskName, multiplicativeFactor);
+		}
+		
 		taskRepository.store(task);	
 	}
 

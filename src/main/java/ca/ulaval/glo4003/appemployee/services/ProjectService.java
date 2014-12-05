@@ -43,8 +43,7 @@ public class ProjectService {
 	}
 
 	public void createProject(ProjectViewModel projectViewModel) throws Exception {
-		Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(),
-				projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
+		Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(), projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
 		projectRepository.store(newProject);
 
 	}
@@ -64,6 +63,6 @@ public class ProjectService {
 	}
 	
 	public void addNewTaskToProject(String projectNumber, TaskViewModel taskViewModel) throws Exception {
-		projectProcessor.addTaskToProject(projectNumber, taskViewModel.getName());
+		projectProcessor.addTaskToProject(projectNumber, taskViewModel.getName(), taskViewModel.getMultiplicativeFactor());
 	}
 }

@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.appemployee.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.task.TaskProcessor;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
@@ -44,7 +42,7 @@ public class TaskService {
 	}
 	
 	public void editTask(String projectId, String taskId, TaskViewModel taskViewModel) throws Exception {
-		taskProcessor.editTask(taskId, taskViewModel.getName(), taskViewModel.getSelectedUserEmail());
+		taskProcessor.editTask(taskId, taskViewModel.getName(), taskViewModel.getSelectedUserEmail(), taskViewModel.getMultiplicativeFactor());
 	}
 
 	public String retrieveTaskName(String taskUid) {

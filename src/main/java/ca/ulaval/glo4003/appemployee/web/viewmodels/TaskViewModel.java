@@ -9,7 +9,19 @@ public class TaskViewModel {
 	private List<String> authorizedUsers = new ArrayList<String>();
 	private String selectedUserEmail = "";
 	private String currentUserEmail = "";
+	private double multiplicativeFactor = 1.0;
 	private List<String> availableUsers = new ArrayList<String>();
+	
+	public TaskViewModel() { 
+		
+	}
+
+	public TaskViewModel(String uid, String taskName, List<String> authorizedUsers, double multiplicativeFactor) {
+		this.uId = uid;
+		this.name = taskName;
+		this.authorizedUsers = authorizedUsers;
+		this.multiplicativeFactor = multiplicativeFactor;
+	}
 
 	public String getuId() {
 		return uId;
@@ -57,6 +69,14 @@ public class TaskViewModel {
 
 	public void setCurrentUserEmail(String currentUserEmail) {
 		this.currentUserEmail = currentUserEmail;
+	}
+
+	public double getMultiplicativeFactor() {
+		return multiplicativeFactor;
+	}
+
+	public void setMultiplicativeFactor(double multiplicativeFactor) {
+		this.multiplicativeFactor = multiplicativeFactor;
 	}
 
 }

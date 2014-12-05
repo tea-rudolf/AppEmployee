@@ -23,17 +23,23 @@
 					<div class="alert alert-danger" style="margin-top: 10px;"
 						role="alert">${message.message}</div>
 			</c:if>
+			
 			<div class="form-group">
 				<form:label path="name">Name</form:label>
-				<form:input class="form-control" path="name" value="${name}"
-					required="required" />			
+				<form:input class="form-control" path="name" value="${name}" required="required" />	
+					
 			<c:if test="${role eq 'EMPLOYEE'}">
 				<form:hidden path="currentUserEmail" />
 			</c:if>
 			<c:if test="${role eq 'ENTERPRISE'}">
 				<form:hidden path="currentUserEmail" />
 			</c:if>
+			
 			<c:if test="${role eq 'SUPERVISOR'}">
+			<div>
+				<form:label path="multiplicativeFactor">Multiplicative Factor</form:label>
+				<form:input class="form-control" path="multiplicativeFactor" value="${multiplicativeFactor}" required="required" />	
+			</div>	
 				<div class="form-group">
 					<b>Assign a user (optional)</b>
 					<td><form:select class="form-control" path="selectedUserEmail">

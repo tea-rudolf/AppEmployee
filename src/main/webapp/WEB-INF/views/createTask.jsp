@@ -22,10 +22,15 @@
 						role="alert">${message.message}</div>
 				</c:if>
 			</div>
+			
 			<div class="form-group">
 				<form:label path="name">Name</form:label>
-				<form:input class="form-control" path="name" value="${name}"
-					required="required" />
+				<form:input class="form-control" path="name" value="${name}" required="required" />
+			</div>
+			<div/>
+			<div class="form-group">
+				<form:label path="name">Multiplicative factor</form:label>
+				<form:input class="form-control" path="multiplicativeFactor" value="${multiplicativeFactor}" required="required" />
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Create task" class="btn btn-primary"></input>

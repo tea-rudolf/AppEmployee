@@ -19,15 +19,12 @@ public class TaskConverter {
 			TaskViewModel viewModel = convert(task);
 			viewModels.add(viewModel);
 		}
-
 		return viewModels;
 	}
 
 	public TaskViewModel convert(Task task) {
-		TaskViewModel taskViewModel = new TaskViewModel();
-		taskViewModel.setuId(task.getUid());
-		taskViewModel.setName(task.getName());
-		taskViewModel.setAuthorizedUsers(task.getAuthorizedUsers());
+		TaskViewModel taskViewModel = new TaskViewModel(task.getUid(), task.getName(), task.getAuthorizedUsers(),
+				task.getMultiplicativeFactor());
 		return taskViewModel;
 	}
 }

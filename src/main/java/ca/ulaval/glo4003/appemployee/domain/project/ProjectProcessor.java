@@ -75,9 +75,9 @@ public class ProjectProcessor {
 		return tasks;
 	}
 	
-	public void addTaskToProject(String projectNumber, String taskName) throws Exception {
+	public void addTaskToProject(String projectNumber, String taskName, double multiplicativeFactor) throws Exception {
 		Project project = projectRepository.findById(projectNumber);
-		Task newTask = new Task(taskName, project.getEmployeeUids());
+		Task newTask = new Task(taskName, project.getEmployeeUids(), multiplicativeFactor);
 		
 		project.addTaskUid(newTask.getUid());
 		
