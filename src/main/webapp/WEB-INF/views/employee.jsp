@@ -41,7 +41,6 @@
 		</div>
 
 		<h2 class="sub-header">Welcome!</h2>
-		<div class="table-responsive">Please select an option above.</div>
 	</div>
 
 	<%@include file="../includes/footer.jsp"%>
