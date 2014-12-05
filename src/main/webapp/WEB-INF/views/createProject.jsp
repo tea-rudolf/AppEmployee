@@ -18,7 +18,7 @@
 				<form:hidden path="uId" />
 				<c:if
 					test="${not empty message }">
-					<div class="alert alert-danger" style="margin-top: 10px;"
+					<div class="alert alert-warning" style="margin-top: 10px;"
 						role="alert">${message.message}</div>
 				</c:if>
 			</div>
