@@ -28,11 +28,11 @@ public class DepartmentControllerTest {
 	private static final String DEPARTMENT_NAME = "Research and development";
 	private static final String EMAIL = "test@test.com";
 	private static final String CREATE_USER_FORM = "createUser";
-	private static final String DEPARTMENT_REDIRECT = "redirect:/departments/Research and development";
 	private static final String EDIT_DEPARTMENT_REDIRECT = "redirect:/departments/{departmentName}/edit";
 	private static final String EDIT_DEPARTMENT_EMPLOYEE = "redirect:/departments/Research and development/employees/email/edit";
 	private static final String EDIT_EMPLOYEE_FORM = "editEmployee";
 	private static final String CREATE_DEPARTMENT_FORM = "createDepartment";
+	private static final String EDIT_DEPARTMENT_FORM = "editDepartment";
 	private static final String DEPARTMENTS_LIST_REDIRECT = "redirect:/departments/";
 	private static final String ASSIGN_EMPLOYE_FORM = "assignEmployeToDepartment";
 	private static final String DEPARTMENT_LIST_FORM = "departmentsList";
@@ -103,7 +103,7 @@ public class DepartmentControllerTest {
 	@Test
 	public void showEmployeesListReturnDepartmentFormWhenSuccessful() throws DepartmentNotFoundException {
 		String returnedForm = departmentController.showEmployeesList(DEPARTMENT_NAME, modelMock, sessionMock);
-		assertEquals(DEPARTMENT_REDIRECT, returnedForm);
+		assertEquals(EDIT_DEPARTMENT_FORM, returnedForm);
 	}
 
 	@Test
