@@ -3,6 +3,7 @@ package ca.ulaval.glo4003.appemployee.domain.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 
@@ -37,6 +38,14 @@ public class UserProcessor {
 
 	public Role retrieveUserRole(String userEmail) {
 		return retrieveUserByEmail(userEmail).getRole();
+	}
+
+	public void createUser(String email, String password, Role role, double wage) throws Exception {
+		if (userRepository.findByEmail(email) != null) {
+			throw new EmployeeAlreadyExistsException("Employee you are trying to create already exists.");
+		}
+		User user = new User(email, password, role, wage);
+		userRepository.store(user);
 	}
 
 }

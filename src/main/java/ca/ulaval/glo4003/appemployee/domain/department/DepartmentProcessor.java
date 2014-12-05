@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.appemployee.domain.department;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +47,11 @@ public class DepartmentProcessor {
 	public void createDepartment(String departmentName, List<String> userEmails) throws Exception {
 		Department department = new Department(departmentName);
 
-		if (userEmails!=null){
+		if (userEmails != null) {
 			for (String email : userEmails) {
 				department.addEmployee(email);
-			}			
+			}
 		}
-
 		departmentRepository.store(department);
 	}
 
@@ -72,13 +72,17 @@ public class DepartmentProcessor {
 		departmentRepository.store(department);
 	}
 
-	private Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
+	public Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
 		Department department = departmentRepository.findByName(departmentName);
 
 		if (department == null) {
 			throw new DepartmentNotFoundException("Department not found with following name : " + departmentName);
 		}
 		return department;
+	}
+
+	public Collection<Department> retrieveAllDepartments() {
+		return departmentRepository.findAll();
 	}
 
 }

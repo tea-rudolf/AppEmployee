@@ -37,7 +37,6 @@ public class DepartmentController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String showDepartmentsList(Model model, HttpSession session) {
 		model.addAttribute("departments", departmentService.retrieveDepartmentsList());
-
 		return "departmentsList";
 	}
 
@@ -51,7 +50,6 @@ public class DepartmentController {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			// redirect
 		}
-
 		return "createDepartment";
 	}
 
@@ -59,9 +57,7 @@ public class DepartmentController {
 	public String createDepartment(Model model, DepartmentViewModel departmentViewModel, HttpSession session)
 			throws Exception {
 		departmentService.createDepartement(departmentViewModel);
-
 		return "redirect:/departments/";
-
 	}
 
 	@RequestMapping(value = "/{departmentName}/edit", method = RequestMethod.GET)
@@ -69,7 +65,6 @@ public class DepartmentController {
 			throws DepartmentNotFoundException {
 		model.addAttribute("department", departmentService.retrieveDepartmentViewModel(departmentName));
 		model.addAttribute("employees", departmentService.retrieveEmployeesListViewModel(departmentName));
-
 		return "redirect:/departments/" + departmentName;
 	}
 
@@ -78,7 +73,6 @@ public class DepartmentController {
 			HttpSession session) {
 		model.addAttribute("departmentName", departmentName);
 		model.addAttribute("user", userViewModel);
-
 		return "createUser";
 	}
 
@@ -104,7 +98,6 @@ public class DepartmentController {
 			HttpSession session) {
 		model.addAttribute("user", userService.retrieveUserViewModel(email));
 		model.addAttribute("departmentName", departmentName);
-
 		return "editEmployee";
 	}
 
@@ -112,9 +105,7 @@ public class DepartmentController {
 	public String editEmployee(@PathVariable String departmentName, UserViewModel userViewModel, Model model,
 			HttpSession session) {
 		try {
-
 			userService.editUser(userViewModel);
-
 			model.addAttribute("departmentName", departmentName);
 
 			return "redirect:/departments/{departmentName}/edit";
@@ -132,14 +123,12 @@ public class DepartmentController {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			// quel redirect
 		}
-
 		return "assignEmployeToDepartment";
 	}
 
 	@RequestMapping(value = "/assignEmployes", method = RequestMethod.POST)
 	public String assignEmployeeToDepartment(EmployeeAssignationViewModel model, HttpSession session) throws Exception {
-		departmentService.assignUserToDepartment(model);
-
+		departmentService.assignOrphanEmployeeToDepartment(model);
 		return "redirect:/departments";
 	}
 

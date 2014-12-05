@@ -177,7 +177,7 @@ public class DepartmentControllerTest {
 	@Test
 	public void assignEmployeeToDepartmentCallsCorrectServiceMethod() throws Exception {
 		departmentController.assignEmployeeToDepartment(assignationEmployeDepViewModelMock, sessionMock);
-		verify(departmentServiceMock, times(1)).assignUserToDepartment(assignationEmployeDepViewModelMock);
+		verify(departmentServiceMock, times(1)).assignOrphanEmployeeToDepartment(assignationEmployeDepViewModelMock);
 	}
 
 }

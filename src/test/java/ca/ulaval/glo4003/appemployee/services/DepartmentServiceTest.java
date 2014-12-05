@@ -18,10 +18,8 @@
 //import ca.ulaval.glo4003.appemployee.domain.exceptions.DepartmentNotFoundException;
 //import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 //import ca.ulaval.glo4003.appemployee.domain.exceptions.SupervisorAccessException;
-//import ca.ulaval.glo4003.appemployee.domain.repository.DepartmentRepository;
-//import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
-//import ca.ulaval.glo4003.appemployee.domain.user.Role;
 //import ca.ulaval.glo4003.appemployee.domain.user.User;
+//import ca.ulaval.glo4003.appemployee.domain.user.UserProcessor;
 //import ca.ulaval.glo4003.appemployee.web.converters.DepartmentConverter;
 //import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
 //import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
@@ -35,13 +33,16 @@
 //	private static final String SUPERVISOR_ID = "0001";
 //
 //	@Mock
-//	private UserRepository userRepositoryMock;
-//
-//	@Mock
-//	private DepartmentRepository departmentRepositoryMock;
+//	private UserProcessor userProcessorMock;
 //
 //	@Mock
 //	private DepartmentProcessor departmentProcessorMock;
+//
+//	@Mock
+//	private DepartmentConverter departmentConverterMock;
+//
+//	@Mock
+//	private UserConverter userConverterMock;
 //
 //	@Mock
 //	private UserViewModel userViewModelMock;
@@ -52,28 +53,18 @@
 //	@Mock
 //	private Department departmentMock;
 //
-//	@Mock
-//	private DepartmentConverter departmentConverterMock;
-//
-//	@Mock
-//	private UserConverter userConverterMock;
-//
 //	@InjectMocks
 //	private DepartmentService departmentService;
 //
 //	@Before
 //	public void setUp() {
 //		MockitoAnnotations.initMocks(this);
-//		departmentService = new DepartmentService(departmentRepositoryMock, userRepositoryMock, departmentProcessorMock, departmentConverterMock,
+//		departmentService = new DepartmentService(userProcessorMock, departmentProcessorMock, departmentConverterMock,
 //				userConverterMock);
-//		when(userViewModelMock.getEmail()).thenReturn(EMAIL);
-//		when(userViewModelMock.getPassword()).thenReturn(PASSWORD);
-//		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
-//		when(userViewModelMock.getWage()).thenReturn(WAGE);
 //	}
 //
 //	@Test
-//	public void canInstantiateService() {
+//	public void canInstantiateDepartmentService() {
 //		assertNotNull(departmentService);
 //	}
 //
