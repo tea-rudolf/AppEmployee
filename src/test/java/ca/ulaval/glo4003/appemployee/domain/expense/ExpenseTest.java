@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.domain.expense;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;

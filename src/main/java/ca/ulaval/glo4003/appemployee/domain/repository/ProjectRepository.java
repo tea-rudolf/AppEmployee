@@ -18,6 +18,4 @@ public interface ProjectRepository {
 
 	void store(Project project) throws Exception;
 
-	Project findByName(String Name);
-
 }

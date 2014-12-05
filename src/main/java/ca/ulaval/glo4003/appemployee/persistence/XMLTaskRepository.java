@@ -1,7 +1,6 @@
 package ca.ulaval.glo4003.appemployee.persistence;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +9,8 @@ import javax.inject.Singleton;
 
 import org.springframework.stereotype.Repository;
 
-import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.task.Task;
-import ca.ulaval.glo4003.appemployee.domain.user.User;
 
 @Repository
 @Singleton
@@ -58,17 +55,6 @@ public class XMLTaskRepository implements TaskRepository {
 			tasks.add(task);
 		}
 		return tasks;
-	}
-	
-	@Override
-	public Task findByName(String name) {
-		Collection<Task> tasks = findAll();
-		for(Task task : tasks){
-			if  (task.getName().equals(name)){
-				return task;
-			}	
-		}
-		return null;
 	}
 
 	private void saveXML() throws Exception {

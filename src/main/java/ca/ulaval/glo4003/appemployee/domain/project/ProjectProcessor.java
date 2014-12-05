@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
@@ -66,6 +65,16 @@ public class ProjectProcessor {
 		return employees;
 	}
 	
+	public boolean checkIfProjectWithSameNameExists(String projectName){
+		Collection<Project> projects = projectRepository.findAll();
+		for(Project project : projects){
+			if  (project.getName().equals(projectName)){
+				return true;
+			}	
+		}
+		return false;
+	}
+	
 	public List<Task> retrieveAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
 		List<Task> tasks = new ArrayList<Task>();
@@ -79,9 +88,8 @@ public class ProjectProcessor {
 	
 	public void addTaskToProject(String projectNumber, String taskName, double multiplicativeFactor) throws Exception {
 		Project project = projectRepository.findById(projectNumber);
-		System.out.println(taskName);
-		System.out.println(taskRepository.findByName(taskName));
-		if (taskRepository.findByName(taskName) != null){
+
+		if (checkIfTaskAlreadyExistsInProject(project, taskName)){
 			throw new TaskExistsException(String.format("The task %s already exists!", taskName));
 		}
 		
@@ -91,5 +99,15 @@ public class ProjectProcessor {
 		
 		taskRepository.store(newTask);	
 		projectRepository.store(project);
+	}
+	
+	public boolean checkIfTaskAlreadyExistsInProject(Project project, String taskName ){
+		List<Task> tasks = taskRepository.findByUids(project.getTaskUids());
+		for(Task task : tasks){
+			if  (task.getName().equals(taskName)){
+				return true;
+			}	
+		}
+		return false;
 	}
 }
