@@ -42,8 +42,8 @@ public class UserService {
 		userProcessor.updateUser(userViewModel.getEmail(), userViewModel.getPassword(), Role.valueOf(userViewModel.getRole()), userViewModel.getWage());
 	}
 
-	public boolean isUserValid(String userEmail, String password) {
-		return userProcessor.validateUserCredentials(userEmail, password);
+	public void validateCredentials(String userEmail, String password) {
+		userProcessor.validateUserCredentials(userEmail, password);
 	}
 
 	public String retrieveUserRole(String userEmail) {
