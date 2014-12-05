@@ -17,13 +17,13 @@
 
 		<div class="row placeholders">
 			<div class="col-xs-6 col-sm-3 placeholder">
-				<a href="time"><img
+				<a href="departments"><img
 					src="../../resources/img/Operations/manageDepartments.png"
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>
 			</div>
 			<div class="col-xs-6 col-sm-3 placeholder">
-				<a href="expenses"><img
+				<a href="departments/assignEmployes"><img
 					src="../../resources/img/Operations/assignEmployees.png"
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>

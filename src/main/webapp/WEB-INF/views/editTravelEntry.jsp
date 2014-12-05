@@ -11,7 +11,7 @@
 	<%@include file="../includes/navbar.jsp"%>
 
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-		<h2 class="sub-header">Edit a time entry</h2>
+		<h2 class="sub-header">Edit a travel entry</h2>
 				<h3>
 			Pay period from
 			<c:out value="${payPeriodForm.payPeriodStartDate}" />

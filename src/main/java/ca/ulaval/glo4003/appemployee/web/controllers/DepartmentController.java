@@ -70,7 +70,7 @@ public class DepartmentController {
 		model.addAttribute("department", departmentService.retrieveDepartmentViewModel(departmentName));
 		model.addAttribute("employees", departmentService.retrieveEmployeesListViewModel(departmentName));
 
-		return "editDepartment";
+		return "redirect:/departments/" + departmentName;
 	}
 
 	@RequestMapping(value = "/{departmentName}/employees/createEmployee", method = RequestMethod.GET)
@@ -120,7 +120,7 @@ public class DepartmentController {
 			return "redirect:/departments/{departmentName}/edit";
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return "editEmployee";
+			return "redirect:/departments/" + departmentName + "/employees/" + userViewModel.getEmail() + "/edit";
 		}
 	}
 
