@@ -16,25 +16,25 @@
 		<div class="row placeholders">
 			<div class="col-xs-6 col-sm-3 placeholder">
 				<a href="time"><img
-					src="../../resources/img/Employee Operations/manageTimeSquare.png"
+					src="../../resources/img/Operations/manageTime.png"
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>
 			</div>
 			<div class="col-xs-6 col-sm-3 placeholder">
 				<a href="expenses"><img
-					src="../../resources/img/Employee Operations/manageExpensesSquare.png"
+					src="../../resources/img/Operations/manageExpenses.png"
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>
 			</div>
 			<div class="col-xs-6 col-sm-3 placeholder">
 				<a href="projects"><img
-					src="../../resources/img/Employee Operations/manageProjects.png"
+					src="../../resources/img/Operations/manageProjects.png"
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>
 			</div>
 			<div class="col-xs-6 col-sm-3 placeholder">
 				<a href="travel"><img
-					src="../../resources/img/Employee Operations/manageTravel.png"
+					src="../../resources/img/Operations/manageTravel.png"
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>
 			</div>
