@@ -1,9 +1,10 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +101,18 @@ public class TravelServiceTest {
 		when(travelConverterMock.convert(travelMock)).thenReturn(travelViewModelMock);
 		TravelViewModel returnedViewModel = travelService.retrieveTravelViewModel(TRAVEL_UID);
 		assertEquals(returnedViewModel, travelViewModelMock);
+	}
+	
+	@Test(expected = TravelNotFoundException.class)
+	public void retrieveTravelViewModelThrowsExceptionIfTravelNotFound() throws TravelNotFoundException {
+		doThrow(new TravelNotFoundException("")).when(travelProcessorMock).retrieveTravelByUid(TRAVEL_UID);
+		travelService.retrieveTravelViewModel(TRAVEL_UID);
+	}
+	
+	@Test
+	public void retrieveUserTravelViewModelReturnsNotNullViewModel() {
+		TravelViewModel returnedViewModel = travelService.retrieveUserTravelViewModel(VALID_EMAIL);
+		assertNotNull(returnedViewModel);
 	}
 	
 }
