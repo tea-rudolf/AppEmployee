@@ -5,10 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
-import ca.ulaval.glo4003.appemployee.domain.project.Project;
 import ca.ulaval.glo4003.appemployee.domain.project.ProjectProcessor;
-import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.web.converters.ProjectConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.TaskConverter;
 import ca.ulaval.glo4003.appemployee.web.converters.UserConverter;
@@ -22,21 +19,18 @@ public class ProjectService {
 	private TaskConverter taskConverter;
 	private ProjectConverter projectConverter;
 	private UserConverter userConverter;
-	private ProjectRepository projectRepository;
 	private ProjectProcessor projectProcessor;
 
 	@Autowired
-	public ProjectService(ProjectConverter projectConverter, TaskConverter taskConverter, UserConverter userConverter,
-			ProjectRepository projectRepository, ProjectProcessor projectProcessor) {
+	public ProjectService(ProjectConverter projectConverter, TaskConverter taskConverter, UserConverter userConverter, ProjectProcessor projectProcessor) {
 		this.taskConverter = taskConverter;
 		this.userConverter = userConverter;
 		this.projectConverter = projectConverter;
-		this.projectRepository = projectRepository;
 		this.projectProcessor = projectProcessor;
 	}
 
 	public Collection<ProjectViewModel> retrieveAllProjects() {
-		return projectConverter.convert(projectRepository.findAll());
+		return projectConverter.convert(projectProcessor.retrieveAllProjects());
 	}
 
 	public void editProject(String projectId, ProjectViewModel projectViewModel) throws Exception {
@@ -44,20 +38,11 @@ public class ProjectService {
 	}
 
 	public void createProject(ProjectViewModel projectViewModel) throws Exception {
-
-		if (projectProcessor.checkIfProjectWithSameNameExists(projectViewModel.getName())) {
-			throw new ProjectExistsException(
-					String.format("The project %s already exists!", projectViewModel.getName()));
-		}
-
-		Project newProject = new Project(projectViewModel.getName(), projectViewModel.getTaskIds(),
-				projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
-		projectRepository.store(newProject);
-
+		projectProcessor.createProject(projectViewModel.getName(), projectViewModel.getTaskIds(), projectViewModel.getUserIds(), projectViewModel.getExpenseIds());
 	}
 
 	public ProjectViewModel retrieveProjectViewModelForExistingProject(String projectNumber) {
-		ProjectViewModel projectViewModel = projectConverter.convert(projectRepository.findById(projectNumber));
+		ProjectViewModel projectViewModel = projectConverter.convert(projectProcessor.retrieveProjectById(projectNumber));
 		projectViewModel.setAvailableUsers(projectProcessor.evaluateAvailableEmployeeEmailsByProject(projectNumber));
 		return projectViewModel;
 	}
@@ -71,7 +56,6 @@ public class ProjectService {
 	}
 
 	public void addNewTaskToProject(String projectNumber, TaskViewModel taskViewModel) throws Exception {
-		projectProcessor.addTaskToProject(projectNumber, taskViewModel.getName(),
-				taskViewModel.getMultiplicativeFactor());
+		projectProcessor.addTaskToProject(projectNumber, taskViewModel.getName(), taskViewModel.getMultiplicativeFactor());
 	}
 }

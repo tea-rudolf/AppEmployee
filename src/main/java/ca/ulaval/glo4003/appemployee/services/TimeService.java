@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TimeEntryNotFoundException;
+import ca.ulaval.glo4003.appemployee.domain.task.TaskProcessor;
 import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
 import ca.ulaval.glo4003.appemployee.domain.time.TimeEntry;
 import ca.ulaval.glo4003.appemployee.domain.time.TimeProcessor;
@@ -18,11 +19,13 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeEntryViewModel;
 @Service
 public class TimeService {
 
+	private TaskProcessor taskProcessor;
 	private TimeProcessor timeProcessor;
 	private TimeConverter timeConverter;
 
 	@Autowired
-	public TimeService(TimeProcessor timeProcessor, TimeConverter timeConverter) {
+	public TimeService(TaskProcessor taskProcessor, TimeProcessor timeProcessor, TimeConverter timeConverter) {
+		this.taskProcessor = taskProcessor;
 		this.timeProcessor = timeProcessor;
 		this.timeConverter = timeConverter;
 	}
@@ -60,7 +63,7 @@ public class TimeService {
 	}
 
 	public TimeEntryViewModel retrieveTimeEntryViewModelForUser(String userEmail) {
-		return timeConverter.convert(userEmail);
+		return timeConverter.convert(userEmail, taskProcessor.retrieveAllTasksByUserId(userEmail));
 	}
 
 	public Collection<TimeEntryViewModel> retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(String userEmail) throws TimeEntryNotFoundException {
@@ -74,7 +77,7 @@ public class TimeService {
 
 	public TimeEntryViewModel retrieveTimeEntryViewModel(String timeEntryUid) throws TimeEntryNotFoundException {
 		TimeEntry timeEntry = timeProcessor.retrieveTimeEntryByUid(timeEntryUid);
-		return timeConverter.convert(timeEntry);
+		return timeConverter.convert(timeEntry, taskProcessor.retrieveTaskName(timeEntry.getTaskUid()), taskProcessor.retrieveAllTasksByUserId(timeEntry.getUserEmail()));
 	}
 
 }

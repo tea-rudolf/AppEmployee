@@ -10,19 +10,20 @@ import org.springframework.stereotype.Service;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseProcessor;
 import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.time.TimeProcessor;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 
 @Service
 public class ExpenseService {
 
-	private TimeService timeService;
+	private TimeProcessor timeProcessor;
 	private ExpenseProcessor expenseProcessor;
 	private ExpenseConverter expenseConverter;
 
 	@Autowired
-	public ExpenseService(TimeService timeService, ExpenseProcessor expenseProcessor, ExpenseConverter expenseConverter) {
-		this.timeService = timeService;
+	public ExpenseService(TimeProcessor timeProcessor, ExpenseProcessor expenseProcessor, ExpenseConverter expenseConverter) {
+		this.timeProcessor = timeProcessor;
 		this.expenseProcessor = expenseProcessor;
 		this.expenseConverter = expenseConverter;
 	}
@@ -52,7 +53,7 @@ public class ExpenseService {
 	}
 
 	private List<Expense> retrieveUserExpensesForCurrentPayPeriod(String userEmail) {
-		PayPeriod currentPayPeriod = timeService.retrieveCurrentPayPeriod();
+		PayPeriod currentPayPeriod = timeProcessor.retrieveCurrentPayPeriod();
 		return expenseProcessor.retrieveUserExpensesForCurrentPayPeriod(userEmail, currentPayPeriod);
 	}
 

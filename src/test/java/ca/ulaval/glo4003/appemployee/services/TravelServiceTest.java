@@ -1,6 +1,6 @@
 package ca.ulaval.glo4003.appemployee.services;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TravelNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.TravelRepository;
+import ca.ulaval.glo4003.appemployee.domain.time.TimeProcessor;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.domain.travel.TravelProcessor;
 import ca.ulaval.glo4003.appemployee.domain.travel.Vehicle;
@@ -47,7 +48,7 @@ public class TravelServiceTest {
 	private TravelViewModel travelViewModelMock;
 
 	@Mock
-	private TimeService payPeriodServiceMock;
+	private TimeProcessor timeProcessorMock;
 
 	@Mock
 	private TravelProcessor travelProcessorMock;
@@ -58,8 +59,7 @@ public class TravelServiceTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelService = new TravelService(travelConverterMock,
-				payPeriodServiceMock, travelProcessorMock);
+		travelService = new TravelService(travelConverterMock, timeProcessorMock, travelProcessorMock);
 	}
 
 	@Test

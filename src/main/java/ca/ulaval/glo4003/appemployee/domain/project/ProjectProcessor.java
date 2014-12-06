@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
@@ -66,16 +67,6 @@ public class ProjectProcessor {
 		return employees;
 	}
 
-	public boolean checkIfProjectWithSameNameExists(String projectName) {
-		Collection<Project> projects = projectRepository.findAll();
-		for (Project project : projects) {
-			if (project.getName().equals(projectName)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public List<Task> retrieveAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
 		List<Task> tasks = new ArrayList<Task>();
@@ -110,5 +101,32 @@ public class ProjectProcessor {
 			}
 		}
 		return false;
+	}
+
+	public void createProject(String projectName, List<String> taskIds, List<String> userIds, List<String> expenseIds) throws Exception {
+		if (checkIfProjectWithSameNameExists(projectName)) {
+			throw new ProjectExistsException(String.format("The project %s already exists!", projectName));
+		}
+
+		Project newProject = new Project(projectName, taskIds, userIds, expenseIds);
+		projectRepository.store(newProject);
+	}
+	
+	private boolean checkIfProjectWithSameNameExists(String projectName) {
+		Collection<Project> projects = projectRepository.findAll();
+		for (Project project : projects) {
+			if (project.getName().equals(projectName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Collection<Project> retrieveAllProjects() {
+		return projectRepository.findAll();
+	}
+
+	public Project retrieveProjectById(String projectNumber) {
+		return projectRepository.findById(projectNumber);
 	}
 }

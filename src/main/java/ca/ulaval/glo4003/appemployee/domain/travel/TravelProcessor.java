@@ -30,14 +30,12 @@ public class TravelProcessor {
 		return travel;
 	}
 
-	public void createTravel(double distance, String vehicle, LocalDate localDate, String userEmail, String comment)
-			throws Exception {
+	public void createTravel(double distance, String vehicle, LocalDate localDate, String userEmail, String comment) throws Exception {
 		Travel travel = new Travel(distance, Vehicle.valueOf(vehicle), localDate, userEmail, comment);
 		travelRepository.store(travel);
 	}
 
-	public void editTravel(String travelUid, double distance, String vehicle, LocalDate date, String user,
-			String comment) throws Exception {
+	public void editTravel(String travelUid, double distance, String vehicle, LocalDate date, String user, String comment) throws Exception {
 		Travel travel = retrieveTravelByUid(travelUid);
 		updateTravel(distance, vehicle, date, user, comment, travel);
 	}
@@ -54,8 +52,7 @@ public class TravelProcessor {
 		return travels;
 	}
 
-	private void updateTravel(double distance, String vehicle, LocalDate date, String user, String comment,
-			Travel travel) throws Exception {
+	private void updateTravel(double distance, String vehicle, LocalDate date, String user, String comment, Travel travel) throws Exception {
 		travel.update(distance, vehicle, date, user, comment);
 		travelRepository.store(travel);
 	}

@@ -16,6 +16,10 @@ public class TimeEntryViewModel {
 	private String taskName;
 	private String uid;
 	
+	public TimeEntryViewModel() {
+		
+	}
+	
 	public TimeEntryViewModel(String uid, String userEmail, String date, double billableHours, String taskUid, String taskName, 
 			String comment, List<Task> availableTasks) {
 			this.uid = uid;
@@ -28,9 +32,15 @@ public class TimeEntryViewModel {
 			this.availableTasks = availableTasks;
 		
 	}
-	
-	public TimeEntryViewModel() {
-		
+
+	public TimeEntryViewModel(String uid, String userEmail, String date, double billableHours, String taskUid, String comment)
+	{
+		this.uid = uid;
+		this.userEmail = userEmail;
+		this.date = date;
+		this.hours = billableHours;
+		this.taskId = taskUid;
+		this.comment = comment;
 	}
 
 	public List<Task> getAvailableTasks() {

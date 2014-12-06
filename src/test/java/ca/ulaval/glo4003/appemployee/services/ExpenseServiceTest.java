@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import ca.ulaval.glo4003.appemployee.domain.expense.Expense;
 import ca.ulaval.glo4003.appemployee.domain.expense.ExpenseProcessor;
 import ca.ulaval.glo4003.appemployee.domain.repository.ExpenseRepository;
+import ca.ulaval.glo4003.appemployee.domain.time.TimeProcessor;
 import ca.ulaval.glo4003.appemployee.web.converters.ExpenseConverter;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ExpenseViewModel;
 
@@ -32,7 +33,7 @@ public class ExpenseServiceTest {
 	private ExpenseViewModel expenseViewModelMock;
 
 	@Mock
-	private TimeService timeServiceMock;
+	private TimeProcessor timeProcessorMock;
 
 	@Mock
 	private ExpenseConverter expenseConverterMock;
@@ -46,7 +47,7 @@ public class ExpenseServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		expenseService = new ExpenseService(timeServiceMock,
+		expenseService = new ExpenseService(timeProcessorMock,
 				expenseProcessorMock, expenseConverterMock);
 	}
 

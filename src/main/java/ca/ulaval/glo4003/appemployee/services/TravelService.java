@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TravelNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.time.PayPeriod;
+import ca.ulaval.glo4003.appemployee.domain.time.TimeProcessor;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.domain.travel.TravelProcessor;
 import ca.ulaval.glo4003.appemployee.web.converters.TravelConverter;
@@ -18,13 +19,13 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 public class TravelService {
 
 	private TravelConverter travelConverter;
-	private TimeService timeService;
+	private TimeProcessor timeProcessor;
 	private TravelProcessor travelProcessor;
 
 	@Autowired
-	public TravelService(TravelConverter travelConverter, TimeService payPeriodService, TravelProcessor travelProcessor) {
+	public TravelService(TravelConverter travelConverter, TimeProcessor timeProcessor, TravelProcessor travelProcessor) {
 		this.travelConverter = travelConverter;
-		this.timeService = payPeriodService;
+		this.timeProcessor = timeProcessor;
 		this.travelProcessor = travelProcessor;
 	}
 
@@ -54,7 +55,7 @@ public class TravelService {
 	}
 
 	private List<Travel> retrieveUserTravelsForCurrentPayPeriod(String userEmail) {
-		PayPeriod payPeriod = timeService.retrieveCurrentPayPeriod();
+		PayPeriod payPeriod = timeProcessor.retrieveCurrentPayPeriod();
 		return travelProcessor.evaluateUserTravelsForPayPeriod(payPeriod, userEmail);
 	}
 

@@ -4,22 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ca.ulaval.glo4003.appemployee.domain.task.Task;
 import ca.ulaval.glo4003.appemployee.domain.time.TimeEntry;
-import ca.ulaval.glo4003.appemployee.services.TaskService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TimeEntryViewModel;
 
 @Component
-public class TimeConverter {
-
-	private TaskService taskService;;
-
-	@Autowired
-	public TimeConverter(TaskService taskService) {
-		this.taskService = taskService;
-	}
+public class TimeConverter {	
 
 	public Collection<TimeEntryViewModel> convert(List<TimeEntry> timeEntries) {
 		Collection<TimeEntryViewModel> viewModels = new ArrayList<TimeEntryViewModel>();
@@ -32,17 +24,24 @@ public class TimeConverter {
 
 		return viewModels;
 	}
-
-	public TimeEntryViewModel convert(TimeEntry timeEntry) {
+	
+	public TimeEntryViewModel convert(TimeEntry timeEntry, String taskId, List<Task> tasks) {
 		return new TimeEntryViewModel(timeEntry.getUid(), timeEntry.getUserEmail(), timeEntry.getDate().toString(), timeEntry.getBillableHours(), timeEntry.getTaskUid(), 
-				taskService.retrieveTaskName(timeEntry.getTaskUid()), timeEntry.getComment(), taskService.retrieveAllTasksByUserId(timeEntry.getUserEmail()));
+				taskId, timeEntry.getComment(), tasks);
 
 	}
 
-	public TimeEntryViewModel convert(String userEmail) {
+
+	public TimeEntryViewModel convert(String userEmail, List<Task> tasks) {
 		TimeEntryViewModel timeViewModel = new TimeEntryViewModel();
 		timeViewModel.setUserEmail(userEmail);
-		timeViewModel.setAvailableTasks(taskService.retrieveAllTasksByUserId(userEmail));
+		timeViewModel.setAvailableTasks(tasks);
 		return timeViewModel;
+	}
+	
+	private TimeEntryViewModel convert(TimeEntry timeEntry) {
+		return new TimeEntryViewModel(timeEntry.getUid(), timeEntry.getUserEmail(), timeEntry.getDate().toString(), timeEntry.getBillableHours(), timeEntry.getTaskUid(), 
+				timeEntry.getComment());
+
 	}
 }

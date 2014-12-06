@@ -83,4 +83,16 @@ public class TaskProcessor {
 		return assignedToCurrentUserTasks;
 	}
 
+	public Task retrieveTaskById(String taskNumber) {
+		return taskRepository.findByUid(taskNumber);
+	}
+	
+	public String retrieveTaskName(String taskNumber) {
+		return retrieveTaskById(taskNumber).getName();
+	}
+	
+	public List<Task> retrieveAllTasksByUserId(String userEmail) {
+		return retrieveAllTasksAssignedToUserId(userEmail);
+	}
+
 }
