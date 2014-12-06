@@ -84,8 +84,7 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
-	public String showCreateTaskForm(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel,
-			HttpSession session) {
+	public String showCreateTaskForm(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
 		return String.format("createTask");
@@ -93,6 +92,7 @@ public class ProjectController {
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.POST)
 	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
+		
 		try {
 			projectService.addNewTaskToProject(projectNumber, taskViewModel);
 		} catch (TaskExistsException e) {

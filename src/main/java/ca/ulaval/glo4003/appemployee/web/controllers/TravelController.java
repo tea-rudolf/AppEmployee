@@ -70,8 +70,7 @@ public class TravelController {
 	}
 
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.POST)
-	public String editTravelEntry(@PathVariable String uid, Model model, TravelViewModel viewModel, HttpSession session)
-			throws Exception {
+	public String editTravelEntry(@PathVariable String uid, Model model, TravelViewModel viewModel, HttpSession session) throws Exception {
 		travelService.editTravel(uid, viewModel);
 		return "redirect:/travel/" + uid + "/edit";
 	}

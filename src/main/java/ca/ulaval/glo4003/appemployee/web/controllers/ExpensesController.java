@@ -43,16 +43,14 @@ public class ExpensesController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String showExpensesList(ModelMap model, HttpSession session) {
-		Collection<ExpenseViewModel> expensesViewModels = expenseService
-				.retrieveExpenseViewModelsListForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
+		Collection<ExpenseViewModel> expensesViewModels = expenseService.retrieveExpenseViewModelsListForCurrentPayPeriod(session.getAttribute(EMAIL_ATTRIBUTE).toString());
 		model.addAttribute("expenses", expensesViewModels);
 		return "expenses";
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showCreateExpenseForm(Model model, ExpenseViewModel expenseModel, HttpSession session) {
-		model.addAttribute("expenseForm",
-				expenseService.retrieveUserExpenseViewModel(session.getAttribute(EMAIL_ATTRIBUTE).toString()));
+		model.addAttribute("expenseForm", expenseService.retrieveUserExpenseViewModel(session.getAttribute(EMAIL_ATTRIBUTE).toString()));
 		return "createExpense";
 	}
 
@@ -70,8 +68,7 @@ public class ExpensesController {
 	}
 
 	@RequestMapping(value = "/{Uid}/edit", method = RequestMethod.POST)
-	public String editExpense(@PathVariable String Uid, ExpenseViewModel viewModel, HttpSession session)
-			throws Exception {
+	public String editExpense(@PathVariable String Uid, ExpenseViewModel viewModel, HttpSession session) throws Exception {
 		expenseService.editExpense(viewModel);
 		return "redirect:/expenses/" + Uid + "/edit";
 	}
