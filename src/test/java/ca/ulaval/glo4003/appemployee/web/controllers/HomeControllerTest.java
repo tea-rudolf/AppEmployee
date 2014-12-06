@@ -3,6 +3,8 @@ package ca.ulaval.glo4003.appemployee.web.controllers;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
@@ -65,30 +66,20 @@ public class HomeControllerTest {
 
 	@Test
 	public void loginReturnsCorrectModelForm() {
-		// when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-		// when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-		// when(userServiceMock.retrieveUserRole(USER_EMAIL)).thenReturn(Role.EMPLOYEE.toString());
-		// when(servletRequestMock.getSession()).thenReturn(sessionMock);
-
+		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
+		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
 		ModelAndView returnedModel = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock,
 				servletRequestMock);
-
 		assertEquals("home", returnedModel.getViewName());
 	}
 
-	@Test
+	@Test(expected = Exception.class)
 	public void loginReturnsAlertIfWrongEmailOrPassword() {
-		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
-		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-		doThrow(new UserNotFoundException("")).when(userServiceMock).validateCredentials(USER_EMAIL, USER_PASSWORD);
-
-		ModelAndView returnedModel = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock,
+		doThrow(new Exception()).when(userServiceMock).validateCredentials(USER_EMAIL, USER_PASSWORD);
+		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock,
 				servletRequestMock);
-
-		assertEquals("home", returnedModel.getViewName());
-
-		// verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE,
-		// ALERT_MESSAGE);
+		verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE,
+		ALERT_MESSAGE);
 	}
 
 	@Test
