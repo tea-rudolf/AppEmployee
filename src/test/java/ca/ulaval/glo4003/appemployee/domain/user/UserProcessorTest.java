@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.UserNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
 
@@ -32,6 +33,7 @@ public class UserProcessorTest {
 	private static final String EMAIL = "test@test.com";
 	private static final String PASSWORD = "dummyPassword";
 	private static final double WAGE = 150000.00;
+	private static final Role ROLE = Role.EMPLOYEE;
 
 	@Before
 	public void setUp() {
@@ -104,6 +106,20 @@ public class UserProcessorTest {
 		Role actualUserRole = userProcessor.retrieveUserRole(EMAIL);
 
 		assertEquals(Role.EMPLOYEE, actualUserRole);
+	}
+	
+	@Test(expected = EmployeeAlreadyExistsException.class)
+	public void createUserThrowsExceptionWhenUserAlreadyExists() throws Exception {
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userMock);
+		userProcessor.createUser(EMAIL, PASSWORD, ROLE, WAGE);
+	}
+	
+	@Test
+	public void createUserCallsCorrectRepositoryException() throws Exception {
+		ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+		when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(null);
+		userProcessor.createUser(EMAIL, PASSWORD, ROLE, WAGE);
+		verify(userRepositoryMock, times(1)).store(userArgumentCaptor.capture());
 	}
 
 }

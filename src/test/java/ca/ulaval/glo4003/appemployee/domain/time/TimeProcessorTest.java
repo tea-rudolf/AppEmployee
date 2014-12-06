@@ -78,7 +78,9 @@ public class TimeProcessorTest {
 
 	@Test(expected = PayPeriodNotFoundException.class)
 	public void retrievePreviousPayPeriodThrowsExceptionWhenPayPeriodNotFound() {
-		when(payPeriodRepositoryMock.findByDate(PAYPERIOD_START_DATE.minusDays(1))).thenReturn(null);
+		when(timeProcessor.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
+		when(payPeriodMock.getStartDate()).thenReturn(CURRENT_DATE);
+		when(payPeriodRepositoryMock.findByDate(CURRENT_DATE.minusDays(1))).thenReturn(null);
 		timeProcessor.retrievePreviousPayPeriod();
 	}
 
@@ -98,17 +100,6 @@ public class TimeProcessorTest {
 		timeProcessor.editPayPeriod(payPeriodMock);
 		verify(payPeriodRepositoryMock, times(1)).update(payPeriodMock);
 	}
-
-	// @Test
-	// public void createTimeEntryAddTimeEntryToPayPeriod() throws Exception {
-	// ArgumentCaptor<TimeEntry> timeEntryArgumentCaptor =
-	// ArgumentCaptor.forClass(TimeEntry.class);
-	// timeProcessor.createTimeEntry(payPeriodMock, BILLABLE_HOURS,
-	// CURRENT_DATE, EMAIL, TASK_ID, COMMENT);
-	// verify(payPeriodMock,
-	// times(1)).addTimeEntry(timeEntryArgumentCaptor.capture());
-	// assertEquals(TASK_ID, timeEntryArgumentCaptor.getValue().getTaskUid());
-	// }
 
 	@Test
 	public void createTimeEntryStoresTimeEntryInRepository() throws Exception {
