@@ -39,11 +39,12 @@ public class UserService {
 	}
 
 	public void editUser(UserViewModel userViewModel) throws Exception {
-		userProcessor.updateUser(userViewModel.getEmail(), userViewModel.getPassword(), Role.valueOf(userViewModel.getRole()), userViewModel.getWage());
+		userProcessor.updateUser(userViewModel.getEmail(), userViewModel.getPassword(),
+				Role.valueOf(userViewModel.getRole()), userViewModel.getWage());
 	}
 
-	public void validateCredentials(String userEmail, String password) {
-		userProcessor.validateUserCredentials(userEmail, password);
+	public boolean validateCredentials(String userEmail, String password) {
+		return userProcessor.validateUserCredentials(userEmail, password);
 	}
 
 	public String retrieveUserRole(String userEmail) {

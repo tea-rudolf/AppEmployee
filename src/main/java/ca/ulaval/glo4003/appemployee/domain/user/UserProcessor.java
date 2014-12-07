@@ -32,8 +32,8 @@ public class UserProcessor {
 	}
 
 	public boolean validateUserCredentials(String userEmail, String password) {
-		User user = retrieveUserByEmail(userEmail);
-		return user.validatePassword(password);
+		User user = userRepository.findByEmail(userEmail);
+		return (user != null && user.validatePassword(password));
 	}
 
 	public Role retrieveUserRole(String userEmail) {
