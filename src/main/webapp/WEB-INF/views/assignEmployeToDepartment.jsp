@@ -45,6 +45,9 @@
 						<br />
 						<input type="submit" class="btn btn-primary" name="submit"
 							value="Save" />
+						<input type="button"
+							onclick="javascript:window.location.href = '/'"
+							value="Cancel" class="btn btn-default"></input>
 					</form:form>
 			      </c:otherwise>
 			</c:choose>
