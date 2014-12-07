@@ -55,11 +55,11 @@
 					</tr>
 					<c:forEach var="timeEntry" items="${timeEntries}">
 						<tr
-							onClick="javascript:window.location.href = '/time/previousTime/${timeEntry.timeEntryUid}/edit'">
-							<td>${timeEntry.dateTimeEntry}</td>
-							<td>${timeEntry.taskNameTimeEntry}</td>
-							<td>${timeEntry.hoursTimeEntry}</td>
-							<td>${timeEntry.commentTimeEntry}</td>
+							onClick="javascript:window.location.href = '/time/previousTime/${timeEntry.uid}/edit'">
+							<td>${timeEntry.date}</td>
+							<td>${timeEntry.taskName}</td>
+							<td>${timeEntry.hours}</td>
+							<td>${timeEntry.comment}</td>
 						</tr>
 					</c:forEach>
 				</table>
