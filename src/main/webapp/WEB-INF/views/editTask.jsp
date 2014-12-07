@@ -38,7 +38,7 @@
 			<c:if test="${role eq 'SUPERVISOR'}">
 			<div>
 				<form:label path="multiplicativeFactor">Multiplicative Factor</form:label>
-				<form:input class="form-control" path="multiplicativeFactor" value="${multiplicativeFactor}" required="required" />	
+				<form:input class="form-control" path="multiplicativeFactor" type="number" step="any" value="${multiplicativeFactor}" required="required" />	
 			</div>	
 				<div class="form-group">
 					<b>Assign a user (optional)</b>

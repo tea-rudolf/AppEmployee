@@ -50,7 +50,7 @@
 									itemLabel="name"></form:options>
 							</form:select></td>
 						<td><form:label path="hours"></form:label> <form:input
-								class="form-control" type="number" min="1" max="24"
+								class="form-control" type="number" step="any" min="1" max="24"
 								path="hours" value="${hours}"
 								required="required" /></td>
 						<td><form:label path="comment"></form:label> <form:input

@@ -46,7 +46,7 @@
 								<form:options items="${travelForm.availableVehicles}"></form:options>
 							</form:select></td>
 						<td><form:label path="distanceTravelled"></form:label> <form:input
-								class="form-control" type="number" min="1" 
+								class="form-control" type="number" step="any" min="1" 
 								path="distanceTravelled" value="${distanceTravelled}"
 								required="required" /></td>
 						<td><form:label path="comment"></form:label> <form:input

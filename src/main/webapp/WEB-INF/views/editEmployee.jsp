@@ -33,7 +33,7 @@
       
       <div class="form-group">
         <form:label path="wage">Wage</form:label>
-        <form:input class="form-control" path="wage" value="${user.wage}"
+        <form:input class="form-control" type="number" step="any" path="wage" value="${user.wage}"
           required="required" />
       </div>
       <div class="form-group">
