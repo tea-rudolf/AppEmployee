@@ -32,17 +32,23 @@
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
 				<li><a href="/">Overview</a></li>
-				<li><a href="/time">Manage time</a></li>
-				<li><a href="/expenses">Manage expenses</a></li>
-				<li><a href="/travel">Manage travel</a></li>
+
 				<c:if
-					test='${sessionScope.role eq "SUPERVISOR" or sessionScope.role eq "ENTERPRISE"}'>
-					<li><a href="/projects">Manage projects & tasks</a></li>
-					<li><a href="/departments">Manage departments</a></li>
+					test='${sessionScope.role eq "SUPERVISOR" or sessionScope.role eq "EMPLOYEE"}'>
+					<li><a href="/time">Manage time</a></li>
+					<li><a href="/expenses">Manage expenses</a></li>
+					<li><a href="/travel">Manage travel</a></li>
+
 
 				</c:if>
 				<c:if
+					test='${sessionScope.role eq "SUPERVISOR"}'>
+					<li><a href="/projects">Manage projects & tasks</a></li>
+					<li><a href="/departments">Manage departments</a></li>
+				</c:if>
+				<c:if
 					test='${sessionScope.role eq "ENTERPRISE"}'>
+					<li><a href="/departments">Manage departments</a></li>
 					<li><a href="/departments/assignEmployes">Assign employees to department</a></li>
 				</c:if>
 
