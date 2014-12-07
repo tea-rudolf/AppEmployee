@@ -86,6 +86,7 @@ public class TimeProcessorTest {
 
 	@Test
 	public void retrievePreviousPayPeriodReturnsPreviousPayPeriod() {
+		when(timeProcessor.retrieveCurrentPayPeriod()).thenReturn(payPeriodMock);
 		when(payPeriodMock.getStartDate()).thenReturn(PAYPERIOD_START_DATE);
 		when(payPeriodRepositoryMock.findByDate(CURRENT_DATE)).thenReturn(payPeriodMock);
 		when(payPeriodRepositoryMock.findByDate(PAYPERIOD_START_DATE.minusDays(1))).thenReturn(previousPayPeriodMock);
