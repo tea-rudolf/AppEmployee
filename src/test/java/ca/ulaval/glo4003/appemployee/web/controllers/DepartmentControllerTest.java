@@ -41,6 +41,8 @@ public class DepartmentControllerTest {
 	private static final String ASSIGN_EMPLOYE_FORM = "assignEmployeToDepartment";
 	private static final String DEPARTMENT_LIST_FORM = "departmentsList";
 	private static final String DEPARTMENT_LIST_REDIRECT = "redirect:/departments";
+	private static final String ADD_DEPARTMENT_REDIRECT = "redirect:/add";
+	private static final String ASSIGN_EMPLOYEE_REDIRECT = "redirect:/assignEmployes";
 
 	@Mock
 	private DepartmentService departmentServiceMock;
@@ -90,6 +92,13 @@ public class DepartmentControllerTest {
 		when(departmentServiceMock.retrieveAvailableEmployeesViewModel()).thenReturn(departmentViewModelMock);
 		String returnedForm = departmentController.showCreateDepartmentForm(modelMock, sessionMock);
 		assertEquals(CREATE_DEPARTMENT_FORM, returnedForm);
+	}
+	
+	@Test
+	public void showCreateDepartmentFormRedirectsToAddDepartmentPageWhenDepartmentDoesNotExist() throws DepartmentNotFoundException {
+		doThrow(new DepartmentNotFoundException("")).when(departmentServiceMock).retrieveAvailableEmployeesViewModel();
+		String returnedForm = departmentController.showCreateDepartmentForm(modelMock, sessionMock);
+		assertEquals(ADD_DEPARTMENT_REDIRECT, returnedForm);
 	}
 
 	@Test

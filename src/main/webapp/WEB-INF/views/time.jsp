@@ -44,7 +44,6 @@
 				<table class="table table-striped table-hover table-condensed">
 					<tr>
 						<th>Date</th>
-						<th>Task</th>
 						<th>Hours</th>
 						<th>Comment</th>
 					</tr>
@@ -52,7 +51,6 @@
 						<tr
 							onClick="javascript:window.location.href = '/time/${timeEntry.uid}/edit'">
 							<td>${timeEntry.date}</td>
-							<td>${timeEntry.taskName}</td>
 							<td>${timeEntry.hours}</td>
 							<td>${timeEntry.comment}</td>
 						</tr>

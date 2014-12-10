@@ -89,12 +89,14 @@ public class TaskProcessorTest {
 	
 	@Test
 	public void evaluateAvailableEmployeeEmailsByTaskReturnsListOfEmails() {
-		when(taskRepositoryMock.findByUid(TASK_UID)).thenReturn(taskMock);
-		when(userRepositoryMock.findAll()).thenReturn(allUsers);
-		when(taskMock.userIsAlreadyAssignedToTask(USER_EMAIL)).thenReturn(false);
 		when(userMock.getRole()).thenReturn(Role.EMPLOYEE);
 		when(userMock.getEmail()).thenReturn(USER_EMAIL);
+		when(taskRepositoryMock.findByUid(TASK_UID)).thenReturn(taskMock);
+		allUsers.add(userMock);
+		when(userRepositoryMock.findAll()).thenReturn(allUsers);
+		when(taskMock.userIsAlreadyAssignedToTask(USER_EMAIL)).thenReturn(false);
 		List<String> availableUserEmails = new ArrayList<String>();
+		availableUserEmails.add(USER_EMAIL);
 		
 		List<String> returnedEmails = taskProcessor.evaluateAvailableEmployeeEmailsByTask(TASK_UID);
 		
