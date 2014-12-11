@@ -1,10 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,7 +39,6 @@ public class DepartmentControllerTest {
 	private static final String DEPARTMENT_LIST_FORM = "departmentsList";
 	private static final String DEPARTMENT_LIST_REDIRECT = "redirect:/departments";
 	private static final String ADD_DEPARTMENT_REDIRECT = "redirect:/add";
-	private static final String ASSIGN_EMPLOYEE_REDIRECT = "redirect:/assignEmployes";
 
 	@Mock
 	private DepartmentService departmentServiceMock;
@@ -93,9 +89,10 @@ public class DepartmentControllerTest {
 		String returnedForm = departmentController.showCreateDepartmentForm(modelMock, sessionMock);
 		assertEquals(CREATE_DEPARTMENT_FORM, returnedForm);
 	}
-	
+
 	@Test
-	public void showCreateDepartmentFormRedirectsToAddDepartmentPageWhenDepartmentDoesNotExist() throws DepartmentNotFoundException {
+	public void showCreateDepartmentFormRedirectsToAddDepartmentPageWhenDepartmentDoesNotExist()
+			throws DepartmentNotFoundException {
 		doThrow(new DepartmentNotFoundException("")).when(departmentServiceMock).retrieveAvailableEmployeesViewModel();
 		String returnedForm = departmentController.showCreateDepartmentForm(modelMock, sessionMock);
 		assertEquals(ADD_DEPARTMENT_REDIRECT, returnedForm);
@@ -112,10 +109,11 @@ public class DepartmentControllerTest {
 		departmentController.createDepartment(modelMock, departmentViewModelMock, sessionMock);
 		verify(departmentServiceMock, times(1)).createDepartement(departmentViewModelMock);
 	}
-	
+
 	@Test
 	public void createDepartmentReturnsShowCreateDepartmentFormWhenExceptionIsThrown() throws Exception {
-		doThrow(new DepartmentAlreadyExistsException("")).when(departmentServiceMock).createDepartement(departmentViewModelMock);
+		doThrow(new DepartmentAlreadyExistsException("")).when(departmentServiceMock).createDepartement(
+				departmentViewModelMock);
 		String returnedForm = departmentController.createDepartment(modelMock, departmentViewModelMock, sessionMock);
 		assertEquals(returnedForm, CREATE_DEPARTMENT_FORM);
 	}
