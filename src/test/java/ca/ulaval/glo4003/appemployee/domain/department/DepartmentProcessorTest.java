@@ -172,4 +172,15 @@ public class DepartmentProcessorTest {
 
 		assertEquals(departments, actualDepartments);
 	}
+
+	@Test
+	public void removeEmployeesListFromUnassignedDepartmentCallsUnassignEmployeeToDepartment() throws Exception {
+		List<String> employees = new ArrayList<String>();
+		employees.add(EMAIL);
+		when(departmentRepositoryMock.findByName(UNASSIGNED_EMPLOYEES_DEPARTMENT)).thenReturn(departmentMock);
+
+		departmentProcessor.removeEmployeesListFromUnassignedDepartment(employees);
+
+		verify(departmentMock, times(1)).removeEmployee(EMAIL);
+	}
 }
