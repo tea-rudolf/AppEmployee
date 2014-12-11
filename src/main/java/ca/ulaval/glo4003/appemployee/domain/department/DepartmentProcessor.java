@@ -21,12 +21,14 @@ public class DepartmentProcessor {
 	private DepartmentRepository departmentRepository;
 
 	@Autowired
-	public DepartmentProcessor(UserRepository userRepository, DepartmentRepository departmentRepository) {
+	public DepartmentProcessor(UserRepository userRepository,
+			DepartmentRepository departmentRepository) {
 		this.userRepository = userRepository;
 		this.departmentRepository = departmentRepository;
 	}
 
-	public List<User> evaluateEmployeesList(String departmentName) throws DepartmentNotFoundException {
+	public List<User> evaluateEmployeesList(String departmentName)
+			throws DepartmentNotFoundException {
 		Department department = retrieveDepartmentByName(departmentName);
 		List<String> employeeIds = department.getEmployeeIds();
 		List<User> employees = userRepository.findByEmails(employeeIds);
@@ -34,8 +36,8 @@ public class DepartmentProcessor {
 		return employees;
 	}
 
-	public boolean isSupervisorAssignedToDepartment(String supervisorID, String departmentName)
-			throws DepartmentNotFoundException {
+	public boolean isSupervisorAssignedToDepartment(String supervisorID,
+			String departmentName) throws DepartmentNotFoundException {
 		boolean isAssigned = false;
 		Department department = retrieveDepartmentByName(departmentName);
 
@@ -45,10 +47,12 @@ public class DepartmentProcessor {
 		return isAssigned;
 	}
 
-	public void createDepartment(String departmentName, List<String> userEmails) throws Exception {
+	public void createDepartment(String departmentName, List<String> userEmails)
+			throws Exception {
 
 		if (departmentRepository.findByName(departmentName) != null) {
-			throw new DepartmentAlreadyExistsException(String.format("The department %s already exists!", departmentName));
+			throw new DepartmentAlreadyExistsException(String.format(
+					"The department %s already exists!", departmentName));
 		}
 
 		Department department = new Department(departmentName);
@@ -59,28 +63,43 @@ public class DepartmentProcessor {
 		departmentRepository.store(department);
 	}
 
-	public List<String> evaluateEmployeesNotAssignedToDepartment() throws DepartmentNotFoundException {
+	public List<String> evaluateEmployeesNotAssignedToDepartment()
+			throws DepartmentNotFoundException {
 		Department unassignedEmployeesDepartment = retrieveDepartmentByName(DEPARTMENT_OF_UNASSIGNED_EMPLOYEES);
 		return unassignedEmployeesDepartment.getEmployeeIds();
 	}
 
-	public void assignEmployeeToDepartment(String employeeUid, String departmentName) throws Exception {
+	public void removeEmployeesFromUnassignedDepartment(List<String> userEmails)
+			throws Exception {
+		Department unassignedEmployeesDepartment = retrieveDepartmentByName(DEPARTMENT_OF_UNASSIGNED_EMPLOYEES);
+		for (String userEmail : userEmails) {
+			unassignedEmployeesDepartment.removeEmployee(userEmail);
+		}
+		departmentRepository.store(unassignedEmployeesDepartment);
+	}
+
+	public void assignEmployeeToDepartment(String employeeUid,
+			String departmentName) throws Exception {
 		Department department = retrieveDepartmentByName(departmentName);
 		department.addEmployee(employeeUid);
 		departmentRepository.store(department);
 	}
 
-	public void unassignEmployeeToDepartment(String employeeUid, String departmentName) throws Exception {
+	public void unassignEmployeeToDepartment(String employeeUid,
+			String departmentName) throws Exception {
 		Department department = retrieveDepartmentByName(departmentName);
 		department.removeEmployee(employeeUid);
 		departmentRepository.store(department);
 	}
 
-	public Department retrieveDepartmentByName(String departmentName) throws DepartmentNotFoundException {
+	public Department retrieveDepartmentByName(String departmentName)
+			throws DepartmentNotFoundException {
 		Department department = departmentRepository.findByName(departmentName);
 
 		if (department == null) {
-			throw new DepartmentNotFoundException("Department not found with following name : " + departmentName);
+			throw new DepartmentNotFoundException(
+					"Department not found with following name : "
+							+ departmentName);
 		}
 		return department;
 	}

@@ -68,6 +68,8 @@ public class DepartmentService {
 		}
 
 		departmentProcessor.createDepartment(departmentViewModel.getName(), userEmails);
+		departmentProcessor.removeEmployeesFromUnassignedDepartment(userEmails);
+		
 	}
 
 	public Collection<Department> retrieveDepartmentsList() {
