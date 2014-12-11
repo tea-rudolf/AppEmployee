@@ -127,7 +127,7 @@ public class TimeControllerTest {
 
 		String returnedForm = timeControllerMock.editTimeEntry(TIME_ENTRY_UID, modelMock, timeViewModelMock, sessionMock);
 
-		assertEquals(EDIT_TIME_REDIRECT, returnedForm);
+		assertEquals(TIME_REDIRECT, returnedForm);
 	}
 
 	@Test

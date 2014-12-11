@@ -24,12 +24,15 @@ import ca.ulaval.glo4003.appemployee.web.viewmodels.LoginFormViewModel;
 
 public class HomeControllerTest {
 
-	private static final String USER_EMAIL = "employee@employee.com";
-	private static final String USER_PASSWORD = "employee";
+	private static final String USER_EMAIL = "emp@company.com";
+	private static final String USER_ROLE = "EMPLOYEE";
+	private static final String USER_PASSWORD = "emp";
+	private static final String USER_WRONG_PASSWORD = "blablabla";
 	private static final String ALERT_ATTRIBUTE = "alert";
 	private static final String ALERT_MESSAGE = "Invalid username and/or password.";
 	private static final String HOME_VIEW = "home";
 	private static final String SIMPLE_REDIRECT = "redirect:/";
+	static final Integer SESSION_IDLE_TRESHOLD_IN_SECONDS = 462;
 
 	@Mock
 	private LoginFormViewModel loginFormViewModelMock;
@@ -68,18 +71,28 @@ public class HomeControllerTest {
 	public void loginReturnsCorrectModelForm() {
 		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
 		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
-		ModelAndView returnedModel = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock,
-				servletRequestMock);
+		ModelAndView returnedModel = homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
 		assertEquals("home", returnedModel.getViewName());
+	}
+	
+	@Test
+	public void loginSetsSessionIdleTreshold() {
+		when(loginFormViewModelMock.getEmail()).thenReturn(USER_EMAIL);
+		when(loginFormViewModelMock.getPassword()).thenReturn(USER_PASSWORD);
+		when(userServiceMock.retrieveUserRole(USER_EMAIL)).thenReturn(USER_ROLE);
+		when(userServiceMock.validateCredentials(USER_EMAIL, USER_PASSWORD)).thenReturn(true);
+		when(servletRequestMock.getSession()).thenReturn(sessionMock);
+		
+		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
+		
+		verify(sessionMock, times(1)).setMaxInactiveInterval(SESSION_IDLE_TRESHOLD_IN_SECONDS);
 	}
 
 	@Test(expected = Exception.class)
 	public void loginReturnsAlertIfWrongEmailOrPassword() {
-		doThrow(new Exception()).when(userServiceMock).validateCredentials(USER_EMAIL, USER_PASSWORD);
-		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock,
-				servletRequestMock);
-		verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE,
-		ALERT_MESSAGE);
+		doThrow(new Exception()).when(userServiceMock).validateCredentials(USER_EMAIL, USER_WRONG_PASSWORD);
+		homeController.login(loginFormViewModelMock, modelMapMock, sessionMock, servletRequestMock);
+		verify(modelMapMock, times(1)).addAttribute(ALERT_ATTRIBUTE, ALERT_MESSAGE);
 	}
 
 	@Test

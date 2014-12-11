@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.task;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

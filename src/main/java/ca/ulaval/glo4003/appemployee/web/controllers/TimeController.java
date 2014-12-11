@@ -75,7 +75,7 @@ public class TimeController {
 	@RequestMapping(value = "/{timeEntryUid}/edit", method = RequestMethod.POST)
 	public String editTimeEntry(@PathVariable String timeEntryUid, Model model, TimeEntryViewModel viewModel, HttpSession session) throws Exception {
 		timeService.updateTimeEntry(viewModel);
-		return "redirect:/time/" + timeEntryUid + "/edit";
+		return "redirect:/time";
 	}
 
 	@RequestMapping(value = "/previousTime", method = RequestMethod.GET)

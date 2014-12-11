@@ -1,4 +1,4 @@
-package ca.ulaval.glo4003.appemployee.domain;
+package ca.ulaval.glo4003.appemployee.domain.project;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;

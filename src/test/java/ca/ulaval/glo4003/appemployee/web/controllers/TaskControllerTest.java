@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.TaskService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
 public class TaskControllerTest {
@@ -74,5 +76,11 @@ public class TaskControllerTest {
 		taskController.editTask(SAMPLE_PROJECT_NUMBER, SAMPLE_TASK_NUMBER, modelMock, taskViewModelMock, sessionMock);
 		verify(taskServiceMock, times(1)).editTask(SAMPLE_PROJECT_NUMBER, SAMPLE_TASK_NUMBER, taskViewModelMock);
 	}
-
+	
+	@Test
+	public void editTaskReturnsAlertIfSomethingWentWrongOnUpdate() throws Exception {
+		doThrow(new Exception()).when(taskServiceMock).editTask(SAMPLE_PROJECT_NUMBER, SAMPLE_TASK_NUMBER, taskViewModelMock);
+		taskController.editTask(SAMPLE_PROJECT_NUMBER, SAMPLE_TASK_NUMBER, modelMock, taskViewModelMock, sessionMock);
+		verify(modelMock, times(1)).addAttribute(org.mockito.Matchers.eq("message"), org.mockito.Matchers.any(MessageViewModel.class));
+	}
 }

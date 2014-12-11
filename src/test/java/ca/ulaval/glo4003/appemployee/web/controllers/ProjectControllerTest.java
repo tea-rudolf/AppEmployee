@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +21,7 @@ import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.ProjectViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TaskViewModel;
 
@@ -107,6 +109,13 @@ public class ProjectControllerTest {
 	public void editProjectReturnsEditProjectRedirectionPageIfServiceMethodIsCalledCorrectly() throws Exception {
 		String returnedForm = projectController.editProject(SAMPLE_PROJECT_NUMBER, modelMock, projectViewModelMock, sessionMock);
 		assertEquals(returnedForm, EDITED_PROJECT_REDIRECT);
+	}
+	
+	@Test
+	public void editProjectReturnsAlertIfSomethingWentWrongOnUpdate() throws Exception {
+		doThrow(new Exception()).when(projectServiceMock).editProject(SAMPLE_PROJECT_NUMBER, projectViewModelMock);
+		projectController.editProject(SAMPLE_PROJECT_NUMBER, modelMock, projectViewModelMock, sessionMock);
+		verify(modelMock, times(1)).addAttribute(org.mockito.Matchers.eq("message"), org.mockito.Matchers.any(MessageViewModel.class));
 	}
 	
 	@Test

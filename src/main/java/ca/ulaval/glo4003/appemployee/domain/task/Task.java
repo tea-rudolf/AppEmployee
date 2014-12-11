@@ -42,6 +42,14 @@ public class Task {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
+	
+	public double getMultiplicativeFactor() {
+		return multiplicativeFactor;
+	}
+	
+	public void setMultiplicativeFactor(double multiplicativeFactor) {
+		this.multiplicativeFactor = multiplicativeFactor;
+	}
 
 	public void assignUserToTask(String userId) {
 		if (authorizedUsers.contains(userId)) {
@@ -55,10 +63,6 @@ public class Task {
 		return authorizedUsers;
 	}
 
-	public void setAuthorizedUsers(List<String> authorizedUsers) {
-		this.authorizedUsers = authorizedUsers;
-	}
-
 	public boolean userIsAlreadyAssignedToTask(String userId) {
 		return authorizedUsers.contains(userId);
 	}
@@ -66,14 +70,6 @@ public class Task {
 	public void update(String taskName, String newUserEmail, double multiplicativeFactor) {
 		update(taskName, multiplicativeFactor);
 		assignUserToTask(newUserEmail);
-	}
-
-	public double getMultiplicativeFactor() {
-		return multiplicativeFactor;
-	}
-
-	public void setMultiplicativeFactor(double multiplicativeFactor) {
-		this.multiplicativeFactor = multiplicativeFactor;
 	}
 
 	public void update(String taskName, double multiplicativeFactor) {

@@ -1,5 +1,6 @@
 package ca.ulaval.glo4003.appemployee.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class TimeService {
 
 	public Collection<TimeEntryViewModel> retrieveAllTimeEntriesViewModelsForCurrentPayPeriod(String userEmail) throws TimeEntryNotFoundException {
 		List<TimeEntry> timeEntries = timeProcessor.evaluateUserTimeEntriesForPayPeriod(retrieveCurrentPayPeriod(), userEmail);
-		return timeConverter.convert(timeEntries);
+		return convertTimeEntriesWithTasks(timeEntries);
 	}
 
 	public Collection<TimeEntryViewModel> retrieveAllTimeEntriesViewModelsForPreviousPayPeriod(String userEmail) throws TimeEntryNotFoundException {
@@ -79,5 +80,13 @@ public class TimeService {
 		TimeEntry timeEntry = timeProcessor.retrieveTimeEntryByUid(timeEntryUid);
 		return timeConverter.convert(timeEntry, taskProcessor.retrieveTaskName(timeEntry.getTaskUid()), taskProcessor.retrieveAllTasksByUserId(timeEntry.getUserEmail()));
 	}
-
+	
+	private Collection<TimeEntryViewModel> convertTimeEntriesWithTasks(List<TimeEntry> timeEntries) {
+		Collection<TimeEntryViewModel> timeEntryViewModels = new ArrayList<TimeEntryViewModel>();
+		for (TimeEntry timeEntry : timeEntries) {
+			timeEntryViewModels .add(timeConverter.convert(timeEntry, taskProcessor.retrieveTaskName(timeEntry.getTaskUid()), 
+					taskProcessor.retrieveAllTasksByUserId(timeEntry.getUserEmail())));
+		}
+		return timeEntryViewModels;
+	}
 }
