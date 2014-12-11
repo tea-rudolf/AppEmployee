@@ -21,10 +21,11 @@
     <beans:property name="prefix" value="/WEB-INF/views/" />
     <beans:property name="suffix" value=".jsp" />
   </beans:bean>
-
+  
   <interceptors>
     <interceptor>
-      <mapping path="/*" />
+      <mapping path="/**" />
+      <exclude-mapping path="/resources/**"/>
       <beans:bean
         class="ca.ulaval.glo4003.appemployee.AuthenticationInterceptor" />
     </interceptor>
