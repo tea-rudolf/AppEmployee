@@ -43,7 +43,7 @@ public class TimeProcessorTest {
 	@InjectMocks
 	private TimeProcessor timeProcessor;
 
-	private static final LocalDate CURRENT_DATE = new LocalDate("2014-12-09");
+	private static final LocalDate CURRENT_DATE = new LocalDate();
 	private static final LocalDate PAYPERIOD_START_DATE = new LocalDate("2014-12-08");
 	private static final double BILLABLE_HOURS = 30.5;
 	private static final String EMAIL = "test@test.com";
