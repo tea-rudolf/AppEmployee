@@ -1,8 +1,6 @@
 package ca.ulaval.glo4003.appemployee.domain.task;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.UUID;
 
@@ -12,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
-import ca.ulaval.glo4003.appemployee.domain.task.Task;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TaskTest {
@@ -21,12 +18,11 @@ public class TaskTest {
 	private static final double DUMMY_MULTIPLICATIVE_FACTOR = 1.2;
 
 	private Task task;
-	
-	@Before 
+
+	@Before
 	public void init() {
 		task = new Task(UUID.randomUUID().toString());
 	}
-	
 
 	@Test
 	public void canInstantiateTask() {
@@ -45,14 +41,14 @@ public class TaskTest {
 		task.assignUserToTask(DUMMY_USER_ID);
 
 	}
-	
+
 	@Test
 	public void updateTaskWithoutNewUserUpdatesTaskCorrectly() {
 		task.update(DUMMY_TASK_NAME, DUMMY_MULTIPLICATIVE_FACTOR);
 		assertEquals(task.getName(), DUMMY_TASK_NAME);
 		assertTrue(DUMMY_MULTIPLICATIVE_FACTOR == task.getMultiplicativeFactor());
 	}
-	
+
 	@Test
 	public void updateTaskWithNewUserUpdatesTaskCorrectly() {
 		task.update(DUMMY_TASK_NAME, DUMMY_USER_ID, DUMMY_MULTIPLICATIVE_FACTOR);

@@ -1,9 +1,8 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +26,6 @@ public class TimeConverterTest {
 	private static final String TASK_ID = "id";
 	private static final String TIME_ENTRY_ID = "anotherid";
 	private static final String SECOND_ID = "timeentryid";
-	private static final String TASK_NAME = "task";
-	private static final String USER_EMAIL = "employee@employee.com";
 	private static final double EPSILON = 0.001;
 	private static final String COMMENT = "imacomment";
 	private static final double OTHER_HOURS = 8.00;
@@ -78,13 +75,16 @@ public class TimeConverterTest {
 		// when(projectServiceMock.getTaskName(TASK_ID)).thenReturn(TASK_NAME);
 		when(timeEntryMock.getComment()).thenReturn(COMMENT);
 
-		//timeViewModelMock = payPeriodConverterMock.convert(timeEntryMock);
+		// timeViewModelMock = payPeriodConverterMock.convert(timeEntryMock);
 
-		// assertEquals(timeEntryMock.getDate().toString(), timeViewModelMock.getDate());
-		// assertEquals(timeEntryMock.getBillableHours(), timeViewModelMock.getHours(), EPSILON);
+		// assertEquals(timeEntryMock.getDate().toString(),
+		// timeViewModelMock.getDate());
+		// assertEquals(timeEntryMock.getBillableHours(),
+		// timeViewModelMock.getHours(), EPSILON);
 		// assertEquals(projectServiceMock.getTaskName(TASK_ID),
 		// timeViewModelMock.getTaskName());
-		// assertEquals(timeEntryMock.getComment(), timeViewModelMock.getComment());
+		// assertEquals(timeEntryMock.getComment(),
+		// timeViewModelMock.getComment());
 	}
 
 	// @Test

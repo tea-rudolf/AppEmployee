@@ -52,11 +52,11 @@ public class TaskProcessor {
 		return availableUserEmails;
 	}
 	
-	public void addEmployeeToEachTaskOfProject(List<String> taskIds, String newUserEmail) {
+	public void addEmployeeToEachTaskOfProject(List<String> taskIds, String userEmail) {
 		List<Task> tasks = taskRepository.findByUids(taskIds);
 		for (Task task : tasks) {
-			if (!task.userIsAlreadyAssignedToTask(newUserEmail)) {
-				task.assignUserToTask(newUserEmail);
+			if (!task.userIsAlreadyAssignedToTask(userEmail)) {
+				task.assignUserToTask(userEmail);
 			}
 		}
 	}
