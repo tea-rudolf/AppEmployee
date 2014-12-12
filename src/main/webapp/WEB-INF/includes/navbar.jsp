@@ -49,7 +49,7 @@
 				<c:if
 					test='${sessionScope.role eq "ENTERPRISE"}'>
 					<li><a href="/departments">Manage departments</a></li>
-					<li><a href="/departments/assignEmployes">Assign employees to department</a></li>
+					<li><a href="/departments/assignEmployees">Assign employees to department</a></li>
 				</c:if>
 
 			</ul>

@@ -24,7 +24,7 @@
 			      </c:when>
 
 			      <c:otherwise>
-			      		<form:form method="post" action="/departments/assignEmployes" modelAttribute="assignationModel">
+			      		<form:form method="post" action="/departments/assignEmployees" modelAttribute="assignationModel">
 
 						<div class="table-responsive">
 							<table class="table table-striped table-hover table-condensed">

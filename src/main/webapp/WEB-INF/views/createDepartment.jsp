@@ -35,7 +35,7 @@
 			</c:if>
 
 			<c:if test="${fn:length(department.availableUsers) eq 0}">
-                 <p> There are no available employes to add to this department.</p>
+                 <p> There are no available employees to add to this department.</p>
 			</c:if>
 			</div>
 
