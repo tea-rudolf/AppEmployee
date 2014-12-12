@@ -67,21 +67,6 @@ public class ProjectProcessor {
         return employees;
 	}
 
-	private List<User> completeRetrievingAllEmployeesOfProjectByCheckingTasks(List<User> employees, String projectId) {
-		List<Task> tasks = retrieveAllTasksByProjectId(projectId);
-		for (Task task : tasks) {	
-			for (String employeeEmail : task.getAuthorizedUsers()) {
-				if (!employeeEmail.isEmpty()) {
-					User employee = userRepository.findByEmail(employeeEmail);
-					if (!employees.contains(employee)) {
-						employees.add(employee);
-					}
-				}
-			}
-		}
-		return employees;
-	}
-
 	public List<Task> retrieveAllTasksByProjectId(String projectId) {
 		Project project = projectRepository.findById(projectId);
 		List<Task> tasks = new ArrayList<Task>();
@@ -144,5 +129,20 @@ public class ProjectProcessor {
 			}
 		}
 		return false;
+	}
+	
+	private List<User> completeRetrievingAllEmployeesOfProjectByCheckingTasks(List<User> employees, String projectId) {
+		List<Task> tasks = retrieveAllTasksByProjectId(projectId);
+		for (Task task : tasks) {	
+			for (String employeeEmail : task.getAuthorizedUsers()) {
+				if (!employeeEmail.isEmpty()) {
+					User employee = userRepository.findByEmail(employeeEmail);
+					if (!employees.contains(employee)) {
+						employees.add(employee);
+					}
+				}
+			}
+		}
+		return employees;
 	}
 }
