@@ -23,7 +23,7 @@
 					style="width: 200px; height: 200px"></a>
 			</div>
 			<div class="col-xs-6 col-sm-3 placeholder">
-				<a href="departments/assignEmployes"><img
+				<a href="departments/assignEmployees"><img
 					src="../../resources/img/Operations/assignEmployees.png"
 					class="img-responsive" alt="Mountain View"
 					style="width: 200px; height: 200px"></a>
