@@ -140,7 +140,7 @@ public class TimeController {
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 		}
-		return "redirect:/time/previousTime/" + timeEntryUid + "/edit";
+		return "redirect:/time/previousTime";
 	}
 
 }
