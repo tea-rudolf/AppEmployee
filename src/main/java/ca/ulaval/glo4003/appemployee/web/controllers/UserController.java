@@ -39,9 +39,9 @@ public class UserController {
 		try {
 			userService.editUser(viewModel);
 		} catch (Exception e) {
-			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));	
 		}
-		return "employee";
+		return "redirect:/";
 	}
 
 }

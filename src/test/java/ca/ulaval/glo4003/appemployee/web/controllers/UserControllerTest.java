@@ -23,7 +23,7 @@ public class UserControllerTest {
 	private static final String EMAIL_KEY = "email";
 	private static final String VALID_EMAIL = "employee@employee.com";
 	private static final String EDIT_PROFILE_JSP = "editProfile";
-	private static final String EMPLOYEE_JSP = "employee";
+	private static final String HOME_REDIRECT = "redirect:/";
 
 	@Mock
 	private Model modelMock;
@@ -57,10 +57,10 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void updatePasswordRedirectsToEmployeePage() throws Exception {
+	public void updatePasswordRedirectsToHomePage() throws Exception {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		String returnedForm = userController.updatePassword(userViewModelMock, modelMock);
-		assertEquals(EMPLOYEE_JSP, returnedForm);
+		assertEquals(HOME_REDIRECT, returnedForm);
 	}
 
 	@Test
