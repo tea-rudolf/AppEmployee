@@ -54,8 +54,21 @@ public class ProjectProcessor {
 	}
 
 	public List<User> retrieveAllEmployeesByProjectId(String projectId) {
+        Project project = projectRepository.findById(projectId);
+        List<User> employees = new ArrayList<User>();
+
+        for (String employeeEmail : project.getEmployeeUids()) {
+                if (!employeeEmail.isEmpty()) {
+                        User employee = userRepository.findByEmail(employeeEmail);
+                        employees.add(employee);
+                }
+        }
+        completeRetrievingAllEmployeesOfProjectByCheckingTasks(employees, projectId);
+        return employees;
+	}
+
+	private List<User> completeRetrievingAllEmployeesOfProjectByCheckingTasks(List<User> employees, String projectId) {
 		List<Task> tasks = retrieveAllTasksByProjectId(projectId);
-		List<User> employees = new ArrayList<User>();
 		for (Task task : tasks) {	
 			for (String employeeEmail : task.getAuthorizedUsers()) {
 				if (!employeeEmail.isEmpty()) {

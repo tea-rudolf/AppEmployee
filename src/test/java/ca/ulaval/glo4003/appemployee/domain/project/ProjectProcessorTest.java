@@ -129,20 +129,20 @@ public class ProjectProcessorTest {
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
 
-	@Test
-	public void retrieveAllEmployeesByProjectIdReturnsListOfUsers() {
-		setupRetrieveTasksByProjectIdForRetriveUsersByProjectTest();
-		uids.add(USER_EMAIL);
-		when(taskMock.getAuthorizedUsers()).thenReturn(uids);
-		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
-		List<User> users = new ArrayList<User>();
-		users.add(userMock);
+    @Test
+    public void retrieveAllEmployeesByProjectIdReturnsListOfUsers() {
+            when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
+            uids.add(USER_EMAIL);
+            when(projectMock.getEmployeeUids()).thenReturn(uids);
+            when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
+            List<User> users = new ArrayList<User>();
+            users.add(userMock);
 
-		List<User> returnedUsers = projectProcessor.retrieveAllEmployeesByProjectId(PROJECT_UID);
+            List<User> returnedUsers = projectProcessor.retrieveAllEmployeesByProjectId(PROJECT_UID);
 
-		assertEquals(users, returnedUsers);
-	}
-
+            assertEquals(users, returnedUsers);
+    }
+    
 	@Test
 	public void retrieveAllEmployeesByProjectIdDoNotReturnEmployeeWhenEmployeeNameIsEmpty() {
 		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
@@ -229,18 +229,4 @@ public class ProjectProcessorTest {
 		when(projectMock.getTaskUids()).thenReturn(uids);
 		when(taskRepositoryMock.findByUids(uids)).thenReturn(tasks);
 	}
-	
-	private void setupRetrieveTasksByProjectIdForRetriveUsersByProjectTest() {
-		projectProcessor = new ProjectProcessor(projectRepositoryMock, userRepositoryMock, taskRepositoryMock,
-				taskProcessorMock) {
-			
-			@Override
-			public List<Task> retrieveAllTasksByProjectId(String PROJECT_UID) {
-				tasks.add(taskMock);
-				return tasks;
-			}
-		};
-		
-	}
-
 }
