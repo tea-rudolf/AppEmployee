@@ -123,21 +123,24 @@ public class DepartmentController {
 		}
 	}
 
-	@RequestMapping(value = "/assignEmployes", method = RequestMethod.GET)
+	@RequestMapping(value = "/assignEmployees", method = RequestMethod.GET)
 	public String showAssignEmployeeToDepartmentForm(Model model, HttpSession session) {
 		try {
 			model.addAttribute("assignationModel", departmentService.retrieveEmployeeAssignationViewModel());
 			return "assignEmployeToDepartment";
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
-			return "redirect:/assignEmployes";
+			return "redirect:/assignEmployees";
 		}
-
 	}
 
-	@RequestMapping(value = "/assignEmployes", method = RequestMethod.POST)
-	public String assignEmployeeToDepartment(EmployeeAssignationViewModel model, HttpSession session) throws Exception {
-		departmentService.assignOrphanEmployeeToDepartment(model);
+	@RequestMapping(value = "/assignEmployees", method = RequestMethod.POST)
+	public String assignEmployeeToDepartment(EmployeeAssignationViewModel viewModel, Model model, HttpSession session) throws Exception {
+		try {
+			departmentService.assignOrphanEmployeeToDepartment(viewModel);
+		} catch (Exception e) {
+			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
+		}
 		return "redirect:/departments";
 	}
 

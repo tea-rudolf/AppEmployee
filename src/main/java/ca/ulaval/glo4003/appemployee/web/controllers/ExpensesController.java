@@ -70,7 +70,7 @@ public class ExpensesController {
 	@RequestMapping(value = "/{uid}/edit", method = RequestMethod.POST)
 	public String editExpense(@PathVariable String uid, ExpenseViewModel viewModel, HttpSession session) throws Exception {
 		expenseService.editExpense(viewModel);
-		return "redirect:/expenses/" + uid + "/edit";
+		return "redirect:/expenses/";
 	}
 
 }

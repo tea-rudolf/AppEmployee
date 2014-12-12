@@ -21,6 +21,7 @@ import ca.ulaval.glo4003.appemployee.services.DepartmentService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.DepartmentViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.EmployeeAssignationViewModel;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.UserViewModel;
 
 public class DepartmentControllerTest {
@@ -91,8 +92,7 @@ public class DepartmentControllerTest {
 	}
 
 	@Test
-	public void showCreateDepartmentFormRedirectsToAddDepartmentPageWhenDepartmentDoesNotExist()
-			throws DepartmentNotFoundException {
+	public void showCreateDepartmentFormRedirectsToAddDepartmentPageWhenDepartmentDoesNotExist() throws DepartmentNotFoundException {
 		doThrow(new DepartmentNotFoundException("")).when(departmentServiceMock).retrieveAvailableEmployeesViewModel();
 		String returnedForm = departmentController.showCreateDepartmentForm(modelMock, sessionMock);
 		assertEquals(ADD_DEPARTMENT_REDIRECT, returnedForm);
@@ -112,8 +112,7 @@ public class DepartmentControllerTest {
 
 	@Test
 	public void createDepartmentReturnsShowCreateDepartmentFormWhenExceptionIsThrown() throws Exception {
-		doThrow(new DepartmentAlreadyExistsException("")).when(departmentServiceMock).createDepartement(
-				departmentViewModelMock);
+		doThrow(new DepartmentAlreadyExistsException("")).when(departmentServiceMock).createDepartement(departmentViewModelMock);
 		String returnedForm = departmentController.createDepartment(modelMock, departmentViewModelMock, sessionMock);
 		assertEquals(returnedForm, CREATE_DEPARTMENT_FORM);
 	}
@@ -123,12 +122,18 @@ public class DepartmentControllerTest {
 		String returnedForm = departmentController.showEmployeesList(DEPARTMENT_NAME, modelMock, sessionMock);
 		assertEquals(EDIT_DEPARTMENT_FORM, returnedForm);
 	}
+	
+	@Test
+	public void showEmployeesListSendsAlertWhenSomethingWentWrong() throws Exception {
+		doThrow(new DepartmentNotFoundException("alert message")).when(departmentServiceMock).retrieveEmployeeAssignationViewModel();
+		departmentController.showAssignEmployeeToDepartmentForm(modelMock, sessionMock);
+		verify(modelMock, times(1)).addAttribute(org.mockito.Matchers.eq("message"), org.mockito.Matchers.any(MessageViewModel.class));
+	}
 
 	@Test
 	public void showCreateEmployeeAccountPageReturnsUserCreationFormWhenSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
-		String returnedForm = departmentController.showCreateEmployeeForm(DEPARTMENT_NAME, modelMock,
-				userViewModelMock, sessionMock);
+		String returnedForm = departmentController.showCreateEmployeeForm(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
 		assertEquals(CREATE_USER_FORM, returnedForm);
 	}
 
@@ -136,8 +141,7 @@ public class DepartmentControllerTest {
 	public void createEmployeeAccountRedirectsToEditionPageWhenRoleIsNotMissing() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
-		String returnedForm = departmentController.createEmployee(DEPARTMENT_NAME, modelMock, userViewModelMock,
-				sessionMock);
+		String returnedForm = departmentController.createEmployee(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
 		assertEquals(EDIT_DEPARTMENT_REDIRECT, returnedForm);
 	}
 
@@ -146,8 +150,7 @@ public class DepartmentControllerTest {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
 		doThrow(new Exception()).when(departmentServiceMock).createEmployee(EMAIL, DEPARTMENT_NAME, userViewModelMock);
-		String returnedForm = departmentController.createEmployee(DEPARTMENT_NAME, modelMock, userViewModelMock,
-				sessionMock);
+		String returnedForm = departmentController.createEmployee(DEPARTMENT_NAME, modelMock, userViewModelMock, sessionMock);
 		assertEquals(CREATE_USER_FORM, returnedForm);
 	}
 
@@ -163,8 +166,7 @@ public class DepartmentControllerTest {
 	public void editEmployeeReturnsEditedDepartmentFormIfSuccessful() {
 		when(sessionMock.getAttribute(EMAIL_ATTRIBUTE)).thenReturn(EMAIL);
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
-		String returnedForm = departmentController.editEmployee(DEPARTMENT_NAME, userViewModelMock, modelMock,
-				sessionMock);
+		String returnedForm = departmentController.editEmployee(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
 		assertEquals(EDIT_DEPARTMENT_REDIRECT, returnedForm);
 	}
 
@@ -174,8 +176,7 @@ public class DepartmentControllerTest {
 		when(userViewModelMock.getRole()).thenReturn(Role.EMPLOYEE.toString());
 		when(userViewModelMock.getEmail()).thenReturn(EMAIL_ATTRIBUTE);
 		doThrow(new Exception()).when(userServiceMock).editUser(userViewModelMock);
-		String returnedForm = departmentController.editEmployee(DEPARTMENT_NAME, userViewModelMock, modelMock,
-				sessionMock);
+		String returnedForm = departmentController.editEmployee(DEPARTMENT_NAME, userViewModelMock, modelMock, sessionMock);
 		assertEquals(EDIT_DEPARTMENT_EMPLOYEE, returnedForm);
 	}
 
@@ -187,15 +188,20 @@ public class DepartmentControllerTest {
 
 	@Test
 	public void assignEmployeeToDepartmentReturnsDepartmentsListFormIfSaveIsSuccessful() throws Exception {
-		String returnedForm = departmentController.assignEmployeeToDepartment(assignationEmployeDepViewModelMock,
-				sessionMock);
+		String returnedForm = departmentController.assignEmployeeToDepartment(assignationEmployeDepViewModelMock, modelMock, sessionMock);
 		assertEquals(DEPARTMENT_LIST_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void assignEmployeeToDepartmentCallsCorrectServiceMethod() throws Exception {
-		departmentController.assignEmployeeToDepartment(assignationEmployeDepViewModelMock, sessionMock);
+		departmentController.assignEmployeeToDepartment(assignationEmployeDepViewModelMock, modelMock, sessionMock);
 		verify(departmentServiceMock, times(1)).assignOrphanEmployeeToDepartment(assignationEmployeDepViewModelMock);
 	}
-
+	
+	@Test
+	public void assigneEmployeeToDepartementShowsAlertWhenSomethingWentWrong() throws Exception {
+		doThrow(new Exception()).when(departmentServiceMock).assignOrphanEmployeeToDepartment(assignationEmployeDepViewModelMock);
+		departmentController.assignEmployeeToDepartment(assignationEmployeDepViewModelMock, modelMock, sessionMock);
+		verify(modelMock, times(1)).addAttribute(org.mockito.Matchers.eq("message"), org.mockito.Matchers.any(MessageViewModel.class));
+	}
 }

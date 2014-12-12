@@ -1,6 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.controllers;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,9 +20,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TravelNotFoundException;
 import ca.ulaval.glo4003.appemployee.domain.travel.Travel;
 import ca.ulaval.glo4003.appemployee.services.TimeService;
 import ca.ulaval.glo4003.appemployee.services.TravelService;
+import ca.ulaval.glo4003.appemployee.web.viewmodels.MessageViewModel;
 import ca.ulaval.glo4003.appemployee.web.viewmodels.TravelViewModel;
 
 public class TravelControllerTest {
@@ -33,7 +36,6 @@ public class TravelControllerTest {
 	private static final String CREATE_TRAVEL_JSP = "createTravelEntry";
 	private static final String EDIT_TRAVEL_ENTRY_JSP = "editTravelEntry";
 	private static final String TRAVEL_REDIRECT = "redirect:/travel/";
-	private static final String EDIT_TRAVEL_REDIRECT = "redirect:/travel/uid/edit";
 
 	private Collection<TravelViewModel> travelViewModels;
 
@@ -64,16 +66,14 @@ public class TravelControllerTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		travelController = new TravelController(travelServiceMock,
-				timeServiceMock);
+		travelController = new TravelController(travelServiceMock, timeServiceMock);
 	}
 
 	@Test
 	public void retrieveUserTravelViewModelCallsTravelService() {
 		when(sessionMock.getAttribute(EMAIL_KEY)).thenReturn(VALID_EMAIL);
 		travelController.retrieveUserTravelViewModel(sessionMock);
-		verify(travelServiceMock, times(1)).retrieveUserTravelViewModel(
-				VALID_EMAIL);
+		verify(travelServiceMock, times(1)).retrieveUserTravelViewModel(VALID_EMAIL);
 	}
 
 	@Test
@@ -98,31 +98,26 @@ public class TravelControllerTest {
 
 	@Test
 	public void showCreateTravelEntryFormReturnsCreationForm() {
-		String returnedForm = travelController.showCreateTravelEntryForm(
-				modelMock, travelViewModelMock, sessionMock);
+		String returnedForm = travelController.showCreateTravelEntryForm(modelMock, travelViewModelMock, sessionMock);
 		assertEquals(CREATE_TRAVEL_JSP, returnedForm);
 	}
 
 	@Test
 	public void createTravelEntryReturnsSaveFormIfSuccessful() throws Exception {
-		String returnedForm = travelController.createTravelEntry(modelMock,
-				travelViewModelMock, sessionMock);
+		String returnedForm = travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
 		assertEquals(TRAVEL_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void createTravelEntryCallsCorrectServiceMethod() throws Exception {
-		travelController.createTravelEntry(modelMock, travelViewModelMock,
-				sessionMock);
+		travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
 		verify(travelServiceMock, times(1)).createTravel(travelViewModelMock);
 	}
 
 	@Test
 	public void editTravelEntryReturnsEditFormIfSuccessful() throws Exception {
-		when(travelServiceMock.retrieveTravelViewModel(TRAVEL_UID)).thenReturn(
-				travelViewModelMock);
-		String returnedForm = travelController.showEditTravelEntryForm(
-				TRAVEL_UID, modelMock, sessionMock);
+		when(travelServiceMock.retrieveTravelViewModel(TRAVEL_UID)).thenReturn(travelViewModelMock);
+		String returnedForm = travelController.showEditTravelEntryForm(TRAVEL_UID, modelMock, sessionMock);
 		assertEquals(EDIT_TRAVEL_ENTRY_JSP, returnedForm);
 	}
 
@@ -131,14 +126,33 @@ public class TravelControllerTest {
 			throws Exception {
 		String returnedForm = travelController.editTravelEntry(TRAVEL_UID,
 				modelMock, travelViewModelMock, sessionMock);
-		assertEquals(EDIT_TRAVEL_REDIRECT, returnedForm);
+		assertEquals(TRAVEL_REDIRECT, returnedForm);
 	}
 
 	@Test
 	public void editTravelEntryCallsServiceUpdateMethod() throws Exception {
-		travelController.editTravelEntry(TRAVEL_UID, modelMock,
-				travelViewModelMock, sessionMock);
-		verify(travelServiceMock, times(1)).editTravel(TRAVEL_UID,
-				travelViewModelMock);
+		travelController.editTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
+		verify(travelServiceMock, times(1)).editTravel(TRAVEL_UID, travelViewModelMock);
+	}
+	
+	@Test
+	public void createTravelEntryReturnsAlertWhenSomethingWentWrong() throws Exception {
+		doThrow(new Exception()).when(travelServiceMock).createTravel(travelViewModelMock);
+		travelController.createTravelEntry(modelMock, travelViewModelMock, sessionMock);
+		verify(modelMock, times(1)).addAttribute(org.mockito.Matchers.eq("message"), org.mockito.Matchers.any(MessageViewModel.class));
+	}
+	
+	@Test
+	public void showEditTravelEntryFormReturnsAlertWhenSomethingWentWrong() throws Exception {
+		doThrow(new TravelNotFoundException("alert message")).when(travelServiceMock).retrieveTravelViewModel(TRAVEL_UID);
+		travelController.showEditTravelEntryForm(TRAVEL_UID, modelMock, sessionMock);
+		verify(modelMock, times(1)).addAttribute(org.mockito.Matchers.eq("message"), org.mockito.Matchers.any(MessageViewModel.class));
+	}
+	
+	@Test
+	public void editTravelEntryReturnsAlertWhenSomethingWentWrong() throws Exception {
+		doThrow(new Exception()).when(travelServiceMock).editTravel(TRAVEL_UID, travelViewModelMock);
+		travelController.editTravelEntry(TRAVEL_UID, modelMock, travelViewModelMock, sessionMock);
+		verify(modelMock, times(1)).addAttribute(org.mockito.Matchers.eq("message"), org.mockito.Matchers.any(MessageViewModel.class));
 	}
 }
