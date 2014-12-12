@@ -49,7 +49,6 @@ public class TaskController {
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 		}
-
 		return String.format("redirect:/projects/%s/tasks/%s/edit", projectNumber, taskNumber);
 	}
 

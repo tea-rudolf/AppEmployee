@@ -1,7 +1,10 @@
 package ca.ulaval.glo4003.appemployee.domain.project;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +36,7 @@ public class ProjectProcessorTest {
 	private static final String TASK_UID = "1";
 	private static final double MULTIPLICATIVE_FACTOR = 1.0;
 
-	private Collection<User> users = new ArrayList<User>();
+	private List<User> users = new ArrayList<User>();
 	private List<String> uids = new ArrayList<String>();
 	private List<Task> tasks = new ArrayList<Task>();
 	private Collection<Project> projects = new ArrayList<Project>();
@@ -128,9 +131,9 @@ public class ProjectProcessorTest {
 
 	@Test
 	public void retrieveAllEmployeesByProjectIdReturnsListOfUsers() {
-		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
+		setupRetrieveTasksByProjectIdForRetriveUsersByProjectTest();
 		uids.add(USER_EMAIL);
-		when(projectMock.getEmployeeUids()).thenReturn(uids);
+		when(taskMock.getAuthorizedUsers()).thenReturn(uids);
 		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
 		List<User> users = new ArrayList<User>();
 		users.add(userMock);
@@ -225,6 +228,19 @@ public class ProjectProcessorTest {
 		tasks.add(taskMock);
 		when(projectMock.getTaskUids()).thenReturn(uids);
 		when(taskRepositoryMock.findByUids(uids)).thenReturn(tasks);
+	}
+	
+	private void setupRetrieveTasksByProjectIdForRetriveUsersByProjectTest() {
+		projectProcessor = new ProjectProcessor(projectRepositoryMock, userRepositoryMock, taskRepositoryMock,
+				taskProcessorMock) {
+			
+			@Override
+			public List<Task> retrieveAllTasksByProjectId(String PROJECT_UID) {
+				tasks.add(taskMock);
+				return tasks;
+			}
+		};
+		
 	}
 
 }

@@ -26,8 +26,7 @@ public class ProjectProcessor {
 	private TaskProcessor taskProcessor;
 
 	@Autowired
-	public ProjectProcessor(ProjectRepository projectRepository, UserRepository userRepository,
-			TaskRepository taskRepository, TaskProcessor taskProcessor) {
+	public ProjectProcessor(ProjectRepository projectRepository, UserRepository userRepository, TaskRepository taskRepository, TaskProcessor taskProcessor) {
 		this.projectRepository = projectRepository;
 		this.userRepository = userRepository;
 		this.taskRepository = taskRepository;
@@ -55,13 +54,16 @@ public class ProjectProcessor {
 	}
 
 	public List<User> retrieveAllEmployeesByProjectId(String projectId) {
-		Project project = projectRepository.findById(projectId);
+		List<Task> tasks = retrieveAllTasksByProjectId(projectId);
 		List<User> employees = new ArrayList<User>();
-
-		for (String employeeEmail : project.getEmployeeUids()) {
-			if (!employeeEmail.isEmpty()) {
-				User employee = userRepository.findByEmail(employeeEmail);
-				employees.add(employee);
+		for (Task task : tasks) {	
+			for (String employeeEmail : task.getAuthorizedUsers()) {
+				if (!employeeEmail.isEmpty()) {
+					User employee = userRepository.findByEmail(employeeEmail);
+					if (!employees.contains(employee)) {
+						employees.add(employee);
+					}
+				}
 			}
 		}
 		return employees;
