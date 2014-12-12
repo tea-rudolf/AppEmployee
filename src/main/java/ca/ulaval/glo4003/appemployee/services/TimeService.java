@@ -73,7 +73,7 @@ public class TimeService {
 	}
 
 	public Collection<TimeEntryViewModel> retrieveAllTimeEntriesViewModelsForPreviousPayPeriod(String userEmail) throws TimeEntryNotFoundException {
-		return timeConverter.convert(timeProcessor.evaluateUserTimeEntriesForPayPeriod(retrievePreviousPayPeriod(), userEmail));
+		return convertTimeEntriesWithTasks(timeProcessor.evaluateUserTimeEntriesForPayPeriod(retrievePreviousPayPeriod(), userEmail));
 	}
 
 	public TimeEntryViewModel retrieveTimeEntryViewModel(String timeEntryUid) throws TimeEntryNotFoundException {
