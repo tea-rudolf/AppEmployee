@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
@@ -89,6 +91,34 @@ public class ProjectProcessorTest {
 	}
 
 	@Test
+	public void evaluateAvailableEmployeeEmailsByProjectDoNotReturnEmployeeWhenAlreadyAssignedToProject() {
+		users.add(userMock);
+		when(userMock.getEmail()).thenReturn(USER_EMAIL);
+		when(userMock.getRole()).thenReturn(Role.EMPLOYEE);
+		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
+		when(userRepositoryMock.findAll()).thenReturn(users);
+		when(projectMock.userIsAssignedToProject(USER_EMAIL)).thenReturn(true);
+
+		List<String> returnedListOfEmails = projectProcessor.evaluateAvailableEmployeeEmailsByProject(PROJECT_UID);
+
+		assertEquals(0, returnedListOfEmails.size());
+	}
+
+	@Test
+	public void evaluateAvailableEmployeeEmailsByProjectDoNotReturnEmployeeWhenEmployeeHasEnterpriseRole() {
+		users.add(userMock);
+		when(userMock.getEmail()).thenReturn(USER_EMAIL);
+		when(userMock.getRole()).thenReturn(Role.ENTERPRISE);
+		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
+		when(userRepositoryMock.findAll()).thenReturn(users);
+		when(projectMock.userIsAssignedToProject(USER_EMAIL)).thenReturn(false);
+
+		List<String> returnedListOfEmails = projectProcessor.evaluateAvailableEmployeeEmailsByProject(PROJECT_UID);
+
+		assertEquals(0, returnedListOfEmails.size());
+	}
+
+	@Test
 	public void editProjectCallsCorrectRepositoryMethod() throws Exception {
 		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
 		when(projectMock.getTaskUids()).thenReturn(uids);
@@ -100,7 +130,6 @@ public class ProjectProcessorTest {
 	public void retrieveAllEmployeesByProjectIdReturnsListOfUsers() {
 		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
 		uids.add(USER_EMAIL);
-		when(userMock.getEmail()).thenReturn(USER_EMAIL);
 		when(projectMock.getEmployeeUids()).thenReturn(uids);
 		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
 		List<User> users = new ArrayList<User>();
@@ -109,6 +138,18 @@ public class ProjectProcessorTest {
 		List<User> returnedUsers = projectProcessor.retrieveAllEmployeesByProjectId(PROJECT_UID);
 
 		assertEquals(users, returnedUsers);
+	}
+
+	@Test
+	public void retrieveAllEmployeesByProjectIdDoNotReturnEmployeeWhenEmployeeNameIsEmpty() {
+		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
+		uids.add("");
+		when(projectMock.getEmployeeUids()).thenReturn(uids);
+		when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(userMock);
+
+		List<User> returnedUsers = projectProcessor.retrieveAllEmployeesByProjectId(PROJECT_UID);
+
+		assertEquals(0, returnedUsers.size());
 	}
 
 	@Test
@@ -137,30 +178,12 @@ public class ProjectProcessorTest {
 		verify(projectRepositoryMock, times(1)).store(projectMock);
 	}
 
-	@Test
-	public void checkIfTaskAlreadyExistsInProjectReturnsTrueIfTaskExistsInProject() {
-		uids.add(TASK_UID);
-		when(taskMock.getUid()).thenReturn(TASK_UID);
-		when(taskMock.getName()).thenReturn(TASK_NAME);
-		tasks.add(taskMock);
-		when(projectMock.getTaskUids()).thenReturn(uids);
-		when(taskRepositoryMock.findByUids(uids)).thenReturn(tasks);
+	@Test(expected = TaskAlreadyAssignedToProjectException.class)
+	public void addTaskToProjectThrowsExceptionWhenTaskAlreadyExists() throws Exception {
+		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
+		retrieveTaskMockInfo();
 
-		Boolean returnedValue = projectProcessor.checkIfTaskAlreadyExistsInProject(projectMock, TASK_NAME);
-
-		assertTrue(returnedValue);
-	}
-
-	@Test
-	public void checkIfTaskAlreadyExistsInProjectReturnsTrueIfTaskDoesNotExist() {
-		uids.add(TASK_UID);
-		when(taskMock.getUid()).thenReturn(TASK_UID);
-		tasks.add(taskMock);
-		when(taskRepositoryMock.findByUids(uids)).thenReturn(tasks);
-
-		Boolean returnedValue = projectProcessor.checkIfTaskAlreadyExistsInProject(projectMock, TASK_NAME);
-
-		assertFalse(returnedValue);
+		projectProcessor.addTaskToProject(PROJECT_UID, TASK_NAME, MULTIPLICATIVE_FACTOR);
 	}
 
 	@Test
@@ -168,6 +191,15 @@ public class ProjectProcessorTest {
 		ArgumentCaptor<Project> projectArgumentCaptor = ArgumentCaptor.forClass(Project.class);
 		projectProcessor.createProject(PROJECT_NAME, uids, uids, uids);
 		verify(projectRepositoryMock, times(1)).store(projectArgumentCaptor.capture());
+	}
+
+	@Test(expected = ProjectExistsException.class)
+	public void createProjectThrowsExceptionWhenProjectAlreadyExists() throws Exception {
+		projects.add(projectMock);
+		when(projectRepositoryMock.findAll()).thenReturn(projects);
+		when(projectMock.getName()).thenReturn(PROJECT_NAME);
+
+		projectProcessor.createProject(PROJECT_NAME, uids, uids, uids);
 	}
 
 	@Test
@@ -185,6 +217,14 @@ public class ProjectProcessorTest {
 		when(projectRepositoryMock.findById(PROJECT_UID)).thenReturn(projectMock);
 		Project returnedProject = projectProcessor.retrieveProjectById(PROJECT_UID);
 		assertEquals(projectMock, returnedProject);
+	}
+
+	private void retrieveTaskMockInfo() {
+		uids.add(TASK_UID);
+		when(taskMock.getName()).thenReturn(TASK_NAME);
+		tasks.add(taskMock);
+		when(projectMock.getTaskUids()).thenReturn(uids);
+		when(taskRepositoryMock.findByUids(uids)).thenReturn(tasks);
 	}
 
 }

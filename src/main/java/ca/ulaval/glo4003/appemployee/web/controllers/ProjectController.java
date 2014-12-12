@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
@@ -49,14 +49,14 @@ public class ProjectController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String createProject(Model model, ProjectViewModel projectViewModel, HttpSession session) throws Exception {
-		
+
 		try {
 			projectService.createProject(projectViewModel);
 		} catch (ProjectExistsException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return showCreateProjectForm(model, projectViewModel, session);
 		}
-		
+
 		return "redirect:/projects";
 	}
 
@@ -72,30 +72,33 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/{projectNumber}/edit", method = RequestMethod.POST)
-	public String editProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel, HttpSession session) throws Exception {
-		
+	public String editProject(@PathVariable String projectNumber, Model model, ProjectViewModel viewModel,
+			HttpSession session) throws Exception {
+
 		try {
 			projectService.editProject(projectNumber, viewModel);
 		} catch (Exception e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 		}
-		
+
 		return String.format("redirect:/projects/%s/edit", projectNumber);
 	}
-	
+
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.GET)
-	public String showCreateTaskForm(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) {
+	public String showCreateTaskForm(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel,
+			HttpSession session) {
 		model.addAttribute("task", taskViewModel);
 		model.addAttribute("projectNumber", projectNumber);
 		return String.format("createTask");
 	}
 
 	@RequestMapping(value = "/{projectNumber}/tasks/add", method = RequestMethod.POST)
-	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel, HttpSession session) throws Exception {
-		
+	public String createTask(@PathVariable String projectNumber, Model model, TaskViewModel taskViewModel,
+			HttpSession session) throws Exception {
+
 		try {
 			projectService.addNewTaskToProject(projectNumber, taskViewModel);
-		} catch (TaskExistsException e) {
+		} catch (TaskAlreadyAssignedToProjectException e) {
 			model.addAttribute("message", new MessageViewModel(e.getClass().getSimpleName(), e.getMessage()));
 			return showCreateTaskForm(projectNumber, model, taskViewModel, session);
 		}

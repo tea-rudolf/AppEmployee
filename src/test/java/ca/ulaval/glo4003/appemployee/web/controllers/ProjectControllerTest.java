@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
 import ca.ulaval.glo4003.appemployee.domain.user.User;
 import ca.ulaval.glo4003.appemployee.services.ProjectService;
 import ca.ulaval.glo4003.appemployee.services.UserService;
@@ -131,8 +131,10 @@ public class ProjectControllerTest {
 	
 	@Test
 	public void createTaskReturnsCreateTaskFormIfServiceMethodFails() throws Exception {
-		doThrow(new TaskExistsException("")).when(projectServiceMock).addNewTaskToProject(SAMPLE_PROJECT_NUMBER, taskViewModelMock);
-		String returnedForm = projectController.createTask(SAMPLE_PROJECT_NUMBER, modelMock, taskViewModelMock, sessionMock);
+		doThrow(new TaskAlreadyAssignedToProjectException("")).when(projectServiceMock).addNewTaskToProject(
+				SAMPLE_PROJECT_NUMBER, taskViewModelMock);
+		String returnedForm = projectController.createTask(SAMPLE_PROJECT_NUMBER, modelMock, taskViewModelMock,
+				sessionMock);
 		assertEquals(returnedForm, CREATE_TASK_FORM);
 	}
 

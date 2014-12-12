@@ -22,7 +22,8 @@ public class ExpenseService {
 	private ExpenseConverter expenseConverter;
 
 	@Autowired
-	public ExpenseService(TimeProcessor timeProcessor, ExpenseProcessor expenseProcessor, ExpenseConverter expenseConverter) {
+	public ExpenseService(TimeProcessor timeProcessor, ExpenseProcessor expenseProcessor,
+			ExpenseConverter expenseConverter) {
 		this.timeProcessor = timeProcessor;
 		this.expenseProcessor = expenseProcessor;
 		this.expenseConverter = expenseConverter;
@@ -57,7 +58,7 @@ public class ExpenseService {
 		return expenseProcessor.retrieveUserExpensesForCurrentPayPeriod(userEmail, currentPayPeriod);
 	}
 
-	public Object retrieveUserExpenseViewModel(String email) {
+	public ExpenseViewModel retrieveUserExpenseViewModel(String email) {
 		return new ExpenseViewModel(email);
 	}
 

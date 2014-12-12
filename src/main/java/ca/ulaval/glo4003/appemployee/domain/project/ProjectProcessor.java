@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.ProjectExistsException;
-import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskExistsException;
+import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
 import ca.ulaval.glo4003.appemployee.domain.repository.ProjectRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.TaskRepository;
 import ca.ulaval.glo4003.appemployee.domain.repository.UserRepository;
@@ -82,7 +82,7 @@ public class ProjectProcessor {
 		Project project = projectRepository.findById(projectNumber);
 
 		if (checkIfTaskAlreadyExistsInProject(project, taskName)) {
-			throw new TaskExistsException(String.format("The task %s already exists!", taskName));
+			throw new TaskAlreadyAssignedToProjectException(String.format("The task %s already exists!", taskName));
 		}
 
 		Task newTask = new Task(taskName, project.getEmployeeUids(), multiplicativeFactor);
@@ -91,16 +91,6 @@ public class ProjectProcessor {
 
 		taskRepository.store(newTask);
 		projectRepository.store(project);
-	}
-
-	public boolean checkIfTaskAlreadyExistsInProject(Project project, String taskName) {
-		List<Task> tasks = taskRepository.findByUids(project.getTaskUids());
-		for (Task task : tasks) {
-			if (task.getName().equals(taskName)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public void createProject(String projectName, List<String> taskIds, List<String> userIds, List<String> expenseIds)
@@ -125,6 +115,16 @@ public class ProjectProcessor {
 		Collection<Project> projects = projectRepository.findAll();
 		for (Project project : projects) {
 			if (project.getName().equals(projectName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean checkIfTaskAlreadyExistsInProject(Project project, String taskName) {
+		List<Task> tasks = taskRepository.findByUids(project.getTaskUids());
+		for (Task task : tasks) {
+			if (task.getName().equals(taskName)) {
 				return true;
 			}
 		}
