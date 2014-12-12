@@ -42,11 +42,19 @@ public class Task {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	
+
+	public List<String> getAuthorizedUsers() {
+		return authorizedUsers;
+	}
+
+	public void setAuthorizedUsers(List<String> authorizedUsers) {
+		this.authorizedUsers = authorizedUsers;
+	}
+
 	public double getMultiplicativeFactor() {
 		return multiplicativeFactor;
 	}
-	
+
 	public void setMultiplicativeFactor(double multiplicativeFactor) {
 		this.multiplicativeFactor = multiplicativeFactor;
 	}
@@ -57,10 +65,6 @@ public class Task {
 		}
 
 		authorizedUsers.add(userId);
-	}
-
-	public List<String> getAuthorizedUsers() {
-		return authorizedUsers;
 	}
 
 	public boolean userIsAlreadyAssignedToTask(String userId) {

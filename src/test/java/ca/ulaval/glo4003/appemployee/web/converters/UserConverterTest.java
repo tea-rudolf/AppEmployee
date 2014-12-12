@@ -1,9 +1,7 @@
 package ca.ulaval.glo4003.appemployee.web.converters;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,10 +81,10 @@ public class UserConverterTest {
 
 	private User createUser(String email, String password, double wage, Role role) {
 		User user = mock(User.class);
-		given(user.getEmail()).willReturn(email);
-		given(user.getPassword()).willReturn(password);
-		given(user.getWage()).willReturn(wage);
-		given(user.getRole()).willReturn(role);
+		when(user.getEmail()).thenReturn(email);
+		when(user.getPassword()).thenReturn(password);
+		when(user.getWage()).thenReturn(wage);
+		when(user.getRole()).thenReturn(role);
 		return user;
 	}
 

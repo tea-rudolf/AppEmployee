@@ -103,23 +103,14 @@ public class ProjectProcessor {
 		return false;
 	}
 
-	public void createProject(String projectName, List<String> taskIds, List<String> userIds, List<String> expenseIds) throws Exception {
+	public void createProject(String projectName, List<String> taskIds, List<String> userIds, List<String> expenseIds)
+			throws Exception {
 		if (checkIfProjectWithSameNameExists(projectName)) {
 			throw new ProjectExistsException(String.format("The project %s already exists!", projectName));
 		}
 
 		Project newProject = new Project(projectName, taskIds, userIds, expenseIds);
 		projectRepository.store(newProject);
-	}
-	
-	private boolean checkIfProjectWithSameNameExists(String projectName) {
-		Collection<Project> projects = projectRepository.findAll();
-		for (Project project : projects) {
-			if (project.getName().equals(projectName)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public Collection<Project> retrieveAllProjects() {
@@ -128,5 +119,15 @@ public class ProjectProcessor {
 
 	public Project retrieveProjectById(String projectNumber) {
 		return projectRepository.findById(projectNumber);
+	}
+
+	private boolean checkIfProjectWithSameNameExists(String projectName) {
+		Collection<Project> projects = projectRepository.findAll();
+		for (Project project : projects) {
+			if (project.getName().equals(projectName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

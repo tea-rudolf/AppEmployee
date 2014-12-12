@@ -25,9 +25,9 @@ public class TimeConverter {
 		return viewModels;
 	}
 	
-	public TimeEntryViewModel convert(TimeEntry timeEntry, String taskId, List<Task> tasks) {
+	public TimeEntryViewModel convert(TimeEntry timeEntry, String taskName, List<Task> tasks) {
 		return new TimeEntryViewModel(timeEntry.getUid(), timeEntry.getUserEmail(), timeEntry.getDate().toString(), timeEntry.getBillableHours(), timeEntry.getTaskUid(), 
-				taskId, timeEntry.getComment(), tasks);
+				taskName, timeEntry.getComment(), tasks);
 
 	}
 

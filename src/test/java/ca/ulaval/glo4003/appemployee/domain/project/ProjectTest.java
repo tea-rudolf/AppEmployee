@@ -1,8 +1,6 @@
 package ca.ulaval.glo4003.appemployee.domain.project;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +9,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import ca.ulaval.glo4003.appemployee.domain.exceptions.EmployeeAlreadyExistsException;
 import ca.ulaval.glo4003.appemployee.domain.exceptions.TaskAlreadyAssignedToProjectException;
-import ca.ulaval.glo4003.appemployee.domain.project.Project;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectTest {
@@ -45,7 +42,7 @@ public class ProjectTest {
 		project.addTaskUid(TASK_ID);
 		project.addTaskUid(TASK_ID);
 	}
-	
+
 	@Test
 	public void updateProjectUpdatesAllProjectInformation() {
 		project.update(NEW_PROJECT_NAME, NEW_EMPLOYEE_UID);
